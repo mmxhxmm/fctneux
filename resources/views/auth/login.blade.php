@@ -6,10 +6,10 @@
         @csrf
 
         <!-- Email Address -->
-        <div class="mt-12">
+        <div class="mt-6">
             <label for="email" :value="__('Email')" >
-            <input id="email" class="block border-4 border-white rounded-full bg-transparent w-full placeholder-white"
-                            placeholder="email..." 
+            <input id="email" class="block border-2 text-[12px] text-white border-white rounded-full bg-transparent w-full h-1/2 placeholder-white"
+                            placeholder="Email..." 
                             type="email" 
                             name="email" :value="old('email')" 
                             required autofocus autocomplete="username" />
@@ -19,11 +19,11 @@
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
+        <div class="mt-2">
             <label for="password" :value="__('Password')" >
 
-            <input id="password" class="block border-4 border-white rounded-full bg-transparent w-full placeholder-white"
-                            placeholder="contraseña..."
+            <input id="password" class="block border-2 text-[12px] text-white border-white rounded-full bg-transparent w-full h-1/2 placeholder-white"
+                            placeholder="Contraseña..."
                             type="password"
                             name="password"
                             required autocomplete="current-password" />
@@ -40,16 +40,16 @@
             </label>
         </div> -->
 
-        <div class="flex items-center justify-center mt-4">
+        <div class="flex items-center justify-center mt-2">
             @if (Route::has('password.request'))
-                <a class="text-[16px] mt-4 mb-4 text-sm text-white hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
+                <a class="text-[12px] mt-2 mb-2 text-sm text-white hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
                     Solicitar restablecer la contraseña
                 </a>
             @endif
         </div>
         
-        <div class="flex items-center justify-center mt-4 bg-[#FF8300] text-white p-4 mb-4">
-            <button class="ms-3 text-[28px]">Enter</button>
+        <div class="flex items-center justify-center mt-2 bg-[#FF8300] text-white p-2 mb-2">
+            <button class="ms-3 text-[18px]">Enter</button>
         </div>
         
     </form>
