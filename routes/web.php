@@ -9,12 +9,12 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CoordinadorController;
 use App\Http\Controllers\RegistradorController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // User Authorization
-Route::get('/dashboard', function () {
+Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
 // Pages that only the admin can access
 // Features an example of how to utilize roles to make permission limitations in blade
 Route::middleware(['auth', 'role:admin'])->group(function(){ 
-    Route::get('/test', [UserDBController::class, 'index']);
+    Route::get('/test', [UserDBController::class, 'index'])->name('test');
 });
 
 require __DIR__.'/auth.php';

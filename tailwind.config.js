@@ -24,6 +24,7 @@ export default {
                 orange: "#FF8300",
                 black_transp: "rgba(0, 0, 0, 0.5)",
                 primary: "#263652", // A bit bluer than bg-gray-800
+                white_dull: "#E2E8F0", //slate-200
             },
         },
     },
