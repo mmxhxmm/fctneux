@@ -1,4 +1,4 @@
-<x-app-layout class="font-roboto">
+<x-app-layout>
     <div class="w-full h-screen flex flex-col bg-white">
         <!-- Background Image Section -->
         <div class="relative flex-grow-0 flex-shrink-0" style="background-image: url('../images/fct-bg.png'); background-size: cover; background-position: center; height: 50vh;">
