@@ -18,14 +18,9 @@
         <div style="background-image: url('../images/op1.png'); background-size: cover; background-position: center;"
         class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
             <div class="flex items-center justify-center">
-
                 <p class="font-roboto text-[45px] text-white text-bold mr-4 font-extrabold">¡Bienvenido a </p>
-                    <img src="../images/CEAC-Logotipo-RGB-Blanco.png" class="w-[150px] flex items-center justify-center">
+                    <img src="{{ asset('images/CEACFP_Logo.png') }}" class="w-[150px] flex items-center justify-center">
                 <p class="font-roboto text-white text-bold text-xl text-[45px] font-extrabold">!</p>                
-                
-                <!-- <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>  -->
             </div> 
             <div class="flex items-center justify-center mt-[-30px]">
 

@@ -18,7 +18,7 @@
         </div>
         <p>&copy;2025 CEAC FP. Todos los derechos reservados.<p>
     </div>
-    <div class="flex justify-end items-end">
+    <div class="flex justify-end items-end mt-[-10px]">
         <a href="{{ route('dashboard') }}" class="inline-block pb-2 px-4" title="Ir a la página de Dashboard">
             <p class="text-2xl text-white font-hammersmith">FCT<span class="text-orange">Nexus</span></p>
         </a>
