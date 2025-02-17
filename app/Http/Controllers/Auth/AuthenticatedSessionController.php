@@ -30,14 +30,6 @@ class AuthenticatedSessionController extends Controller
 
         $url = "dashboard";
 
-        if ($request->user()->role == "admin") {
-            $url = "admin/dashboard";
-        } else if($request->user()->role == "coordinador"){
-            $url = "coordinador/dashboard";
-        } else if($request->user()->role == "registrador"){
-            $url = "registrador/dashboard";
-        } // Look into this! Does this actually lock it out
-
         return redirect()->intended($url);
     }
 
