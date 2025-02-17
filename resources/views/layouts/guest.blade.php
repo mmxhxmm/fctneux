@@ -15,12 +15,12 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="antialiased">
-        <div style="background-image: url('../images/op1.png'); background-size: cover; background-position: center;"
-        class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
+        <div style="background-image: url('../images/op2.png'); background-size: cover; background-position: center;"
+        class="min-h-screen object-position flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
             <div class="flex items-center justify-center">
 
-                <p class="font-roboto text-[45px] text-white text-bold mr-4 font-extrabold">¡Bienvenido a </p>
-                    <img src="../images/CEAC-Logotipo-RGB-Blanco.png" class="w-[150px] flex items-center justify-center">
+                <p class="font-roboto text-[30px] text-white text-bold mr-4 font-extrabold">¡Bienvenido a </p>
+                    <img src="../images/CEAC-Logotipo-RGB-Blanco.png" class="w-[100px] mr-1 flex items-center justify-center">
                 <p class="font-roboto text-white text-bold text-xl text-[45px] font-extrabold">!</p>                
                 
                 <!-- <a href="/">
@@ -29,12 +29,12 @@
             </div> 
             <div class="flex items-center justify-center mt-[-30px]">
 
-                <p class="text-[150px] text-white font-hammersmith">FCT</p>
-                <p class="text-[150px] text-[#FF8300] font-hammersmith">Nexus</p>
+                <p class="text-[100px] text-white font-hammersmith">FCT</p>
+                <p class="text-[100px] text-[#FF8300] font-hammersmith">Nexus</p>
 
             </div>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-black bg-opacity-60 dark:bg-gray-800 
+            <div class="w-[400px] h-[250px] sm:max-w-md mt-6 px-6 py-4 bg-black bg-opacity-60 dark:bg-gray-800 
             shadow-md overflow-hidden"> <!--clip-path-[polygon(0%_0%,100%_0%,100%_80%,0%_100%)] -->
                 {{ $slot }}
             </div>
