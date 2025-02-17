@@ -38,8 +38,17 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            {{ __('Perfil') }}
                         </x-dropdown-link>
+
+                        @if (Auth::user()->role == 'admin')
+                        <x-dropdown-link :href="route('profile.edit')">
+                            <div class="flex items-center">
+                                <img src="{{ asset('images/icons/icons8-people-96.png') }}" alt="People Icon" width="20px" class="mr-2 invert brightness-0">
+                                {{ __('Ver todos Perfiles') }}
+                            </div>
+                        </x-dropdown-link>
+                        @endif
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
