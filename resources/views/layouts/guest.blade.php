@@ -34,7 +34,7 @@
 
             </div>
 
-            <div class="w-[400px] h-[250px] sm:max-w-md mt-6 px-6 py-4 bg-black bg-opacity-60 dark:bg-gray-800 
+            <div class="w-[400px] h-[275px] sm:max-w-md mt-6 px-6 py-4 bg-black bg-opacity-60 dark:bg-gray-800 
             shadow-md overflow-hidden"> <!--clip-path-[polygon(0%_0%,100%_0%,100%_80%,0%_100%)] -->
                 {{ $slot }}
             </div>
