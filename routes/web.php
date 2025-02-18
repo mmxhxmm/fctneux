@@ -31,4 +31,8 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::get('/test', [UserDBController::class, 'index'])->name('test');
 });
 
+// ADMIN ROLE INSIDE BLADE
+// @if (Auth::user()->role == 'admin')
+// {{ __("You are a :role", ['role' => Auth::user()->role]) }}
+
 require __DIR__.'/auth.php';
