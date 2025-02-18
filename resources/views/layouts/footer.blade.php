@@ -1,4 +1,4 @@
-<footer class="bg-primary h-17 w-full">
+<footer class="bg-primary w-full">
     <div class="pt-8 text-center text-white text-sm font-roboto_condensed">
         <div class="flex justify-center gap-x-3 mb-3">
             <a href="" class="flex items-center justify-center gap-x-1 hover:underline focus:outline-none focus:underline" title="Ir a la página de Empresa">
