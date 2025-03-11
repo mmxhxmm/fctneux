@@ -8,10 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CoordinadorController;
 use App\Http\Controllers\RegistradorController;
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+use App\Http\Controllers\EmpresaController;
 
 // User Authorization
 Route::get('/', function () {
@@ -23,16 +20,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Forms
+    Route::get('/empresa', [EmpresaController::class, 'index']);
+    Route::post('/store-empresa', [EmpresaController::class, 'store']);
 });
 
 // Pages that only the admin can access
-// Features an example of how to utilize roles to make permission limitations in blade
+// Features an example of how to utilize roles to make permission limitations in blade -> Replace this later
 Route::middleware(['auth', 'role:admin'])->group(function(){ 
     Route::get('/test', [UserDBController::class, 'index'])->name('test');
 });
-
-// ADMIN ROLE INSIDE BLADE
-// @if (Auth::user()->role == 'admin')
-// {{ __("You are a :role", ['role' => Auth::user()->role]) }}
 
 require __DIR__.'/auth.php';

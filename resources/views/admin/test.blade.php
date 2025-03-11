@@ -15,6 +15,12 @@
                     @else
                         <p>No users found.</p>
                     @endif
+                    <?php
+                        $empresa = App\Models\Empresa::where('cif', '123')->first();   
+                        $responsableConvenio = $empresa->responsablesConvenio;
+                        echo '<span class="font-bold">Empresa:</span><br>' . $empresa;
+                        echo '<span class="font-bold">ResponsableConvenio:</span><br>' . $responsableConvenio;
+                    ?>
                 </div>
             </div>
         </div>

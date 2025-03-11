@@ -19,18 +19,18 @@ class EmpresaFactory extends Factory
         return [
             'cif' => $this->faker->unique()->regexify('[A-Z]{1}[0-9]{8}'),
             'nombre' => $this->faker->company,
-            'colaboracion' => $this->faker->randomElement(['Prospección', 'Colaboradora']),
+            'colaboracion' => $this->faker->randomElement(['Prospección', 'Colaboración']),
             'gestiones' => $this->faker->randomElement([
                 'P - Primer contacto', 'P - Pendente respuesta', 'P - Volver a contactar', 'P - No acogen alumnado', 
                 'E - Pendiente firma Convenio', 'E - Plazas conseguidas', 'E - Solicitud plazas'
             ]),
-            'modalidad' => $this->faker->randomElement(['Presencial', 'Remoto', 'B-Learning', 'Semipresencial']),
+            'modalidad' => $this->faker->randomElement(['Presencial', 'Remoto', 'Semipresencial']),
             'oferta_laboral' => $this->faker->randomElement(['Si', 'No']),
             'entidad' => $this->faker->company,
+            'ubicacion' => $this->faker->randomElement(['Cataluña', 'Fuera de Cataluña', 'Fuera de España']),
+            'municipio' => $this->faker->city,
             'direccion' => $this->faker->address,
             'codigoPostal' => $this->faker->randomNumber(5, true),
-            'municipio' => $this->faker->city,
-            'poblacion' => $this->faker->city,
             'familiaPersonal' => $this->faker->randomElement(['Sanidad', 'Informática', 'Hostelería', 'Marketing']),
             'observaciones' => $this->faker->paragraph,
             'created_at' => now(),

@@ -14,16 +14,16 @@ return new class extends Migration
         Schema::create('empresas', function (Blueprint $table) {
             $table->id();
             $table->string('cif');
-            $table->string('nombre')->nullable();
+            $table->string('nombre');
             $table->string('colaboracion')->nullable();
             $table->string('gestiones')->nullable();
             $table->string('modalidad')->nullable();
             $table->string('oferta_laboral')->nullable();
             $table->string('entidad')->nullable();
+            $table->string('ubicacion')->nullable();
+            $table->string('municipio')->nullable();
             $table->string('direccion')->nullable();
             $table->integer('codigoPostal')->nullable();
-            $table->string('municipio')->nullable();
-            $table->string('poblacion')->nullable();
             $table->string('familiaPersonal')->nullable();
             $table->text('observaciones')->nullable();
             $table->timestamps();
@@ -31,9 +31,9 @@ return new class extends Migration
 
         Schema::create('responsables_convenio', function (Blueprint $table) {
             $table->id();
-            $table->string('dni')->nullable();
-            $table->string('nombre')->nullable();
-            $table->string('apellido')->nullable();
+            $table->string('dni');
+            $table->string('nombre');
+            $table->string('apellido');
             $table->integer('telefono')->nullable();
             $table->string('email')->nullable();
             $table->string('empresa_cif'); // FK

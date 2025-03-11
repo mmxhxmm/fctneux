@@ -53,7 +53,7 @@ class Empresa extends Model
         'direccion',
         'codigoPostal',
         'municipio',
-        'poblacion',
+        'ubicacion',
         'familiaPersonal',
         'observaciones',
     ];
@@ -89,10 +89,10 @@ class Empresa extends Model
         'modalidad' => null,
         'oferta_laboral' => null,
         'entidad' => null,
+        'ubicacion' => null,
+        'municipio' => null,
         'direccion' => null,
         'codigoPostal' => null,
-        'municipio' => null,
-        'poblacion' => null,
         'familiaPersonal' => null,
         'observaciones' => null,
     ];
@@ -102,13 +102,13 @@ class Empresa extends Model
      *
      * @param mixed $value
      */
-    public function setCodigoPostalAttribute($value)
-    {
-        if ($value === null || strlen((string)$value) !== 5) {
-            throw new \InvalidArgumentException('El código postal debe tener exactamente 5 dígitos.');
-        }
-        $this->attributes['codigoPostal'] = $value;
-    }
+    // public function setCodigoPostalAttribute($value)
+    // {
+    //     if ($value === null || strlen((string)$value) !== 5) {
+    //         throw new \InvalidArgumentException('El código postal debe tener exactamente 5 dígitos.');
+    //     }
+    //     $this->attributes['codigoPostal'] = $value;
+    // }
 
     /**
      * Accessor for codigoPostal to ensure it is always returned as a 5-digit string.
@@ -116,13 +116,13 @@ class Empresa extends Model
      * @param mixed $value
      * @return string|null
      */
-    public function getCodigoPostalAttribute($value)
-    {
-        if ($value === null) {
-            return null;
-        }
-        return str_pad($value, 5, '0', STR_PAD_LEFT); // Ensure 5 digits with leading zeros
-    }
+    // public function getCodigoPostalAttribute($value)
+    // {
+    //     if ($value === null) {
+    //         return null;
+    //     }
+    //     return str_pad($value, 5, '0', STR_PAD_LEFT); // Ensure 5 digits with leading zeros
+    // }
 
     /**
      * Define the relationship with ResponsableConvenio.
@@ -131,6 +131,6 @@ class Empresa extends Model
      */
     public function responsablesConvenio()
     {
-        return $this->hasMany(ResponsableConvenio::class, 'empresa_cif', 'cif');
+        return $this->hasOne(ResponsableConvenio::class, 'empresa_cif', 'cif');
     }
 }
