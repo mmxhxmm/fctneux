@@ -68,55 +68,6 @@
             clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
         }
 
-        /* Fade-in animation for FCT Nexus */
-        .fade-in {
-            animation: fadeIn 2s ease-in;
-        }
-
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
-
-        /* Slide-in from left for the 'Acceso a Plataforma' div */
-        .animate-left {
-            opacity: 0;
-            transform: translateX(-100%);
-            animation: slideInLeft 2s forwards;
-        }
-
-        @keyframes slideInLeft {
-            0% {
-                opacity: 0;
-                transform: translateX(-100%);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Slide-in from right for the 'Acceso al Registro' div */
-        .animate-right {
-            opacity: 0;
-            transform: translateX(100%);
-            animation: slideInRight 2s forwards;
-        }
-
-        @keyframes slideInRight {
-            0% {
-                opacity: 0;
-                transform: translateX(100%);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
 
         /* More inclined */
         /* .clip-diagonal {
