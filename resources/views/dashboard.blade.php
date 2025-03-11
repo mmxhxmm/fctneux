@@ -28,7 +28,7 @@
                         </div>
                         <!-- Arrow cont -->
                         <div class="absolute pr-6 top-[15.5em] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                            <div class="w-[4.8rem] h-[4.3rem] rounded-full bg-orange flex items-center justify-center">
+                            <div class="w-[4.3rem] h-[4.3rem] rounded-full bg-orange flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="-1 0 25 24" class="fill-white_dull scale-x-[-1]">
                                 <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/>
                             </svg>
@@ -48,7 +48,7 @@
                     </div>
                     <!-- Arrow cont -->
                         <div class="absolute ml-3 top-[15.5em] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                            <div class="w-[4.8rem] h-[4.3rem] rounded-full bg-blue flex items-center justify-center">
+                            <div class="w-[4.3rem] h-[4.3rem] rounded-full bg-blue flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="-1 0 25 24" class="fill-white_dull">
                                 <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/>
                             </svg>
