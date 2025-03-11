@@ -1,12 +1,12 @@
 <x-app-layout>
-    <div class="min-h-screen w-full flex flex-col grid-rows-3 bg-white">
+    <div class="w-full flex flex-col grid-rows-3 bg-white">
         <!-- Background Image Section -->
         <div class="relative h-80 flex-grow-0 flex-shrink-0" style="background-image: url('../images/fct-bg.png'); background-size: cover; background-position: center;">
             <!-- Opacity overlay -->
             <div class="absolute inset-0 bg-primary opacity-40"></div>
             
             <!-- Main Heading -->
-            <div class="w-full h-full flex flex-col items-center justify-center relative px-4">
+            <div class="w-full h-full flex flex-col items-center justify-center relative px-4 fade-in">
                 <div class="text-center">
                     <p class="text-one font-hammersmith text-white" style="text-shadow: 2px 4px 2px rgba(0,0,0,0.40)">
                         FCT<span class="text-orange">Nexus</span>
@@ -17,9 +17,9 @@
 
         <!-- Buttons Section -->
         <div class="w-full relative mt-12 mb-14 sm:h-[20.2em] flex flex-col sm:flex-row items-start justify-center">
-            <!-- First Button -->
-            <div class="relative w-full h-[15em] sm:h-full">
-                <a href="{{ route('test') }}">
+            <!-- First Button (Acceso a Plataforma) -->
+            <div class="relative w-full h-[15em] sm:h-full animate-left">
+                <a href="{{ route('empresa-index') }}">
                     <button class="w-full h-full shadow-lg clip-diagonal hover:opacity-90 " style="background-image: url('../images/empresa-bg.png'); background-size: cover; background-position: center;">
                         <div class="text-white mr-6 text-bold h-[12em]">    
                             <div class="absolute inset-0 bg-blue opacity-70"></div>
@@ -37,10 +37,10 @@
                 </a>
             </div>
 
-            <!-- Second Button -->
-            <div class="relative w-full h-[15em] sm:h-full">
-                <a href="{{ route('dashboard') }}">
-                    <button class="w-full h-full shadow-lg clip-diagonal-reverse hover:opacity-90" style="background-image: url('../images/tareas-bg.png'); background-size: cover; background-position: center;">
+            <!-- Second Button (Acceso al Registro) -->
+            <div class="relative w-full h-[15em] sm:h-full animate-right">
+                <a href="{{ route('tareas-index') }}">
+                    <button class="w-full h-full shadow-lg clip-diagonal-reverse hover:opacity-90" style="background-image: url('../images/tareashead.png'); background-size: cover; background-position: center;">
                     <div class="text-white ml-6 text-bold h-[12em]">
                             <div class="absolute inset-0 bg-orange opacity-70"></div>
                             <p class="text-xl relative text-center font-roboto_condensed_bold">Acceso al Registro<br>de</p>
@@ -67,7 +67,57 @@
         .clip-diagonal-reverse {
             clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
         }
-        
+
+        /* Fade-in animation for FCT Nexus */
+        .fade-in {
+            animation: fadeIn 2s ease-in;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Slide-in from left for the 'Acceso a Plataforma' div */
+        .animate-left {
+            opacity: 0;
+            transform: translateX(-100%);
+            animation: slideInLeft 2s forwards;
+        }
+
+        @keyframes slideInLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Slide-in from right for the 'Acceso al Registro' div */
+        .animate-right {
+            opacity: 0;
+            transform: translateX(100%);
+            animation: slideInRight 2s forwards;
+        }
+
+        @keyframes slideInRight {
+            0% {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
         /* More inclined */
         /* .clip-diagonal {
             clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 0% 100%);
