@@ -1,7 +1,9 @@
 <<Welcome to the Cheatsheet>>
 (We will delete this later, don't you worry Maham)
 
-git fetch origin -> Update branches, hacer antes que comitear
+HACER ANTES QUE COMITEAR A DEV:
+git fetch origin -> Update branches
+git merge dev -> Merge dev a tu branch
 
 
 [ADMIN ROLE INSIDE BLADE]
