@@ -23,9 +23,9 @@ return new class extends Migration
 
         Schema::create('personas_contacto', function (Blueprint $table) {
             $table->id();
-            $table->string('dni')->nullable();
-            $table->string('nombre')->nullable();
-            $table->string('apellido')->nullable();
+            $table->string('dni');
+            $table->string('nombre');
+            $table->string('apellido');
             $table->integer('telefono')->nullable();
             $table->string('email')->nullable();
             $table->string('id_centrosTrabajo'); // FK

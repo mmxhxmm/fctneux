@@ -30,9 +30,9 @@ return new class extends Migration
 
         Schema::create('tutores_empresa', function (Blueprint $table) {
             $table->id();
-            $table->string('dni')->nullable();
-            $table->string('nombre')->nullable();
-            $table->string('apellido')->nullable();
+            $table->string('dni');
+            $table->string('nombre');
+            $table->string('apellido');
             $table->integer('telefono')->nullable();
             $table->string('email')->nullable();
             $table->integer('id_practica'); // FK
@@ -41,9 +41,9 @@ return new class extends Migration
 
         Schema::create('tutores', function (Blueprint $table) {
             $table->id();
-            $table->string('dni')->nullable();
-            $table->string('nombre')->nullable();
-            $table->string('apellido')->nullable();
+            $table->string('dni');
+            $table->string('nombre');
+            $table->string('apellido');
             $table->integer('telefono')->nullable();
             $table->string('email')->nullable();
             $table->integer('id_practica'); // FK

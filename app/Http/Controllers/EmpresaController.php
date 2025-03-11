@@ -173,10 +173,10 @@ class EmpresaController extends Controller
     
             if ($action === 'save_draft') {
                 // TODO: Ir a lista de empresas con mensaje
-                return redirect('/empresa#bottom')->with('status', 'La empresa se ha añadido corectamente');
+                return redirect('/empresa-form#bottom')->with('status', 'La empresa se ha añadido corectamente');
             } elseif ($action === 'next_page') {
                 // TODO: Ir a seguiente página
-                return redirect('/empresa#bottom')->with('status', 'La empresa se ha añadido corectamente');
+                return redirect('/empresa-form#bottom')->with('status', 'La empresa se ha añadido corectamente');
             }
         }
     }

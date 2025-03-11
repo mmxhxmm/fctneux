@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-primary border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" class="bg-primary border-b border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
 
@@ -25,7 +25,7 @@
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-primary hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:bg-primary hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
@@ -42,7 +42,7 @@
                         </x-dropdown-link>
 
                         @if (Auth::user()->role == 'admin')
-                        <x-dropdown-link :href="route('profile.edit')">
+                        <x-dropdown-link :href="route('personal-activo')">
                             <div class="flex items-center">
                                 <img src="{{ asset('images/icons/icons8-people-96.png') }}" alt="People Icon" width="20px" class="mr-2 invert brightness-0">
                                 {{ __('Ver todos Perfiles') }}

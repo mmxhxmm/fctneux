@@ -22,8 +22,37 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Forms
-    Route::get('/empresa', [EmpresaController::class, 'index']);
+    Route::get('/empresa-form', [EmpresaController::class, 'index']);
     Route::post('/store-empresa', [EmpresaController::class, 'store']);
+
+    // Empresa
+    Route::get('/empresa-index', function () {
+        return view('empresa-index');
+    })->middleware(['auth', 'verified'])->name('empresa-index');
+    
+    // Tareas
+    Route::get('/tareas-index', function () {
+        return view('tareas-index');
+    })->middleware(['auth', 'verified'])->name('tareas-index');
+    Route::get('/tareas-historial', function () {
+        return view('tareas-historial');
+    })->middleware(['auth', 'verified'])->name('tareas-historial');
+    Route::get('/datos-tareas', function () {
+        return view('form-datos-tareas');
+    })->middleware(['auth', 'verified'])->name('form-datos-tareas');
+    
+    // Personal
+    Route::get('/personal-activo', function () {
+        return view('personal-activo');
+    })->middleware(['auth', 'verified'])->name('personal-activo');
+    Route::get('/personal-suspendidos', function () {
+        return view('personal-suspendidos');
+    })->middleware(['auth', 'verified'])->name('personal-suspendidos');
+    Route::get('/datos-personal', function () {
+        return view('form-datos-personal');
+    })->middleware(['auth', 'verified'])->name('form-datos-personal');
+    
+    // Route::get('/empresa', [ProfileController::class, 'show'])->name('empresa');
 });
 
 // Pages that only the admin can access
