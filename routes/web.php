@@ -18,6 +18,15 @@ Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+Route::get('/error', function () {
+    return view('error');
+})->middleware(['auth', 'verified'])->name('error');
+
+Route::get('/usuario', function () {
+    return view('usuario');
+})->middleware(['auth', 'verified'])->name('usuario');
+
 // Pages that will run only after logging in
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

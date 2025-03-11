@@ -1,6 +1,6 @@
 <x-app-layout>
-    <div style="w-full background-color:gray; display:flex; justify-content: center; align-items: center; height: 80.8vh; margin: 0;">
-        <div style="background-color:white; width:60em; margin:10em 0">
+    <div style="w-full background-color:gray; display:flex; justify-content: center; align-items: center; margin: 0;">
+        <div style="background-color:white; width:60em; margin:5em 0">
             <div style="margin: 2em 5em">
                 <div style="padding:1em 5em">
                     <h1 class="text-xl font-bold mb-2">Users</h1>
