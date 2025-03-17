@@ -1,7 +1,7 @@
 <<Welcome to the Cheatsheet>>
 (We will delete this later, don't you worry Maham)
 
-HACER ANTES QUE COMITEAR A DEV:
+[HACER ANTES QUE COMITEAR A DEV]
 git fetch origin -> Update branches
 git merge dev -> Merge dev a tu branch
 git checkout dev -> Ir a dev + no olvidar Actualizarlo!

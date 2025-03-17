@@ -28,29 +28,29 @@ Route::middleware('auth')->group(function () {
     // Empresa
     Route::get('/empresa-index', function () {
         return view('empresa-index');
-    })->middleware(['auth', 'verified'])->name('empresa-index');
+    })->name('empresa-index');
     
     // Tareas
     Route::get('/tareas-index', function () {
         return view('tareas-index');
-    })->middleware(['auth', 'verified'])->name('tareas-index');
+    })->name('tareas-index');
     Route::get('/tareas-historial', function () {
         return view('tareas-historial');
-    })->middleware(['auth', 'verified'])->name('tareas-historial');
+    })->name('tareas-historial');
     Route::get('/datos-tareas', function () {
         return view('form-datos-tareas');
-    })->middleware(['auth', 'verified'])->name('form-datos-tareas');
+    })->name('form-datos-tareas');
     
     // Personal
     Route::get('/personal-activo', function () {
         return view('personal-activo');
-    })->middleware(['auth', 'verified'])->name('personal-activo');
+    })->name('personal-activo');
     Route::get('/personal-suspendidos', function () {
         return view('personal-suspendidos');
-    })->middleware(['auth', 'verified'])->name('personal-suspendidos');
+    })->name('personal-suspendidos');
     Route::get('/datos-personal', function () {
         return view('form-datos-personal');
-    })->middleware(['auth', 'verified'])->name('form-datos-personal');
+    })->name('form-datos-personal');
     
     // Route::get('/empresa', [ProfileController::class, 'show'])->name('empresa');
 });
