@@ -72,13 +72,13 @@
 
 
             <div class="w-full h-full flex flex-col  absolute px-4">
-                <div class="absolute left-0 top-[6em]">
+                <div class="absolute left-0 top-[6em] animate-left">
                     <a href="/" class="p-2 hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6"><<< Volver al inicio</a>
                     <!-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6">
                         {{ __('<<< Volver al inicio') }}
                     </x-nav-link> -->
                 </div>
-                <div class="absolute left-0 top-[10em]">
+                <div class="absolute left-0 top-[10em] animate-left2">
                     <button class="hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-blue w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0">
                        <a href="https://outlook.office.com/calendar/view/workweek" ><<< Ir al calendario</a> 
                     </button>
@@ -87,7 +87,7 @@
 
 
 
-                <div class="text-center justify-center mt-20">
+                <div class="text-center justify-center mt-20 fade-in">
                     <p class="text-white text-three " style="text-shadow: 2px 4px 2px rgba(0,0,0,0.40)">
                         Datos de <span class="text-two font-roboto_condensed_bold text-orange">Tareas</span>
                     </p>

@@ -28,7 +28,7 @@
                         </div>
                         <!-- Arrow cont -->
                         <div class="absolute pr-6 top-[15.5em] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                            <div class="w-[4.8rem] h-[4.3rem] rounded-full bg-orange flex items-center justify-center">
+                            <div class="w-[4.3rem] h-[4.3rem] rounded-full bg-orange flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="-1 0 25 24" class="fill-white_dull scale-x-[-1]">
                                 <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/>
                             </svg>
@@ -48,7 +48,7 @@
                     </div>
                     <!-- Arrow cont -->
                         <div class="absolute ml-3 top-[15.5em] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                            <div class="w-[4.8rem] h-[4.3rem] rounded-full bg-blue flex items-center justify-center">
+                            <div class="w-[4.3rem] h-[4.3rem] rounded-full bg-blue flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="-1 0 25 24" class="fill-white_dull">
                                 <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/>
                             </svg>
@@ -68,55 +68,6 @@
             clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
         }
 
-        /* Fade-in animation for FCT Nexus */
-        .fade-in {
-            animation: fadeIn 2s ease-in;
-        }
-
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
-
-        /* Slide-in from left for the 'Acceso a Plataforma' div */
-        .animate-left {
-            opacity: 0;
-            transform: translateX(-100%);
-            animation: slideInLeft 2s forwards;
-        }
-
-        @keyframes slideInLeft {
-            0% {
-                opacity: 0;
-                transform: translateX(-100%);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Slide-in from right for the 'Acceso al Registro' div */
-        .animate-right {
-            opacity: 0;
-            transform: translateX(100%);
-            animation: slideInRight 2s forwards;
-        }
-
-        @keyframes slideInRight {
-            0% {
-                opacity: 0;
-                transform: translateX(100%);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
 
         /* More inclined */
         /* .clip-diagonal {

@@ -124,52 +124,5 @@
 
 
     </div>
-        <style>
-         .fade-in {
-            animation: fadeIn 1s ease-in;
-        }
-
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
-
-        .animate-left {
-            opacity: 0;
-            transform: translateX(-100%);
-            animation: slideInLeft 1s forwards;
-        }
-
-        @keyframes slideInLeft {
-            0% {
-                opacity: 0;
-                transform: translateX(-100%);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .animate-left2 {
-            opacity: 0;
-            transform: translateX(-100%);
-            animation: slideInLeft 1.5s forwards;
-        }
-
-        @keyframes slideInLeft {
-            0% {
-                opacity: 0;
-                transform: translateX(-100%);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-    </style>
+      
 </x-app-layout>
