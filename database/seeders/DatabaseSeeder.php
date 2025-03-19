@@ -20,10 +20,8 @@ class DatabaseSeeder extends Seeder
             ]);
         });
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // Crear 10 usuarios aleatorios
+        User::factory()->count(10)->create();
         
         $this->call([
             UserSeeder::class,

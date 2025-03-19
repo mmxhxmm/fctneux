@@ -8,18 +8,19 @@
                         @foreach ($users as $key => $user)
                             <p>Name: {{ $user->name }}</p>
                             <p>Email: {{ $user->email }}</p>
+                            <p>Telefono: {{ $user->telefono }}</p>
                             <p>Role: {{ $user->role }}</p>
-                            <p>Password: {{ $user->password }}</p>
+                            <p>Situacion: {{ $user->situacion }}</p>
                             <p>----------------------------------------------</p>
                         @endforeach
                     @else
                         <p>No users found.</p>
                     @endif
                     <?php
-                        $empresa = App\Models\Empresa::where('cif', '123')->first();   
-                        $responsableConvenio = $empresa->responsablesConvenio;
-                        echo '<span class="font-bold">Empresa:</span><br>' . $empresa;
-                        echo '<span class="font-bold">ResponsableConvenio:</span><br>' . $responsableConvenio;
+                        // $empresa = App\Models\Empresa::where('cif', '123')->first();   
+                        // $responsableConvenio = $empresa->responsablesConvenio;
+                        // echo '<span class="font-bold">Empresa:</span><br>' . $empresa;
+                        // echo '<span class="font-bold">ResponsableConvenio:</span><br>' . $responsableConvenio;
                     ?>
                 </div>
             </div>
