@@ -57,8 +57,8 @@ Route::middleware('auth')->group(function () {
 
 // Pages that only the admin can access
 // Features an example of how to utilize roles to make permission limitations in blade -> Replace this later
-Route::middleware(['auth', 'role:admin'])->group(function(){ 
-    Route::get('/test', [UserDBController::class, 'index'])->name('test');
+Route::middleware(['auth', 'role:Admin'])->group(function(){ 
+    Route::get('/personal-activo', [UserDBController::class, 'index'])->name('personal-activo');
 });
 
 require __DIR__.'/auth.php';

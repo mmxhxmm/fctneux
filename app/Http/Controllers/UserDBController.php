@@ -13,6 +13,6 @@ class UserDBController extends Controller
         $users = DB::select('select * from users');
 
         // Pass the users to the view
-        return view('admin/test', compact('users'));
+        return view('Admin/personal-activo', compact('users'));
     }
 }

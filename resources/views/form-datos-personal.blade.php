@@ -72,14 +72,13 @@
 
 
             <div class="w-full h-full flex flex-col  absolute px-4">
-                <div class="absolute left-0 top-[6em] animate-left">
+                <div class="absolute left-0 top-[10em] animate-left2">
                 <a href="/" class="p-2 hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6"><<< Volver al inicio</a>
                 </div>
-                <!-- <div class="absolute right-0 top-[10em]">
-                <x-nav-link :href="route('personal-suspendidos')" :active="request()->routeIs('personal-suspendidos')" class="justify-end px-4 rounded-tl-[0px] rounded-tl-[50px] rounded-bl-[50px] rounded-bl-[0px] px-4 bg-blue w-[200px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 flex justify-end items-center">
-                {{__('Usuarios suspendidos >>>') }} </a> 
-            </x-nav-link>
-            </div> -->
+                <div class="absolute left-0 top-[6em] animate-left">
+                <a href="/personal-activo" class="p-2 hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-blue w-[120px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6"><<< Usuarios</a>
+            </div>
+            </div>
 
 
 
@@ -98,9 +97,13 @@
                         <form action="" class="w-full max-w-3xl">
                             <!-- First Row -->
                             <div class="flex gap-6 mb-4 justify-center">
-                                <div class="flex-1">
+                                <!-- <div class="flex-1">
                                     <label for="nif-personal" class="block w-[200px] pb-3">NIF</label>
                                     <input type="text" name="nif-personal" maxlength="9" required class="ml-2 rounded-lg w-[70%] border-2 border-blue">
+                                </div> -->
+                                <div class="flex-1">
+                                    <label for="nombre-personal" class="block w-[200px] pb-3">Nombre</label>
+                                    <input type="text" name="nombre-personal" required class="ml-2 rounded-lg w-[70%] border-2 border-blue">
                                 </div>
                                 <div class="flex-1">
                                     <label for="nivel-personal" class="block w-[200px] pb-3">Nivel de acceso</label>
@@ -112,16 +115,13 @@
                             </div>
 
                             <!-- Second Row -->
-                            <div class="flex gap-6 mb-4 justify-center">
-                                <div class="flex-1">
-                                    <label for="nombre-personal" class="block w-[200px] pb-3">Nombre</label>
-                                    <input type="text" name="nombre-personal" required class="ml-2 rounded-lg w-[70%] border-2 border-blue">
-                                </div>
+                            <!-- <div class="flex gap-6 mb-4 justify-center">
+                                
                                 <div class="flex-1">
                                     <label for="apellido-personal" class="block w-[200px] pb-3">Apellido</label>
                                     <input type="text" name="apellido-personal" class="ml-2 rounded-lg w-[70%] border-2 border-blue">
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- Third Row -->
                             <div class="flex gap-6 mb-4 justify-center">
