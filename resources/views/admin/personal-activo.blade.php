@@ -106,7 +106,7 @@
                         <p class="text-semibold m-4"><b>Municipio: </b>{{ $user->municipio }}</p>
                         <p class="text-semibold m-4">
                                     <b>Role: </b>
-                                    <span class="{{ $user->role == 'Admin' ? 'text-orange' : ($user->role == 'Coordinador' ? 'text-blue' : 'text-black') }}">
+                                    <span class="{{ $user->role == 'admin' ? 'text-orange' : ($user->role == 'coordinador' ? 'text-blue' : 'text-black') }}">
                                         {{ $user->role }}
                                     </span>
                                 </p>
@@ -137,7 +137,7 @@
                                 <p class="text-semibold m-4"><b>Municipio: </b>{{ $user->municipio }}</p>
                                 <p class="text-semibold m-4">
                                     <b>Role: </b>
-                                    <span class="{{ $user->role == 'Admin' ? 'text-orange' : ($user->role == 'Coordinador' ? 'text-blue' : 'text-black') }}">
+                                    <span class="{{ $user->role == 'admin' ? 'text-orange' : ($user->role == 'coordinador' ? 'text-blue' : 'text-black') }}">
                                         {{ $user->role }}
                                     </span>
                                 </p>

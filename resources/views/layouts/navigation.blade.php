@@ -41,7 +41,7 @@
                             {{ __('Perfil') }}
                         </x-dropdown-link>
 
-                        @if (Auth::user()->role == 'Admin')
+                        @if (Auth::user()->role == 'admin')
                         <x-dropdown-link :href="route('personal-activo')">
                             <div class="flex items-center">
                                 <img src="{{ asset('images/icons/icons8-people-96.png') }}" alt="People Icon" width="20px" class="mr-2 invert brightness-0">
