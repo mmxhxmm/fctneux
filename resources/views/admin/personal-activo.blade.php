@@ -82,7 +82,7 @@
 
                 <div class="text-center justify-center mt-24 fade-in">
                     <p class="text-white text-three " style="text-shadow: 2px 4px 2px rgba(0,0,0,0.40)">
-                        Personal <span class="text-three font-roboto_condensed_bold text-orange">Activo</span>
+                    Usuarios <span class="text-three font-roboto_condensed_bold text-orange"></span>
                     </p>
                 </div>
             </div>
