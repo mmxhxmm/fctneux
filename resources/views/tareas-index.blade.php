@@ -19,9 +19,9 @@
 
                 <!-- Eliminar button -->
                 <div class="w-[110px] h-10">
-                    <div class="bg-[#002f86] rounded-[100px] w-[110px] h-10 flex justify-center items-center">
+                    <!-- <div class="bg-[#002f86] rounded-[100px] w-[110px] h-10 flex justify-center items-center">
                         <button class="text-white font-roboto text-base font-bold">- Eliminar</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 

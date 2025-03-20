@@ -35,11 +35,11 @@
                 </div>
 
                 <!-- Barcelona / BCN Dropdown -->
-                <select class="bg-black_transp rounded-[100px] border-2 border-white w-[200px] h-[40px] flex items-center pl-4 pr-2 text-white font-roboto text-base font-medium">
+                <!-- <select class="bg-black_transp rounded-[100px] border-2 border-white w-[200px] h-[40px] flex items-center pl-4 pr-2 text-white font-roboto text-base font-medium">
                     <option value="barcelona">Barcelona / BCN</option>
                     <option value="madrid">Madrid / Mad</option>
                     <option value="valencia">Valencia / Val</option>
-                </select>
+                </select> -->
 
                 <!-- Search Section -->
                 <div class="relative">

@@ -18,9 +18,9 @@
 
                 <!-- Eliminar button -->
                 <div class="w-[110px] h-10">
-                    <div class="bg-[#002f86] rounded-[100px] w-[110px] h-10 flex justify-center items-center">
+                    <!-- <div class="bg-[#002f86] rounded-[100px] w-[110px] h-10 flex justify-center items-center">
                         <button class="text-white font-roboto text-base font-bold">- Eliminar</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -36,11 +36,58 @@
                     </div>
                 </div>
 
-                <!-- Barcelona / BCN Dropdown -->
+                <!-- Provincias Dropdown -->
                 <select class="bg-black_transp rounded-[100px] border-2 border-white w-[200px] h-[40px] flex items-center pl-4 pr-2 text-white font-roboto text-base font-medium">
-                    <option value="barcelona">Barcelona / BCN</option>
-                    <option value="madrid">Madrid / Mad</option>
-                    <option value="valencia">Valencia / Val</option>
+                    <option value="todos">Todos</option>
+                    <option value="alava">Álava</option>
+                    <option value="albacete">Albacete</option>
+                    <option value="alicante">Alicante</option>
+                    <option value="almeria">Almería</option>
+                    <option value="asturias">Asturias</option>
+                    <option value="avila">Ávila</option>
+                    <option value="badajoz">Badajoz</option>
+                    <option value="barcelona">Barcelona</option>
+                    <option value="burgos">Burgos</option>
+                    <option value="caceres">Cáceres</option>
+                    <option value="cadiz">Cádiz</option>
+                    <option value="cantabria">Cantabria</option>
+                    <option value="castellon">Castellón</option>
+                    <option value="ceuta">Ceuta</option>
+                    <option value="cordoba">Córdoba</option>
+                    <option value="cuenca">Cuenca</option>
+                    <option value="girona">Girona</option>
+                    <option value="granada">Granada</option>
+                    <option value="guadalajara">Guadalajara</option>
+                    <option value="girona">Girona</option>
+                    <option value="huelva">Huelva</option>
+                    <option value="huesca">Huesca</option>
+                    <option value="jaen">Jaén</option>
+                    <option value="la-coruna">La Coruña</option>
+                    <option value="la-rioja">La Rioja</option>
+                    <option value="las-palmas">Las Palmas</option>
+                    <option value="leon">León</option>
+                    <option value="lleida">Lleida</option>
+                    <option value="lugo">Lugo</option>
+                    <option value="madrid">Madrid</option>
+                    <option value="malaga">Málaga</option>
+                    <option value="melilla">Melilla</option>
+                    <option value="murcia">Murcia</option>
+                    <option value="navarra">Navarra</option>
+                    <option value="orense">Ourense</option>
+                    <option value="palencia">Palencia</option>
+                    <option value="pontevedra">Pontevedra</option>
+                    <option value="salamanca">Salamanca</option>
+                    <option value="segovia">Segovia</option>
+                    <option value="sevilla">Sevilla</option>
+                    <option value="soria">Soria</option>
+                    <option value="tarragona">Tarragona</option>
+                    <option value="teruel">Teruel</option>
+                    <option value="toledo">Toledo</option>
+                    <option value="valencia">Valencia</option>
+                    <option value="valladolid">Valladolid</option>
+                    <option value="vizcaya">Vizcaya</option>
+                    <option value="zamora">Zamora</option>
+                    <option value="zaragoza">Zaragoza</option>
                 </select>
 
                 <!-- Search Section -->
