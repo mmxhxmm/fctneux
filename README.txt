@@ -11,3 +11,10 @@ git merge [your_branch] -> Mergear tu branch a dev y resolver conflictos
 @if (Auth::user()->role == 'admin')
 OR
 {{ __("You are a :role", ['role' => Auth::user()->role]) }}
+
+[Example on how to add an Accesor in the Model]
+(-> Replace Image with the variable you want to change)
+(-> Use this to change the value of the variable to mayuscula for example)
+public function getImageAttribute($value) {
+    return '/storage/' . $value;
+}
