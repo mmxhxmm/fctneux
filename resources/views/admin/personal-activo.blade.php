@@ -39,19 +39,12 @@
                     </div> -->
 
                     <!-- Barcelona / BCN Dropdown -->
-                    <select class="bg-black_transp rounded-[100px] border-2 border-white w-[200px] h-[40px] flex items-center pl-4 pr-2 text-white font-roboto text-base font-medium" onchange="filterUsers()">
+                    <select id="filter_municipio" class="bg-black_transp rounded-[100px] border-2 border-white w-[200px] h-[40px] flex items-center pl-4 pr-2 text-white font-roboto text-base font-medium" onchange="filterUsers()">
                         <option value="all">Municipio</option>
                         <option value="barcelona">Barcelona / BCN</option>
                         <option value="madrid">Madrid / Mad</option>
                         <option value="valencia">Valencia / Val</option>
                     </select>
-
-                    <!-- Situación Dropdown -->
-                    <!-- <select class="bg-black_transp rounded-[100px] border-2 border-white w-[200px] h-[40px] flex items-center pl-4 pr-2 text-white font-roboto text-base font-medium" onchange="filterUsers()">
-                        <option value="all">Situación</option>
-                        <option value="alta">Alta</option>
-                        <option value="baja">Baja</option>
-                    </select> -->
 
                     <!-- Search Section -->
                     <div class="relative">
@@ -175,18 +168,13 @@
 
         // Function to filter users based on selected municipio and situacion
         function filterUsers() {
-            const selectedMunicipio = document.querySelector('select:nth-of-type(1)').value.toLowerCase();
-            const selectedSituacion = document.querySelector('select:nth-of-type(2)').value.toLowerCase();
+            const selectedMunicipio = document.querySelector('#filter_municipio').value.toLowerCase();
             const userCards = document.querySelectorAll('.user-card');
 
             userCards.forEach(card => {
                 const municipio = card.getAttribute('data-municipio');
-                const situacion = card.getAttribute('data-situacion');
                 
-                if (
-                    (selectedMunicipio === 'all' || municipio === selectedMunicipio) &&
-                    (selectedSituacion === 'all' || situacion === selectedSituacion)
-                ) {
+                if (selectedMunicipio === 'all' || municipio === selectedMunicipio) {
                     card.style.display = 'block';
                 } else {
                     card.style.display = 'none';

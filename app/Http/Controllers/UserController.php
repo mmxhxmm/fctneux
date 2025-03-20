@@ -11,8 +11,7 @@ class UserController extends Controller
     public function active()
     {
         // Fetch all users from the database
-        // $users = User::all()->where('situacion', 'alta');
-        $users = DB::select('select * from users where situacion like "alta"');
+        $users = User::all()->where('situacion', 'alta');
 
         // Pass the users to the view
         return view('admin/personal-activo', compact('users'));
@@ -21,8 +20,7 @@ class UserController extends Controller
     public function no_active()
     {
         // Fetch all users from the database
-        // $users = User::all()->where('situacion', 'baja');
-        $users = DB::select('select * from users where situacion like "baja"');
+        $users = User::all()->where('situacion', 'baja');
 
         // Pass the users to the view
         return view('admin/personal-no-activo', compact('users'));
