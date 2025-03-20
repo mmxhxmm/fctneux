@@ -30,6 +30,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/empresa-index', function () {
         return view('empresa-index');
     })->middleware(['auth', 'verified'])->name('empresa-index');
+
+    // Usuario
+    Route::get('/usuario', function () {
+        return view('usuario');
+    })->middleware(['auth', 'verified'])->name('usuario');
     
     // Tareas
     Route::get('/tareas-index', function () {
