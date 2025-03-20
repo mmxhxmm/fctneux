@@ -77,12 +77,12 @@
                     <a href="/" class="p-2 hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6"><<< Volver al inicio</a>
                 </div>
                 <div class="absolute right-0 top-[10em] animate-right">
-                    <a href="personal-no-activo" class="hover:text-white hover:border-none justify-end px-4 rounded-tl-[0px] rounded-tl-[50px] rounded-bl-[50px] rounded-bl-[0px] px-4 bg-blue w-[220px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 flex justify-end items-center">Usuarios no activos >>></a>
+                    <a href="personal-activo" class="hover:text-white hover:border-none justify-end px-4 rounded-tl-[0px] rounded-tl-[50px] rounded-bl-[50px] rounded-bl-[0px] px-4 bg-blue w-[220px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 flex justify-end items-center">Usuarios activos >>></a>
                 </div>
 
                 <div class="text-center justify-center mt-24 fade-in">
                     <p class="text-white text-three " style="text-shadow: 2px 4px 2px rgba(0,0,0,0.40)">
-                        Personal <span class="text-three font-roboto_condensed_bold text-orange">Activo</span>
+                        Personal <span class="text-three font-roboto_condensed_bold text-orange">No Activo</span>
                     </p>
                 </div>
             </div>

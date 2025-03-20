@@ -144,8 +144,8 @@
                                 <div class="flex-1">
                                     <label for="situacion-personal" class="block w-[200px] pb-3">Situación</label>
                                     <select name="situacion-personal" id="situacion-personal" class="ml-2 rounded-lg w-auto mb-4 border-2 border-blue">
-                                        <option value="Alta">Alta</option>
-                                        <option value="Baja">Baja</option>
+                                        <option value="alta">Alta</option>
+                                        <option value="baja">Baja</option>
                                     </select>
                                 </div>
                             </div>
