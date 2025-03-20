@@ -10,9 +10,7 @@
         
         <section class="absolute md:left-[22%] md:top-[180px]">
             <div class="bg-[#ff8300] rounded-[5px] shadow-xl px-6 py-2">
-                <div class="text-white text-center font-['Roboto-Bold',_sans-serif] text-[20px] font-bold">
-                    ALEX MIKEILA
-                </div>
+                <div class="text-white text-center font-['Roboto-Bold',_sans-serif] text-[20px] font-bold"><!-- Aqui el nombre del usuario --></div>
             </div>
         </section>
 
@@ -23,11 +21,11 @@
                     <div class="bg-[#002f86] text-white p-8 sm:w-[60%] md:w-[40%] h-[360px]">
                         <div class="flex-col items-center">
                             <h2 class="text-2xl font-bold mt-7 mb-20">USUARIO:</h2>
-                            <p class="mt-2">Nivel de acceso: Registrador</p>
-                            <p class="mt-2">Provincia: Barcelona</p>
-                            <p class="mt-2">Telefono: 999999999</p>
-                            <p class="mt-2">correo en uso: Alex@gmail.com</p>
-                            <p class="mt-2">Situación: Alta</p>
+                            <p class="mt-2">Nivel de acceso: </p>
+                            <p class="mt-2">Provincia: </p>
+                            <p class="mt-2">Telefono: </p>
+                            <p class="mt-2">correo en uso: </p>
+                            <p class="mt-2">Situación: </p>
                         </div>
                     </div>
                     
@@ -61,27 +59,27 @@ document.documentElement.addEventListener("click", function () {
                         <ul class="mt-10 space-y-4">
                             <li class="flex items-center text-[#ff8300] font-bold">
                                 <div class="w-8 h-8 flex items-center justify-center bg-[#ff8300] text-white rounded-full text-xl">!</div>
-                                <span class="ml-3">Ejemplo de tarea pendiente.</span>
+                                <span class="ml-3"> <!--Aqui la tarea--> </span>
                             </li>
                             <li class="flex items-center text-[#ff8300] font-bold">
                                 <div class="w-8 h-8 flex items-center justify-center bg-[#ff8300] text-white rounded-full text-xl">!</div>
-                                <span class="ml-3">Ejemplo de tarea pendiente.</span>
+                                <span class="ml-3"> <!--Aqui la tarea--> </span>
                             </li>
                             <li class="flex items-center text-[#ff8300] font-bold">
                                 <div class="w-8 h-8 flex items-center justify-center bg-[#ff8300] text-white rounded-full text-xl">!</div>
-                                <span class="ml-3">Ejemplo de tarea pendiente.</span>
+                                <span class="ml-3"> <!--Aqui la tarea--> </span>
                             </li>
                             <li class="flex items-center text-[#ff8300] font-bold">
                                 <div class="w-8 h-8 flex items-center justify-center bg-[#ff8300] text-white rounded-full text-xl">!</div>
-                                <span class="ml-3">Ejemplo de tarea pendiente.</span>
+                                <span class="ml-3"> <!--Aqui la tarea--> </span>
                             </li>
                             <li class="flex items-center text-[#ff8300] font-bold hidden peer-checked:block">
                                 <div class="w-8 h-8 flex items-center justify-center bg-[#ff8300] text-white rounded-full text-xl">!</div>
-                                <span class="ml-3">Ejemplo de tarea pendiente.</span>
+                                <span class="ml-3"> <!--Aqui la tarea--> </span>
                             </li>
                             <li class="flex items-center text-[#ff8300] font-bold hidden peer-checked:block">
                                 <div class="w-8 h-8 flex items-center justify-center bg-[#ff8300] text-white rounded-full text-xl">!</div>
-                                <span class="ml-3">Ejemplo de tarea pendiente.</span>
+                                <span class="ml-3"> <!--Aqui la tarea--> </span>
                             </li>
                         </ul>
                         <div class="flex justify-center mt-[8%] mb-[-10px]">
