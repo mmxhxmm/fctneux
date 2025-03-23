@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('colaboracion')->nullable();
             $table->string('gestiones')->nullable();
             $table->string('modalidad')->nullable();
-            $table->string('oferta_laboral')->nullable();
+            $table->string('ofertaLaboral')->nullable();
             $table->string('entidad')->nullable();
             $table->string('ubicacion')->nullable();
             $table->string('municipio')->nullable();

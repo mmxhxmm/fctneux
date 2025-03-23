@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Empresa extends Model
 {
@@ -48,7 +49,7 @@ class Empresa extends Model
         'colaboracion',
         'gestiones',
         'modalidad',
-        'oferta_laboral',
+        'ofertaLaboral',
         'entidad',
         'direccion',
         'codigoPostal',
@@ -87,7 +88,7 @@ class Empresa extends Model
         'colaboracion' => null,
         'gestiones' => null,
         'modalidad' => null,
-        'oferta_laboral' => null,
+        'ofertaLaboral' => null,
         'entidad' => null,
         'ubicacion' => null,
         'municipio' => null,
@@ -132,5 +133,83 @@ class Empresa extends Model
     public function responsablesConvenio()
     {
         return $this->hasOne(ResponsableConvenio::class, 'empresa_cif', 'cif');
+    }
+
+    public function getColaboracionAttribute($value) {
+        return $value === 'prospeccion' ? 'Prospección' : 'Colaboración';
+    }
+
+    public function getModalidadAttribute($value) {
+        switch ($value) {
+            case 'presencial':
+                return 'Presencial';
+            case 'remoto':
+                return 'Remoto';
+            case 'semipresencial':
+                return 'Semipresencial';
+            default:
+                return $value;
+        }
+    }
+
+    public function getGestionesAttribute($value) {
+        switch ($this->colaboracion) {
+            case 'Prospección':
+                switch ($value) {
+                    case 'primer_contacto':
+                        return 'P - Primer contacto';
+                    case 'pendente_respuesta':
+                        return 'P - Pendente respuesta';
+                    case 'volver_contactar':
+                        return 'P - Volver a contactar';
+                    case 'no_acogen_alumnado':
+                        return 'P - No acogen alumnado';
+                    default:
+                        return $value;
+                }
+            case 'Colaboración':
+                switch ($value) {
+                    case 'pendiente_firma_convenio':
+                        return 'E - Pendiente firma Convenio';
+                    case 'plazas_conseguidas':
+                        return 'E - Plazas conseguidas';
+                    case 'solicitud_plazas':
+                        return 'E - Solicitud plazas';
+                    default:
+                        return $value;
+                }
+        }
+    }
+
+    public function getOfertaLaboralAttribute($value) {
+        return $value === 'si' ? 'Si' : 'No';
+    }
+
+    public function getUbicacionAttribute($value) {
+        switch ($value) {
+            case 'catalunya':
+                return 'Cataluña';
+            case 'fueraDeCatalunya':
+                return 'Fuera de Cataluña';
+            case 'fueraDeEspanya':
+                return 'Fuera de España';
+            default:
+                return $value;
+        }
+    }
+
+    public function getFamiliaPersonalAttribute($value) {
+        switch ($value) {
+            case 'sanidad':
+                return 'Sanidad';
+            case 'informatica':
+                return 'Informática';
+            case 'hostelería':
+                return 'Hostelería';
+            case 'marketing':
+                return 'Marketing';
+            default:
+                return $value;
+        }
     }
 }

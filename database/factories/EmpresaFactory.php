@@ -25,7 +25,7 @@ class EmpresaFactory extends Factory
                 'E - Pendiente firma Convenio', 'E - Plazas conseguidas', 'E - Solicitud plazas'
             ]),
             'modalidad' => $this->faker->randomElement(['Presencial', 'Remoto', 'Semipresencial']),
-            'oferta_laboral' => $this->faker->randomElement(['Si', 'No']),
+            'ofertaLaboral' => $this->faker->randomElement(['Si', 'No']),
             'entidad' => $this->faker->company,
             'ubicacion' => $this->faker->randomElement(['Cataluña', 'Fuera de Cataluña', 'Fuera de España']),
             'municipio' => $this->faker->city,

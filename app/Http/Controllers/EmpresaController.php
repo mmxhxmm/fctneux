@@ -10,99 +10,8 @@ class EmpresaController extends Controller
 {
     public function index()
     {
-        return view('pages/form');
-    }
-
-    // Helper function to transform select fields
-    private function transformSelect($field, $value, $colaboracion = null) {
-        switch ($field) {
-            case 'colaboracion':
-                return $value === 'prospeccion' ? 'Prospección' : 'Colaboración';
-            case 'gestiones':
-                switch ($colaboracion) {
-                    case 'prospeccion':
-                        switch ($value) {
-                            case 'primer_contacto':
-                                return 'P - Primer contacto';
-                            case 'pendente_respuesta':
-                                return 'P - Pendente respuesta';
-                            case 'volver_contactar':
-                                return 'P - Volver a contactar';
-                            case 'no_acogen_alumnado':
-                                return 'P - No acogen alumnado';
-                            default:
-                                return $value;
-                        }
-                    case 'colaboracion':
-                        switch ($value) {
-                            case 'pendiente_firma_convenio':
-                                return 'E - Pendiente firma Convenio';
-                            case 'plazas_conseguidas':
-                                return 'E - Plazas conseguidas';
-                            case 'solicitud_plazas':
-                                return 'E - Solicitud plazas';
-                            default:
-                                return $value;
-                        }
-                }
-                switch ($value) {
-                    case 'primer_contacto':
-                        return 'P - Primer contacto';
-                    case 'pendente_respuesta':
-                        return 'P - Pendente respuesta';
-                    case 'volver_contactar':
-                        return 'P - Volver a contactar';
-                    case 'no_acogen_alumnado':
-                        return 'P - No acogen alumnado';
-                    case 'pendiente_firma_convenio':
-                        return 'E - Pendiente firma Convenio';
-                    case 'plazas_conseguidas':
-                        return 'E - Plazas conseguidas';
-                    case 'solicitud_plazas':
-                        return 'E - Solicitud plazas';
-                    default:
-                        return $value;
-                }
-            case 'modalidad':
-                switch ($value) {
-                    case 'presencial':
-                        return 'Presencial';
-                    case 'remoto':
-                        return 'Remoto';
-                    case 'semipresencial':
-                        return 'Semipresencial';
-                    default:
-                        return $value;
-                }
-            case 'oferta_laboral':
-                return $value === 'si' ? 'Si' : 'No';
-            case 'ubicacion':
-                switch ($value) {
-                    case 'catalunya':
-                        return 'Cataluña';
-                    case 'fueraDeCatalunya':
-                        return 'Fuera de Cataluña';
-                    case 'fueraDeEspanya':
-                        return 'Fuera de España';
-                    default:
-                        return $value;
-                }
-            case 'familiaPersonal':
-                switch ($value) {
-                    case 'sanidad':
-                        return 'Sanidad';
-                    case 'informatica':
-                        return 'Informática';
-                    case 'hostelería':
-                        return 'Hostelería';
-                    case 'marketing':
-                        return 'Marketing';
-                    default:
-                        return $value;
-                }
-            default:
-                return $value;
-        }
+        $empresas = Empresa::all();
+        return view('empresa-index', compact('empresas'));
     }
 
     public function store(Request $request)
@@ -114,7 +23,7 @@ class EmpresaController extends Controller
             'gestiones_prospeccion' => 'nullable|string|max:255',
             'gestiones_colaboracion' => 'nullable|string|max:255',
             'modalidad' => 'nullable|string|max:255',
-            'oferta_laboral' => 'nullable|string|max:255',
+            'ofertaLaboral' => 'nullable|string|max:255',
             'entidad' => 'nullable|string|max:255',
             'ubicacion' => 'nullable|string|max:255',
             'municipio' => 'nullable|string|max:255',
@@ -129,22 +38,22 @@ class EmpresaController extends Controller
         $empresa = new Empresa;
         $empresa->cif = $request->cif;
         $empresa->nombre = $request->nombre;
-        $empresa->colaboracion = $this->transformSelect('colaboracion', $request->colaboracion);
+        $empresa->colaboracion = $request->colaboracion;
         if ($request->colaboracion === 'prospeccion') {
-            $empresa->gestiones = $this->transformSelect('gestiones', $request->gestiones_prospeccion, 'prospeccion');
+            $empresa->gestiones = $request->gestiones_prospeccion;
         } elseif ($request->colaboracion === 'colaboracion') {
-            $empresa->gestiones = $this->transformSelect('gestiones', $request->gestiones_colaboracion, 'colaboracion');
+            $empresa->gestiones = $request->gestiones_colaboracion;
         } else {
             $empresa->gestiones = null;
         }
-        $empresa->modalidad = $this->transformSelect('modalidad', $request->modalidad);
-        $empresa->oferta_laboral = $this->transformSelect('oferta_laboral', $request->oferta_laboral);
+        $empresa->modalidad = $request->modalidad;
+        $empresa->ofertaLaboral = $request->ofertaLaboral;
         $empresa->entidad = $request->entidad;
-        $empresa->ubicacion = $this->transformSelect('ubicacion', $request->ubicacion);
+        $empresa->ubicacion = $request->ubicacion;
         $empresa->municipio = $request->municipio;
         $empresa->direccion = $request->direccion;
         $empresa->codigoPostal = $request->codigoPostal;
-        $empresa->familiaPersonal = $this->transformSelect('familiaPersonal', $request->familiaPersonal);
+        $empresa->familiaPersonal = $request->familiaPersonal;
         $empresa->observaciones = $request->observaciones;
         $empresa->save();
 
@@ -172,10 +81,10 @@ class EmpresaController extends Controller
             $action = $request->input('action');
     
             if ($action === 'save_draft') {
-                return redirect('/empresa-index')->with('status', 'La empresa se ha añadido corectamente');
+                return redirect('empresa-index')->with('status', 'La empresa se ha añadido corectamente');
             } elseif ($action === 'next_page') {
                 // TODO: Ir a seguiente página
-                return redirect('/empresa-form#bottom')->with('status', 'La empresa se ha añadido corectamente');
+                return redirect('empresa-form#bottom')->with('status', 'La empresa se ha añadido corectamente');
             }
         }
     }

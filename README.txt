@@ -8,7 +8,7 @@ git checkout dev -> Ir a dev + no olvidar Actualizarlo!
 git merge [your_branch] -> Mergear tu branch a dev y resolver conflictos
 
 [ADMIN ROLE INSIDE BLADE]
-@if (Auth::user()->role == 'admin')
+@if (Auth::user()->role == 'Admin')
 OR
 {{ __("You are a :role", ['role' => Auth::user()->role]) }}
 
@@ -18,3 +18,6 @@ OR
 public function getImageAttribute($value) {
     return '/storage/' . $value;
 }
+
+[Guardar data en laravel.log]
+\Log::info();

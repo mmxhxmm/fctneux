@@ -22,13 +22,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Forms
-    Route::get('/empresa-form', [EmpresaController::class, 'index']);
+    // Route::get('/empresa-form')->name('empresa-form');
+    Route::get('/empresa-form', function () {
+        return view('pages/form');
+    })->name('empresa-form');
     Route::post('/store-empresa', [EmpresaController::class, 'store']);
 
     // Empresa
-    Route::get('/empresa-index', function () {
-        return view('empresa-index');
-    })->name('empresa-index');
+    Route::get('/empresa-index', [EmpresaController::class, 'index'])->name('empresa-index');
     
     // Tareas
     Route::get('/tareas-index', function () {
@@ -42,24 +43,17 @@ Route::middleware('auth')->group(function () {
     })->name('form-datos-tareas');
     
     // Personal
-    Route::get('/personal-activo', function () {
-        return view('personal-activo');
-    })->name('personal-activo');
-    Route::get('/personal-suspendidos', function () {
-        return view('personal-suspendidos');
-    })->name('personal-suspendidos');
-    Route::get('/datos-personal', function () {
-        return view('form-datos-personal');
+    Route::get('/admin/datos-personal', function () {
+        return view('/admin/form-datos-personal');
     })->name('form-datos-personal');
     
     // Route::get('/empresa', [ProfileController::class, 'show'])->name('empresa');
 });
 
 // Pages that only the admin can access
-// Features an example of how to utilize roles to make permission limitations in blade -> Replace this later
-Route::middleware(['auth', 'role:admin'])->group(function(){ 
-    Route::get('/personal-activo', [UserController::class, 'active'])->name('personal-activo');
-    Route::get('/personal-no-activo', [UserController::class, 'no_active'])->name('personal-no-activo');
+Route::middleware(['auth', 'role:Admin'])->group(function(){ 
+    Route::get('/admin/personal-activo', [UserController::class, 'active'])->name('personal-activo');
+    Route::get('/admin/personal-no-activo', [UserController::class, 'no_active'])->name('personal-no-activo');
 });
 
 require __DIR__.'/auth.php';

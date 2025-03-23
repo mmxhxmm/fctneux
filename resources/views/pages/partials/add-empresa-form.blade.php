@@ -69,8 +69,8 @@
 
         <!-- Oferta Laboral -->
         <div>
-            <x-input-label for="oferta_laboral" :value="__('Oferta Laboral')" />
-            <x-select-input name="oferta_laboral" id="oferta_laboral" class="mt-1 block w-full">
+            <x-input-label for="ofertaLaboral" :value="__('Oferta Laboral')" />
+            <x-select-input name="ofertaLaboral" id="ofertaLaboral" class="mt-1 block w-full">
                 <option value="si">Si</option>
                 <option value="no">No</option>
             </x-select-input>

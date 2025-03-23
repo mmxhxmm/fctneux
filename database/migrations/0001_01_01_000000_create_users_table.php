@@ -18,7 +18,7 @@ return new class extends Migration
             // $table->timestamp('email_verified_at')->nullable();
             $table->integer('telefono')->nullable();
             $table->enum('situacion', ['alta','baja'])->default('alta');
-            $table->enum('municipio', ['Barcelona','Madrid','Valencia'])->default('Barcelona');
+            $table->enum('municipio', ['barcelona','madrid','valencia'])->default('barcelona');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

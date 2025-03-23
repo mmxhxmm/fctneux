@@ -83,8 +83,8 @@
                     </x-nav-link> -->
                 </div>
                 <div class="absolute right-0 top-[10em] animate-right">
-                    <a href="personal-suspendidos" class="hover:text-white hover:border-none justify-end px-4 rounded-tl-[0px] rounded-tl-[50px] rounded-bl-[50px] rounded-bl-[0px] px-4 bg-blue w-[220px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 flex justify-end items-center">Usuarios suspendidos >>></a>
-                <!-- <x-nav-link :href="route('personal-suspendidos')" :active="request()->routeIs('personal-suspendidos')" class="hover:text-white hover:border-none justify-end px-4 rounded-tl-[0px] rounded-tl-[50px] rounded-bl-[50px] rounded-bl-[0px] px-4 bg-blue w-[200px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 flex justify-end items-center">
+                    <a href="personal-no-activo" class="hover:text-white hover:border-none justify-end px-4 rounded-tl-[0px] rounded-tl-[50px] rounded-bl-[50px] rounded-bl-[0px] px-4 bg-blue w-[220px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 flex justify-end items-center">Usuarios suspendidos >>></a>
+                <!-- <x-nav-link :href="route('personal-no-activo')" :active="request()->routeIs('personal-no-activo')" class="hover:text-white hover:border-none justify-end px-4 rounded-tl-[0px] rounded-tl-[50px] rounded-bl-[50px] rounded-bl-[0px] px-4 bg-blue w-[200px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 flex justify-end items-center">
                 {{__('Usuarios suspendidos >>>') }} </a> 
             </x-nav-link> -->
             </div>
