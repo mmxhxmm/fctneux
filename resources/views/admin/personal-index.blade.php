@@ -12,8 +12,8 @@
                     <!-- Añadir button -->
                     <div class="w-[110px] h-10">
                         <div class="bg-[#ff8300] rounded-[100px] w-[110px] h-10 flex justify-center items-center">
-                            <a href="datos-personal">
-                                <button class="text-white font-roboto text-base font-bold">+ Añadir</button>
+                            <a href="{{ route('personal-form') }}">
+                                <p class="text-white font-roboto text-base font-bold">+ Añadir</p>
                             </a>
                         </div>
                     </div>
@@ -91,24 +91,7 @@
             <div class="grid grid-cols-3 gap-6">
                 <!-- Display first 9 users by default -->
                 @foreach ($users as $key => $user)
-                    <div class="user-card w-[342px] h-[342px] p-4 flex-grow-0 shadow-lg opacity-90 border-2 border-blue bg-white" data-municipio="{{ strtolower($user->municipio) }}" data-situacion="{{ strtolower($user->situacion) }}">
-                        <p class="text-semibold m-4"><b>Nombre: </b>{{ $user->name }}</p>
-                        <p class="text-semibold m-4"><b>Correo: </b>{{ $user->email }}</p>
-                        <p class="text-semibold m-4 "><b>Telefono: </b>{{ $user->telefono }}</p>
-                        <p class="text-semibold m-4">
-                            <b>Situación: </b>
-                            <span class="{{ $user->situacion == 'Alta' ? 'text-green-500' : ($user->situacion == 'Baja' ? 'text-red-500' : 'text-black') }}">
-                                {{ $user->situacion }}
-                            </span>
-                        </p>
-                        <p class="text-semibold m-4"><b>Municipio: </b>{{ $user->municipio }}</p>
-                        <p class="text-semibold m-4">
-                                    <b>Role: </b>
-                                    <span class="{{ $user->role == 'admin' ? 'text-orange' : ($user->role == 'coordinador' ? 'text-blue' : 'text-black') }}">
-                                        {{ $user->role }}
-                                    </span>
-                                </p>
-                    </div>
+                    <x-index.personal :user="$user"></x-index-box>
                     @if ($key == 8) <!-- After the 9th user, break the loop -->
                         @break
                     @endif
@@ -122,25 +105,7 @@
                 <div class="grid grid-cols-3 gap-6">
                     @foreach ($users as $key => $user)
                         @if ($key > 8) <!-- Only show users after the 9th one -->
-                            <div class="user-card w-[342px] h-[342px] p-4 flex-grow-0 shadow-lg opacity-90 border-2 border-blue bg-white" data-municipio="{{ strtolower($user->municipio) }}" data-situacion="{{ strtolower($user->situacion) }}">
-                                <p class="text-semibold m-4"><b>Nombre: </b>{{ $user->name }}</p>
-                                <p class="text-semibold m-4"><b>Correo: </b>{{ $user->email }}</p>
-                                <p class="text-semibold m-4"><b>Telefono: </b>{{ $user->telefono }}</p>
-                                <p class="text-semibold m-4">
-                                    <b>Situación: </b>
-                                    <span class="{{ $user->situacion == 'Alta' ? 'text-green-500' : ($user->situacion == 'Baja' ? 'text-red-500' : 'text-black') }}">
-                                        {{ $user->situacion }}
-                                    </span>
-                                </p>
-                                <p class="text-semibold m-4"><b>Municipio: </b>{{ $user->municipio }}</p>
-                                <p class="text-semibold m-4">
-                                    <b>Role: </b>
-                                    <span class="{{ $user->role == 'admin' ? 'text-orange' : ($user->role == 'coordinador' ? 'text-blue' : 'text-black') }}">
-                                        {{ $user->role }}
-                                    </span>
-                                </p>
-                                <!-- <p class="text-semibold m-4 text-blue"><b class="text-black">Role: </b>{{ $user->role }}</p> -->
-                            </div>
+                            <x-index.personal :user="$user"></x-index-box>
                         @endif
                     @endforeach
                 </div>
@@ -150,24 +115,28 @@
         <div class="relative h-[420px] flex-grow-0 flex-shrink-0" style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 15), rgba(255, 255, 255, 0) ), url('../images/personalbottom.png'); background-size: cover; background-position: center;">
             <!-- Button is absolutely positioned in the center of the image -->
             <div class="absolute inset-0 flex justify-center items-center">
-                <button class="p-4 bg-blue rounded-lg text-white w-[120px]"  onclick="toggleUserVisibility()">Ver todos</button>
+                <button id="see-more" class="p-4 bg-blue rounded-lg text-white w-[120px]"  onclick="toggleUserVisibility()">Ver todos</button>
             </div>
         </div>
     </div>
 
     <!-- JavaScript to toggle visibility -->
     <script>
+        document.addEventListener("DOMContentLoaded", (e) => {
+            filterUsers();
+        });
+
         function toggleUserVisibility() {
-            const hiddenUsers = document.getElementById('hiddenUsers');
-            const button = document.querySelector('button');
+            const hiddenUsers = document.querySelector('#hiddenUsers');
+            const button = document.querySelector('#see-more');
 
             // Toggle hidden users visibility
             if (hiddenUsers.classList.contains('hidden')) {
                 hiddenUsers.classList.remove('hidden');
-                button.innerText = 'Ver menos'; // Change button text to 'Ver menos'
+                button.innerText = 'Ver menos';
             } else {
                 hiddenUsers.classList.add('hidden');
-                button.innerText = 'Ver todos'; // Change button text back to 'Ver todos'
+                button.innerText = 'Ver todos';
             }
         }
 

@@ -13,7 +13,7 @@
                 <div class="w-[110px] h-10">
 
                     <div class="bg-[#ff8300] rounded-[100px] w-[110px] h-10 flex justify-center items-center">
-                        <a href="datos-tareas" class="hover:text-white no-underline text-white font-roboto text-base font-bold">+ Añadir</a>
+                        <a href="{{ route('tareas-form') }}" class="hover:text-white no-underline text-white font-roboto text-base font-bold">+ Añadir</a>
                     </div>
                 </div>
 

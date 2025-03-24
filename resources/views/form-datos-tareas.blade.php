@@ -28,14 +28,14 @@
                 <div class="relative">
                     <div class="bg-black_transp w-[200px] h-[40px] rounded-[100px] border-2 border-white flex items-center pl-4 pr-2">
                         <img class="w-[20px] h-[20px]" src="../images/filter-svg.svg" alt="Filter Icon" />
-                        <div class="text-white font-roboto text-base font-medium ml-2">
+                        <div class="text-white text-base font-medium ml-2">
                             Filter
                         </div>
                     </div>
                 </div>
 
                 <!-- Barcelona / BCN Dropdown -->
-                <select class="bg-black_transp rounded-[100px] border-2 border-white w-[200px] h-[40px] flex items-center pl-4 pr-2 text-white font-roboto text-base font-medium">
+                <select class="bg-black_transp rounded-[100px] border-2 border-white w-[200px] h-[40px] flex items-center pl-4 pr-2 text-white text-base font-medium">
                     <option value="barcelona">Barcelona / BCN</option>
                     <option value="madrid">Madrid / Mad</option>
                     <option value="valencia">Valencia / Val</option>
@@ -50,7 +50,7 @@
                             type="text"
                             id="searchInput"
                             placeholder="Search"
-                            class="bg-transparent border-none rounded-[100px] text-white font-roboto text-xs font-medium outline-none w-full"
+                            class="bg-transparent border-none rounded-[100px] text-white text-xs font-medium outline-none w-full"
                             onkeyup="handleSearch()"
                         />
                         <!-- Search Icon -->
@@ -73,13 +73,13 @@
 
             <div class="w-full h-full flex flex-col  absolute px-4">
                 <div class="absolute left-0 top-[6em] animate-left">
-                    <a href="/" class="p-2 hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6"><<< Volver al inicio</a>
+                    <a href="/" class="p-2 hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left flex-grow-0 mb-6"><<< Volver al inicio</a>
                     <!-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6">
                         {{ __('<<< Volver al inicio') }}
                     </x-nav-link> -->
                 </div>
                 <div class="absolute left-0 top-[10em] animate-left2">
-                    <button class="hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-blue w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0">
+                    <button class="hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-blue w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left flex-grow-0">
                        <a href="https://outlook.office.com/calendar/view/workweek" ><<< Ir al calendario</a> 
                     </button>
                 </div>

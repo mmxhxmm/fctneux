@@ -11,16 +11,16 @@
             <div class="flex items-center space-x-4">
                 <!-- Añadir button -->
                 <div class="w-[110px] h-10">
-                    <div class="bg-[#ff8300] rounded-[100px] w-[110px] h-10 flex justify-center items-center">
-                        <button class="text-white font-roboto text-base font-bold">+ Añadir</button>
-                    </div>
+                    <a href="{{ route('empresa-form') }}" class="bg-[#ff8300] rounded-[100px] w-[110px] h-10 flex justify-center items-center">
+                        <p class="text-white text-base font-bold">+ Añadir</p>
+                    </a>
                 </div>
 
                 <!-- Eliminar button -->
                 <div class="w-[110px] h-10">
-                    <div class="bg-[#002f86] rounded-[100px] w-[110px] h-10 flex justify-center items-center">
-                        <button class="text-white font-roboto text-base font-bold">- Eliminar</button>
-                    </div>
+                    <a href="#" class="bg-[#002f86] rounded-[100px] w-[110px] h-10 flex justify-center items-center">
+                        <p class="text-white text-base font-bold">- Eliminar</p>
+                    </a>
                 </div>
             </div>
 
@@ -30,14 +30,14 @@
                 <div class="relative">
                     <div class="bg-black_transp w-[200px] h-[40px] rounded-[100px] border-2 border-white flex items-center pl-4 pr-2">
                         <img class="w-[20px] h-[20px]" src="../images/filter-svg.svg" alt="Filter Icon" />
-                        <div class="text-white font-roboto text-base font-medium ml-2">
+                        <div class="text-white text-base font-medium ml-2">
                             Filter
                         </div>
                     </div>
                 </div>
 
                 <!-- Barcelona / BCN Dropdown -->
-                <select class="bg-black_transp rounded-[100px] border-2 border-white w-[200px] h-[40px] flex items-center pl-4 pr-2 text-white font-roboto text-base font-medium">
+                <select class="bg-black_transp rounded-[100px] border-2 border-white w-[200px] h-[40px] flex items-center pl-4 pr-2 text-white text-base font-medium">
                     <option value="barcelona">Barcelona / BCN</option>
                     <option value="madrid">Madrid / Mad</option>
                     <option value="valencia">Valencia / Val</option>
@@ -52,7 +52,7 @@
                             type="text"
                             id="searchInput"
                             placeholder="Search"
-                            class="bg-transparent border-none rounded-[100px] text-white font-roboto text-xs font-medium outline-none w-full"
+                            class="bg-transparent border-none rounded-[100px] text-white text-xs font-medium outline-none w-full"
                             onkeyup="handleSearch()"
                         />
                         <!-- Search Icon -->
@@ -75,14 +75,14 @@
 
             <div class="w-full h-full flex flex-col  absolute px-4 ">
             <div class="absolute left-0 top-[6em] animate-left">
-                <a href="/" class="justify-start p-2 px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] hover:text-white hover:border-none text-[16px] text-white text-left font-roboto flex-grow-0 mb-6 "><<< Volver al inicio</a>
+                <a href="/" class="justify-start p-2 px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] hover:text-white hover:border-none text-[16px] text-white text-left flex-grow-0 mb-6 "><<< Volver al inicio</a>
                 <!-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] hover:text-white hover:border-none text-[16px] text-white text-left font-roboto flex-grow-0 mb-6 ">
                     {{ __('<<< Volver al inicio') }}
                 </x-nav-link> -->
             </div>
 
                 <div class="absolute left-0 top-[10em] animate-left2">
-                    <button class="justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-blue w-[210px] h-[40px] opacity-90 text-[15px] text-white text-left font-roboto flex-grow-0">
+                    <button class="justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-blue w-[210px] h-[40px] opacity-90 text-[15px] text-white text-left flex-grow-0">
                        <a href="https://www.empresaiformacio.org/sBid" ><<< Plataforma de qBid</a> 
                     </button>
                 </div>

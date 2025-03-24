@@ -102,12 +102,12 @@
                                     <input type="text" name="nif-personal" maxlength="9" required class="ml-2 rounded-lg w-[70%] border-2 border-blue">
                                 </div> -->
                                 <div class="flex-1">
-                                    <label for="nombre-personal" class="block w-[200px] pb-3">Nombre</label>
-                                    <input type="text" name="nombre-personal" required class="ml-2 rounded-lg w-[70%] border-2 border-blue">
+                                    <label for="nombre" class="block w-[200px] pb-3">Nombre <span class='text-red-500'>*</span></label>
+                                    <input type="text" name="nombre" id="nombre" required class="ml-2 rounded-lg w-[70%] border-2 border-blue">
                                 </div>
                                 <div class="flex-1">
-                                    <label for="nivel-personal" class="block w-[200px] pb-3">Nivel de acceso</label>
-                                    <select name="nivel-personal" id="nivel-personal" class="ml-2 rounded-lg w-[70%] border-2 border-blue">
+                                    <label for="nivel" class="block w-[200px] pb-3">Nivel de acceso</label>
+                                    <select name="nivel" id="nivel" class="ml-2 rounded-lg w-[70%] border-2 border-blue">
                                         <option value="Coodinador">Coordinador</option>
                                         <option value="Registrador">Registrador</option>
                                     </select>
@@ -126,24 +126,24 @@
                             <!-- Third Row -->
                             <div class="flex gap-6 mb-4 justify-center">
                                 <div class="flex-1">
-                                    <label for="correo-personal" class="block w-[200px] pb-3">Correo Electronico</label>
-                                    <input type="email" name="correo-personal" class="ml-2 rounded-lg w-[70%] border-2 border-blue">
+                                    <label for="correo" class="block w-[200px] pb-3">Correo Electronico</label>
+                                    <input type="email" name="correo" id="correo" class="ml-2 rounded-lg w-[70%] border-2 border-blue">
                                 </div>
                                 <div class="flex-1">
-                                    <label for="tel-personal" class="block w-[200px] pb-3">Teléfono</label>
-                                    <input type="tel" name="tel-personal" maxlength="9" class="ml-2 rounded-lg w-[70%] border-2 border-blue">
+                                    <label for="telefono" class="block w-[200px] pb-3">Teléfono</label>
+                                    <input type="text" name="telefono" id="telefono" maxlength="9" class="ml-2 rounded-lg w-[70%] border-2 border-blue">
                                 </div>
                             </div>
 
                             <!-- Fourth Row -->
                             <div class="flex gap-6 mb-4 justify-center">
                                 <div class="flex-1">
-                                    <label for="municipio-personal" class="block w-[200px] pb-3">Municipio</label>
-                                    <input type="text" name="municipio-personal" class="ml-2 rounded-lg w-[70%] border-2 border-blue">
+                                    <label for="municipio" class="block w-[200px] pb-3">Municipio</label>
+                                    <input type="text" name="municipio" id="municipio" class="ml-2 rounded-lg w-[70%] border-2 border-blue">
                                 </div>
                                 <div class="flex-1">
-                                    <label for="situacion-personal" class="block w-[200px] pb-3">Situación</label>
-                                    <select name="situacion-personal" id="situacion-personal" class="ml-2 rounded-lg w-auto mb-4 border-2 border-blue">
+                                    <label for="situacion" class="block w-[200px] pb-3">Situación</label>
+                                    <select name="situacion" id="situacion" class="ml-2 rounded-lg w-auto mb-4 border-2 border-blue">
                                         <option value="alta">Alta</option>
                                         <option value="baja">Baja</option>
                                     </select>
@@ -152,8 +152,8 @@
 
                             <!-- Buttons Section -->
                             <div class="flex gap-6 mt-4 justify-end">
+                                <button type="reset" class="bg-orange text-white p-3 px-6 rounded-lg">Limpiar</button>
                                 <button type="submit" class="bg-blue text-white p-3 px-6 rounded-lg">Guardar</button>
-                                <button type="button" class="bg-orange text-white p-3 px-6 rounded-lg">Eliminar</button>
                             </div>
                         </form>
                     </div>
