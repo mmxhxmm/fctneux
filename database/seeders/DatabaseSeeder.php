@@ -26,6 +26,23 @@ class DatabaseSeeder extends Seeder
                     'id_centrosTrabajo' => $centroTrabajo->id,
                 ]);
             });
+
+            // And with 2 practicas each with 1 tutor and 1 tutor empresa
+            \App\Models\Practica::factory(2)->create([
+                'empresa_cif' => $empresa->cif,
+            ])->each(function ($practica) {
+                \App\Models\Tutor::factory(1)->create([
+                    'id_practica' => $practica->id,
+                ]);
+                \App\Models\TutorEmpresa::factory(1)->create([
+                    'id_practica' => $practica->id,
+                ]);
+            });
+
+            // With 2 Tareas
+            \App\Models\Tarea::factory(2)->create([
+                'empresa_cif' => $empresa->cif,
+            ]);
         });
 
         // Crear 10 usuarios aleatorios

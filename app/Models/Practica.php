@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
-class CentroTrabajo extends Model
+class Practica extends Model
 {
     use HasFactory;
 
@@ -15,7 +15,7 @@ class CentroTrabajo extends Model
      *
      * @var string
      */
-    protected $table = 'centros_trabajo';
+    protected $table = 'practicas';
 
     /**
      * The primary key associated with the table.
@@ -44,10 +44,11 @@ class CentroTrabajo extends Model
      * @var array<string>
      */
     protected $fillable = [
-        'direccion',
-        'codigoPostal',
-        'ubicacion',
-        'municipio',
+        'nombre',
+        'asignado',
+        'estado',
+        'descripcion',
+        'comentarios',
     ];
 
     /**
@@ -56,41 +57,18 @@ class CentroTrabajo extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'codigoPostal' => 'integer', // Cast codigoPostal to integer
+        'periodoFrom' => 'date',
+        'periodoTo' => 'date',
+        'horarioFrom' => 'datetime:H:i',
+        'horarioTo' => 'datetime:H:i',
+        'numPlazasAsignadas' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<string>
-     */
-    protected $hidden = [
-        // Add any fields you want to hide (e.g., sensitive data)
-    ];
-
-    /**
-     * Default values for attributes.
-     *
-     * @var array<string, mixed>
-     */
-    protected $attributes = [
-        'direccion' => null,
-        'codigoPostal' => null,
-        'ubicacion' => null,
-        'municipio' => null,
-    ];
-
 
     // Define Relationships
     public function empresa()
     {
         return $this->belongsTo(Empresa::class, 'empresa_cif', 'cif');
-    }
-
-    public function responsablesConvenio()
-    {
-        return $this->HasMany(PersonaContacto::class, 'id_centrosTrabajo', 'id');
     }
 }

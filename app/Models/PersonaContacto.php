@@ -15,7 +15,7 @@ class PersonaContacto extends Model
      *
      * @var string
      */
-    protected $table = 'persona_contacto';
+    protected $table = 'personas_contacto';
 
     /**
      * The primary key associated with the table.

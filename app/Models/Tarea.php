@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
-class CentroTrabajo extends Model
+class Tarea extends Model
 {
     use HasFactory;
 
@@ -15,7 +15,7 @@ class CentroTrabajo extends Model
      *
      * @var string
      */
-    protected $table = 'centros_trabajo';
+    protected $table = 'tareas';
 
     /**
      * The primary key associated with the table.
@@ -44,10 +44,11 @@ class CentroTrabajo extends Model
      * @var array<string>
      */
     protected $fillable = [
-        'direccion',
-        'codigoPostal',
-        'ubicacion',
-        'municipio',
+        'nombre',
+        'asignado',
+        'estado',
+        'descripcion',
+        'comentarios',
     ];
 
     /**
@@ -56,41 +57,48 @@ class CentroTrabajo extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'codigoPostal' => 'integer', // Cast codigoPostal to integer
+        'estado' => 'string',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Possible task states.
      *
-     * @var array<string>
+     * @var array
      */
-    protected $hidden = [
-        // Add any fields you want to hide (e.g., sensitive data)
+    public const ESTADOS = [
+        'to_do' => 'Por hacer',
+        'in_progress' => 'En progreso',
+        'revision' => 'En revisión',
+        'done' => 'Completada'
     ];
+    
+    /**
+     * Get the human-readable status name.
+     *
+     * @return string
+     */
+    public function getEstadoNombreAttribute()
+    {
+        return self::ESTADOS[$this->estado] ?? $this->estado;
+    }
 
     /**
-     * Default values for attributes.
+     * Scope for tasks in a specific state.
      *
-     * @var array<string, mixed>
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $estado
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected $attributes = [
-        'direccion' => null,
-        'codigoPostal' => null,
-        'ubicacion' => null,
-        'municipio' => null,
-    ];
-
+    public function scopeWhereEstado($query, $estado)
+    {
+        return $query->where('estado', $estado);
+    }
 
     // Define Relationships
     public function empresa()
     {
         return $this->belongsTo(Empresa::class, 'empresa_cif', 'cif');
-    }
-
-    public function responsablesConvenio()
-    {
-        return $this->HasMany(PersonaContacto::class, 'id_centrosTrabajo', 'id');
     }
 }

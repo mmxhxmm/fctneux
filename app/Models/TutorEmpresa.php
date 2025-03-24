@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
-class CentroTrabajo extends Model
+class TutorEmpresa extends Model
 {
     use HasFactory;
 
@@ -15,7 +15,7 @@ class CentroTrabajo extends Model
      *
      * @var string
      */
-    protected $table = 'centros_trabajo';
+    protected $table = 'tutores_empresa';
 
     /**
      * The primary key associated with the table.
@@ -44,10 +44,11 @@ class CentroTrabajo extends Model
      * @var array<string>
      */
     protected $fillable = [
-        'direccion',
-        'codigoPostal',
-        'ubicacion',
-        'municipio',
+        'dni',
+        'nombre',
+        'apellido',
+        'telefono',
+        'email',
     ];
 
     /**
@@ -56,18 +57,9 @@ class CentroTrabajo extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'codigoPostal' => 'integer', // Cast codigoPostal to integer
+        'telefono' => 'integer', // Cast codigoPostal to integer
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<string>
-     */
-    protected $hidden = [
-        // Add any fields you want to hide (e.g., sensitive data)
     ];
 
     /**
@@ -76,21 +68,16 @@ class CentroTrabajo extends Model
      * @var array<string, mixed>
      */
     protected $attributes = [
-        'direccion' => null,
-        'codigoPostal' => null,
-        'ubicacion' => null,
-        'municipio' => null,
+        'dni' => null,
+        'nombre' => null,
+        'apellido' => null,
+        'telefono' => null,
+        'email' => null,
     ];
 
-
     // Define Relationships
-    public function empresa()
+    public function practica()
     {
-        return $this->belongsTo(Empresa::class, 'empresa_cif', 'cif');
-    }
-
-    public function responsablesConvenio()
-    {
-        return $this->HasMany(PersonaContacto::class, 'id_centrosTrabajo', 'id');
+        return $this->belongsTo(Practica::class, 'id_practica', 'id');
     }
 }
