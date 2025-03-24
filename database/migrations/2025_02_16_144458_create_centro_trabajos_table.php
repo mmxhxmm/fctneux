@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('centros_trabajo', function (Blueprint $table) {
+        Schema::create('centro_trabajo', function (Blueprint $table) {
             $table->id();
             $table->string('direccion')->nullable();
             $table->integer('codigoPostal')->nullable();
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('personas_contacto', function (Blueprint $table) {
+        Schema::create('persona_contacto', function (Blueprint $table) {
             $table->id();
             $table->string('dni');
             $table->string('nombre');
@@ -38,7 +38,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('centros_trabajo');
-        Schema::dropIfExists('personas_contacto');
+        Schema::dropIfExists('centro_trabajo');
+        Schema::dropIfExists('persona_contacto');
     }
 };

@@ -125,16 +125,7 @@ class Empresa extends Model
     //     return str_pad($value, 5, '0', STR_PAD_LEFT); // Ensure 5 digits with leading zeros
     // }
 
-    /**
-     * Define the relationship with ResponsableConvenio.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function responsablesConvenio()
-    {
-        return $this->hasOne(ResponsableConvenio::class, 'empresa_cif', 'cif');
-    }
-
+    // Accessors
     public function getColaboracionAttribute($value) {
         return $value === 'prospeccion' ? 'Prospección' : 'Colaboración';
     }
@@ -211,5 +202,20 @@ class Empresa extends Model
             default:
                 return $value;
         }
+    }
+
+    /**
+     * Define the relationship with ResponsableConvenio.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function responsablesConvenio()
+    {
+        return $this->HasMany(ResponsableConvenio::class, 'empresa_cif', 'cif');
+    }
+
+    public function centrosTrabajo()
+    {
+        return $this->HasMany(CentroTrabajo::class, 'empresa_cif', 'cif');
     }
 }
