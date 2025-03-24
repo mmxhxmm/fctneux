@@ -8,13 +8,13 @@
             <!-- Main Heading and Buttons -->
             <div class="bg-black_transp h-16 relative flex justify-between items-center px-10 w-full">
                 <!-- Left buttons (Añadir and Eliminar) -->
-                <div class="flex items-center">
+            <div class="flex items-center">
                     <!-- Añadir button -->
                     <div class="w-[110px] h-10">
-                <div class="bg-[#ff8300] rounded-[100px] w-[110px] h-10 flex justify-center items-center">
-                    <button id="openModal" class="text-white font-roboto text-base font-bold">+ Añadir</button>
-                </div>
-            </div>
+                        <div class="bg-[#ff8300] rounded-[100px] w-[110px] h-10 flex justify-center items-center">
+                            <button id="openModal" class="text-white font-roboto text-base font-bold">+ Añadir</button>
+                        </div>
+                    </div>
 
             <!-- The Modal -->
             <div id="myModal" class="fixed inset-0 flex bg-black bg-opacity-50 hidden justify-center items-center z-50">
