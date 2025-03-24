@@ -16,48 +16,54 @@
                         </div>
                     </div>
 
-                    <!-- The Modal -->
                     <div id="myModal" class="fixed inset-0 flex bg-black bg-opacity-50 hidden justify-center items-center z-50">
                         <div class="bg-white border-2 border-blue w-[60%] h-auto rounded-lg">
                             <div class="relative">
                                 <div class="bg-blue text-white text-center p-2 text-four">Datos de Tareas</div>
-                                <div class="p-10 flex justify-between items-start">
-                        <div class="w-[45%]">
-                            <iframe src="https://calendar.google.com/calendar/embed?src=your-calendar-id&ctz=America%2FNew_York"
-                                    width="100%" height="400px" frameborder="0" scrolling="no"></iframe>
-                        </div>
+                                     <div class="p-8 flex justify-between items-start">
+                                        <div class="w-[45%]">
+                                            <iframe src="https://calendar.google.com/calendar/embed?src=your-calendar-id&ctz=America%2FNew_York"
+                                                    width="100%" height="400px" frameborder="0" scrolling="no"></iframe>
+                                        </div>
 
                         <div class="w-[50%]">
                             <form id="taskForm" class="w-full">
-                                <div class="flex gap-6 mb-4 justify-center">
+                                <div class="flex gap-4 mb-4 justify-center">
                                     <div class="flex-1">
                                         <label for="nombre-tarea" class="block w-[200px] pb-3">Nombre de la tarea</label>
-                                        <input type="text" name="nombre-tarea" id="nombre-tarea" required class="ml-2 rounded-lg w-[70%] border-2 border-blue">
+                                        <input type="text" name="nombre-tarea" id="nombre-tarea" required class="ml-2 rounded-lg w-[90%] border-2 border-blue">
                                     </div>
                                 </div>
 
-                                <div class="flex gap-6 mb-4 justify-center">
+                                <div class="flex gap-4 mb-4 justify-center">
+                                    <div class="flex-1">
+                                        <label for="estado-tarea" class="block w-[200px] pb-3">Estado</label>
+                                        <input type="text" name="estado-tarea" id="estado-tarea" required class="ml-2 rounded-lg w-[90%] border-2 border-blue">
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-4 mb-4 justify-center">
                                     <div class="flex-1">
                                         <label for="desc-tarea" class="block w-[200px] pb-3">Descripción</label>
-                                        <textarea name="desc-tarea" id="desc-tarea" class="ml-2 rounded-lg w-[70%] border-2 border-blue"></textarea>
+                                        <textarea name="desc-tarea" id="desc-tarea" class="ml-2 rounded-lg w-[90%] border-2 border-blue"></textarea>
                                     </div>
                                 </div>
 
-                                <div class="flex gap-6 mb-4 justify-center">
+                                <div class="flex gap-4 mb-4 justify-center">
                                     <div class="flex-1">
                                         <label for="asig-tarea" class="block w-[200px] pb-3">Asignado a</label>
-                                        <input type="text" name="asig-tarea" id="asig-tarea" class="ml-2 rounded-lg w-[70%] border-2 border-blue">
+                                        <input type="text" name="asig-tarea" id="asig-tarea" class="ml-2 rounded-lg w-[90%] border-2 border-blue">
                                     </div>
                                 </div>
 
-                                <div class="flex gap-6 mb-4 justify-center">
+                                <div class="flex gap-4 mb-4 justify-center">
                                     <div class="flex-1">
                                         <label for="fecha-tarea" class="block w-[200px] pb-3">Fecha</label>
                                         <input type="date" name="fecha-tarea" id="fecha-tarea" class="ml-2 rounded-lg w-[70%] border-2 border-blue">
                                     </div>
                                 </div>
 
-                                <div class="flex gap-6 mt-4 justify-end">
+                                <div class="flex gap-4 mt-4 justify-end">
                                     <button type="submit" id="saveTask" class="bg-blue text-white p-3 px-6 rounded-lg">Guardar</button>
                                     <button type="button" class="bg-orange text-white p-3 px-6 rounded-lg">Eliminar</button>
                                 </div>
