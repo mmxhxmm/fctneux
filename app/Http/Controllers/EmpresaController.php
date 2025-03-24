@@ -8,6 +8,9 @@ use App\Models\ResponsableConvenio;
 
 class EmpresaController extends Controller
 {
+    public $empresaDraft;
+    public $rcDraft;
+
     public function index()
     {
         $empresas = Empresa::all();
@@ -55,7 +58,7 @@ class EmpresaController extends Controller
         $empresa->codigoPostal = $request->codigoPostal;
         $empresa->familiaPersonal = $request->familiaPersonal;
         $empresa->observaciones = $request->observaciones;
-        $empresa->save();
+        $empresaDraft = $empresa;
 
         // ResponsableConvenio
         if ($request->rc_dni && $request->rc_nombre && $request->rc_apellido) {
@@ -74,17 +77,18 @@ class EmpresaController extends Controller
             $rc->telefono = $request->rc_telefono;
             $rc->email = $request->rc_email;
             $rc->empresa_cif = $request->cif;
-            $rc->save();
+            $rcDraft = $rc;
         }
 
         if ($request->has('action')) {
             $action = $request->input('action');
     
             if ($action === 'save_draft') {
+                $empresaDraft->save();
+                $rcDraft->save();
                 return redirect('empresa-index')->with('status', 'La empresa se ha añadido corectamente');
             } elseif ($action === 'next_page') {
-                // TODO: Ir a seguiente página
-                return redirect('empresa-form#bottom')->with('status', 'La empresa se ha añadido corectamente');
+                return redirect('empresa-form-2');
             }
         }
     }

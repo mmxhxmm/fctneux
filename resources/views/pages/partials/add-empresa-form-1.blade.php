@@ -9,7 +9,7 @@
         </p>
     </header>
 
-    <form method="POST" id="form" action="{{ url('/store-empresa') }}" class="mt-6 space-y-6">
+    <form method="POST" id="form" action="{{ route('store-empresa') }}" class="mt-6 space-y-6">
         @csrf <!-- CSRF token for security -->
 
         <!-- CIF -->
@@ -32,6 +32,7 @@
             <x-select-input name="colaboracion" id="colaboracion" class="mt-1 block w-full">
                 <option value="prospeccion">Prospección</option>
                 <option value="colaboracion">Colaboración</option>
+                <option value="inactiva">Inactiva</option>
             </x-select-input>
         </div>
 
@@ -53,6 +54,12 @@
                     <option value="pendiente_firma_convenio">C - Pendiente firma Convenio</option>
                     <option value="plazas_conseguidas">C - Plazas conseguidas</option>
                     <option value="solicitud_plazas">C - Solicitud plazas</option>
+                </x-select-input>
+            </div>
+
+            <div id="inactiva-options" style="display: none;">
+                <x-select-input name="gestiones_inactiva" id="gestiones" class="mt-1 block w-full">
+                    <option value="null">--</option>
                 </x-select-input>
             </div>
         </div>
@@ -136,7 +143,9 @@
 
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 flex justify-between">
             {{ __('Añadir Responsable Convenio') }}
-            <x-primary-nonsubmit-button id="add_section_button">{{ __(' + ') }}</x-primary-nonsubmit-button>
+            <a href="#responsable_convenio">
+                <x-primary-nonsubmit-button id="add_section_button">{{ __(' + ') }}</x-primary-nonsubmit-button>
+            </a>
         </h2>
 
         <div id="responsable_convenio" class="space-y-6" style="display:block">
@@ -206,13 +215,20 @@
 
             const colaboracion = document.getElementById('colaboracion-options');
             const prospeccion = document.getElementById('prospeccion-options');
+            const inactiva = document.getElementById('inactiva-options');
 
             if (selectedValue === 'prospeccion') {
                 colaboracion.style.display = 'none';
+                inactiva.style.display = 'none';
                 prospeccion.style.display = 'block';
             } else if (selectedValue === 'colaboracion') {
                 prospeccion.style.display = 'none';
+                inactiva.style.display = 'none';
                 colaboracion.style.display = 'block';
+            } else if (selectedValue === 'inactiva') {
+                prospeccion.style.display = 'none';
+                colaboracion.style.display = 'none';
+                inactiva.style.display = 'block';
             }
         }
         

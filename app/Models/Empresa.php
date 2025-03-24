@@ -127,7 +127,16 @@ class Empresa extends Model
 
     // Accessors
     public function getColaboracionAttribute($value) {
-        return $value === 'prospeccion' ? 'Prospección' : 'Colaboración';
+        switch ($value) {
+            case 'prospeccion':
+                return 'Prospección';
+            case 'colaboracion':
+                return 'Colaboración';
+            case 'inactiva':
+                return 'Inactiva';
+            default:
+                return $value;
+        }
     }
 
     public function getModalidadAttribute($value) {
@@ -169,6 +178,8 @@ class Empresa extends Model
                     default:
                         return $value;
                 }
+            default:
+                return $value;
         }
     }
 

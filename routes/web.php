@@ -20,10 +20,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Empresa
-    Route::get('/empresa-form', function () {
-        return view('pages/form');
-    })->name('empresa-form');
-    Route::post('/store-empresa', [EmpresaController::class, 'store']);
+    Route::get('/empresa-form/pagina-1', function () {
+        return view('pages/form', ['form' => 'add-empresa-form-1']);
+    })->name('empresa-form-1');
+    Route::get('/empresa-form/pagina-2', function () {
+        return view('pages/form', ['form' => 'add-empresa-form-2']);
+    })->name('empresa-form-2');
+    Route::post('/store-empresa', [EmpresaController::class, 'store'])->name('store-empresa');
     Route::get('/empresa-index', [EmpresaController::class, 'index'])->name('empresa-index');
     
     // Tareas
