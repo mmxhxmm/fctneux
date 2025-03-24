@@ -21,3 +21,6 @@ public function getImageAttribute($value) {
 
 [Guardar data en laravel.log]
 \Log::info();
+
+[Utilizar en blade para rutas]
+{{ route('') }} <- Poner el name('') del web aqui, utilizar para que no se lia con las subcarpetas

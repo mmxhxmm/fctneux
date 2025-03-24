@@ -11,7 +11,7 @@
                 <p>Tareas</p>
             </a>
             <label>-</label>
-            <a href="personal-activo" class="flex items-center justify-center gap-x-1 hover:underline focus:outline-none focus:underline" title="Ir a la página de Usuarios">
+            <a href="{{ route('personal-activo') }}" class="flex items-center justify-center gap-x-1 hover:underline focus:outline-none focus:underline" title="Ir a la página de Usuarios">
                 <img src="{{ asset('images/icons/icons8-people-96.png') }}" alt="" width="20px" class="invert brightness-0">
                 <p>Usuarios</p>
             </a>
