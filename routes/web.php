@@ -32,10 +32,10 @@ Route::middleware('auth')->group(function () {
     
     // Tareas
     Route::get('/tareas-index', function () {
-        return view('tareas-index');
+        return view('pages/tareas-index');
     })->name('tareas-index');
     Route::get('/tareas-historial', function () {
-        return view('tareas-historial');
+        return view('pages/tareas-historial');
     })->name('tareas-historial');
     Route::get('/tareas-form', function () {
         return view('form-datos-tareas');
