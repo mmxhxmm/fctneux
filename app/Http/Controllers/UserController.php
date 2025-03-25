@@ -8,6 +8,15 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+    public function all()
+    {
+        // Fetch all users from the database
+        $users = User::all();
+
+        // Pass the users to the view
+        return view('profile/perfil', compact('users'));
+    }
+
     public function active()
     {
         // Fetch all users from the database

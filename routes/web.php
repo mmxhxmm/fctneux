@@ -19,6 +19,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    // Usuario perfil
+    Route::get('/perfil', function () {
+        return view('profile/perfil');
+    })->name('perfil');
+    Route::get('/perfil', [UserController::class, 'all'])->name('perfil');
+
+
     // Empresa
     Route::get('/empresa-form/pagina-1', function () {
         return view('pages/form', ['form' => 'add-empresa-form-1']);
