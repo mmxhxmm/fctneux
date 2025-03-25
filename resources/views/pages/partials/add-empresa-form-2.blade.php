@@ -9,13 +9,13 @@
         </p>
     </header>  -->
 
-    <form method="POST" id="form" action="{{ route('store-empresa') }}" class="mt-6 space-y-6">
+    <form method="POST" id="form" action="{{ route('store-empresa-2') }}" class="min-h-[30em] mt-6 space-y-6">
         @csrf <!-- CSRF token for security -->
 
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 flex justify-between">
-            {{ __('Añadir Responsable Convenio') }}
+            {{ __('Añadir Centro Trabajo') }}
             <a>
-                <x-primary-nonsubmit-button id="add_section_button_1">{{ __(' + ') }}</x-primary-nonsubmit-button>
+                <x-primary-nonsubmit-button id="add_section_button_1">{{ __(' - ') }}</x-primary-nonsubmit-button>
             </a>
         </h2>
 
@@ -119,7 +119,6 @@
         document.getElementById('add_section_button_1').addEventListener('click', showCentroTrabajo);
         document.getElementById('add_section_button_2').addEventListener('click', showPersonaContacto);
         
-        showCentroTrabajo(); // Set required to false on startup
         function showCentroTrabajo() {
             const centroTrabajo = document.getElementById('centro_trabajo');
 

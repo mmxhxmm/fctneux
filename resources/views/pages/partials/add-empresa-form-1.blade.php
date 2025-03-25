@@ -9,7 +9,7 @@
         </p>
     </header>
 
-    <form method="POST" id="form" action="{{ route('store-empresa') }}" class="mt-6 space-y-6">
+    <form method="POST" id="form" action="{{ route('store-empresa-1') }}" class="mt-6 space-y-6">
         @csrf <!-- CSRF token for security -->
 
         <!-- CIF -->
