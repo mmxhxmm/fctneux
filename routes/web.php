@@ -1,24 +1,17 @@
 <?php
 
-use App\Http\Controllers\UserDBController;
-
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CoordinadorController;
 use App\Http\Controllers\RegistradorController;
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+use App\Http\Controllers\EmpresaController;
 
 // User Authorization
 Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-
 
 // Pages that will run only after logging in
 Route::middleware('auth')->group(function () {
@@ -27,50 +20,36 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Empresa
-    Route::get('/empresa-index', function () {
-        return view('empresa-index');
-    })->middleware(['auth', 'verified'])->name('empresa-index');
-
-    // Usuario
-    Route::get('/usuario', function () {
-        return view('usuario');
-    })->middleware(['auth', 'verified'])->name('usuario');
+    Route::get('/empresa-form/pagina-1', function () {
+        return view('pages/form', ['form' => 'add-empresa-form-1']);
+    })->name('empresa-form-1');
+    Route::get('/empresa-form/pagina-2', function () {
+        return view('pages/form', ['form' => 'add-empresa-form-2']);
+    })->name('empresa-form-2');
+    Route::post('/store-empresa-1', [EmpresaController::class, 'store_1'])->name('store-empresa-1');
+    Route::post('/store-empresa-2', [EmpresaController::class, 'store_2'])->name('store-empresa-2');
+    Route::get('/empresa-index', [EmpresaController::class, 'index'])->name('empresa-index');
     
     // Tareas
     Route::get('/tareas-index', function () {
-        return view('tareas-index');
-    })->middleware(['auth', 'verified'])->name('tareas-index');
+        return view('pages/tareas-index');
+    })->name('tareas-index');
     Route::get('/tareas-historial', function () {
-        return view('tareas-historial');
-    })->middleware(['auth', 'verified'])->name('tareas-historial');
-    Route::get('/datos-tareas', function () {
+        return view('pages/tareas-historial');
+    })->name('tareas-historial');
+    Route::get('/tareas-form', function () {
         return view('form-datos-tareas');
-    })->middleware(['auth', 'verified'])->name('form-datos-tareas');
-    
-    // Personal
-    Route::get('/personal-activo', function () {
-        return view('personal-activo');
-    })->middleware(['auth', 'verified'])->name('personal-activo');
-    Route::get('/personal-suspendidos', function () {
-        return view('personal-suspendidos');
-    })->middleware(['auth', 'verified'])->name('personal-suspendidos');
-    Route::get('/datos-personal', function () {
-        return view('form-datos-personal');
-    })->middleware(['auth', 'verified'])->name('form-datos-personal');
-    
-    
-    
-    // Route::get('/empresa', [ProfileController::class, 'show'])->name('empresa');
+    })->name('tareas-form');
 });
 
 // Pages that only the admin can access
-// Features an example of how to utilize roles to make permission limitations in blade
-Route::middleware(['auth', 'role:admin'])->group(function(){ 
-    Route::get('/test', [UserDBController::class, 'index'])->name('test');
+Route::middleware(['auth', 'role:Admin'])->group(function(){ 
+    // Personal
+    Route::get('/admin/personal-activo', [UserController::class, 'active'])->name('personal-activo');
+    Route::get('/admin/personal-no-activo', [UserController::class, 'no_active'])->name('personal-no-activo');
+    Route::get('/admin/personal-form', function () {
+        return view('/admin/form-datos-personal');
+    })->name('personal-form');
 });
-
-// ADMIN ROLE INSIDE BLADE
-// @if (Auth::user()->role == 'admin')
-// {{ __("You are a :role", ['role' => Auth::user()->role]) }}
 
 require __DIR__.'/auth.php';

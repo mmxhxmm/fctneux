@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Casts\Attribute; // Is this necesasary
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
@@ -21,6 +21,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'telefono',
+        'situacion',
+        'municipio',
         'password',
         'role'
     ];
@@ -46,5 +49,17 @@ class User extends Authenticatable
             // 'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getSituacionAttribute($value) {
+        return strtoupper(substr($value, 0, 1)) . substr($value, 1);
+    }
+
+    public function getMunicipioAttribute($value) {
+        return strtoupper(substr($value, 0, 1)) . substr($value, 1);
+    }
+
+    public function getRoleAttribute($value) {
+        return strtoupper(substr($value, 0, 1)) . substr($value, 1);
     }
 }

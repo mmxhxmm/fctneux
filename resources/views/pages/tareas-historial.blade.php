@@ -8,20 +8,102 @@
             <!-- Main Heading and Buttons -->
             <div class="bg-black_transp h-16 relative flex justify-between items-center px-10 w-full">
             <!-- Left buttons (Añadir and Eliminar) -->
-            <div class="flex items-center space-x-4">
-                <!-- Añadir button -->
-                <div class="w-[110px] h-10">
-                    <div class="bg-[#ff8300] rounded-[100px] w-[110px] h-10 flex justify-center items-center">
-                    <a href="datos-tareas" class="hover:text-white no-underline text-white font-roboto text-base font-bold">+ Añadir</a>
+            <div class="flex items-center">
+                    <!-- Añadir button -->
+                    <div class="w-[110px] h-10">
+                        <div class="bg-[#ff8300] rounded-[100px] w-[110px] h-10 flex justify-center items-center">
+                            <button id="openModal" class="text-white font-roboto text-base font-bold">+ Añadir</button>
+                        </div>
+                    </div>
+
+                    <!-- The Modal -->
+                    <div id="myModal" class="fixed inset-0 flex bg-black bg-opacity-50 hidden justify-center items-center z-50">
+                        <div class="bg-white border-2 border-blue w-[60%] h-auto rounded-lg">
+                            <div class="relative">
+                                <div class="bg-blue text-white text-center p-2 text-four">Datos de Tareas</div>
+                                     <div class="p-8 flex justify-between items-start">
+                                        <div class="w-[45%]">
+                                            <iframe src="https://calendar.google.com/calendar/embed?src=your-calendar-id&ctz=America%2FNew_York"
+                                                    width="100%" height="400px" frameborder="0" scrolling="no"></iframe>
+                                        </div>
+
+                        <div class="w-[50%]">
+                            <form id="taskForm" class="w-full">
+                                <div class="flex gap-4 mb-4 justify-center">
+                                    <div class="flex-1">
+                                        <label for="nombre-tarea" class="block w-[200px] pb-3">Nombre de la tarea</label>
+                                        <input type="text" name="nombre-tarea" id="nombre-tarea" required class="ml-2 rounded-lg w-[90%] border-2 border-blue">
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-4 mb-4 justify-center">
+                                    <div class="flex-1">
+                                        <label for="estado-tarea" class="block w-[200px] pb-3">Estado</label>
+                                        <input type="text" name="estado-tarea" id="estado-tarea" required class="ml-2 rounded-lg w-[90%] border-2 border-blue">
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-4 mb-4 justify-center">
+                                    <div class="flex-1">
+                                        <label for="desc-tarea" class="block w-[200px] pb-3">Descripción</label>
+                                        <textarea name="desc-tarea" id="desc-tarea" class="ml-2 rounded-lg w-[90%] border-2 border-blue"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-4 mb-4 justify-center">
+                                    <div class="flex-1">
+                                        <label for="asig-tarea" class="block w-[200px] pb-3">Asignado a</label>
+                                        <input type="text" name="asig-tarea" id="asig-tarea" class="ml-2 rounded-lg w-[90%] border-2 border-blue">
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-4 mb-4 justify-center">
+                                    <div class="flex-1">
+                                        <label for="fecha-tarea" class="block w-[200px] pb-3">Fecha</label>
+                                        <input type="date" name="fecha-tarea" id="fecha-tarea" class="ml-2 rounded-lg w-[70%] border-2 border-blue">
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-4 mt-4 justify-end">
+                                    <button type="submit" id="saveTask" class="bg-blue text-white p-3 px-6 rounded-lg">Guardar</button>
+                                    <button type="button" class="bg-orange text-white p-3 px-6 rounded-lg">Eliminar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+                        <!-- Close Button -->
+                         
+                        <button id="closeModal" class="absolute top-0 w-10 h-10 right-0 bg-orange text-white rounded-[100px] m-2">X</button>
                     </div>
                 </div>
+            </div>
+                <script>
+                    // Get the modal, open button, and close button
+                            const modal = document.getElementById("myModal");
+                            const openModalBtn = document.getElementById("openModal");
+                            const closeModalBtn = document.getElementById("closeModal");
 
-                <!-- Eliminar button -->
-                <div class="w-[110px] h-10">
-                    <!-- <div class="bg-[#002f86] rounded-[100px] w-[110px] h-10 flex justify-center items-center">
-                        <button class="text-white font-roboto text-base font-bold">- Eliminar</button>
-                    </div> -->
-                </div>
+                            // Open the modal
+                            openModalBtn.onclick = function() {
+                                modal.classList.remove("hidden"); // Show the modal
+                            };
+
+                            // Close the modal
+                            closeModalBtn.onclick = function() {
+                                modal.classList.add("hidden"); // Hide the modal
+                            };
+
+                            // Close the modal if clicked outside the modal content
+                            window.onclick = function(event) {
+                                if (event.target === modal) {
+                                    modal.classList.add("hidden"); // Hide the modal if clicked outside
+                                }
+                            };
+
+                </script>
+
             </div>
 
             <!-- Right Section (Filter, Barcelona / BCN, and Search) -->
@@ -81,7 +163,7 @@
                     </x-nav-link> -->
                 </div>
                 <div class="absolute left-0 top-[10em] animate-left2">
-                    <a href="tareas-index"  class="hover:text-white hover:border-none rounded-tl-[0px] rounded-tr-[50px] px-4 rounded-br-[50px] rounded-bl-[0px] bg-blue w-[200px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex justify-start items-center"><<< Tareas pendientes</a>
+                    <a href="{{ route('tareas-index') }}"  class="hover:text-white hover:border-none rounded-tl-[0px] rounded-tr-[50px] px-4 rounded-br-[50px] rounded-bl-[0px] bg-blue w-[200px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex justify-start items-center"><<< Tareas pendientes</a>
                 <!-- <x-nav-link :href="route('tareas-index')" :active="request()->routeIs('tareas-index')" 
                     class="hover:text-white hover:border-none rounded-tl-[0px] rounded-tr-[50px] px-4 rounded-br-[50px] rounded-bl-[0px] bg-blue w-[200px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex justify-start items-center">
                     {{ __('<<< Tareas pendientes') }}

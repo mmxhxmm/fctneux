@@ -1,0 +1,63 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('practicas', function (Blueprint $table) {
+            $table->id();
+            $table->string('cicloFormativo')->nullable();
+            $table->string('cursoAcademico')->nullable();
+            $table->integer('numPlazasAsignadas')->nullable();
+            $table->date('periodoFrom')->nullable();
+            $table->date('periodoTo')->nullable();
+            $table->time('horarioFrom')->nullable();
+            $table->time('horarioTo')->nullable();
+            $table->string('convenioMarco')->nullable();
+            $table->string('usoLogos')->nullable();
+            $table->string('tecnicoGestion')->nullable();
+            $table->text('observaciones')->nullable();
+            $table->string('empresa_cif'); // FK
+            $table->timestamps();
+        });
+
+        Schema::create('tutores_empresa', function (Blueprint $table) {
+            $table->id();
+            $table->string('dni');
+            $table->string('nombre');
+            $table->string('apellido');
+            $table->integer('telefono')->nullable();
+            $table->string('email')->nullable();
+            $table->integer('id_practica'); // FK
+            $table->timestamps();
+        });
+
+        Schema::create('tutores', function (Blueprint $table) {
+            $table->id();
+            $table->string('dni');
+            $table->string('nombre');
+            $table->string('apellido');
+            $table->integer('telefono')->nullable();
+            $table->string('email')->nullable();
+            $table->integer('id_practica'); // FK
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('practicas');
+        Schema::dropIfExists('tutores_empresa');
+        Schema::dropIfExists('tutores');
+    }
+};
