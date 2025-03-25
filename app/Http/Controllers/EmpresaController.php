@@ -13,6 +13,13 @@ class EmpresaController extends Controller
     public function index()
     {
         $empresas = Empresa::all();
+
+        return view('empresa-index', compact('empresas'));
+    }
+
+    public function show()
+    {
+        $empresas = Empresa::all();
         return view('empresa-index', compact('empresas'));
     }
 

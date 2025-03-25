@@ -97,17 +97,12 @@
 
         <div class="flex justify-center bg-white items-center">
     <div class="grid grid-cols-3 gap-6">
-        <div class="w-[342px] h-[400px] flex-grow-0 opacity-90 border border-[#b7b7b7] bg-white">Block 1</div>
-        <div class="w-[342px] h-[400px] flex-grow-0 opacity-90 border border-[#b7b7b7] bg-white">Block 2</div>
-        <div class="w-[342px] h-[400px] flex-grow-0 opacity-90 border border-[#b7b7b7] bg-white">Block 3</div>
-
-        <div class="w-[342px] h-[400px] flex-grow-0 opacity-90 border border-[#b7b7b7] bg-white">Block 4</div>
-        <div class="w-[342px] h-[400px] flex-grow-0 opacity-90 border border-[#b7b7b7] bg-white">Block 5</div>
-        <div class="w-[342px] h-[400px] flex-grow-0 opacity-90 border border-[#b7b7b7] bg-white">Block 6</div>
-
-        <div class="w-[342px] h-[400px] flex-grow-0 opacity-90 border border-[#b7b7b7] bg-white">Block 7</div>
-        <div class="w-[342px] h-[400px] flex-grow-0 opacity-90 border border-[#b7b7b7] bg-white">Block 8</div>
-        <div class="w-[342px] h-[400px] flex-grow-0 opacity-90 border border-[#b7b7b7] bg-white">Block 9</div>
+        @foreach ($empresas as $key => $empresa)
+            <x-index.empresa :empresa="$empresa"></x-index-box>
+            @if ($key == 8) <!-- After the 9th user, break the loop -->
+                @break
+            @endif
+        @endforeach
     </div>
 </div>
 
