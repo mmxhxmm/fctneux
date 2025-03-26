@@ -26,8 +26,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/empresa-form/pagina-2', function () {
         return view('pages/form', ['form' => 'add-empresa-form-2']);
     })->name('empresa-form-2');
+    Route::get('/empresa-form/pagina-3', function () {
+        return view('pages/form', ['form' => 'add-empresa-form-3']);
+    })->name('empresa-form-3');
     Route::post('/store-empresa-1', [EmpresaController::class, 'store_1'])->name('store-empresa-1');
     Route::post('/store-empresa-2', [EmpresaController::class, 'store_2'])->name('store-empresa-2');
+    Route::post('/store-empresa-3', [EmpresaController::class, 'store_3'])->name('store-empresa-3');
     Route::get('/empresa-index', [EmpresaController::class, 'index'])->name('empresa-index');
     
     // Tareas

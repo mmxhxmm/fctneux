@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('codigoPostal')->nullable();
             $table->string('ubicacion')->nullable();
             $table->string('municipio')->nullable();
-            $table->string('empresa_cif'); // FK
+            $table->integer('empresa_id'); // FK
             $table->timestamps();
         });
 

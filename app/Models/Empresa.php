@@ -222,11 +222,11 @@ class Empresa extends Model
      */
     public function responsablesConvenio()
     {
-        return $this->HasMany(ResponsableConvenio::class, 'empresa_cif', 'cif');
+        return $this->HasMany(ResponsableConvenio::class, 'empresa_id', 'id');
     }
 
     public function centrosTrabajo()
     {
-        return $this->HasMany(CentroTrabajo::class, 'empresa_cif', 'cif');
+        return $this->HasMany(CentroTrabajo::class, 'empresa_id', 'id');
     }
 }

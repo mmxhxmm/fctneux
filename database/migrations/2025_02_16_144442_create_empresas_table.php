@@ -36,8 +36,8 @@ return new class extends Migration
             $table->string('apellido');
             $table->integer('telefono')->nullable();
             $table->string('email')->nullable();
-            $table->string('empresa_cif'); // FK
-            // $table->foreign('empresa_cif')->references('cif')->on('empresas')->onDelete('cascade'); // Optional: delete child records when empresa is deleted
+            $table->integer('empresa_id'); // FK
+            // $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade'); // Optional: delete child records when empresa is deleted
             $table->timestamps();
         });
     }

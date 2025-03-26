@@ -86,7 +86,7 @@ class CentroTrabajo extends Model
     // Define Relationships
     public function empresa()
     {
-        return $this->belongsTo(Empresa::class, 'empresa_cif', 'cif');
+        return $this->belongsTo(Empresa::class, 'empresa_id', 'id');
     }
 
     public function responsablesConvenio()

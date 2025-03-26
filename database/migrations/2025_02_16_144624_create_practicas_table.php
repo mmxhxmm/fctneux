@@ -17,14 +17,14 @@ return new class extends Migration
             $table->string('cursoAcademico')->nullable();
             $table->date('periodoFrom')->nullable();
             $table->date('periodoTo')->nullable();
-            $table->time('horarioFrom')->nullable();
-            $table->time('horarioTo')->nullable();
+            $table->string('horarioFrom')->nullable();
+            $table->string('horarioTo')->nullable();
             $table->string('convenioMarco')->nullable();
             $table->string('usoLogos')->nullable();
             $table->text('observaciones')->nullable();
             $table->integer('numPlazasAsignadas')->nullable();
             $table->integer('tecnicoGestion'); // FK user
-            $table->string('empresa_cif'); // FK
+            $table->integer('empresa_id'); // FK
             $table->timestamps();
         });
 

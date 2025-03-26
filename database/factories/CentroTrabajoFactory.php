@@ -21,7 +21,7 @@ class CentroTrabajoFactory extends Factory
             'codigoPostal' => $this->faker->randomNumber(5, true),
             'ubicacion' => $this->faker->city,
             'municipio' => $this->faker->city,
-            'empresa_cif' => $this->faker->unique()->regexify('[A-Z]{2}\d{7}'),
+            'empresa_id' => null,
             'created_at' => now(),
             'updated_at' => now(),
         ];

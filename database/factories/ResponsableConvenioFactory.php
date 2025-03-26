@@ -22,7 +22,7 @@ class ResponsableConvenioFactory extends Factory
             'apellido' => $this->faker->lastName,
             'telefono' => $this->faker->numerify('########'),
             'email' => $this->faker->unique()->safeEmail,
-            'empresa_cif' => null, // This will be overridden in the seeder
+            'empresa_id' => null, // This will be overridden in the seeder
             'created_at' => now(),
             'updated_at' => now(),
         ];
