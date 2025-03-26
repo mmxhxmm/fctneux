@@ -10,8 +10,8 @@
         @if(count($users) > 0)
         @foreach ($users as $key => $user)
         @if (Auth::user()->id == $user->id)
-        <section class="absolute md:left-[22%] md:top-[180px]">
-            <div class="bg-[#ff8300] rounded-[5px] shadow-xl px-6 py-2">
+        <section class="absolute md:left-[24%] md:top-[180px]">
+            <div class="bg-[#ff8300] rounded-[5px] shadow-xl px-10 py-2">
                 <div class="text-white text-center font-['Roboto-Bold',_sans-serif] text-[20px] font-bold">{{ $user->name }}<!-- Aqui el nombre del usuario --></div>
             </div>
         </section>
@@ -20,16 +20,28 @@
             <section class="md:mx-[9%] sm:mx-[3%] p-6">
                 <div class="flex flex-col md:flex-row md:gap-24 w-full">
 
-                    <div class="bg-[#002f86] text-white p-8 sm:w-[60%] md:w-[40%] h-[360px]">
-                        <div class="flex-col items-center">
-                            <h2 class="text-2xl font-bold mt-7 mb-20">USUARIO:</h2>
-                            <p class="mt-2">Nivel de acceso: {{ $user->role }}</p>
-                            <p class="mt-2">Provincia: {{ $user->municipio }}</p>
-                            <p class="mt-2">Telefono: {{ $user->telefono }}</p>
-                            <p class="mt-2">correo en uso: Email: {{ $user->email }}</p>
-                            <p class="mt-2">Situación: {{ $user->situacion }}</p>
+                <div class="bg-[#002f86] text-white p-8 sm:w-[60%] md:w-[50%] h-[360px]">
+                    <div class="flex-col items-start">
+                        <h2 class="text-2xl font-bold mt-7 mb-7">USUARIO:</h2>
+                        <div class="mt-4 flex w-full">
+                            <p><b>Nivel de acceso: </b><span style="margin-left: auto; margin-right: 0;">{{ $user->role }}</span></p>
+                        </div>
+                        <div class="mt-4 flex w-full">
+                            <p><b>Provincia: </b><span style="margin-left: auto; margin-right: 0;">{{ $user->municipio }}</span></p>
+                        </div>
+                        <div class="mt-4 flex w-full">
+                            <p><b>Telefono: </b><span style="margin-left: auto; margin-right: 0;">{{ $user->telefono }}</span></p>
+                        </div>
+                        <div class="mt-4 flex w-full">
+                            <p><b>Correo: </b><span style="margin-left: auto; margin-right: 0;">{{ $user->email }}</span></p>
+                        </div>
+                        <div class="mt-4 flex w-full">
+                            <p><b>Situación: </b><span style="margin-left: auto; margin-right: 0;">{{ $user->situacion }}</span></p>
                         </div>
                     </div>
+                </div>
+
+
                     @endif
                     @endforeach
                     @else
