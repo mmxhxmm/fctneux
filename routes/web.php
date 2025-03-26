@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/store-empresa-2', [EmpresaController::class, 'store_2'])->name('store-empresa-2');
     Route::post('/store-empresa-3', [EmpresaController::class, 'store_3'])->name('store-empresa-3');
     Route::get('/empresa-index', [EmpresaController::class, 'index'])->name('empresa-index');
+    Route::get('/empresa-detail', [EmpresaController::class, 'index_2'])->name('empresa-detail');
     
     // Tareas
     Route::get('/tareas-index', function () {

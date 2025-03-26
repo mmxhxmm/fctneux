@@ -19,6 +19,12 @@ class EmpresaController extends Controller
         return view('pages/empresa-index', compact('empresas'));
     }
 
+    public function index_2()
+    {
+        $empresas = Empresa::all();
+        return view('pages/detail-view', ['page' => 'empresa-detail'], compact('empresas'));
+    }
+
     public function saveData()
     {
         session('empresa_draft')->save();
@@ -167,7 +173,7 @@ class EmpresaController extends Controller
 
                 return redirect('empresa-index')->with('status', 'La empresa se ha añadido corectamente');
             } elseif ($action === 'next_page') {
-                return redirect(route('empresa-form-2'));
+                return redirect(route('empresa-form-3'));
             }
         }
     }
@@ -246,7 +252,9 @@ class EmpresaController extends Controller
 
                 return redirect('empresa-index')->with('status', 'La empresa se ha añadido corectamente');
             } elseif ($action === 'next_page') {
-                return redirect(route('empresa-form-2'));
+                saveData();
+
+                return redirect('empresa-index')->with('status', 'La empresa se ha añadido corectamente');
             }
         }
     }
