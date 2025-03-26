@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('asignado');
-            $table->enum('estado', ['to_do', 'in_progress', 'revision', 'done']);
+            $table->enum('estado', ['to_do', 'in_progress', 'revision', 'blocked', 'done'])->default('to_do');
             $table->text('descripcion')->nullable();
-            $table->text('comentarios')->nullable();
+            $table->time('fecha_limite')->nullable();
             $table->string('empresa_cif'); // FK
             $table->timestamps();
         });
