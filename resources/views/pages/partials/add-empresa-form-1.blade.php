@@ -15,14 +15,14 @@
         <!-- CIF -->
         <div>
             <x-input-label for="cif" :value="__('CIF <span class=\'text-red-500\'>*</span>')" />
-            <x-text-input id="cif" name="cif" type="text" class="mt-1 block w-full" autocomplete="cif" required />
+            <x-text-input id="cif" name="cif" type="text" value="{{ old('cif', session('empresa_draft')?->cif) }}"  class="mt-1 block w-full" autocomplete="cif" required />
             <x-input-error :messages="$errors->get('cif')" class="mt-2" />
         </div>
 
         <!-- Nombre -->
         <div>
             <x-input-label for="nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
-            <x-text-input id="nombre" name="nombre" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
+            <x-text-input id="nombre" name="nombre" type="text" value="{{ old('nombre', session('empresa_draft')?->nombre) }}" class="mt-1 block w-full" autocomplete="nombre" required />
             <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
         </div>
 
@@ -30,9 +30,21 @@
         <div>
             <x-input-label for="colaboracion" :value="__('Colaboración')" />
             <x-select-input name="colaboracion" id="colaboracion" class="mt-1 block w-full">
-                <option value="prospeccion">Prospección</option>
-                <option value="colaboracion">Colaboración</option>
-                <option value="inactiva">Inactiva</option>
+                <x-session-option 
+                    value="prospeccion" 
+                    :selectedValue="old('colaboracion', session('empresa_draft')?->colaboracion)" 
+                    label="Prospección"
+                />
+                <x-session-option 
+                    value="colaboracion" 
+                    :selectedValue="old('colaboracion', session('empresa_draft')?->colaboracion)" 
+                    label="Colaboración"
+                />
+                <x-session-option 
+                    value="inactiva" 
+                    :selectedValue="old('colaboracion', session('empresa_draft')?->colaboracion)" 
+                    label="Inactiva"
+                />
             </x-select-input>
         </div>
 
@@ -42,24 +54,56 @@
 
             <div id="prospeccion-options" style="display: none;">
                 <x-select-input name="gestiones_prospeccion" id="gestiones" class="mt-1 block w-full">
-                    <option value="primer_contacto">P - Primer contacto</option>
-                    <option value="pendente_respuesta">P - Pendente respuesta</option>
-                    <option value="volver_contactar">P - Volver a contactar</option>
-                    <option value="no_acogen_alumnado">P - No acogen alumnado</option>
+                    <x-session-option 
+                        value="primer_contacto" 
+                        :selectedValue="old('gestiones', session('empresa_draft')?->gestiones)" 
+                        label="P - Primer contacto"
+                    />
+                    <x-session-option 
+                        value="pendente_respuesta" 
+                        :selectedValue="old('gestiones', session('empresa_draft')?->gestiones)" 
+                        label="P - Pendente respuesta"
+                    />
+                    <x-session-option 
+                        value="volver_contactar" 
+                        :selectedValue="old('gestiones', session('empresa_draft')?->gestiones)" 
+                        label="P - Volver a contactar"
+                    />
+                    <x-session-option 
+                        value="no_acogen_alumnado" 
+                        :selectedValue="old('gestiones', session('empresa_draft')?->gestiones)" 
+                        label="P - No acogen alumnado"
+                    />
                 </x-select-input>
             </div>
 
             <div id="colaboracion-options" style="display: none;">
                 <x-select-input name="gestiones_colaboracion" id="gestiones" class="mt-1 block w-full">
-                    <option value="pendiente_firma_convenio">C - Pendiente firma Convenio</option>
-                    <option value="plazas_conseguidas">C - Plazas conseguidas</option>
-                    <option value="solicitud_plazas">C - Solicitud plazas</option>
+                    <x-session-option 
+                        value="pendiente_firma_convenio" 
+                        :selectedValue="old('gestiones', session('empresa_draft')?->gestiones)" 
+                        label="C - Pendiente firma Convenio"
+                    />
+                    <x-session-option 
+                        value="plazas_conseguidas" 
+                        :selectedValue="old('gestiones', session('empresa_draft')?->gestiones)" 
+                        label="C - Plazas conseguidas"
+                    />
+                    <x-session-option 
+                        value="solicitud_plazas" 
+                        :selectedValue="old('gestiones', session('empresa_draft')?->gestiones)" 
+                        label="C - Solicitud plazas"
+                    />
                 </x-select-input>
             </div>
 
             <div id="inactiva-options" style="display: none;">
                 <x-select-input name="gestiones_inactiva" id="gestiones" class="mt-1 block w-full">
-                    <option value="null">--</option>
+                    <x-session-option 
+                        value="null" 
+                        :selectedValue="old('gestiones', session('empresa_draft')?->gestiones)" 
+                        label="--"
+                    />
                 </x-select-input>
             </div>
         </div>
@@ -68,9 +112,21 @@
         <div>
             <x-input-label for="modalidad" :value="__('Modalidad')" />
             <x-select-input name="modalidad" id="modalidad" class="mt-1 block w-full">
-                <option value="presencial">Presencial</option>
-                <option value="remoto">Remoto</option>
-                <option value="semipresencial">Semipresencial</option>
+                <x-session-option 
+                    value="presencial" 
+                    :selectedValue="old('modalidad', session('empresa_draft')?->modalidad)" 
+                    label="Presencial"
+                />
+                <x-session-option 
+                    value="presencial" 
+                    :selectedValue="old('modalidad', session('empresa_draft')?->modalidad)" 
+                    label="Remoto"
+                />
+                <x-session-option 
+                    value="semipresencial" 
+                    :selectedValue="old('modalidad', session('empresa_draft')?->modalidad)" 
+                    label="Semipresencial"
+                />
             </x-select-input>
         </div>
 
@@ -78,46 +134,71 @@
         <div>
             <x-input-label for="ofertaLaboral" :value="__('Oferta Laboral')" />
             <x-select-input name="ofertaLaboral" id="ofertaLaboral" class="mt-1 block w-full">
-                <option value="si">Si</option>
-                <option value="no">No</option>
+                <x-session-option 
+                    value="null" 
+                    :selectedValue="old('ofertaLaboral', session('empresa_draft')?->ofertaLaboral)" 
+                    label="--"
+                />
+                <x-session-option 
+                    value="si" 
+                    :selectedValue="old('ofertaLaboral', session('empresa_draft')?->ofertaLaboral)" 
+                    label="Si"
+                />
+                <x-session-option 
+                    value="no" 
+                    :selectedValue="old('ofertaLaboral', session('empresa_draft')?->ofertaLaboral)" 
+                    label="No"
+                />
             </x-select-input>
         </div>
 
         <!-- Entidad -->
         <div>
             <x-input-label for="entidad" :value="__('Entidad')" />
-            <x-text-input id="entidad" name="entidad" type="text" class="mt-1 block w-full" autocomplete="entidad" />
+            <x-text-input id="entidad" name="entidad" type="text" value="{{ old('entidad', session('empresa_draft')?->entidad) }}" class="mt-1 block w-full" autocomplete="entidad" />
             <x-input-error :messages="$errors->get('entidad')" class="mt-2" />
         </div>
 
         <!-- Ubicación -->
         <div>
             <x-input-label for="ubicacion" :value="__('Ubicación')" />
-            <x-select-input name="ubicacion" id="ubicacion" class="mt-1 block w-full">
-                <option value="catalunya">Cataluña</option>
-                <option value="fueraDeCatalunya">Fuera de Cataluña</option>
-                <option value="fueraDeEspanya">Fuera de España</option>
+            <x-select-input name="ubicacion" id="ubicacion" value="{{ old('ubicacion', session('empresa_draft')?->ubicacion) }}" class="mt-1 block w-full">
+                <x-session-option 
+                    value="catalunya" 
+                    :selectedValue="old('ubicacion', session('empresa_draft')?->ubicacion)" 
+                    label="Cataluña"
+                />
+                <x-session-option 
+                    value="fueraDeCatalunya" 
+                    :selectedValue="old('ubicacion', session('empresa_draft')?->ubicacion)" 
+                    label="Fuera de Cataluña"
+                />
+                <x-session-option 
+                    value="fueraDeEspanya" 
+                    :selectedValue="old('ubicacion', session('empresa_draft')?->ubicacion)" 
+                    label="Fuera de España"
+                />
             </x-select-input>
         </div>
 
         <!-- Municipio -->
         <div>
             <x-input-label for="municipio" :value="__('Municipio/Localidad')" />
-            <x-text-input id="municipio" name="municipio" type="text" class="mt-1 block w-full" autocomplete="municipio" />
+            <x-text-input id="municipio" name="municipio" type="text" value="{{ old('municipio', session('empresa_draft')?->municipio) }}" class="mt-1 block w-full" autocomplete="municipio" />
             <x-input-error :messages="$errors->get('municipio')" class="mt-2" />
         </div>
 
         <!-- Dirección -->
         <div>
             <x-input-label for="direccion" :value="__('Dirección')" />
-            <x-text-input id="direccion" name="direccion" type="text" class="mt-1 block w-full" autocomplete="direccion" />
+            <x-text-input id="direccion" name="direccion" type="text" value="{{ old('direccion', session('empresa_draft')?->direccion) }}" class="mt-1 block w-full" autocomplete="direccion" />
             <x-input-error :messages="$errors->get('direccion')" class="mt-2" />
         </div>
 
         <!-- Código Postal -->
         <div>
             <x-input-label for="codigoPostal" :value="__('Código Postal')" />
-            <x-text-input id="codigoPostal" name="codigoPostal" type="text" class="mt-1 block w-full" autocomplete="codigoPostal" />
+            <x-text-input id="codigoPostal" name="codigoPostal" type="text" value="{{ old('codigoPostal', session('empresa_draft')?->codigoPostal) }}" class="mt-1 block w-full" autocomplete="codigoPostal" />
             <x-input-error :messages="$errors->get('codigoPostal')" class="mt-2" />
         </div>
 
@@ -125,17 +206,33 @@
         <div>
             <x-input-label for="familiaPersonal" :value="__('Familia Personal')" />
             <x-select-input name="familiaPersonal" id="familiaPersonal" class="mt-1 block w-full">
-                <option value="sanidad">Sanidad</option>
-                <option value="informatica">Informática</option>
-                <option value="hostelería">Hostelería</option>
-                <option value="marketing">Marketing</option>
+                <x-session-option 
+                    value="sanidad" 
+                    :selectedValue="old('familiaPersonal', session('empresa_draft')?->familiaPersonal)" 
+                    label="Sanidad"
+                />
+                <x-session-option 
+                    value="informatica" 
+                    :selectedValue="old('familiaPersonal', session('empresa_draft')?->familiaPersonal)" 
+                    label="Informática"
+                />
+                <x-session-option 
+                    value="hosteleria" 
+                    :selectedValue="old('familiaPersonal', session('empresa_draft')?->familiaPersonal)" 
+                    label="Hostelería"
+                />
+                <x-session-option 
+                    value="marketing" 
+                    :selectedValue="old('familiaPersonal', session('empresa_draft')?->familiaPersonal)" 
+                    label="Marketing"
+                />
             </x-select-input>
         </div>
 
         <!-- Observaciones -->
         <div>
             <x-input-label for="observaciones" :value="__('Observaciones')" />
-            <textarea id="observaciones" name="observaciones" rows="3" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"></textarea>
+            <textarea id="observaciones" name="observaciones" value="{{ old('observaciones', session('empresa_draft')?->observaciones) }}" rows="3" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"></textarea>
             <x-input-error :messages="$errors->get('observaciones')" class="mt-2" />
         </div>
 
@@ -143,73 +240,63 @@
 
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 flex justify-between">
             {{ __('Añadir Responsable Convenio') }}
-            <a href="#responsable_convenio">
-                <x-primary-nonsubmit-button id="add_section_button">{{ __(' + ') }}</x-primary-nonsubmit-button>
+            <a href="#secondary_section">
+                <x-primary-nonsubmit-button type="button" id="add_section_button_1">{{ __(' + ') }}</x-primary-nonsubmit-button>
             </a>
         </h2>
 
-        <div id="responsable_convenio" class="space-y-6" style="display:block">
+        <div id="secondary_section" class="space-y-6" style="display:block">
             <!-- DNI -->
             <div>
                 <x-input-label for="rc_dni" :value="__('DNI <span class=\'text-red-500\'>*</span>')" />
-                <x-text-input id="rc_dni" name="rc_dni" type="text" class="mt-1 block w-full" autocomplete="dni" required />
+                <x-text-input id="rc_dni" name="rc_dni" value="{{ old('rc_dni', session('responsableConvenio_draft')?->dni) }}" type="text" class="mt-1 block w-full" autocomplete="dni" required />
                 <x-input-error :messages="$errors->get('dni')" class="mt-2" />
             </div>
 
             <!-- Nombre -->
             <div>
                 <x-input-label for="rc_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
-                <x-text-input id="rc_nombre" name="rc_nombre" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
+                <x-text-input id="rc_nombre" name="rc_nombre" value="{{ old('rc_nombre', session('responsableConvenio_draft')?->nombre) }}" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
                 <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
             </div>
 
             <!-- Apellido -->
             <div>
                 <x-input-label for="rc_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
-                <x-text-input id="rc_apellido" name="rc_apellido" type="text" class="mt-1 block w-full" autocomplete="apellido" required />
+                <x-text-input id="rc_apellido" name="rc_apellido" value="{{ old('rc_apellido', session('responsableConvenio_draft')?->apellido) }}" type="text" class="mt-1 block w-full" autocomplete="apellido" required />
                 <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
             </div>
 
             <!-- Telefono -->
             <div>
                 <x-input-label for="rc_telefono" :value="__('Teléfono')" />
-                <x-text-input id="rc_telefono" name="rc_telefono" type="text" class="mt-1 block w-full" autocomplete="telefono" />
+                <x-text-input id="rc_telefono" name="rc_telefono" value="{{ old('rc_telefono', session('responsableConvenio_draft')?->telefono) }}" type="text" class="mt-1 block w-full" autocomplete="telefono" />
                 <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
             </div>
 
             <!-- Email -->
             <div>
                 <x-input-label for="rc_email" :value="__('Email')" />
-                <x-text-input id="rc_email" name="rc_email" type="text" class="mt-1 block w-full" autocomplete="email" />
+                <x-text-input id="rc_email" name="rc_email" value="{{ old('rc_email', session('responsableConvenio_draft')?->email) }}" type="text" class="mt-1 block w-full" autocomplete="email" />
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
         </div>
 
-        <div class="flex items-center gap-4 pt-12" id="bottom">
-            <x-primary-button name="action" value="save_draft" aria-label="Guardar el Draft y salir">{{ __('Save Draft') }}</x-primary-button>
-            <x-primary-button name="action" value="next_page" aria-label="Guardar y ir a la siguiente página">{{ __('Sigiente Página') }}</x-primary-button>
-
-            <!-- Get status message -->
-            @if (session('status'))
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600 dark:text-gray-400"
-                >{{ session('status') }}</p>
-            @endif
-        </div>
+        <!-- Bottom button and status bar -->
+        <x-form-buttons :currentRoute="route('empresa-form-1')" />
     </form>
 </section>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const colaboracionSelect = document.getElementById('colaboracion');
-        const form = document.getElementById('form');
-        const responsableSection = document.getElementById('responsable_convenio');
-        const requiredFields = responsableSection.querySelectorAll('#rc_dni, #rc_nombre, #rc_apellido');
 
+        document.getElementById('form').addEventListener('change', function () {
+            if (colaboracionSelect.value) {
+                handleColaboracionChange({ target: colaboracionSelect });
+            }
+        });
+        
         function handleColaboracionChange(event) {
             const selectedValue = event.target.value;
 
@@ -235,34 +322,5 @@
         if (colaboracionSelect.value) {
             handleColaboracionChange({ target: colaboracionSelect });
         }
-
-        document.getElementById('add_section_button').addEventListener('click', showResponsableConvenio);
-        
-        showResponsableConvenio(); // Set required to false on startup
-        function showResponsableConvenio() {
-            if (responsableSection.style.display !== 'block') {
-                // Show Area
-                responsableSection.style.display = 'block';
-                document.getElementById('add_section_button').textContent = " - ";
-                requiredFields.forEach(function (field) {
-                    field.required = true;
-                    field.disabled = false;
-                });
-            } else {
-                // Hide Area
-                responsableSection.style.display = 'none';
-                document.getElementById('add_section_button').textContent = " + ";
-                requiredFields.forEach(function (field) {
-                    field.required = false;
-                    field.disabled = true;
-                });
-            }
-        }
-
-        document.getElementById('form').addEventListener('change', function () {
-            if (colaboracionSelect.value) {
-                handleColaboracionChange({ target: colaboracionSelect });
-            }
-        });
     });
 </script>

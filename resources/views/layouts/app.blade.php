@@ -13,8 +13,13 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @if(request()->routeIs('empresa-form-1') || request()->routeIs('empresa-form-2') ||request()->routeIs('empresa-form-3'))
+            <!-- @vite('resources/js/formEmpresa.js') -->
+        @endif
     </head>
     <body class="antialiased">
+        <!-- Dummy script to load css before layout -->
+        <script>0</script>
         <div class="min-h-screen bg-gray-100 dark:bg-gray-800">
             @include('layouts.navigation')
 
@@ -28,7 +33,7 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main class="overflow-hidden">
                 {{ $slot }}
             </main>
 

@@ -15,7 +15,7 @@
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 flex justify-between">
             {{ __('Añadir Práctica') }}
             <a>
-                <x-primary-nonsubmit-button id="add_section_button_1">{{ __(' - ') }}</x-primary-nonsubmit-button>
+                <x-primary-nonsubmit-button type="button" id="add_section_button_1">{{ __(' - ') }}</x-primary-nonsubmit-button>
             </a>
         </h2>
 
@@ -35,7 +35,6 @@
                     <option value="daw">Desarrollo de Aplicaciones Web</option>
                     <option value="asix">Administración de Sistemas Informáticos</option>
                     <option value="dam">Desarrollo de Aplicaciones Multiplataforma</option>
-                    <option value="marketing">Marketing Digital</option>
                     <option value="marketing">Marketing Digital</option>
                 </x-select-input>
             </div>
@@ -165,7 +164,7 @@
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 flex justify-between">
             {{ __('Añadir Tutor') }}
             <a href="#header_tutor">
-                <x-primary-nonsubmit-button id="add_section_button_2">{{ __(' + ') }}</x-primary-nonsubmit-button>
+                <x-primary-nonsubmit-button type="button" id="add_section_button_2">{{ __(' + ') }}</x-primary-nonsubmit-button>
             </a>
         </h2>
 
@@ -213,7 +212,7 @@
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 flex justify-between">
             {{ __('Añadir Tutor Empresa') }}
             <a href="#header_tutorEmpresa">
-                <x-primary-nonsubmit-button id="add_section_button_3">{{ __(' + ') }}</x-primary-nonsubmit-button>
+                <x-primary-nonsubmit-button type="button" id="add_section_button_3">{{ __(' + ') }}</x-primary-nonsubmit-button>
             </a>
         </h2>
 
@@ -254,90 +253,7 @@
             </div>
         </div>
 
-        <div class="flex items-center gap-4 pt-12" id="bottom">
-            <x-primary-button name="action" value="save_draft" aria-label="Guardar el Draft y salir">{{ __('Save Draft') }}</x-primary-button>
-            <x-primary-button name="action" value="next_page" aria-label="Guardar y ir a la siguiente página">{{ __('Sigiente Página') }}</x-primary-button>
-
-            <!-- Get status message -->
-            @if (session('status'))
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600 dark:text-gray-400"
-                >{{ session('status') }}</p>
-            @endif
-        </div>
+        <!-- Bottom button and status bar -->
+        <x-form-buttons :currentRoute="route('empresa-form-3')" />
     </form>
 </section>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('add_section_button_1').addEventListener('click', showPractica);
-        document.getElementById('add_section_button_2').addEventListener('click', showTutor);
-        document.getElementById('add_section_button_3').addEventListener('click', showTutorEmpresa);
-        
-        function showPractica() {
-            const practica = document.getElementById('practica');
-
-            if (practica.style.display !== 'block') {
-                // Show Area
-                practica.style.display = 'block';
-                document.getElementById('add_section_button_1').textContent = " - ";
-            } else {
-                // Hide Area
-                practica.style.display = 'none';
-                document.getElementById('add_section_button_1').textContent = " + ";
-            }
-        }
-
-        showTutor(); // Set required to false on startup
-        function showTutor() {
-            const tutor = document.getElementById('tutor');
-            const requiredFields = tutor.querySelectorAll('#tutor_dni, #tutor_nombre, #tutor_apellido');
-
-            if (tutor.style.display !== 'block') {
-                // Show Area
-                tutor.style.display = 'block';
-                document.getElementById('add_section_button_2').textContent = " - ";
-                requiredFields.forEach(function (field) {
-                    field.required = true;
-                    field.disabled = false;
-                });
-            } else {
-                // Hide Area
-                tutor.style.display = 'none';
-                document.getElementById('add_section_button_2').textContent = " + ";
-                requiredFields.forEach(function (field) {
-                    field.required = false;
-                    field.disabled = true;
-                });
-            }
-        }
-
-        showTutorEmpresa(); // Set required to false on startup
-        function showTutorEmpresa() {
-            const tutorEmpresa = document.getElementById('tutorEmpresa');
-            const requiredFields = tutorEmpresa.querySelectorAll('#tutorEmpresa_dni, #tutorEmpresa_nombre, #tutorEmpresa_apellido');
-
-            if (tutorEmpresa.style.display !== 'block') {
-                // Show Area
-                tutorEmpresa.style.display = 'block';
-                document.getElementById('add_section_button_3').textContent = " - ";
-                requiredFields.forEach(function (field) {
-                    field.required = true;
-                    field.disabled = false;
-                });
-            } else {
-                // Hide Area
-                tutorEmpresa.style.display = 'none';
-                document.getElementById('add_section_button_3').textContent = " + ";
-                requiredFields.forEach(function (field) {
-                    field.required = false;
-                    field.disabled = true;
-                });
-            }
-        }
-    });
-</script>

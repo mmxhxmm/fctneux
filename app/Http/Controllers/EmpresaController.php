@@ -11,6 +11,8 @@ use App\Models\Practica;
 use App\Models\Tutor;
 use App\Models\TutorEmpresa;
 
+use Illuminate\Support\Facades\Auth;
+
 class EmpresaController extends Controller
 {
     public function index()
@@ -27,26 +29,92 @@ class EmpresaController extends Controller
 
     public function saveData()
     {
-        session('empresa_draft')->save();
-        session('responsableConvenio_draft') ? session('responsableConvenio_draft')->save() : '';
-        session('centroTrabajo_draft') ? session('centroTrabajo_draft')->save() : '';
+        \Log::info(session('empresa_draft'));
+        try {
+            if (session()->has('empresa_draft')) {
+                session('empresa_draft')->save();
+            }
 
-        if (session('personaContacto_draft')) {
-            $personaContactoDraft = session('personaContacto_draft');
-            $personaContactoDraft->id_centrosTrabajo = session('centroTrabajo_draft')->id; // Set FK
-            $personaContactoDraft->save();
-        }
+            if (session()->has('responsableConvenio_draft')) {
+                session('responsableConvenio_draft')->empresa_id = session('empresa_draft')->id; // Set FK
+                session('responsableConvenio_draft')->save();
+            }
 
-        session('practica_draft') ? session('practica_draft')->save() : '';
-        if (session('tutor_draft')) {
-            $tutorEmpresaDraft = session('tutor_draft');
-            $tutorEmpresaDraft->id_practica = session('practica_draft')->id; // Set FK
-            $tutorEmpresaDraft->save();
+            if (session()->has('centroTrabajo_draft')) {
+                session('centroTrabajo_draft')->empresa_id = session('empresa_draft')->id; // Set FK
+                session('centroTrabajo_draft')->save();
+            }
+
+            if (session()->has('personaContacto_draft')) {
+                session('personaContacto_draft')->id_centrosTrabajo = session('centroTrabajo_draft')->id; // Set FK
+                session('personaContacto_draft')->save();
+            }
+
+            if (session()->has('practica_draft')) {
+                session('practica_draft')->empresa_id = session('empresa_draft')->id; // Set FK
+                session('practica_draft')->save();
+            }
+
+            if (session()->has('tutor_draft')) {
+                session('tutor_draft')->id_practica = session('practica_draft')->id; // Set FK
+                session('tutor_draft')->save();
+            }
+
+            if (session()->has('tutorEmpresa_draft')) {
+                session('tutorEmpresa_draft')->id_practica = session('practica_draft')->id; // Set FK
+                session('tutorEmpresa_draft')->save();
+            }
+        } catch (\Exception $e) {
+            \Log::error('Save failed: '.$e->getMessage());
+            throw $e; // Re-throw or handle gracefully
         }
-        if (session('tutorEmpresa_draft')) {
-            $tutorEmpresaDraft = session('tutorEmpresa_draft');
-            $tutorEmpresaDraft->id_practica = session('practica_draft')->id; // Set FK
-            $tutorEmpresaDraft->save();
+    }
+
+    public function submit($currentForm, $action)
+    {
+        \Log::info($action);
+        
+        $previousForm = intval(explode('-', $currentForm)[2]) - 1;
+        $nextForm = intval(explode('-', $currentForm)[2]) + 1;
+
+        // Acciones del formulario
+        switch ($action) {
+            case 'publish':
+                $this->saveData();
+                return redirect('empresa-index')->with('status', 'La empresa se ha añadido corectamente');
+                break;
+            case 'save_draft':
+                return redirect('empresa-index')->with('status', 'El draft se ha guardado');
+                break;
+            // TODO: Implement this back later to validate through controller -> add novalidate to form
+            // case 'exit':
+            //     $draftKeys = [
+            //         'empresa_draft',
+            //         'responsableConvenio_draft',
+            //         'centroTrabajo_draft',
+            //         'personaContacto_draft',
+            //         'practica_draft',
+            //         'tutor_draft',
+            //         'tutorEmpresa_draft'
+            //     ];
+            
+            //     // Check if a draft is saved or not
+            //     if (session()->hasAny($draftKeys)) {
+            //         return redirect('empresa-index')->with('status', 'El draft se ha guardado');
+            //     } else {
+            //         return redirect('empresa-index')->with('status', 'Nada se ha guardado');
+            //     }
+            //     break;
+            case 'next_page':
+                \Log::info('Going to: empresa-form-' . $nextForm);
+                return redirect(route('empresa-form-' . $nextForm));
+                break;
+            case 'prev_page':
+                \Log::info('Going to: empresa-form-' . $previousForm);
+                return redirect(route('empresa-form-' . $previousForm));
+                break;
+            default:
+                return redirect('empresa-index')->with('status', 'Ha ocurrido un error');
         }
     }
 
@@ -64,12 +132,10 @@ class EmpresaController extends Controller
             'ubicacion' => 'nullable|string|max:255',
             'municipio' => 'nullable|string|max:255',
             'direccion' => 'nullable|string|max:255',
-            'codigoPostal' => 'nullable|string|max:5',
+            'codigoPostal' => 'nullable|string|size:5',
             'familiaPersonal' => 'nullable|string|max:255',
             'observaciones' => 'nullable|string',
         ]);
-
-        \Log::info($request->all());
 
         $empresa = new Empresa;
         $empresa->cif = $request->cif;
@@ -109,22 +175,11 @@ class EmpresaController extends Controller
             $rc->apellido = $request->rc_apellido;
             $rc->telefono = $request->rc_telefono;
             $rc->email = $request->rc_email;
-            $rc->empresa_id = session('empresa_draft')->id;
             session(['responsableConvenio_draft' => $rc]);
         }
 
-        // Submit
-        if ($request->has('action')) {
-            $action = $request->input('action');
-    
-            if ($action === 'save_draft') {
-                saveData();
-
-                return redirect('empresa-index')->with('status', 'La empresa se ha añadido corectamente');
-            } elseif ($action === 'next_page') {
-                return redirect(route('empresa-form-2'));
-            }
-        }
+        \Log::debug('Artisan Session Check:', session()->all());
+        return $this->submit('empresa-form-1', ($request->has('action') ? $request->input('action') : 'null'));
     }
 
     public function store_2(Request $request)
@@ -132,7 +187,7 @@ class EmpresaController extends Controller
         // CentroTrabajo
         $validated = $request->validate([
             'direccion' => 'nullable|string|max:255',
-            'codigoPostal' => 'nullable|string|max:5',
+            'codigoPostal' => 'nullable|string|size:5',
             'ubicacion' => 'nullable|string|max:255',
             'municipio' => 'nullable|string|max:255',
         ]);
@@ -142,7 +197,6 @@ class EmpresaController extends Controller
         $centroTrabajo->codigoPostal = $request->codigoPostal;
         $centroTrabajo->ubicacion = $request->ubicacion;
         $centroTrabajo->municipio = $request->municipio;
-        $centroTrabajo->empresa_id = session('empresa_draft')->id; // Get FK
         session(['centroTrabajo_draft' => $centroTrabajo]);
 
         // PersonaContacto
@@ -165,17 +219,8 @@ class EmpresaController extends Controller
         }
 
         // Submit
-        if ($request->has('action')) {
-            $action = $request->input('action');
-    
-            if ($action === 'save_draft') {
-                saveData();
-
-                return redirect('empresa-index')->with('status', 'La empresa se ha añadido corectamente');
-            } elseif ($action === 'next_page') {
-                return redirect(route('empresa-form-3'));
-            }
-        }
+        \Log::debug('Artisan Session Check:', session()->all());
+        return $this->submit('empresa-form-2', ($request->has('action') ? $request->input('action') : 'null'));
     }
 
     public function store_3(Request $request)
@@ -202,7 +247,7 @@ class EmpresaController extends Controller
         $practica->convenioMarco = $request->convenioMarco;
         $practica->usoLogos = $request->usoLogos;
         $practica->observaciones = $request->observaciones;
-        $practica->empresa_id = session('empresa_draft')->id; // Get FK
+        $practica->tecnicoGestion = Auth::user()->id;
         session(['practica_draft' => $practica]);
 
         // Tutor
@@ -244,18 +289,6 @@ class EmpresaController extends Controller
         }
 
         // Submit
-        if ($request->has('action')) {
-            $action = $request->input('action');
-    
-            if ($action === 'save_draft') {
-                saveData();
-
-                return redirect('empresa-index')->with('status', 'La empresa se ha añadido corectamente');
-            } elseif ($action === 'next_page') {
-                saveData();
-
-                return redirect('empresa-index')->with('status', 'La empresa se ha añadido corectamente');
-            }
-        }
+        return $this->submit('empresa-form-3', ($request->has('action') ? $request->input('action') : 'null'));
     }
 }

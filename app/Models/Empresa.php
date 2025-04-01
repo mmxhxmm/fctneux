@@ -206,7 +206,7 @@ class Empresa extends Model
                 return 'Sanidad';
             case 'informatica':
                 return 'Informática';
-            case 'hostelería':
+            case 'hosteleria':
                 return 'Hostelería';
             case 'marketing':
                 return 'Marketing';
