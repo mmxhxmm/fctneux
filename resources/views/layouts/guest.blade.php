@@ -25,7 +25,7 @@
             <div class="flex items-center justify-center mt-[-30px]">
 
                 <p class="text-[100px] text-white font-hammersmith">FCT</p>
-                <p class="text-[100px] text-[#FF8300] font-hammersmith">Nexus</p>
+                <p class="text-[100px] text-orange font-hammersmith">Nexus</p>
 
             </div>
 

@@ -10,7 +10,7 @@
             <!-- Left buttons (Añadir and Eliminar) -->
             <div class="flex items-center space-x-4">
                 <div class="w-[110px] h-10">
-                    <!-- <div class="bg-[#ff8300] rounded-[100px] w-[110px] h-10 flex justify-center items-center">
+                    <!-- <div class="bg-orange rounded-[100px] w-[110px] h-10 flex justify-center items-center">
                         <button class="text-white font-roboto text-base font-bold">+ Añadir</button>
                     </div> -->
                 </div>
@@ -73,10 +73,10 @@
 
             <div class="w-full h-full flex flex-col  absolute px-4">
                 <div class="absolute left-0 top-[10em] animate-left2">
-                <a href="/" class="p-2 hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6"><<< Volver al inicio</a>
+                <a href="/" class="p-2 hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6 flex items-center"><img src="../images/flechas-izquierda.png" alt="" class="h-[13px] w-[13px] mr-2"> Volver al inicio</a>
                 </div>
                 <div class="absolute left-0 top-[6em] animate-left">
-                <a href="{{ route('personal-activo') }}" class="p-2 hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-blue w-[120px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6"><<< Usuarios</a>
+                <a href="{{ route('personal-activo') }}" class="p-2 hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-primary w-[120px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6 flex items-center"><img src="../images/flechas-izquierda.png" alt="" class="h-[13px] w-[13px] mr-2"> Usuarios</a>
             </div>
             </div>
 
@@ -91,23 +91,23 @@
             </div>
         </div>
         <div class="flex justify-center bg-white items-center">
-            <div class = "border-2 border-blue w-[70%] h-auto ">
-                <div class= "bg-blue text-white text-center p-2 text-four">Datos</div>
-                <div class="p-16 text-blue flex justify-center items-center">
+            <div class = "border-2 border-primary w-[70%] h-auto ">
+                <div class= "bg-primary text-white text-center p-2 text-four">Datos</div>
+                <div class="p-16 text-primary flex justify-center items-center">
                         <form action="" class="w-full max-w-3xl">
                             <!-- First Row -->
                             <div class="flex gap-6 mb-4 justify-center">
                                 <!-- <div class="flex-1">
                                     <label for="nif-personal" class="block w-[200px] pb-3">NIF</label>
-                                    <input type="text" name="nif-personal" maxlength="9" required class="ml-2 rounded-lg w-[70%] border-2 border-blue">
+                                    <input type="text" name="nif-personal" maxlength="9" required class="ml-2 rounded-lg w-[70%] border-2 border-primary">
                                 </div> -->
                                 <div class="flex-1">
                                     <label for="nombre" class="block w-[200px] pb-3">Nombre <span class='text-red-500'>*</span></label>
-                                    <input type="text" name="nombre" id="nombre" required class="ml-2 rounded-lg w-[70%] border-2 border-blue">
+                                    <input type="text" name="nombre" id="nombre" required class="ml-2 rounded-lg w-[70%] border-2 border-primary">
                                 </div>
                                 <div class="flex-1">
                                     <label for="nivel" class="block w-[200px] pb-3">Nivel de acceso</label>
-                                    <select name="nivel" id="nivel" class="ml-2 rounded-lg w-[70%] border-2 border-blue">
+                                    <select name="nivel" id="nivel" class="ml-2 rounded-lg w-[70%] border-2 border-primary">
                                         <option value="Coodinador">Coordinador</option>
                                         <option value="Registrador">Registrador</option>
                                     </select>
@@ -119,7 +119,7 @@
                                 
                                 <div class="flex-1">
                                     <label for="apellido-personal" class="block w-[200px] pb-3">Apellido</label>
-                                    <input type="text" name="apellido-personal" class="ml-2 rounded-lg w-[70%] border-2 border-blue">
+                                    <input type="text" name="apellido-personal" class="ml-2 rounded-lg w-[70%] border-2 border-primary">
                                 </div>
                             </div> -->
 
@@ -127,11 +127,11 @@
                             <div class="flex gap-6 mb-4 justify-center">
                                 <div class="flex-1">
                                     <label for="correo" class="block w-[200px] pb-3">Correo Electronico</label>
-                                    <input type="email" name="correo" id="correo" class="ml-2 rounded-lg w-[70%] border-2 border-blue">
+                                    <input type="email" name="correo" id="correo" class="ml-2 rounded-lg w-[70%] border-2 border-primary">
                                 </div>
                                 <div class="flex-1">
                                     <label for="telefono" class="block w-[200px] pb-3">Teléfono</label>
-                                    <input type="text" name="telefono" id="telefono" maxlength="9" class="ml-2 rounded-lg w-[70%] border-2 border-blue">
+                                    <input type="text" name="telefono" id="telefono" maxlength="9" class="ml-2 rounded-lg w-[70%] border-2 border-primary">
                                 </div>
                             </div>
 
@@ -139,11 +139,11 @@
                             <div class="flex gap-6 mb-4 justify-center">
                                 <div class="flex-1">
                                     <label for="municipio" class="block w-[200px] pb-3">Municipio</label>
-                                    <input type="text" name="municipio" id="municipio" class="ml-2 rounded-lg w-[70%] border-2 border-blue">
+                                    <input type="text" name="municipio" id="municipio" class="ml-2 rounded-lg w-[70%] border-2 border-primary">
                                 </div>
                                 <div class="flex-1">
                                     <label for="situacion" class="block w-[200px] pb-3">Situación</label>
-                                    <select name="situacion" id="situacion" class="ml-2 rounded-lg w-auto mb-4 border-2 border-blue">
+                                    <select name="situacion" id="situacion" class="ml-2 rounded-lg w-auto mb-4 border-2 border-primary">
                                         <option value="alta">Alta</option>
                                         <option value="baja">Baja</option>
                                     </select>
@@ -153,7 +153,7 @@
                             <!-- Buttons Section -->
                             <div class="flex gap-6 mt-4 justify-end">
                                 <button type="reset" class="bg-orange text-white p-3 px-6 rounded-lg">Limpiar</button>
-                                <button type="submit" class="bg-blue text-white p-3 px-6 rounded-lg">Guardar</button>
+                                <button type="submit" class="bg-primary text-white p-3 px-6 rounded-lg">Guardar</button>
                             </div>
                         </form>
                     </div>

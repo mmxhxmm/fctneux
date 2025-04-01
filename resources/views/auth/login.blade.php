@@ -48,7 +48,7 @@
             @endif
         </div>
         
-        <button class="w-[330px] flex items-center justify-center mt-2 bg-[#FF8300] text-white p-2 mb-2 ms-3 text-[18px]">
+        <button class="w-[330px] flex items-center justify-center mt-2 bg-orange text-white p-2 mb-2 ms-3 text-[18px]">
             Enter
         </button>
 

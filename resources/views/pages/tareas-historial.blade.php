@@ -11,16 +11,16 @@
             <div class="flex items-center">
                     <!-- Añadir button -->
                     <div class="w-[110px] h-10">
-                        <div class="bg-[#ff8300] rounded-[100px] w-[110px] h-10 flex justify-center items-center">
+                        <div class="bg-orange rounded-[100px] w-[110px] h-10 flex justify-center items-center">
                             <button id="openModal" class="text-white font-roboto text-base font-bold">+ Añadir</button>
                         </div>
                     </div>
 
                     <!-- The Modal -->
                     <div id="myModal" class="fixed inset-0 flex bg-black bg-opacity-50 hidden justify-center items-center z-50">
-                        <div class="bg-white border-2 border-blue w-[60%] h-auto rounded-lg">
+                        <div class="bg-white border-2 border-primary w-[60%] h-auto rounded-lg">
                             <div class="relative">
-                                <div class="bg-blue text-white text-center p-2 text-four">Datos de Tareas</div>
+                                <div class="bg-primary text-white text-center p-2 text-four">Datos de Tareas</div>
                                      <div class="p-8 flex justify-between items-start">
                                         <div class="w-[45%]">
                                             <iframe src="https://calendar.google.com/calendar/embed?src=your-calendar-id&ctz=America%2FNew_York"
@@ -32,40 +32,40 @@
                                 <div class="flex gap-4 mb-4 justify-center">
                                     <div class="flex-1">
                                         <label for="nombre-tarea" class="block w-[200px] pb-3">Nombre de la tarea</label>
-                                        <input type="text" name="nombre-tarea" id="nombre-tarea" required class="ml-2 rounded-lg w-[90%] border-2 border-blue">
+                                        <input type="text" name="nombre-tarea" id="nombre-tarea" required class="ml-2 rounded-lg w-[90%] border-2 border-primary">
                                     </div>
                                 </div>
 
                                 <div class="flex gap-4 mb-4 justify-center">
                                     <div class="flex-1">
                                         <label for="estado-tarea" class="block w-[200px] pb-3">Estado</label>
-                                        <input type="text" name="estado-tarea" id="estado-tarea" required class="ml-2 rounded-lg w-[90%] border-2 border-blue">
+                                        <input type="text" name="estado-tarea" id="estado-tarea" required class="ml-2 rounded-lg w-[90%] border-2 border-primary">
                                     </div>
                                 </div>
 
                                 <div class="flex gap-4 mb-4 justify-center">
                                     <div class="flex-1">
                                         <label for="desc-tarea" class="block w-[200px] pb-3">Descripción</label>
-                                        <textarea name="desc-tarea" id="desc-tarea" class="ml-2 rounded-lg w-[90%] border-2 border-blue"></textarea>
+                                        <textarea name="desc-tarea" id="desc-tarea" class="ml-2 rounded-lg w-[90%] border-2 border-primary"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="flex gap-4 mb-4 justify-center">
                                     <div class="flex-1">
                                         <label for="asig-tarea" class="block w-[200px] pb-3">Asignado a</label>
-                                        <input type="text" name="asig-tarea" id="asig-tarea" class="ml-2 rounded-lg w-[90%] border-2 border-blue">
+                                        <input type="text" name="asig-tarea" id="asig-tarea" class="ml-2 rounded-lg w-[90%] border-2 border-primary">
                                     </div>
                                 </div>
 
                                 <div class="flex gap-4 mb-4 justify-center">
                                     <div class="flex-1">
                                         <label for="fecha-tarea" class="block w-[200px] pb-3">Fecha</label>
-                                        <input type="date" name="fecha-tarea" id="fecha-tarea" class="ml-2 rounded-lg w-[70%] border-2 border-blue">
+                                        <input type="date" name="fecha-tarea" id="fecha-tarea" class="ml-2 rounded-lg w-[70%] border-2 border-primary">
                                     </div>
                                 </div>
 
                                 <div class="flex gap-4 mt-4 justify-end">
-                                    <button type="submit" id="saveTask" class="bg-blue text-white p-3 px-6 rounded-lg">Guardar</button>
+                                    <button type="submit" id="saveTask" class="bg-primary text-white p-3 px-6 rounded-lg">Guardar</button>
                                     <button type="button" class="bg-orange text-white p-3 px-6 rounded-lg">Eliminar</button>
                                 </div>
                             </form>
@@ -157,15 +157,15 @@
 
             <div class="w-full h-full flex flex-col  absolute px-4">
                 <div class="absolute left-0 top-[6em] animate-left">
-                    <a href="/" class="p-2 hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6"><<< Volver al inicio</a>
+                    <a href="/" class="p-2 hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6 flex items-center"><img src="../images/flechas-izquierda.png" alt="" class="h-[13px] w-[13px] mr-2"> Volver al inicio</a>
                     <!-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6">
                         {{ __('<<< Volver al inicio') }}
                     </x-nav-link> -->
                 </div>
                 <div class="absolute left-0 top-[10em] animate-left2">
-                    <a href="{{ route('tareas-index') }}"  class="hover:text-white hover:border-none rounded-tl-[0px] rounded-tr-[50px] px-4 rounded-br-[50px] rounded-bl-[0px] bg-blue w-[200px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex justify-start items-center"><<< Tareas pendientes</a>
+                    <a href="{{ route('tareas-index') }}"  class="hover:text-white hover:border-none rounded-tl-[0px] rounded-tr-[50px] px-4 rounded-br-[50px] rounded-bl-[0px] bg-primary w-[200px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex justify-start items-center flex"><img src="../images/flechas-izquierda.png" alt="" class="h-[13px] w-[13px] mr-2"> Tareas pendientes</a>
                 <!-- <x-nav-link :href="route('tareas-index')" :active="request()->routeIs('tareas-index')" 
-                    class="hover:text-white hover:border-none rounded-tl-[0px] rounded-tr-[50px] px-4 rounded-br-[50px] rounded-bl-[0px] bg-blue w-[200px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex justify-start items-center">
+                    class="hover:text-white hover:border-none rounded-tl-[0px] rounded-tr-[50px] px-4 rounded-br-[50px] rounded-bl-[0px] bg-primary w-[200px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex justify-start items-center">
                     {{ __('<<< Tareas pendientes') }}
                 </x-nav-link> -->
             </div>
@@ -203,7 +203,7 @@
 <div class="relative h-[420px] flex-grow-0 flex-shrink-0" style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 15), rgba(255, 255, 255, 0) ), url('../images/bottomtareas.png'); background-size: cover; background-position: center;">
     <!-- Button is absolutely positioned in the center of the image -->
     <div class="absolute inset-0 flex justify-center items-center">
-        <button class="p-4 bg-blue rounded-lg text-white w-[120px]">Ver todos</button>
+        <button class="p-4 bg-primary rounded-lg text-white w-[120px]">Ver todos</button>
     </div>
 </div>
 

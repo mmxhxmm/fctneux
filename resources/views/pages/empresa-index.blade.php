@@ -11,7 +11,7 @@
             <div class="flex items-center space-x-4">
                 <!-- Añadir button -->
                 <div class="w-[110px] h-10">
-                    <a href="{{ route('empresa-form-1') }}" class="bg-[#ff8300] rounded-[100px] w-[110px] h-10 flex justify-center items-center">
+                    <a href="{{ route('empresa-form-1') }}" class="bg-orange rounded-[100px] w-[110px] h-10 flex justify-center items-center">
                         <p class="text-white text-base font-bold">+ Añadir</p>
                     </a>
                 </div>
@@ -122,15 +122,15 @@
 
             <div class="w-full h-full flex flex-col  absolute px-4 ">
             <div class="absolute left-0 top-[6em] animate-left">
-                <a href="/" class="justify-start p-2 px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] hover:text-white hover:border-none text-[16px] text-white text-left flex-grow-0 mb-6 "><<< Volver al inicio</a>
+                <a href="/" class="justify-start p-2 px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] hover:text-white hover:border-none text-[16px] text-white text-left flex-grow-0 mb-6 flex items-center"><img src="../images/flechas-izquierda.png" alt="" class="h-[13px] w-[13px] mr-2"> Volver al inicio</a>
                 <!-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] hover:text-white hover:border-none text-[16px] text-white text-left font-roboto flex-grow-0 mb-6 ">
                     {{ __('<<< Volver al inicio') }}
                 </x-nav-link> -->
             </div>
 
                 <div class="absolute left-0 top-[10em] animate-left2">
-                    <button class="justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-blue w-[210px] h-[40px] opacity-90 text-[15px] text-white text-left flex-grow-0">
-                       <a href="https://www.empresaiformacio.org/sBid" ><<< Plataforma de qBid</a> 
+                    <button class="justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-primary w-[210px] h-[40px] opacity-90 text-[15px] text-white text-left flex-grow-0 flex items-center">
+                       <a href="https://www.empresaiformacio.org/sBid" ><img src="../images/flechas-izquierda.png" alt="" class="h-[13px] w-[13px] mr-2"> Plataforma de qBid</a> 
                     </button>
                 </div>
 
@@ -159,7 +159,7 @@
 <div class="relative h-[420px] flex-grow-0 flex-shrink-0" style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 15), rgba(255, 255, 255, 0) ), url('../images/bottom.png'); background-size: cover; background-position: center;">
     <!-- Button is absolutely positioned in the center of the image -->
     <div class="absolute inset-0 flex justify-center items-center">
-        <button class="p-4 bg-blue rounded-lg text-white w-[120px]">Ver todos</button>
+        <button class="p-4 bg-primary rounded-lg text-white w-[120px]">Ver todos</button>
     </div>
 </div>
 
