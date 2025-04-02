@@ -21,12 +21,19 @@ class EmpresaController extends Controller
         return view('pages/empresa-index', compact('empresas'));
     }
 
-    public function index_2()
+    public function index_2(Request $request)
     {
-        $empresas = Empresa::all();
-        return view('pages/detail-view', ['page' => 'empresa-detail'], compact('empresas'));
-    }
+        // Get the 'id' from the query parameter
+        $id = $request->query('id');
 
+        // Fetch all empresas
+        $empresas = Empresa::all();
+
+        // Pass the empresas and the id to the view
+        return view('pages/detail-view', [
+            'page' => 'empresa-detail',
+        ],  compact('empresas' , 'id') );
+    }
     public function saveData()
     {
         \Log::info(session('empresa_draft'));

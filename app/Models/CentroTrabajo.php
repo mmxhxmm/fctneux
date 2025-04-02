@@ -89,7 +89,7 @@ class CentroTrabajo extends Model
         return $this->belongsTo(Empresa::class, 'empresa_id', 'id');
     }
 
-    public function responsablesConvenio()
+    public function personaContacto()
     {
         return $this->HasMany(PersonaContacto::class, 'id_centrosTrabajo', 'id');
     }
