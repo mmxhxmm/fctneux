@@ -159,7 +159,7 @@
             <x-input-error :messages="$errors->get('entidad')" class="mt-2" />
         </div>
 
-        <!-- Ubicación -->
+        <!-- Ubicación
         <div>
             <x-input-label for="ubicacion" :value="__('Ubicación')" />
             <x-select-input name="ubicacion" id="ubicacion" value="{{ old('ubicacion', session('empresa_draft')?->ubicacion) }}" class="mt-1 block w-full">
@@ -181,12 +181,37 @@
             </x-select-input>
         </div>
 
-        <!-- Municipio -->
+         Municipio 
         <div>
             <x-input-label for="municipio" :value="__('Municipio/Localidad')" />
             <x-text-input id="municipio" name="municipio" type="text" value="{{ old('municipio', session('empresa_draft')?->municipio) }}" class="mt-1 block w-full" autocomplete="municipio" />
             <x-input-error :messages="$errors->get('municipio')" class="mt-2" />
+        </div> -->
+        <!-- Ubicación (Provincia) -->
+        <!-- Comunidad Autónoma -->
+        <div>
+            <x-input-label for="comunidad" :value="__('Comunidad Autónoma')" />
+            <select id="comunidad" class="block border border-gray-300 w-full mt-1 rounded text-gray-900">
+                <option value="">Selecciona una comunidad</option>
+            </select>
         </div>
+
+        <!-- Ubicación (Provincia) -->
+        <div class="mt-4">
+            <x-input-label for="ubicacion" :value="__('Ubicación (Provincia)')" />
+            <select name="ubicacion" id="ubicacion" class="block w-full mt-1 border border-gray-300 rounded text-gray-900">
+                <option value="">Selecciona una provincia</option>
+            </select>
+        </div>
+
+        <!-- Municipio -->
+        <div class="mt-4">
+            <x-input-label for="municipio" :value="__('Municipio')" />
+            <select name="municipio" id="municipio" class="block w-full mt-1 border border-gray-300 rounded text-gray-900">
+                <option value="">Selecciona un municipio</option>
+            </select>
+        </div>
+
 
         <!-- Dirección -->
         <div>
@@ -323,4 +348,68 @@
             handleColaboracionChange({ target: colaboracionSelect });
         }
     });
+
+    const key = "bf9bf54cbf3e6f52ea4f61d205d533c745dc29471259d43d982c83081fc3ce06";
+    const comunidadSelect = document.getElementById("comunidad");
+    const provinciaSelect = document.getElementById("ubicacion"); // Stored as 'ubicacion'
+    const municipioSelect = document.getElementById("municipio");
+
+
+    async function cargarComunidades() {
+        const res = await fetch(`https://apiv1.geoapi.es/comunidades?type=JSON&key=${key}`);
+        const data = await res.json();
+
+        comunidadSelect.innerHTML = `<option value="">Selecciona una comunidad</option>`;
+        data.data.forEach(c => {
+            const option = document.createElement("option");
+            option.value = c.CCOM;
+            option.text = c.COM;
+            comunidadSelect.appendChild(option);
+        });
+    }
+
+
+    async function cargarProvincias(ccom) {
+        const res = await fetch(`https://apiv1.geoapi.es/provincias?CCOM=${ccom}&type=JSON&key=${key}`);
+        const data = await res.json();
+
+        provinciaSelect.innerHTML = `<option value="">Selecciona una provincia</option>`;
+        municipioSelect.innerHTML = `<option value="">Selecciona un municipio</option>`;
+        data.data.forEach(p => {
+            const option = document.createElement("option");
+            option.value = p.CPRO; 
+            option.text = p.PRO;   
+            provinciaSelect.appendChild(option);
+        });
+    }
+
+
+    async function cargarMunicipios(cpro) {
+        const res = await fetch(`https://apiv1.geoapi.es/municipios?CPRO=${cpro}&type=JSON&key=${key}`);
+        const data = await res.json();
+
+        municipioSelect.innerHTML = `<option value="">Selecciona un municipio</option>`;
+        data.data.forEach(m => {
+            const option = document.createElement("option");
+            option.value = m.DMUN50;
+            option.text = m.DMUN50;
+            municipioSelect.appendChild(option);
+        });
+    }
+
+    // Event Listeners
+    comunidadSelect.addEventListener("change", e => {
+        const ccom = e.target.value;
+        if (ccom) cargarProvincias(ccom);
+    });
+
+    provinciaSelect.addEventListener("change", e => {
+        const cpro = e.target.value;
+        if (cpro) cargarMunicipios(cpro);
+    });
+
+    // Initial load
+    document.addEventListener("DOMContentLoaded", cargarComunidades);
+
+
 </script>

@@ -27,4 +27,22 @@ class UserController extends Controller
         // Pass the users to the view
         return view('admin/personal-index', compact('users', 'state'));
     }
+    public function search(Request $request)
+{
+    $query = $request->input('search');
+
+    $users = User::query()
+        ->where('situacion', 'Alta')
+        ->when($query, function ($q) use ($query) {
+            $q->where('name', 'like', '%' . $query . '%')
+              ->orWhere('email', 'like', '%' . $query . '%')
+              ->orWhere('municipio', 'like', '%' . $query . '%')
+              ->orWhere('role', 'like', '%' . $query . '%');
+        })
+        ->get();
+
+    $state = 'activo';
+    return view('admin/personal-index', compact('users', 'state'));
+}
+
 }

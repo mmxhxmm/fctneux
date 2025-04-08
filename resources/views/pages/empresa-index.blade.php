@@ -16,11 +16,17 @@
                                 + Añadir
                             </p>
                         </a>
+                        
                         @if(session()->has('empresa_draft'))
                             <p class="text-white"><- [Tienes un Draft Guardado]</p>
                         @endif
                     </div>
                 </div>
+                <!-- Toggle View Button -->
+                <div class="flex items-center space-x-4">
+                    
+                </div>
+
 
                 <!-- Right Section (Filter, Barcelona / BCN, and Search) -->
                 <div class="flex items-center space-x-4">
@@ -88,22 +94,35 @@
                         <option value="zaragoza">Zaragoza</option>
                     </select>
 
-                    <!-- Search Section -->
-                    <div class="relative">
-                        <!-- Search Container -->
+                    <form action="{{ route('empresa-index-3') }}" method="GET" class="relative">
                         <div class="bg-black_transp w-[200px] h-[40px] rounded-[100px] border-2 border-white flex items-center pl-4 pr-2">
-                            <!-- Search Input -->
                             <input
                                 type="text"
-                                id="searchInput"
-                                placeholder="Search"
+                                name="search"
+                                placeholder="Buscar empresa"
                                 class="bg-transparent border-none rounded-[100px] text-white text-xs font-medium outline-none w-full"
-                                onkeyup="handleSearch()"
+                                value="{{ request('search') }}"
                             />
-                            <!-- Search Icon -->
-                            <img class="w-[20px] h-[20px]" src="../images/svg-buscar.svg" alt="Search Icon" />
+                            <button type="submit">
+                                <img class="w-[20px] h-[20px]" src="../images/svg-buscar.svg" alt="Search Icon" />
+                            </button>
                         </div>
-                    </div>
+                    </form>
+
+
+                    <button id="toggleView" onclick="toggleLayout()" class="w-10 h-10 rounded-full bg-white text-blue border border-blue flex items-center justify-center hover:bg-blue hover:text-white transition">
+                        <!-- Grid Icon -->
+                        <svg id="iconGrid" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h4v4H4V6zM10 6h4v4h-4V6zM16 6h4v4h-4V6zM4 12h4v4H4v-4zM10 12h4v4h-4v-4zM16 12h4v4h-4v-4z"/>
+                        </svg>
+
+                        <!-- List Icon (initially hidden) -->
+                        <svg id="iconList" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
 
@@ -134,7 +153,7 @@
                 x-show="show"
                 x-transition
                 x-init="setTimeout(() => show = false, 5000)"
-                class="w-full py-2 bg-white text-blue-800 text-center text-sm font-medium"
+                class="bg-transparent border border-transparent border-none rounded-[100px] text-white font-roboto text-xs font-medium outline-none w-full"
             >
                 {{ session('status') }}
             </div>
@@ -142,14 +161,66 @@
         </div>
 
         <div class="flex justify-center bg-white items-center">
-            <div class="grid grid-cols-3 gap-6">
-                @foreach ($empresas as $key => $empresa)
-                    <x-index.empresa :empresa="$empresa"></x-index-box>
-                    @if ($key == 8) <!-- After the 9th user, break the loop -->
-                        @break
-                    @endif
-                @endforeach
+            <!-- Empresa Grid (default view) -->
+        <div id="empresaContainer" class="grid grid-cols-3 gap-6 transition-all">
+            @foreach ($empresas as $empresa)
+                <x-index.empresa :empresa="$empresa" />
+            @endforeach
+        </div>
+        <!-- Empresa List View -->
+        <div id="empresaList" class="hidden w-[80%] px-5 py-6 transition-all">
+            <div class="overflow-x-auto bg-white rounded-xl shadow-md border border-gray-200">
+                <table class="min-w-full divide-y divide-gray-200 text-sm font-roboto">
+                    <thead class="bg-blue text-white rounded-t-xl">
+                        <tr>
+                            <th class="p-4 text-left font-semibold">Nombre</th>
+                            <th class="p-4 text-left font-semibold">CIF</th>
+                            <th class="p-4 text-left font-semibold">Gestiones</th>
+                            <th class="p-4 text-left font-semibold">Modalidad</th>
+                            <th class="p-4 text-left font-semibold">Colaboración</th>
+                            <th class="p-4 text-left font-semibold">Familia</th>
+                            <th class="p-4 text-left font-semibold">Municipio</th>
+                            <th class="p-4 text-left font-semibold">Ciclo Formativo</th>
+                            <th class="p-4 text-left font-semibold text-center">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        @foreach ($empresas as $empresa)
+                            <tr class="hover:bg-blue/5 transition-all">
+                                <td class="p-4 text-gray-800">{{ $empresa->nombre }}</td>
+                                <td class="p-4 text-gray-800">{{ $empresa->cif }}</td>
+                                <td class="p-4 text-gray-800">{{ $empresa->gestiones }}</td>
+                                <td class="p-4 text-gray-800">{{ $empresa->modalidad }}</td>
+                                <td class="p-4">
+                                    <span class="text-xs font-medium px-3 py-1 rounded-full 
+                                        {{ 
+                                            $empresa->colaboracion === 'Prospección' ? 'bg-blue/10 text-blue' :
+                                            ($empresa->colaboracion === 'Inactiva' ? 'bg-red-100 text-red-600' :
+                                            'bg-green-100 text-green-600') 
+                                        }}">
+                                        {{ $empresa->colaboracion }}
+                                    </span>
+                                </td>
+                                <td class="p-4 text-gray-800">{{ $empresa->familiaPersonal }}</td>
+                                <td class="p-4 text-gray-800">{{ $empresa->municipio }}</td>
+                                <td class="p-4 text-gray-800 whitespace-pre-wrap">
+                                    @foreach ($empresa->practica as $practica)
+                                        • {{ $practica->cicloFormativo }} ({{ $practica->numPlazasAsignadas }} plazas)<br>
+                                    @endforeach
+                                </td>
+                                <td class="p-4 text-center">
+                                    <a href="{{ route('empresa-detail', ['id' => $empresa->id]) }}" class="inline-block bg-blue text-white px-4 py-2 rounded-full text-xs font-medium hover:bg-blue/90 transition">
+                                        Ver más
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
+        </div>
+
+
         </div>
         <div class="relative h-[420px] flex-grow-0 flex-shrink-0" style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 15), rgba(255, 255, 255, 0) ), url('../images/bottom.png'); background-size: cover; background-position: center;">
             <!-- Button is absolutely positioned in the center of the image -->
@@ -161,11 +232,44 @@
 
     <!-- JavaScript (for Search functionality) -->
     <script>
-        function handleSearch() {
-            const searchText = document.getElementById('searchInput').value;
-            console.log('Search Term:', searchText); // Logs the search term for debugging purposes
-            // You can add additional logic here to filter or display search results on the page
+
+        document.getElementById('searchForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default form behavior
+            const query = document.getElementById('searchInput').value.trim();
+
+            if (query) {
+                console.log('Searching for:', query);
+
+                // Example of filtering logic (adapt to your needs)
+                // You can also make an AJAX request here if needed
+
+                // Or redirect:
+                // window.location.href = `?search=${encodeURIComponent(query)}`;
+            }
+        });
+
+        function toggleLayout() {
+            const grid = document.getElementById('empresaContainer');
+            const list = document.getElementById('empresaList');
+            const iconGrid = document.getElementById('iconGrid');
+            const iconList = document.getElementById('iconList');
+
+            const isGridVisible = !grid.classList.contains('hidden');
+
+            if (isGridVisible) {
+                grid.classList.add('hidden');
+                list.classList.remove('hidden');
+                iconGrid.classList.add('hidden');
+                iconList.classList.remove('hidden');
+            } else {
+                grid.classList.remove('hidden');
+                list.classList.add('hidden');
+                iconGrid.classList.remove('hidden');
+                iconList.classList.add('hidden');
+            }
         }
+
+
     </script>
     
     <style>

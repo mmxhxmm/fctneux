@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/usuarios-buscar', [UserController::class, 'search'])->name('usuarios-buscar');
 
     // Empresa
     // Checks if empresa_draft exists, redirects to empresa-form-1 if not
@@ -43,15 +44,19 @@ Route::middleware('auth')->group(function () {
     // Empresa Index
     Route::get('/empresa-index', [EmpresaController::class, 'index'])->name('empresa-index');
     Route::get('/empresa-detail', [EmpresaController::class, 'index_2'])->name('empresa-detail');
-    
+    Route::get('/empresa-index-3', [EmpresaController::class, 'index_3'])->name('empresa-index-3');
+
     // Tareas
     Route::get('/tareas-index', [TareaController::class, 'index'])->name('tareas-index');
     Route::get('/tareas-historial', function () {
         return view('pages/tareas-historial');
     })->name('tareas-historial');
+    Route::patch('/tareas/{id}/done', [TareaController::class, 'markAsDone'])->name('tarea.markAsDone');
     Route::get('/tareas-form', function () {
         return view('form-datos-tareas');
     })->name('tareas-form');
+    Route::get('/tareas-busqueda', [TareaController::class, 'buscar'])->name('tareas-busqueda');
+
 });
 
 // Pages that only the admin can access

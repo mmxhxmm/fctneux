@@ -24,3 +24,32 @@ public function getImageAttribute($value) {
 
 [Utilizar en blade para rutas]
 {{ route('') }} <- Poner el name('') del web aqui, utilizar para que no se lia con las subcarpetas
+
+[API -> GeoAPI España]
+// https://apiv1.geoapi.es/docs/api/metodos.html
+// https://geoapi.es/pruebalo
+ 
+// All Comunidades
+$response = file_get_contents("https://apiv1.geoapi.es/comunidades?type=JSON&key=bf9bf54cbf3e6f52ea4f61d205d533c745dc29471259d43d982c83081fc3ce06");
+$provincias = json_decode($response);
+foreach ($provincias->data as $p) {
+    \Log::info("API Response: " . $p->CCOM);
+}
+ 
+// Comunidad -> Cataluña
+$response = file_get_contents("https://apiv1.geoapi.es/provincias?CCOM=09&type=JSON&key=bf9bf54cbf3e6f52ea4f61d205d533c745dc29471259d43d982c83081fc3ce06");
+$provincias = json_decode($response);
+var_dump($provincias->data);
+foreach ($provincias->data as $p) {
+    \Log::info("API Response: " . $p->PRO);
+}
+ 
+// Provincia -> Barcelona
+$response = file_get_contents("https://apiv1.geoapi.es/municipios?CPRO=08&type=JSON&key=bf9bf54cbf3e6f52ea4f61d205d533c745dc29471259d43d982c83081fc3ce06");
+$provincias = json_decode($response);
+$array = $provincias->data;
+\Log::info(gettype($array));
+var_dump($array);
+foreach ($array as $p) {
+    \Log::info("API Response: " . $p->DMUN50);
+}

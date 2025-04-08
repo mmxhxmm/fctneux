@@ -34,6 +34,28 @@ class EmpresaController extends Controller
             'page' => 'empresa-detail',
         ],  compact('empresas' , 'id') );
     }
+    public function index_3(Request $request)
+    {
+        $query = $request->input('search');
+
+        $empresas = Empresa::query()
+            ->when($query, function ($q) use ($query) {
+                $q->where('nombre', 'like', '%' . $query . '%')
+                ->orWhere('colaboracion', 'like', '%' . $query . '%')
+                ->orWhere('modalidad', 'like', '%' . $query . '%')
+                ->orWhere('ofertaLaboral', 'like', '%' . $query . '%')
+                ->orWhere('municipio', 'like', '%' . $query . '%')
+                ->orWhere('familiaPersonal', 'like', '%' . $query . '%')
+                ->orWhereHas('practica', function ($subQuery) use ($query) {
+                    $subQuery->where('cicloFormativo', 'like', '%' . $query . '%');
+                });
+            })
+            ->get();
+
+        return view('pages.empresa-index', compact('empresas'));
+    }
+
+
     public function saveData()
     {
         \Log::info(session('empresa_draft'));
@@ -236,6 +258,7 @@ class EmpresaController extends Controller
         $validated = $request->validate([
             'cicloFormativo' => 'nullable|string|max:255',
             'cursoAcademico' => 'nullable|string|max:255',
+            'numPlazasAsignadas'=> 'nullable|integer|max:255',
             'periodoFrom' => 'nullable|date',
             'periodoTo' => 'nullable|date|after_or_equal:periodoFrom',
             'horarioFrom' => 'nullable|string|max:255',
@@ -248,6 +271,7 @@ class EmpresaController extends Controller
         $practica = new Practica;
         $practica->cicloFormativo = $request->cicloFormativo;
         $practica->cursoAcademico = $request->cursoAcademico;
+        $practica->numPlazasAsignadas = $request->numPlazasAsignadas;
         $practica->periodoFrom = $request->periodoFrom;
         $practica->horarioFrom = $request->horarioFrom;
         $practica->horarioTo = $request->horarioTo;

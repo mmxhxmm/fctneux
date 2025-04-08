@@ -1,17 +1,35 @@
-<div {{ $attributes->merge(['class' => 'user-card w-[370px] h-[370px] p-4 flex-grow-0 shadow-lg opacity-90 border-2 border-blue bg-white', 'tabindex' => 0]) }}>
-<span class="{{ $empresa->colaboracion == 'Prospección' ? 'text-blue bg-blue bg-opacity-20' : ($empresa->colaboracion == 'Inactiva' ? 'text-red-500 bg-red-100' : 'text-green-500 bg-green-100') }} rounded-[100px] p-1 px-2">
+<div {{ $attributes->merge(['class' => 'user-card w-[370px] rounded-xl p-6 bg-white shadow-xl border border-blue hover:shadow-2xl transition-all duration-300', 'tabindex' => 0]) }}>
+    
+    <!-- Etiqueta de colaboración -->
+    <span class="{{ 
+        $empresa->colaboracion === 'Prospección' ? 'text-blue bg-blue bg-opacity-10' : 
+        ($empresa->colaboracion === 'Inactiva' ? 'text-red-600 bg-red-100' : 'text-green-600 bg-green-100') 
+    }} text-sm font-semibold rounded-full px-3 py-1 inline-block mb-4">
         {{ $empresa->colaboracion }}
     </span>
-    <p class="text-semibold m-4"><b>Nombre: </b>{{ $empresa->nombre }}</p>
-    <p class="text-semibold m-4"><b>CIF: </b>{{ $empresa->cif }}</p>
-    <p class="text-semibold m-4"><b>Colaboracion: </b>{{ $empresa->colaboracion }}</p>
-    <p class="text-semibold m-4"><b>Gestiones: </b>{{ $empresa->gestiones }}</p>
-    <p class="text-semibold m-4"><b>Modalidad: </b>{{ $empresa->modalidad }}</p>
-    <p class="text-semibold m-4"><b>Familia Personal: </b>{{ $empresa->familiaPersonal }}</p>
 
-    <a href="{{ route('empresa-detail', ['id' => $empresa->id]) }}">
-        <button class="bg-blue text-white flex justify-end items-center p-2 rounded-[100px] ml-auto">
-            Ver más
-        </button>
-    </a>
+    <!-- Datos de la empresa -->
+    <div class="space-y-2 text-sm text-gray-800 font-roboto">
+        <p><span class="font-semibold text-blue">Nombre:</span> {{ $empresa->nombre }}</p>
+        <p><span class="font-semibold text-blue">CIF:</span> {{ $empresa->cif }}</p>
+        <p><span class="font-semibold text-blue">Gestiones:</span> {{ $empresa->gestiones }}</p>
+        <p><span class="font-semibold text-blue">Modalidad:</span> {{ $empresa->modalidad }}</p>
+        <p><span class="font-semibold text-blue">Familia Personal:</span> {{ $empresa->familiaPersonal }}</p>
+        <p><span class="font-semibold text-blue">Municipio:</span> {{ $empresa->municipio }}</p>
+        @foreach ($empresa->practica as $practica)
+            <p>
+                <span class="font-semibold text-blue">Ciclo Formativo:</span> {{ $practica->cicloFormativo }}
+                <span class="text-gray-600">({{ $practica->numPlazasAsignadas }} plazas)</span>
+            </p>
+        @endforeach
+    </div>
+
+    <!-- Botón -->
+    <div class="mt-6 flex justify-end">
+        <a href="{{ route('empresa-detail', ['id' => $empresa->id]) }}">
+            <button class="bg-blue text-white font-medium px-4 py-2 rounded-full hover:bg-blue/90 transition">
+                Ver más
+            </button>
+        </a>
+    </div>
 </div>

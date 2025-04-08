@@ -1,230 +1,114 @@
-<section class="max-w-7xl mx-auto px-4">
-    <div>
-        @foreach ($empresas as $empresa)
-            @if ($empresa->id == $id)
-                <div class="bg-white rounded-xl p-14  mb-10">
-                    <!-- Empresa Details (Always visible) -->
-                    <div class="grid grid-cols-1 md:grid-cols-2  gap-6">
-                    <div class="p-6 shadow-md  border-2 border-blue">
-                        <div class="text-center flex items-center justify-center space-x-4">
-                            <svg fill="#263652" class="w-12 h-12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M22,7H13V2a1,1,0,0,0-1-1H2A1,1,0,0,0,1,2V22a1,1,0,0,0,1,1H22a1,1,0,0,0,1-1V8A1,1,0,0,0,22,7ZM11,13H3V11h8Zm0-5V9H3V7h8ZM3,15h8v2H3ZM11,3V5H3V3ZM3,19h8v2H3Zm18,2H13V9h8Zm-5-5H14V14h2Zm0,4H14V18h2Zm4-4H18V14h2Zm-4-4H14V10h2Zm4,0H18V10h2Zm0,8H18V18h2Z"></path></g></svg>
-                            <h2 class="text-four font-semibold text-blue">Datos de Empresa</h2>
-                        </div>
-                        <hr class="m-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 py-6">
-                            <div class="space-y-3">
-                                <p class="text-md"><b>Nombre:</b> {{ $empresa->nombre }}</p>
-                                <p class="text-md"><b>CIF:</b> {{ $empresa->cif }}</p>
-                                <p class="text-md"><b>Colaboración:</b> {{ $empresa->colaboracion }}</p>
-                                <p class="text-md"><b>Gestiones:</b> {{ $empresa->gestiones }}</p>
-                                <p class="text-md"><b>Modalidad:</b> {{ $empresa->modalidad }}</p>
-                                <p class="text-md"><b>Familia Personal:</b> {{ $empresa->familiaPersonal }}</p>
-                                <p class="text-md"><b>Oferta Laboral:</b> {{ $empresa->ofertaLaboral }}</p>
-                            </div>
-                            <div class="space-y-3">
-                                <p class="text-md"><b>Entidad:</b> {{ $empresa->entidad }}</p>
-                                <p class="text-md"><b>Ubicación:</b> {{ $empresa->ubicacion }}</p>
-                                <p class="text-md"><b>Municipio:</b> {{ $empresa->municipio }}</p>
-                                <p class="text-md"><b>Dirección:</b> {{ $empresa->direccion }}</p>
-                                <p class="text-md"><b>Código Postal:</b> {{ $empresa->codigoPostal }}</p>
-                                <p class="text-md"><b>Observaciones:</b> {{ $empresa->observaciones }}</p>
-                            </div>
-                        </div>
-                    </div>
+<section class="max-w-7xl mx-auto px-6 py-12">
+    @foreach ($empresas as $empresa)
+        @if ($empresa->id == $id)
+        <div class="bg-white rounded-2xl shadow-xl p-10 space-y-12 border border-blue">
 
-
-                    <!-- <hr class="my-6 border-gray-200"> -->
-
-                    <!-- Responsable Convenio Section (Collapsible using details and summary) -->
-                    @foreach($empresa->responsablesConvenio as $resConv)
-                        <div class="p-6 shadow-md border-2 border-blue">
-                            <!-- Header with SVG and title -->
-                            <div class="text-four font-semibold text-blue cursor-pointer flex justify-center items-center space-x-4">
-                                <div class="flex items-center justify-center space-x-4">
-                                    <svg fill="#263652" class="w-10 h-10" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                        <g id="SVGRepo_iconCarrier">
-                                            <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z"></path>
-                                        </g>
-                                    </svg>
-                                    <span>Datos de Responsable Convenio</span>
-                                </div>
-                            </div>
-                            <hr class="m-6">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-20 py-6">
-                                <div class="space-y-3">
-                                    <p class="text-md"><b>DNI:</b> {{ $resConv->dni }}</p>
-                                    <p class="text-md"><b>Nombre Completo:</b> {{ $resConv->nombre }} {{ $resConv->apellido }}</p>
-                                </div>
-                                <div class="space-y-3">
-                                    <p class="text-md"><b>Teléfono:</b> {{ $resConv->telefono }}</p>
-                                    <p class="text-md"><b>Email:</b> {{ $resConv->email }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-
-
-                        @foreach($empresa->centrosTrabajo as $centro)
-                            <div class="p-6 shadow-md border-2 border-blue my-6">
-                                <!-- Header with SVG and title (clickable) -->
-                                <div class="text-four font-semibold text-blue cursor-pointer flex justify-center items-center space-x-4" onclick="toggleDetails(event)">
-                                    <div class="flex items-center justify-center space-x-4">
-                                        <svg viewBox="0 0 512 512" class="w-10 h-10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
-                                            <g id="SVGRepo_iconCarrier">
-                                                <path d="M277.333333,1.42108547e-14 L298.666667,21.3333333 L298.666,64 L426.666667,64 L426.666667,362.666667 L3.55271368e-14,362.666667 L3.55271368e-14,64 L128,64 L128,21.3333333 L149.333333,1.42108547e-14 L277.333333,1.42108547e-14 Z M42.6664912,220.935181 L42.6666667,320 L384,320 L384.000468,220.935097 C341.375319,233.130501 298.701692,240.759085 256.000479,243.809455 L256,277.333333 L170.666667,277.333333 L170.666323,243.809465 C127.965163,240.759108 85.2915887,233.130549 42.6664912,220.935181 Z M384,106.666667 L42.6666667,106.666667 L42.6668606,176.433085 C99.6386775,193.933257 156.507113,202.666667 213.333333,202.666667 C270.159803,202.666667 327.028489,193.933181 384.000558,176.432854 L384,106.666667 Z M256,42.6666667 L170.666667,42.6666667 L170.666667,64 L256,64 L256,42.6666667 Z"></path>
-                                            </g>
-                                        </svg>
-                                        <span>Datos de Centro Trabajo - {{ $centro->municipio }}</span>
-                                    </div>
-                                </div>
-                                <hr class="m-6">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 py-6">
-                                    <div class="space-y-3">
-                                        <p class="text-md"><b>Dirección:</b> {{ $centro->direccion }}</p>
-                                        <p class="text-md"><b>Código Postal:</b> {{ $centro->codigoPostal }}</p>
-                                    </div>
-                                    <div class="space-y-3">
-                                        <p class="text-md"><b>Ubicación:</b> {{ $centro->ubicacion }}</p>
-                                        <p class="text-md"><b>Municipio:</b> {{ $centro->municipio }}</p>
-                                    </div>
-                                </div>
-
-                                <!-- Container for contact personas -->
-                                <!-- <div class="grid grid-cols-1 md:grid-cols-2 gap-6"> -->
-                                    @foreach($centro->personaContacto as $persContacto)
-                                        <details class="p-6 shadow-md border-2 border-blue my-6">
-                                            <summary class="text-four font-semibold text-blue flex justify-center items-center space-x-4">
-                                                <div class="flex items-center justify-center space-x-4">
-                                                    <!-- <svg fill="#263652" class="w-12 h-12" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32.666 32.666" xml:space="preserve">
-                                                        <g id="SVGRepo_iconCarrier">
-                                                            <path d="M28.189,16.504h-1.666c0-5.437-4.422-9.858-9.856-9.858l-0.001-1.664C23.021,4.979,28.189,10.149,28.189,16.504z M16.666,7.856L16.665,9.52c3.853,0,6.983,3.133,6.981,6.983l1.666-0.001C25.312,11.735,21.436,7.856,16.666,7.856z M16.333,0 C7.326,0,0,7.326,0,16.334c0,9.006,7.326,16.332,16.333,16.332c0.557,0,1.007-0.45,1.007-1.006c0-0.559-0.45-1.01-1.007-1.01 c-7.896,0-14.318-6.424-14.318-14.316c0-7.896,6.422-14.319,14.318-14.319c7.896,0,14.317,6.424,14.317,14.319 c0,3.299-1.756,6.568-4.269,7.954c-0.913,0.502-1.903,0.751-2.959,0.761c0.634-0.377,1.183-0.887,1.591-1.529 c0.08-0.121,0.186-0.228,0.238-0.359c0.328-0.789,0.357-1.684,0.555-2.518c0.243-1.064-4.658-3.143-5.084-1.814 c-0.154,0.492-0.39,2.048-0.699,2.458c-0.275,0.366-0.953,0.192-1.377-0.168c-1.117-0.952-2.364-2.351-3.458-3.457l0.002-0.001 c-0.028-0.029-0.062-0.061-0.092-0.092c-0.031-0.029-0.062-0.062-0.093-0.092v0.002c-1.106-1.096-2.506-2.34-3.457-3.459 c-0.36-0.424-0.534-1.102-0.168-1.377c0.41-0.311,1.966-0.543,2.458-0.699c1.326-0.424-0.75-5.328-1.816-5.084 c-0.832,0.195-1.727,0.227-2.516,0.553c-0.134,0.057-0.238,0.16-0.359,0.24c-2.799,1.774-3.16,6.082-0.428,9.292 c1.041,1.228,2.127,2.416,3.245,3.576l-0.006,0.004c0.031,0.031,0.063,0.06,0.095,0.09c0.03,0.031,0.059,0.062,0.088,0.095 l0.006-0.006c1.16,1.118,2.535,2.765,4.769,4.255c4.703,3.141,8.312,2.264,10.438,1.098c3.67-2.021,5.312-6.338,5.312-9.719 C32.666,7.326,25.339,0,16.333,0z"></path>
-                                                        </g>
-                                                    </svg> -->
-                                                    <span>Datos de Persona Contacto - {{ $persContacto->nombre }}</span>
-                                                </div>
-                                            </summary>
-                                            <hr class="m-6">
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
-                                                <div class="space-y-3">
-                                                    <p class="text-md"><b>DNI:</b> {{ $persContacto->dni }}</p>
-                                                    <p class="text-md"><b>Nombre Completo:</b> {{ $persContacto->nombre }} {{ $persContacto->apellido }}</p>
-                                                </div>
-                                                <div class="space-y-3">
-                                                    <p class="text-md"><b>Teléfono:</b> {{ $persContacto->telefono }}</p>
-                                                    <p class="text-md"><b>Email:</b> {{ $persContacto->email }}</p>
-                                                </div>
-                                            </div>
-                                        </details>
-                                    @endforeach
-                                <!-- </div> -->
-                            </div>
-                        @endforeach
-
-
-
-                    <!-- Practica Section (Collapsible using details and summary) -->
-
-                        @foreach($empresa->practica as $practica)
-                            <div class="w-full">
-                                <div class="p-6 shadow-md border-2 border-blue my-6">
-                                    <div class="text-four font-semibold text-blue cursor-pointer flex justify-center items-center">
-                                        <div class="flex items-center space-x-4">
-                                            <!-- SVG on left -->
-                                            <svg version="1.1" class="w-10 h-10" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 496.794 496.794" xml:space="preserve" fill="#000000">
-                                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                                            <g id="SVGRepo_iconCarrier">
-                                                                <g>
-                                                                    <g>
-                                                                        <rect x="298.341" y="5.113" style="fill:#263652;" width="130.176" height="38.872"></rect>
-                                                                        <rect x="319.169" y="96.751" style="fill:#263652;" width="130.127" height="38.958"></rect>
-                                                                        <rect x="316.986" y="50.601" style="fill:#263652;" width="130.159" height="38.872"></rect>
-                                                                        <rect x="292.732" y="143.141" style="fill:#263652;" width="130.212" height="38.89"></rect>
-                                                                        <path style="fill:#263652;" d="M271.091,133.005h-118.15l5.268-35.906h-58.023L34.442,320.336h160.894l-0.086,176.458h58.279 l-0.231-234.412H134.226l11.131-76.739h125.786v-0.017c0,0,0.152,0,0.238,0v-52.621 C271.263,133.005,271.193,133.005,271.091,133.005z"></path>
-                                                                        <path style="fill:#263652;" d="M138.146,84.059c23.201,0,42.017-18.818,42.017-42.034C180.163,18.818,161.344,0,138.146,0 c-23.217,0-42.034,18.818-42.034,42.025C96.112,65.242,114.93,84.061,138.146,84.059z"></path>
-                                                                        <polygon style="fill:#263652;" points="192.334,196.937 192.334,237.02 303.231,237.02 303.231,496.794 350.874,496.794 350.874,237.02 462.352,237.02 462.352,196.937 "></polygon>
-                                                                        <polygon style="fill:#263652;" points="41.992,356.405 100.356,356.405 100.356,496.794 125.463,496.794 125.463,356.405 184.101,356.405 184.101,335.268 41.992,335.268 "></polygon>
-                                                                    </g>
-                                                                </g>
-                                                            </g>
-                                                        </svg>                        <!-- Title in the center -->
-                                            <span>Datos de Práctica - {{ $practica->cicloFormativo }}</span>
-                                        </div>
-                                    </div>
-                                    <hr class="m-6">
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-20  py-6">
-                                        <div class="space-y-3">
-                                            <p class="text-md"><b>Ciclo Formativo:</b> {{ $practica->cicloFormativo }}</p>
-                                            <p class="text-md"><b>Curso Académico:</b> {{ $practica->cursoAcademico }}</p>
-                                            <p class="text-md"><b>Periodo desde:</b> {{ $practica->periodoFrom }}</p>
-                                            <p class="text-md"><b>Periodo a:</b> {{ $practica->periodoTo }}</p>
-                                        </div>
-                                        <div class="space-y-3">
-                                            <p class="text-md"><b>Horario desde:</b> {{ $practica->horarioFrom }}</p>
-                                            <p class="text-md"><b>Horario a:</b> {{ $practica->horarioTo }}</p>
-                                            <p class="text-md"><b>Convenio Marco:</b> {{ $practica->convenioMarco }}</p>
-                                            <p class="text-md"><b>Uso Logos:</b> {{ $practica->usoLogos }}</p>
-                                            <p class="text-md"><b>Observaciones:</b> {{ $practica->observaciones }}</p>
-                                        </div>
-                                    </div>
-
-                                    <!-- Tutors Section (Collapsible using details and summary) -->
-                                    @foreach($practica->tutores as $tutor)
-                                        <details class="p-6 shadow-md border-2 border-blue my-6">
-                                            <summary class="text-four font-semibold text-blue cursor-pointer flex justify-center items-center">
-                                                <div class="flex items-center space-x-4">
-                                                    <!-- SVG on left -->
-                                                        <!-- <svg fill="#263652" class="w-10 h-10" height="200px" width="200px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <g> <path d="M50.918,445.739c1.143,0,2.295-0.23,3.405-0.717c27.221-11.853,73.19-18.022,136.678-18.347l6.161,12.339 c2.116,4.216,7.245,5.939,11.452,3.814c4.215-2.108,5.931-7.228,3.814-11.443l-8.525-17.067 c-1.451-2.893-4.403-4.719-7.637-4.719c-69.538,0-118.204,6.468-148.762,19.772c-4.318,1.886-6.289,6.912-4.412,11.238 C44.493,443.819,47.625,445.739,50.918,445.739z"></path> <path d="M494.933,460.8h-17.067v-42.667c0-2.261-0.905-4.437-2.5-6.033l-51.268-51.26c1.604-3.337,2.569-7.031,2.569-10.974 c0-14.114-11.486-25.6-25.6-25.6c-14.114,0-25.6,11.486-25.6,25.6s11.486,25.6,25.6,25.6c3.942,0,7.629-0.964,10.965-2.56 l48.768,48.759V460.8H17.067C7.654,460.8,0,468.454,0,477.867v25.6C0,508.177,3.823,512,8.533,512s8.533-3.823,8.533-8.533v-25.6 h477.867v25.6c0,4.71,3.814,8.533,8.533,8.533c4.719,0,8.533-3.823,8.533-8.533v-25.6C512,468.454,504.337,460.8,494.933,460.8z M401.067,358.4c-4.71,0-8.533-3.831-8.533-8.533s3.823-8.533,8.533-8.533s8.533,3.831,8.533,8.533S405.777,358.4,401.067,358.4z "></path> <path d="M121.83,255.249c6.221,16.196,26.803,68.42,41.737,90.82l1.348,2.039c10.957,16.614,29.286,44.424,91.085,44.424 c61.79,0,80.128-27.81,91.085-44.424l1.348-2.039c14.933-22.4,35.507-74.624,41.737-90.82c11.145-2.773,19.43-12.86,19.43-24.849 v-34.133c0-11.127-7.134-20.617-17.067-24.141V128c0-33.69-17.741-95.923-83.362-101.931c-0.128-4.028-1.459-7.27-2.944-9.668 C297.839,2.842,274.287,0,256,0C104.158,0,102.4,143.616,102.4,145.067c0,4.71,3.814,8.525,8.516,8.525h0.017 c4.702,0,8.516-3.806,8.533-8.516c0.017-5.222,1.937-128.009,136.533-128.009c24.132,0,33.801,5.222,35.712,8.311 c0.265,0.435,0.99,1.604-0.683,4.941c-1.323,2.645-1.178,5.786,0.375,8.303c1.562,2.509,4.301,4.045,7.262,4.045 c75.657,0,76.791,81.86,76.8,85.333v51.2c0,4.71,3.814,8.533,8.533,8.533c4.71,0,8.533,3.831,8.533,8.533V230.4 c0,4.702-3.823,8.533-8.533,8.533c-3.558,0-6.741,2.21-7.996,5.538c-0.247,0.674-25.446,67.644-41.771,92.126l-1.399,2.116 c-10.223,15.514-24.235,36.753-76.834,36.753c-52.608,0-66.611-21.239-76.834-36.753l-1.399-2.116 c-16.324-24.482-41.523-91.452-41.779-92.126c-1.246-3.328-4.429-5.538-7.987-5.538c-4.702,0-8.533-3.831-8.533-8.533v-34.133 c0-2.313,0.922-4.412,2.423-5.948c3.098,6.955,9.421,13.21,20.045,14.268l29.201,21.897C173.414,243.106,187.554,256,204.8,256 h17.067C240.691,256,256,240.691,256,221.867C256,240.691,271.309,256,290.133,256H307.2c17.237,0,31.394-12.894,33.664-29.525 l31.189-23.381c3.772-2.825,4.54-8.175,1.707-11.947c-2.825-3.772-8.175-4.548-11.947-1.707l-21.751,16.316 c-3.251-10.402-12.86-18.022-24.329-18.022H281.6c-14.114,0-25.6,11.486-25.6,25.6c0-14.114-11.486-25.6-25.6-25.6h-34.133 c-11.46,0-21.069,7.62-24.328,18.022l-16.282-12.211c6.716-16.23,12.8-40.235,14.524-57.088 c26.897-0.478,104.713-3.763,139.332-25.37c7.851,30.31,33.05,55.817,34.321,57.08c3.336,3.336,8.73,3.336,12.066,0 c3.336-3.337,3.336-8.73,0-12.066c-0.316-0.316-31.633-31.983-31.633-62.234c0-3.831-2.56-7.202-6.255-8.226 c-3.678-1.024-7.629,0.546-9.591,3.831c-12.425,20.693-93.022,29.995-146.287,29.995c-4.71,0-8.533,3.823-8.533,8.533 c0,13.85-6.545,41.515-13.508,58.539c-2.722-1.638-3.49-4.693-3.558-7.339c0-4.71-3.823-8.533-8.533-8.533 c-14.114,0-25.6,11.486-25.6,25.6V230.4C102.4,242.389,110.686,252.476,121.83,255.249z M273.067,213.333 c0-4.702,3.823-8.533,8.533-8.533h34.133c4.71,0,8.533,3.831,8.533,8.533v8.533c0,9.412-7.654,17.067-17.067,17.067h-17.067 c-9.412,0-17.067-7.654-17.067-17.067V213.333z M187.733,213.333c0-4.702,3.831-8.533,8.533-8.533H230.4 c4.702,0,8.533,3.831,8.533,8.533v8.533c0,9.412-7.654,17.067-17.067,17.067H204.8c-9.412,0-17.067-7.654-17.067-17.067V213.333z "></path> <path d="M298.658,307.226c0.009-4.702-3.797-8.533-8.499-8.559c-0.162,0-15.42-0.171-30.345-7.637 c-2.398-1.195-5.231-1.195-7.629,0c-14.925,7.467-30.191,7.637-30.319,7.637c-4.71,0-8.533,3.823-8.533,8.533 s3.823,8.533,8.533,8.533c0.725,0,16.845-0.094,34.133-7.654c17.28,7.56,33.408,7.654,34.133,7.654 C294.835,315.733,298.641,311.927,298.658,307.226z"></path> <path d="M315.708,409.95c-3.191,0.017-6.118,1.809-7.578,4.659l-8.533,16.708c-2.142,4.198-0.469,9.344,3.721,11.486 c1.237,0.631,2.569,0.93,3.874,0.93c3.106,0,6.101-1.698,7.612-4.651l6.153-12.066c46.643,0.128,84.207,3.618,111.735,10.377 c4.591,1.135,9.199-1.672,10.317-6.246c1.126-4.582-1.664-9.199-6.246-10.325C406.878,413.474,366.345,409.651,315.708,409.95z"></path> <path d="M247.467,418.133V435.2c0,4.71,3.823,8.533,8.533,8.533s8.533-3.823,8.533-8.533v-17.067c0-4.71-3.823-8.533-8.533-8.533 S247.467,413.423,247.467,418.133z"></path> <path d="M247.467,324.267c-4.71,0-8.533,3.823-8.533,8.533c0,4.71,3.823,8.533,8.533,8.533h17.067 c4.719,0,8.533-3.823,8.533-8.533c0-4.71-3.814-8.533-8.533-8.533H247.467z"></path> </g> </g> </g> </g></svg>                                Title in the center -->
-                                                    <span>Datos de Tutor</span>
-                                                </div>
-                                            </summary>
-                                            <hr class="m-6">
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
-                                                <div class="space-y-3">
-                                                    <p class="text-md"><b>DNI:</b> {{ $tutor->dni }}</p>
-                                                    <p class="text-md"><b>Nombre Completo:</b> {{ $tutor->nombre }} {{ $tutor->apellido }}</p>
-                                                </div>
-                                                <div class="space-y-3">
-                                                    <p class="text-md"><b>Teléfono:</b> {{ $tutor->telefono }}</p>
-                                                    <p class="text-md"><b>Email:</b> {{ $tutor->email }}</p>
-                                                </div>
-                                            </div>
-                                        </details>
-                                    @endforeach
-
-                                    @foreach($practica->tutoresEmpresa as $tutorEmp)
-                                        <details class="p-6 shadow-md border-2 border-blue my-6">
-                                            <summary class="text-four font-semibold text-blue cursor-pointer flex justify-center items-center">
-                                                <div class="flex items-center space-x-4">
-                                                    <!-- SVG on left -->
-                                                    <!-- <svg fill="#263652" class="w-10 h-10" height="200px" width="200px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M501.552,59.003h-88.101c-5.77,0-10.448,4.678-10.448,10.448s4.677,10.448,10.448,10.448h77.653v290.453h-58.811 c-5.77,0-10.448,4.678-10.448,10.448s4.677,10.448,10.448,10.448h69.259c5.77,0,10.448-4.678,10.448-10.448V69.451 C512,63.68,507.323,59.003,501.552,59.003z"></path> </g> </g> <g> <g> <path d="M326.152,425.203h-0.137c-5.77,0-10.448,4.677-10.448,10.448c0,5.77,4.678,10.448,10.448,10.448h0.137 c5.77,0,10.448-4.677,10.448-10.448C336.6,429.88,331.923,425.203,326.152,425.203z"></path> </g> </g> <g> <g> <path d="M10.585,460.203h-0.137C4.678,460.203,0,464.881,0,470.651s4.678,10.448,10.448,10.448h0.137 c5.77,0,10.448-4.678,10.448-10.448S16.355,460.203,10.585,460.203z"></path> </g> </g> <g> <g> <path d="M501.501,460.202h-0.137c-5.77,0-10.448,4.677-10.448,10.448c0,5.77,4.677,10.448,10.448,10.448h0.137 c5.77,0,10.448-4.678,10.448-10.448C511.949,464.88,507.271,460.202,501.501,460.202z"></path> </g> </g> <g> <g> <path d="M266.228,230.469h-20.419c-5.77,0-10.448,4.677-10.448,10.448c0,11.39,9.267,20.658,20.658,20.658 s20.657-9.267,20.658-20.658C276.676,235.146,271.998,230.469,266.228,230.469z"></path> </g> </g> <g> <g> <path d="M130.295,250.2H55.918c-5.77,0-10.448,4.678-10.448,10.448c0,5.77,4.678,10.448,10.448,10.448h74.377 c5.77,0,10.448-4.678,10.448-10.448C140.743,254.877,136.066,250.2,130.295,250.2z"></path> </g> </g> <g> <g> <path d="M130.295,321.246H55.918c-5.77,0-10.448,4.678-10.448,10.448s4.678,10.448,10.448,10.448h74.377 c5.77,0,10.448-4.678,10.448-10.448C140.743,325.923,136.066,321.246,130.295,321.246z"></path> </g> </g> <g> <g> <path d="M130.295,285.722H55.918c-5.77,0-10.448,4.678-10.448,10.448s4.678,10.448,10.448,10.448h74.377 c5.77,0,10.448-4.678,10.448-10.448S136.066,285.722,130.295,285.722z"></path> </g> </g> <g> <g> <path d="M130.295,214.677H55.918c-5.77,0-10.448,4.678-10.448,10.448s4.678,10.448,10.448,10.448h74.377 c5.77,0,10.448-4.678,10.448-10.448S136.066,214.677,130.295,214.677z"></path> </g> </g> <g> <g> <path d="M458.619,250.2h-74.377c-5.77,0-10.448,4.678-10.448,10.448c0,5.77,4.678,10.448,10.448,10.448h74.377 c5.769,0,10.448-4.678,10.448-10.448C469.067,254.877,464.39,250.2,458.619,250.2z"></path> </g> </g> <g> <g> <path d="M458.619,285.722h-74.377c-5.77,0-10.448,4.678-10.448,10.448s4.678,10.448,10.448,10.448h74.377 c5.769,0,10.448-4.678,10.448-10.448S464.39,285.722,458.619,285.722z"></path> </g> </g> <g> <g> <path d="M467.563,460.203h-57.964V389.56c0-20.365-12.291-39.709-29.888-47.042l-67.241-28.016 c-2.392-0.996-3.936-3.313-3.936-5.904v-16.27l27.31-15.659c0.19-0.109,0.377-0.225,0.561-0.346 c13.674-9.03,22.654-25.091,24.02-42.961c0.021-0.264,0.03-0.531,0.03-0.796v-8.674c7.337-2.386,13.562-7.228,17.751-13.535 c1.183,0.085,2.366,0.14,3.551,0.14c27.638,0,50.123-22.485,50.123-50.123c0-6.381-1.222-12.69-3.571-18.576 c6.727-9.543,10.369-20.939,10.369-32.757c0-31.387-25.534-56.92-56.92-56.92c-0.191,0-0.382,0.001-0.575,0.003 c-7.957-12.947-22.31-21.223-37.807-21.223c-13.84,0-26.515,6.343-34.771,16.825c-15.418-9.007-33.338-14.177-52.445-14.177 c-19.181,0-37.167,5.21-52.625,14.282c-8.248-10.548-20.952-16.93-34.856-16.93c-15.497,0-29.849,8.276-37.807,21.223 c-0.192-0.002-0.383-0.003-0.575-0.003c-31.387,0-56.92,25.534-56.92,56.92c0,11.819,3.641,23.214,10.369,32.757 c-2.349,5.885-3.571,12.195-3.571,18.576c0,27.638,22.485,50.123,50.123,50.123c1.151,0,2.304-0.052,3.454-0.132 c4.189,6.302,10.412,11.142,17.746,13.527v8.674c0,0.265,0.01,0.532,0.03,0.796c1.372,17.943,10.288,34.003,23.852,42.961 c0.187,0.123,0.378,0.24,0.573,0.352l27.467,15.702v16.219c0,2.59-1.545,4.907-3.936,5.904l-67.242,28.017 c-11.861,4.942-21.302,15.344-26.203,27.833H20.948V79.9h48.06c5.77,0,10.448-4.678,10.448-10.448s-4.677-10.448-10.448-10.448 H10.5c-5.77,0-10.448,4.678-10.448,10.448V380.8c0,5.77,4.678,10.448,10.448,10.448h91.852v68.956H44.386 c-5.77,0-10.448,4.678-10.448,10.448c0,5.77,4.678,10.448,10.448,10.448h423.177c5.77,0,10.448-4.677,10.448-10.448 C478.011,464.882,473.333,460.203,467.563,460.203z M309.05,335.714l18.68,7.783l-28.194,34.157 c-3.57,4.326-3.088,10.697,1.091,14.437l5.829,5.217l-27.822,22.197L309.05,335.714z M343.375,51.797 c9.62,0,18.405,6.036,21.859,15.019c1.753,4.557,6.429,7.295,11.26,6.588c1.76-0.257,3.53-0.388,5.262-0.388 c19.864,0,36.025,16.161,36.025,36.024c0,9.025-3.356,17.66-9.448,24.314c-3.091,3.375-3.624,8.369-1.319,12.321 c2.596,4.45,3.969,9.532,3.969,14.697c0,15.439-12.035,28.111-27.214,29.15c-0.895-14.069-10.405-25.836-23.315-30.035v-21.645 c0-30.892-13.506-58.686-34.917-77.801C329.903,54.893,336.352,51.797,343.375,51.797z M128.18,189.516 c-15.132-1.088-27.112-13.738-27.112-29.142c0-5.165,1.372-10.247,3.969-14.697c2.307-3.952,1.772-8.947-1.319-12.321 c-6.093-6.655-9.448-15.289-9.448-24.314c0-19.864,16.161-36.024,36.024-36.024c1.731,0,3.501,0.131,5.262,0.388 c4.836,0.706,9.507-2.031,11.26-6.588c3.455-8.983,12.24-15.019,21.859-15.019c7.092,0,13.589,3.147,17.953,8.379 c-20.654,18.51-33.914,45.112-34.727,74.772c-0.265,0.919-0.407,1.892-0.407,2.897v21.645 C138.589,163.688,129.079,175.45,128.18,189.516z M186.636,258.712c-7.984-5.404-13.284-15.289-14.245-26.566v-17.052 c0-5.77-4.678-10.448-10.448-10.448c-7.143,0-12.954-5.812-12.954-12.954s5.812-12.954,12.954-12.954 c5.77,0,10.448-4.678,10.448-10.448v-27.687c0.239-0.878,0.368-1.802,0.368-2.756c0-45.987,37.413-83.4,83.4-83.4 s83.4,37.412,83.4,83.399v30.443c0,5.77,4.678,10.448,10.448,10.448c7.143,0,12.954,5.812,12.954,12.954 s-5.812,12.954-12.954,12.954c-5.77,0-10.448,4.677-10.448,10.448v17.05c-0.949,11.049-6.442,21.174-14.418,26.574 c0,0-57.988,33.33-58.666,33.691v-9.443c0-5.77-4.678-10.448-10.448-10.448s-10.448,4.677-10.448,10.448v9.495 C244.864,292.085,186.636,258.712,186.636,258.712z M203.219,335.58l30.464,83.923l-27.822-22.197l5.829-5.217 c4.179-3.74,4.66-10.112,1.091-14.437l-28.287-34.271L203.219,335.58z M123.246,460.203L123.246,460.203V389.56 c0-11.776,7.321-23.707,17.029-27.753l24.056-10.023l25.942,31.431l-7.56,6.765c-2.291,2.051-3.564,5.007-3.477,8.081 c0.087,3.074,1.523,5.954,3.928,7.872l66.477,53.035c0.621,0.495,1.287,0.902,1.98,1.236H123.246z M220.628,322.301 c2.362-4.073,3.684-8.77,3.684-13.705v-4.274l7.938,4.538c7.043,4.574,14.882,6.928,22.751,7.11 c0.337,0.032,0.678,0.051,1.024,0.051c0.37,0,0.734-0.021,1.095-0.057c7.814-0.212,15.593-2.563,22.585-7.107l7.931-4.548v4.288 c0,5.088,1.411,9.921,3.915,14.081l-35.393,97.503L220.628,322.301z M388.703,425.203h-28.751c-5.77,0-10.448,4.677-10.448,10.448 c0,5.77,4.677,10.448,10.448,10.448h28.751v14.105h-128c0.535-0.259,1.054-0.561,1.549-0.916c0.143-0.102,0.277-0.214,0.414-0.324 c0.003,0.001,0.005,0.003,0.008,0.004l66.477-53.035c2.404-1.917,3.841-4.798,3.928-7.871c0.087-3.074-1.185-6.031-3.477-8.081 l-7.56-6.765l25.848-31.317l23.783,9.909c9.708,4.045,17.029,15.976,17.029,27.753V425.203z"></path> </g> </g> <g> <g> <path d="M294.077,181.243c-6.44,0-11.679,5.239-11.679,11.679c0,6.439,5.239,11.678,11.679,11.678s11.679-5.239,11.679-11.678 C305.756,186.482,300.517,181.243,294.077,181.243z"></path> </g> </g> <g> <g> <path d="M217.872,181.243c-6.44,0-11.679,5.239-11.679,11.679c0,6.439,5.239,11.678,11.679,11.678s11.679-5.239,11.679-11.678 C229.549,186.482,224.311,181.243,217.872,181.243z"></path> </g> </g> <g> <g> <path d="M304.298,100.392c-13.405-11.666-30.565-18.091-48.324-18.091s-34.919,6.424-48.324,18.09 c-4.353,3.788-4.81,10.387-1.023,14.74c3.787,4.353,10.387,4.811,14.741,1.023c9.601-8.355,21.891-12.956,34.606-12.956 c12.715,0,25.005,4.601,34.606,12.956c1.979,1.722,4.422,2.567,6.855,2.567c2.918,0,5.82-1.215,7.886-3.589 C309.108,110.779,308.652,104.181,304.298,100.392z"></path> </g> </g> <g> <g> <path d="M290.571,129.015c-9.596-8.352-21.883-12.951-34.596-12.951c-12.713,0-25,4.599-34.596,12.951 c-4.354,3.787-4.81,10.387-1.023,14.74c3.787,4.353,10.387,4.811,14.74,1.023c5.793-5.041,13.208-7.817,20.879-7.817 c7.671,0,15.086,2.776,20.879,7.817c1.979,1.723,4.422,2.567,6.854,2.567c2.918,0,5.821-1.216,7.886-3.59 C295.381,139.403,294.924,132.804,290.571,129.015z"></path> </g> </g> <g> <g> <path d="M312.23,154.079h-31.866c-5.77,0-10.448,4.678-10.448,10.448s4.677,10.448,10.448,10.448h31.866 c5.77,0,10.448-4.678,10.448-10.448S318.001,154.079,312.23,154.079z"></path> </g> </g> <g> <g> <path d="M231.686,154.079H199.82c-5.77,0-10.448,4.678-10.448,10.448s4.678,10.448,10.448,10.448h31.866 c5.77,0,10.448-4.678,10.448-10.448S237.456,154.079,231.686,154.079z"></path> </g> </g> </g></svg>-->                              
-                                                     <span>Datos de Tutor Empresa</span> 
-                                                </div>
-                                            </summary>
-                                            <hr class="m-6">
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-20 ">
-                                                <div class="space-y-3">
-                                                    <p class="text-md"><b>DNI:</b> {{ $tutorEmp->dni }}</p>
-                                                    <p class="text-md"><b>Nombre Completo:</b> {{ $tutorEmp->nombre }} {{ $tutorEmp->apellido }}</p>
-                                                </div>
-                                                <div class="space-y-3">
-                                                    <p class="text-md"><b>Teléfono:</b> {{ $tutorEmp->telefono }}</p>
-                                                    <p class="text-md"><b>Email:</b> {{ $tutorEmp->email }}</p>
-                                                </div>
-                                            </div>
-                                        </details>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endforeach
-
-
+            <!-- ENCABEZADO EMPRESA -->
+            <div class="text-center">
+                <h2 class="text-3xl font-bold text-blue tracking-wide mb-2">Datos de la Empresa</h2>
+                <p class="text-gray-500 text-sm">Información general y detalles administrativos</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 text-gray-800 text-[15px] leading-relaxed">
+                <div class="space-y-2">
+                    <p><span class="font-semibold">Nombre:</span> {{ $empresa->nombre }}</p>
+                    <p><span class="font-semibold">CIF:</span> {{ $empresa->cif }}</p>
+                    <p><span class="font-semibold">Colaboración:</span> {{ $empresa->colaboracion }}</p>
+                    <p><span class="font-semibold">Gestiones:</span> {{ $empresa->gestiones }}</p>
+                    <p><span class="font-semibold">Modalidad:</span> {{ $empresa->modalidad }}</p>
+                    <p><span class="font-semibold">Familia Personal:</span> {{ $empresa->familiaPersonal }}</p>
+                    <p><span class="font-semibold">Oferta Laboral:</span> {{ $empresa->ofertaLaboral }}</p>
                 </div>
-</div>
-            @endif
-        @endforeach
+                <div class="space-y-2">
+                    <p><span class="font-semibold">Entidad:</span> {{ $empresa->entidad }}</p>
+                    <p><span class="font-semibold">Ubicación:</span> {{ $empresa->ubicacion }}</p>
+                    <p><span class="font-semibold">Municipio:</span> {{ $empresa->municipio }}</p>
+                    <p><span class="font-semibold">Dirección:</span> {{ $empresa->direccion }}</p>
+                    <p><span class="font-semibold">Código Postal:</span> {{ $empresa->codigoPostal }}</p>
+                    <p><span class="font-semibold">Observaciones:</span> {{ $empresa->observaciones }}</p>
+                </div>
+            </div>
 
-    </div>
+            <!-- RESPONSABLES DE CONVENIO -->
+            @foreach ($empresa->responsablesConvenio as $resConv)
+            <div class="bg-white_dull p-6 rounded-xl border-l-4 border-blue shadow-sm">
+                <h3 class="text-xl font-semibold text-blue mb-4">Responsable de Convenio</h3>
+                <div class="grid md:grid-cols-2 gap-6 text-gray-700">
+                    <p><strong>DNI:</strong> {{ $resConv->dni }}</p>
+                    <p><strong>Nombre Completo:</strong> {{ $resConv->nombre }} {{ $resConv->apellido }}</p>
+                    <p><strong>Teléfono:</strong> {{ $resConv->telefono }}</p>
+                    <p><strong>Email:</strong> {{ $resConv->email }}</p>
+                </div>
+            </div>
+            @endforeach
+
+            <!-- CENTROS DE TRABAJO -->
+            @foreach ($empresa->centrosTrabajo as $centro)
+            <div class="bg-white_dull p-6 rounded-xl border-l-4 border-blue shadow-sm">
+                <h3 class="text-xl font-semibold text-blue mb-4">Centro de Trabajo - {{ $centro->municipio }}</h3>
+                <div class="grid md:grid-cols-2 gap-6 text-gray-700">
+                    <p><strong>Dirección:</strong> {{ $centro->direccion }}</p>
+                    <p><strong>Código Postal:</strong> {{ $centro->codigoPostal }}</p>
+                    <p><strong>Ubicación:</strong> {{ $centro->ubicacion }}</p>
+                    <p><strong>Municipio:</strong> {{ $centro->municipio }}</p>
+                </div>
+
+                @foreach ($centro->personaContacto as $persContacto)
+                <details class="mt-6 bg-white border border-blue rounded-lg p-4">
+                    <summary class="cursor-pointer text-blue font-semibold">Persona de Contacto - {{ $persContacto->nombre }}</summary>
+                    <div class="mt-4 grid md:grid-cols-2 gap-4 text-gray-700">
+                        <p><strong>DNI:</strong> {{ $persContacto->dni }}</p>
+                        <p><strong>Nombre Completo:</strong> {{ $persContacto->nombre }} {{ $persContacto->apellido }}</p>
+                        <p><strong>Teléfono:</strong> {{ $persContacto->telefono }}</p>
+                        <p><strong>Email:</strong> {{ $persContacto->email }}</p>
+                    </div>
+                </details>
+                @endforeach
+            </div>
+            @endforeach
+
+            <!-- PRÁCTICAS -->
+            @foreach ($empresa->practica as $practica)
+            <div class="bg-white_dull p-6 rounded-xl border-l-4 border-blue shadow-sm">
+                <h3 class="text-xl font-semibold text-blue mb-4">Prácticas - {{ $practica->cicloFormativo }}</h3>
+                <div class="grid md:grid-cols-2 gap-6 text-gray-700">
+                    <p><strong>Curso Académico:</strong> {{ $practica->cursoAcademico }}</p>
+                    <p><strong>Plazas:</strong> {{ $practica->numPlazasAsignadas }}</p>
+                    <p><strong>Periodo:</strong> {{ $practica->periodoFrom }} - {{ $practica->periodoTo }}</p>
+                    <p><strong>Horario:</strong> {{ $practica->horarioFrom }} - {{ $practica->horarioTo }}</p>
+                    <p><strong>Convenio Marco:</strong> {{ $practica->convenioMarco }}</p>
+                    <p><strong>Uso Logos:</strong> {{ $practica->usoLogos }}</p>
+                    <p><strong>Observaciones:</strong> {{ $practica->observaciones }}</p>
+                </div>
+
+                <!-- TUTORES ACADÉMICOS -->
+                @foreach ($practica->tutores as $tutor)
+                <details class="mt-6 bg-white border border-blue rounded-lg p-4">
+                    <summary class="cursor-pointer text-blue font-semibold">Tutor Académico - {{ $tutor->nombre }}</summary>
+                    <div class="mt-4 grid md:grid-cols-2 gap-4 text-gray-700">
+                        <p><strong>DNI:</strong> {{ $tutor->dni }}</p>
+                        <p><strong>Nombre Completo:</strong> {{ $tutor->nombre }} {{ $tutor->apellido }}</p>
+                        <p><strong>Teléfono:</strong> {{ $tutor->telefono }}</p>
+                        <p><strong>Email:</strong> {{ $tutor->email }}</p>
+                    </div>
+                </details>
+                @endforeach
+
+                <!-- TUTORES EMPRESA -->
+                @foreach ($practica->tutoresEmpresa as $tutorEmp)
+                <details class="mt-6 bg-white border border-blue rounded-lg p-4">
+                    <summary class="cursor-pointer text-blue font-semibold">Tutor Empresa - {{ $tutorEmp->nombre }}</summary>
+                    <div class="mt-4 grid md:grid-cols-2 gap-4 text-gray-700">
+                        <p><strong>DNI:</strong> {{ $tutorEmp->dni }}</p>
+                        <p><strong>Nombre Completo:</strong> {{ $tutorEmp->nombre }} {{ $tutorEmp->apellido }}</p>
+                        <p><strong>Teléfono:</strong> {{ $tutorEmp->telefono }}</p>
+                        <p><strong>Email:</strong> {{ $tutorEmp->email }}</p>
+                    </div>
+                </details>
+                @endforeach
+            </div>
+            @endforeach
+
+        </div>
+        @endif
+    @endforeach
 </section>
-
-
