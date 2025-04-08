@@ -1,120 +1,67 @@
 <x-app-layout>
-<section class="bg-white overflow-hidden">
-    <section style="background-image: url('../images/Group 58.png');" class="relative flex-grow-0 flex-shrink-0 bg-fixed bg-cover bg-center mb-16">
-
-        <!-- <section class="relative pt-6">
-            <div class="bg-white shadow-xl w-[300px] h-[300px] absolute left-[4%] rounded-full">
-            
-            </div>
-        </section> -->
-        @if(count($users) > 0)
-        @foreach ($users as $key => $user)
-        @if (Auth::user()->id == $user->id)
-        <section class="absolute md:left-[24%] md:top-[180px]">
-            <div class="bg-orange rounded-[5px] shadow-xl px-10 py-2">
-                <div class="text-white text-center font-['Roboto-Bold',_sans-serif] text-[20px] font-bold">{{ $user->name }}<!-- Aqui el nombre del usuario --></div>
-            </div>
-        </section>
-
-        <section class="pt-[7%]">
-            <section class="md:mx-[9%] sm:mx-[3%] p-6">
-                <div class="flex flex-col md:flex-row md:gap-24 w-full">
-
-                <div class="bg-primary text-white p-8 sm:w-[60%] md:w-[50%] h-[360px]">
-                    <div class="flex-col items-start">
-                        <h2 class="text-2xl font-bold mt-7 mb-7">USUARIO:</h2>
-                        <div class="mt-4 flex w-full">
-                            <p><b>Nivel de acceso: </b><span style="margin-left: auto; margin-right: 0;">{{ $user->role }}</span></p>
+    <section class="bg-white overflow-hidden">
+        <section class="relative bg-cover bg-center bg-fixed mb-16" style="background-image: url('../images/Group 58.png');">
+            @if(count($users) > 0)
+                @foreach ($users as $key => $user)
+                    @if (Auth::user()->id == $user->id)
+                        <!-- User Name Badge -->
+                        <div class="absolute left-[31%] transform -translate-x-1/2 md:top-[31%] w-fit">
+                            <div class="bg-gradient-to-r from-orange to-orange/80 shadow-lg rounded-full px-6 py-2">
+                                <h1 class="text-white text-center text-xl font-semibold tracking-wide uppercase">
+                                    {{ $user->role }}
+                                </h1>
+                            </div>
                         </div>
-                        <div class="mt-4 flex w-full">
-                            <p><b>Provincia: </b><span style="margin-left: auto; margin-right: 0;">{{ $user->municipio }}</span></p>
-                        </div>
-                        <div class="mt-4 flex w-full">
-                            <p><b>Telefono: </b><span style="margin-left: auto; margin-right: 0;">{{ $user->telefono }}</span></p>
-                        </div>
-                        <div class="mt-4 flex w-full">
-                            <p><b>Correo: </b><span style="margin-left: auto; margin-right: 0;">{{ $user->email }}</span></p>
-                        </div>
-                        <div class="mt-4 flex w-full">
-                            <p><b>Situación: </b><span style="margin-left: auto; margin-right: 0;">{{ $user->situacion }}</span></p>
-                        </div>
-                    </div>
-                </div>
 
 
+                        <!-- Info and Tasks -->
+                        <section class="pt-[7%]">
+                            <div class="md:mx-[9%] sm:mx-[3%] p-6">
+                                <div class="flex flex-col md:flex-row md:gap-12 w-full">
+
+                                    <!-- User Info Card -->
+                                    <div class="bg-primary text-white rounded-xl shadow-lg p-8 sm:w-full md:w-[50%] h-auto">
+                                        <h2 class="text-3xl font-bold mt-3 mb-12"> Usuario</h2>
+
+                                        <div class="space-y-4  text-base">
+                                            <p><strong>Nombre:</strong> <span class="float-right">{{ $user->name }}</span></p>
+                                            <p><strong>Provincia:</strong> <span class="float-right">{{ $user->municipio }}</span></p>
+                                            <p><strong>Teléfono:</strong> <span class="float-right">{{ $user->telefono }}</span></p>
+                                            <p><strong>Correo:</strong> <span class="float-right">{{ $user->email }}</span></p>
+                                            <p><strong>Situación:</strong> <span class="float-right">{{ $user->situacion }}</span></p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Tareas Pendientes -->
+                                    <input type="checkbox" id="toggle" class="hidden peer" />
+                                    <div class="w-full bg-white border-[6px] border-primary p-6 rounded-2xl shadow-lg mt-8 peer-checked:h-auto transition-all duration-500">
+                                        <h3 class="text-2xl text-primary font-bold text-center mb-6"> Tareas Pendientes</h3>
+
+                                        <ul class="space-y-4">
+                                            @for ($i = 0; $i < 6; $i++)
+                                                <li class="flex items-center text-orange font-semibold {{ $i >= 4 ? 'hidden peer-checked:flex' : '' }}">
+                                                    <div class="w-8 h-8 flex items-center justify-center bg-orange text-white rounded-full text-lg">!</div>
+                                                    <span class="ml-3"> <!-- Aquí la tarea {{ $i + 1 }} --> </span>
+                                                </li>
+                                            @endfor
+                                        </ul>
+
+                                        <!-- Toggle Button -->
+                                        <div class="flex justify-center mt-6">
+                                            <label for="toggle" class="cursor-pointer flex items-center gap-2 text-white bg-orange hover:bg-orange-600 px-5 py-2 rounded-full shadow-md transition-all">
+                                                <img class="w-5 peer-checked:hidden" src="../images/flecha-hacia-abajo.png" alt="Mostrar más">
+                                                <img class="w-5 hidden peer-checked:block" src="../images/flecha-hacia-arriba.png" alt="Mostrar menos">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     @endif
-                    @endforeach
-                    @else
-                        <p>No users found.</p>
-                    @endif 
-                    <input type="checkbox" id="toggle" class="hidden peer"/>
-
-                    <!-- const dropdownBtn = document.getElementById("btn");
-const dropdownMenu = document.getElementById("dropdown");
-const toggleArrow = document.getElementById("arrow");
-
-// Toggle dropdown function
-const toggleDropdown = function () {
-  dropdownMenu.classList.toggle("show");
-  toggleArrow.classList.toggle("arrow");
-};
-
-// Toggle dropdown open/close when dropdown button is clicked
-dropdownBtn.addEventListener("click", function (e) {
-  e.stopPropagation();
-  toggleDropdown();
-});
-
-// Close dropdown when dom element is clicked
-document.documentElement.addEventListener("click", function () {
-  if (dropdownMenu.classList.contains("show")) {
-    toggleDropdown();
-  }
-}); -->
-
-                    <div class="w-full h-[400px] bg-white border-[10px] border-primary p-6 rounded-[30px] mt-[-75px] peer-checked:h-[500px] transition-all duration-500">
-                        <h3 class="text-xl text-primary text-center font-extrabold">TAREAS PENDIENTES</h3>
-                        <ul class="mt-10 space-y-4">
-                            <li class="flex items-center text-orange font-bold">
-                                <div class="w-8 h-8 flex items-center justify-center bg-orange text-white rounded-full text-xl">!</div>
-                                <span class="ml-3"> <!--Aqui la tarea--> </span>
-                            </li>
-                            <li class="flex items-center text-orange font-bold">
-                                <div class="w-8 h-8 flex items-center justify-center bg-orange text-white rounded-full text-xl">!</div>
-                                <span class="ml-3"> <!--Aqui la tarea--> </span>
-                            </li>
-                            <li class="flex items-center text-orange font-bold">
-                                <div class="w-8 h-8 flex items-center justify-center bg-orange text-white rounded-full text-xl">!</div>
-                                <span class="ml-3"> <!--Aqui la tarea--> </span>
-                            </li>
-                            <li class="flex items-center text-orange font-bold">
-                                <div class="w-8 h-8 flex items-center justify-center bg-orange text-white rounded-full text-xl">!</div>
-                                <span class="ml-3"> <!--Aqui la tarea--> </span>
-                            </li>
-                            <li class="flex items-center text-orange font-bold hidden peer-checked:block">
-                                <div class="w-8 h-8 flex items-center justify-center bg-orange text-white rounded-full text-xl">!</div>
-                                <span class="ml-3"> <!--Aqui la tarea--> </span>
-                            </li>
-                            <li class="flex items-center text-orange font-bold hidden peer-checked:block">
-                                <div class="w-8 h-8 flex items-center justify-center bg-orange text-white rounded-full text-xl">!</div>
-                                <span class="ml-3"> <!--Aqui la tarea--> </span>
-                            </li>
-                        </ul>
-                        <div class="flex justify-center mt-[8%] mb-[-10px]">
-                            <button class="bg-orange text-white px-3 py-3 rounded-full text-bold">
-
-                            <label for="toggle" class="cursor-pointer transition-all duration-500 ease-in-out">
-                                <img class="w-[20px] peer-checked:hidden" src="../images/flecha-hacia-abajo.png" alt="">
-                            </label>
-                            <label for="toggle" class="cursor-pointer transition-all duration-500 ease-in-out">
-                                <img class="w-[20px] hidden peer-checked:block" src="../images/flecha-hacia-arriba.png" alt="">
-                            </label>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                @endforeach
+            @else
+                <p class="text-center py-10 text-gray-600">No users found.</p>
+            @endif
         </section>
     </section>
-</section>
 </x-app-layout>
