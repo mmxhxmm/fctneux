@@ -4,7 +4,7 @@
 @endphp
     <div class="w-full flex flex-col grid-rows-3 bg-white">
         <!-- First Container with Background Image -->
-        <div class="relative h-[450px] flex-grow-0 flex-shrink-0" style="background-image: url('../images/tareasheader.png'); background-size: cover; background-position: center;">
+        <div class="relative h-[350px] mb-10 flex-grow-0 flex-shrink-0" style="background-image: url('../images/tareasheader.png'); background-size: cover; background-position: center;">
             <!-- Opacity overlay -->
             <!-- <div class="absolute inset-0 bg-primary opacity-40"></div> -->
             
@@ -172,19 +172,19 @@
             </div>
 
             <div class="w-full h-full flex flex-col  absolute px-4">
-                <div class="absolute left-0 top-[6em] animate-left">
+                <div class="absolute left-0 top-[4em] animate-left">
                     <a href="/"  class="hover:text-white hover:border-none justify-start p-2 px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6"><<< Volver al inicio</a>
                     <!-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6">
                         {{ __('<<< Volver al inicio') }}
                     </x-nav-link> -->
                 </div>
-                <div class="absolute right-0 top-[10em] animate-right">
+                <div class="absolute right-0 top-[8em] animate-right">
                     <a href="{{ route('tareas-historial') }}" class="hover:text-white hover:border-none justify-end px-4 rounded-tl-[0px] rounded-tl-[50px] rounded-bl-[50px] rounded-bl-[0px] px-4 bg-blue w-[200px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 flex justify-end items-center"> Historial de tareas >>></a>
                     <!-- <x-nav-link :href="route('tareas-historial')" :active="request()->routeIs('tareas-historial')" class="hover:text-white hover:border-none justify-end px-4 rounded-tl-[0px] rounded-tl-[50px] rounded-bl-[50px] rounded-bl-[0px] px-4 bg-blue w-[200px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 flex justify-end items-center">
                     {{__('Historial de tareas >>>') }} </a> 
                     </x-nav-link> -->
                 </div>
-                <div class="text-center justify-center mt-20 fade-in">
+                <div class="text-center justify-center mt-14 fade-in">
                     <p class="text-white text-three " style="text-shadow: 2px 4px 2px rgba(0,0,0,0.40)">
                         Plataforma de <span class="text-two font-roboto_condensed_bold text-orange">Tareas</span>
                     </p>
@@ -219,7 +219,7 @@
                                     <td class="p-4 text-gray-800">{{ $tarea->nombre }}</td>
                                     <td class="p-4 text-gray-800">{{ $tarea->asignado }}</td>
                                     <td class="p-4 text-gray-800"><select name="estado" onchange="this.form.submit()"
-                                        class="text-sm font-semibold shadow-sm rounded-full w-[120%] px-3 py-1 cursor-pointer transition-all
+                                        class="text-sm font-semibold shadow-sm rounded-full w-[90%] px-3 py-1 cursor-pointer transition-all
                                         {{ $tarea->estado === 'done' ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-white_dull text-blue hover:bg-white_dull' }}">
                                         <option value="to_do" {{ $tarea->estado === 'to_do' ? 'selected' : '' }}>Por hacer</option>
                                         <option value="in_progress" {{ $tarea->estado === 'in_progress' ? 'selected' : '' }}>En progreso</option>

@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="w-full flex flex-col grid-rows-3 bg-white">
         <!-- First Container with Background Image -->
-        <div class="relative h-[450px] flex-grow-0 flex-shrink-0" style="background-image: url('../images/bg-fct.png'); background-size: cover; background-position: center;">
+        <div class="relative h-[400px] flex-grow-0 flex-shrink-0" style="background-image: url('../images/bg-fct.png'); background-size: cover; background-position: center;">
             <!-- Opacity overlay -->
             <!-- <div class="absolute inset-0 bg-primary opacity-40"></div> -->
             
@@ -24,9 +24,8 @@
                 </div>
                 <!-- Toggle View Button -->
                 <div class="flex items-center space-x-4">
-                    
+                
                 </div>
-
 
                 <!-- Right Section (Filter, Barcelona / BCN, and Search) -->
                 <div class="flex items-center space-x-4">
@@ -127,20 +126,20 @@
             </div>
 
             <div class="w-full h-full flex flex-col  absolute px-4 ">
-                <div class="absolute left-0 top-[6em] animate-left">
+                <div class="absolute left-0 top-[4em] animate-left">
                     <a href="/" class="justify-start p-2 px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] hover:text-white hover:border-none text-[16px] text-white text-left flex-grow-0 mb-6 "><<< Volver al inicio</a>
                     <!-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] hover:text-white hover:border-none text-[16px] text-white text-left font-roboto flex-grow-0 mb-6 ">
                         {{ __('<<< Volver al inicio') }}
                     </x-nav-link> -->
                 </div>
 
-                <div class="absolute left-0 top-[10em] animate-left2">
+                <div class="absolute left-0 top-[7em] animate-left2">
                     <button class="justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-blue w-[210px] h-[40px] opacity-90 text-[15px] text-white text-left flex-grow-0">
                         <a href="https://www.empresaiformacio.org/sBid" ><<< Plataforma de qBid</a> 
                     </button>
                 </div>
 
-                <div class="text-center justify-center mt-20 fade-in">
+                <div class="text-center justify-center mt-10 fade-in">
                     <p class="text-white text-three " style="text-shadow: 2px 4px 2px rgba(0,0,0,0.40)">
                         Plataforma de <span class="text-two font-roboto_condensed_bold text-orange">Empresas</span>
                     </p>

@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="w-full flex flex-col bg-white">
         <!-- First Container with Background Image -->
-        <div class="relative h-[450px] flex-grow-0 flex-shrink-0" style="background-image: url('../images/personalactivo.png'); background-size: cover; background-position: center;">
+        <div class="relative h-[350px] mb-10 flex-grow-0 flex-shrink-0" style="background-image: url('../images/personalactivo.png'); background-size: cover; background-position: center;">
             <!-- Opacity overlay -->
             <!-- <div class="absolute inset-0 bg-primary opacity-40"></div> -->
 
@@ -156,16 +156,16 @@
                 
             </div>
             <div class="w-full h-full flex flex-col absolute px-4">
-                <div class="absolute left-0 top-[6em] animate-left">
+                <div class="absolute left-0 top-[4em] animate-left">
                     <a href="/" class="p-2 hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6"><<< Volver al inicio</a>
                 </div>
-                <div class="absolute right-0 top-[10em] animate-right">
+                <div class="absolute right-0 top-[7em] animate-right">
                     <a href="{{ $state == 'activo' ? 'personal-no-activo' : 'personal-activo' }}" class="hover:text-white hover:border-none justify-end px-4 rounded-tl-[0px] rounded-tl-[50px] rounded-bl-[50px] rounded-bl-[0px] px-4 bg-blue w-[220px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 flex justify-end items-center">
                         Usuarios {{ $state == 'activo' ? 'No Activos' : 'activos'}} >>>
                     </a>
                 </div>
 
-                <div class="text-center justify-center mt-24 fade-in">
+                <div class="text-center justify-center mt-14 fade-in">
                     <p class="text-white text-three " style="text-shadow: 2px 4px 2px rgba(0,0,0,0.40)">
                         Personal 
                         <span class="text-three font-roboto_condensed_bold text-orange">
@@ -229,11 +229,10 @@
                 </div>
             </div>
         </div>
-
         <div class="relative h-[420px] flex-grow-0 flex-shrink-0" style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 15), rgba(255, 255, 255, 0) ), url('../images/personalbottom.png'); background-size: cover; background-position: center;">
             <!-- Button is absolutely positioned in the center of the image -->
             <div class="absolute inset-0 flex justify-center items-center">
-                <button id="see-more" class="p-4 bg-blue rounded-lg text-white w-[120px]"  onclick="toggleUserVisibility()">Ver todos</button>
+                <button class="p-4 bg-blue rounded-lg text-white w-[120px]">Ver todos</button>
             </div>
         </div>
     </div>

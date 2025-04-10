@@ -10,12 +10,14 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @if(request()->routeIs('empresa-form-1') || request()->routeIs('empresa-form-2') ||request()->routeIs('empresa-form-3'))
             <!-- @vite('resources/js/formEmpresa.js') -->
         @endif
+        
     </head>
     <body class="antialiased">
         <!-- Dummy script to load css before layout -->
@@ -42,5 +44,17 @@
             <!-- TODO: Make it not appear in error screens -->
             @include('layouts.footer')
         </div>
+        <!-- In your <head> -->
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init({
+                duration: 700,
+                easing: 'ease-in-out',
+                once: true,
+                mirror: true // <-- importante para permitir animación al hacer scroll up
+            });
+        </script>
+
+
     </body>
 </html>
