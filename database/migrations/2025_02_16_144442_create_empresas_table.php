@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('modalidad')->nullable();
             $table->string('ofertaLaboral')->nullable();
             $table->string('entidad')->nullable();
-            $table->string('ubicacion')->nullable();
+            $table->string('comunidad')->nullable();
+            $table->string('provincia')->nullable();
             $table->string('municipio')->nullable();
             $table->string('direccion')->nullable();
             $table->integer('codigoPostal')->nullable();

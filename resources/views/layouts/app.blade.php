@@ -13,8 +13,8 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @if(request()->routeIs('empresa-form-1') || request()->routeIs('empresa-form-2') ||request()->routeIs('empresa-form-3'))
-            <!-- @vite('resources/js/formEmpresa.js') -->
+        @if (request()->routeIs('empresa-form-1') || request()->routeIs('empresa-form-2'))
+            @vite('resources/js/geoapi.js')
         @endif
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
         <style>

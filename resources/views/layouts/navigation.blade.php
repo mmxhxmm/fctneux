@@ -12,8 +12,11 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden text-white space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-nav-link :href="route('empresa-index')" :active="request()->routeIs('empresa-index')">
+                        {{ __('Empresas') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('tareas-index')" :active="request()->routeIs('tareas-index')">
+                        {{ __('Tareas') }}
                     </x-nav-link>
                     <x-nav-link :href="route('personal-activo')" :active="request()->routeIs('personal-activo')">
                         {{ __('Usuarios') }}
@@ -22,11 +25,14 @@
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <div class="hidden sm:flex sm:items-center sm:ms-6 text-white">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div class="flex flex-col justify-center items-center">
+                                <img src="{{ asset('images/icons/icons8-person-96.png') }}" alt="User Icon" width="30px" class="invert brightness-0">
+                                <div>{{ Auth::user()->name }}</div>
+                            </div>
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -38,13 +44,14 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
+                            <img src="{{ asset('images/icons/icons8-person-96.png') }}" alt="User Icon" width="20px" class="mr-2 invert brightness-0">
                             {{ __('Perfil') }}
                         </x-dropdown-link>
 
                         @if (Auth::user()->role == 'Admin')
                         <x-dropdown-link :href="route('personal-activo')">
                             <div class="flex items-center">
-                                <!-- <img src="{{ asset('images/icons/icons8-people-96.png') }}" alt="People Icon" width="20px" class="mr-2 invert brightness-0"> -->
+                                <img src="{{ asset('images/icons/icons8-people-96.png') }}" alt="User Group Icon" width="20px" class="mr-2 invert brightness-0">
                                 {{ __('Ver todos Perfiles') }}
                             </div>
                         </x-dropdown-link>
@@ -55,8 +62,9 @@
                             @csrf
 
                             <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
+                            onclick="event.preventDefault();
+                            this.closest('form').submit();">
+                                <img src="{{ asset('images/icons/icons8-exit-96.png') }}" alt="EXit Icon" width="20px" class="mr-2 invert brightness-0">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>

@@ -23,7 +23,10 @@
                         <div class="w-full max-w-6xl bg-white rounded-xl shadow-2xl overflow-hidden border-t-4 border-blue">
                             <!-- Header -->
                             <div class="bg-blue px-6 py-4 flex justify-between items-center">
-                                <h2 class="text-xl font-semibold text-white">📋 Datos de la Tarea</h2>
+                                <h2 class="text-xl font-semibold text-white flex items-center gap-x-1">
+                                    <img src="{{ asset('images/icons/icons8-address-book-96.png') }}" alt="" width="20px" class="invert brightness-0">
+                                    <p>Datos de la Tarea</p>
+                                </h2>
                                 <button id="closeModal" class="text-white text-xl hover:text-orange transition-all">✕</button>
                             </div>
 

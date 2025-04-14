@@ -17,10 +17,11 @@ class CentroTrabajoFactory extends Factory
     public function definition(): array
     {
         return [
-            'direccion' => $this->faker->address,
             'codigoPostal' => $this->faker->randomNumber(5, true),
-            'ubicacion' => $this->faker->city,
+            'comunidad' => $this->faker->randomElement(['catalunya', 'aragon', 'canarias']),
+            'provincia' => $this->faker->randomElement(['barcelona', 'zaragoza', 'sevilla']),
             'municipio' => $this->faker->city,
+            'direccion' => $this->faker->address,
             'empresa_id' => null,
             'created_at' => now(),
             'updated_at' => now(),
