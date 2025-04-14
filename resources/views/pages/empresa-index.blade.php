@@ -111,13 +111,13 @@
 
                     <button id="toggleView" onclick="toggleLayout()" class="w-10 h-10 rounded-full bg-white text-blue border border-blue flex items-center justify-center hover:bg-blue hover:text-white transition">
                         <!-- Grid Icon -->
-                        <svg id="iconGrid" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg id="iconGrid" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 6h4v4H4V6zM10 6h4v4h-4V6zM16 6h4v4h-4V6zM4 12h4v4H4v-4zM10 12h4v4h-4v-4zM16 12h4v4h-4v-4z"/>
                         </svg>
 
                         <!-- List Icon (initially hidden) -->
-                        <svg id="iconList" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg id="iconList" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
@@ -159,7 +159,7 @@
             @endif
         </div>
 
-        <div class="flex justify-center bg-white items-center">
+        <div class="flex px-6 justify-center bg-white items-center">
             <!-- Empresa Grid (default view) -->
         <div id="empresaContainer" class="grid grid-cols-3 gap-6 transition-all">
             @foreach ($empresas as $empresa)
@@ -223,9 +223,9 @@
         </div>
         <div class="relative h-[420px] flex-grow-0 flex-shrink-0" style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 15), rgba(255, 255, 255, 0) ), url('../images/bottom.png'); background-size: cover; background-position: center;">
             <!-- Button is absolutely positioned in the center of the image -->
-            <div class="absolute inset-0 flex justify-center items-center">
+            <!-- <div class="absolute inset-0 flex justify-center items-center">
                 <button class="p-4 bg-blue rounded-lg text-white w-[120px]">Ver todos</button>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -250,8 +250,8 @@
         function toggleLayout() {
             const grid = document.getElementById('empresaContainer');
             const list = document.getElementById('empresaList');
-            const iconGrid = document.getElementById('iconGrid');
-            const iconList = document.getElementById('iconList');
+            const iconGrid = document.getElementById('iconList');
+            const iconList = document.getElementById('iconGrid');
 
             const isGridVisible = !grid.classList.contains('hidden');
 

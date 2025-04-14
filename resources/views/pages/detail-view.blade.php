@@ -3,7 +3,7 @@
 @if ($empresa->id == $id)
     <div class="relative h-[300px] flex-grow-0 flex-shrink-0" style="background-image: url('../images/bg-details.png'); background-size: cover; background-position: center;">
             <div class="w-full h-full flex flex-col  absolute px-4 ">
-                <div class="absolute left-0 top-[6em] animate-left">
+                <div class="absolute left-0 top-[4em] animate-left">
                     <a href="/empresa-index" class="justify-start p-2 px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[250px] h-[40px] hover:text-white hover:border-none text-[16px] text-white text-left flex-grow-0 mb-6 "><<< Volver a las empresas</a>
                 </div>
 

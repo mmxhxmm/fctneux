@@ -167,9 +167,9 @@
 
         <div class="relative h-[420px] flex-grow-0 flex-shrink-0" style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 15), rgba(255, 255, 255, 0) ), url('../images/bottomtareas.png'); background-size: cover; background-position: center;">
             <!-- Button is absolutely positioned in the center of the image -->
-            <div class="absolute inset-0 flex justify-center items-center">
+            <!-- <div class="absolute inset-0 flex justify-center items-center">
                 <button class="p-4 bg-blue rounded-lg text-white w-[120px]">Ver todos</button>
-            </div>
+            </div> -->
         </div>
 
 

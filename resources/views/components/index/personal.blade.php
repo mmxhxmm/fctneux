@@ -1,15 +1,16 @@
 <div
     data-aos="fade-up"
     data-aos-offset="150"
-    data-aos-once="false"
+    data-aos-once="true"
     {{ $attributes->merge([
-        'class' => 'user-card w-full max-w-md rounded-2xl p-6 bg-white border border-blue shadow-md hover:shadow-blue/30 transition-all duration-300',
+        'class' => 'user-card w-full max-w-md rounded-2xl bg-white border m-1 border-blue  shadow-md hover:shadow-blue/30 transition-all duration-300',
         'data-municipio' => strtolower($user->municipio),
         'tabindex' => 0
     ]) }}>
     
-    <!-- Header: Name + Situación badge -->
-    <div class="flex items-center justify-between mb-6">
+
+    <div class="bg-white_dull px-4 py-4 mb-1 flex items-center justify-between"
+     style="border-top-left-radius: 1.05rem; border-top-right-radius: 1.05rem;">
         <h2 class="text-xl font-semibold text-blue">{{ $user->name }}</h2>
         <span class="px-3 py-1 text-sm rounded-full font-medium
             {{ 
@@ -20,8 +21,11 @@
         </span>
     </div>
 
+
+
+
     <!-- Details -->
-    <div class="space-y-4 text-[16px] text-gray-800 font-roboto leading-relaxed">
+    <div class="space-y-4 text-[16px] p-6  text-gray-800 font-roboto leading-relaxed">
     <div class="space-y-2">
     <div class="flex justify-between items-center pb-2">
         <span class="text-sm text-gray-500 font-medium">Correo electrónico</span>

@@ -10,14 +10,19 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @if(request()->routeIs('empresa-form-1') || request()->routeIs('empresa-form-2') ||request()->routeIs('empresa-form-3'))
             <!-- @vite('resources/js/formEmpresa.js') -->
         @endif
-        
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <style>
+            [data-aos] {
+                transition-timing-function: ease-in !important;
+            }
+        </style>
+
     </head>
     <body class="antialiased">
         <!-- Dummy script to load css before layout -->
@@ -49,9 +54,9 @@
         <script>
             AOS.init({
                 duration: 700,
-                easing: 'ease-in-out',
+                easing: 'ease-in',
                 once: true,
-                mirror: true // <-- importante para permitir animación al hacer scroll up
+                mirror: false // <-- importante para permitir animación al hacer scroll up
             });
         </script>
 

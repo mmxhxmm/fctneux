@@ -1,7 +1,7 @@
 <div 
     data-aos="fade-up"
     data-aos-offset="150"
-    data-aos-once="false"
+    data-aos-once="true"
     {{ $attributes->merge([
         'class' => 'user-card w-[380px] rounded-2xl p-6 bg-white border border-blue shadow-md hover:shadow-blue/30 transition-all duration-300',
         'tabindex' => 0

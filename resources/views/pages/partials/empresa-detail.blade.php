@@ -42,6 +42,7 @@
             @endforeach
 
             <!-- CENTROS DE TRABAJO -->
+            <div class="grid grid-cols-2 gap-6">
             @foreach ($empresa->centrosTrabajo as $centro)
             <div class="bg-white_dull p-6 rounded-xl border-l-4 border-blue shadow-sm">
                 <h3 class="text-xl font-semibold text-blue mb-4">Centro de Trabajo - {{ $centro->municipio }}</h3>
@@ -65,8 +66,10 @@
                 @endforeach
             </div>
             @endforeach
+            </div>
 
             <!-- PRÁCTICAS -->
+            <div class="grid grid-cols-2 gap-6">
             @foreach ($empresa->practica as $practica)
             <div class="bg-white_dull p-6 rounded-xl border-l-4 border-blue shadow-sm">
                 <h3 class="text-xl font-semibold text-blue mb-4">Prácticas - {{ $practica->cicloFormativo }}</h3>
@@ -107,7 +110,7 @@
                 @endforeach
             </div>
             @endforeach
-
+            </div>
         </div>
         @endif
     @endforeach

@@ -140,13 +140,13 @@
                     </form>
                     <button id="toggleView" onclick="toggleLayout()" class="w-10 h-10 rounded-full bg-white text-blue border border-blue flex items-center justify-center hover:bg-blue hover:text-white transition">
                         <!-- Grid Icon -->
-                        <svg id="iconGrid" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg id="iconGrid" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 6h4v4H4V6zM10 6h4v4h-4V6zM16 6h4v4h-4V6zM4 12h4v4H4v-4zM10 12h4v4h-4v-4zM16 12h4v4h-4v-4z"/>
                         </svg>
 
                         <!-- List Icon (initially hidden) -->
-                        <svg id="iconList" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg id="iconList" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
@@ -231,9 +231,9 @@
         </div>
         <div class="relative h-[420px] flex-grow-0 flex-shrink-0" style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 15), rgba(255, 255, 255, 0) ), url('../images/personalbottom.png'); background-size: cover; background-position: center;">
             <!-- Button is absolutely positioned in the center of the image -->
-            <div class="absolute inset-0 flex justify-center items-center">
+            <!-- <div class="absolute inset-0 flex justify-center items-center">
                 <button class="p-4 bg-blue rounded-lg text-white w-[120px]">Ver todos</button>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -243,19 +243,19 @@
             filterUsers();
         });
 
-        function toggleUserVisibility() {
-            const hiddenUsers = document.querySelector('#hiddenUsers');
-            const button = document.querySelector('#see-more');
+        // function toggleUserVisibility() {
+        //     const hiddenUsers = document.querySelector('#hiddenUsers');
+        //     const button = document.querySelector('#see-more');
 
-            // Toggle hidden users visibility
-            if (hiddenUsers.classList.contains('hidden')) {
-                hiddenUsers.classList.remove('hidden');
-                button.innerText = 'Ver menos';
-            } else {
-                hiddenUsers.classList.add('hidden');
-                button.innerText = 'Ver todos';
-            }
-        }
+        //     // Toggle hidden users visibility
+        //     if (hiddenUsers.classList.contains('hidden')) {
+        //         hiddenUsers.classList.remove('hidden');
+        //         button.innerText = 'Ver menos';
+        //     } else {
+        //         hiddenUsers.classList.add('hidden');
+        //         button.innerText = 'Ver todos';
+        //     }
+        // }
 
         // Function to filter users based on selected municipio and situacion
         function filterUsers() {
@@ -311,8 +311,8 @@
         function toggleLayout() {
             const grid = document.getElementById('userContainer');
             const list = document.getElementById('userList');
-            const iconGrid = document.getElementById('iconGrid');
-            const iconList = document.getElementById('iconList');
+            const iconGrid = document.getElementById('iconList');
+            const iconList = document.getElementById('iconGrid');
 
             const isGridVisible = !grid.classList.contains('hidden');
 
