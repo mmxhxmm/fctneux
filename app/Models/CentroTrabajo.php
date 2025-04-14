@@ -39,47 +39,14 @@ class CentroTrabajo extends Model
     protected $keyType = 'int';
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<string>
-     */
-    protected $fillable = [
-        'direccion',
-        'codigoPostal',
-        'ubicacion',
-        'municipio',
-    ];
-
-    /**
      * The attributes that should be cast.
      *
      * @var array<string, string>
      */
     protected $casts = [
-        'codigoPostal' => 'integer', // Cast codigoPostal to integer
+        'codigoPostal' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<string>
-     */
-    protected $hidden = [
-        // Add any fields you want to hide (e.g., sensitive data)
-    ];
-
-    /**
-     * Default values for attributes.
-     *
-     * @var array<string, mixed>
-     */
-    protected $attributes = [
-        'direccion' => null,
-        'codigoPostal' => null,
-        'ubicacion' => null,
-        'municipio' => null,
     ];
 
 

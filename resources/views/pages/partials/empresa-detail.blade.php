@@ -2,54 +2,28 @@
     @foreach ($empresas as $empresa)
         @if ($empresa->id == $id)
         <div class="bg-white rounded-2xl shadow-xl p-10 space-y-12 border border-blue">
-
             <!-- ENCABEZADO EMPRESA -->
             <div class="text-center">
                 <h2 class="text-3xl font-bold text-blue tracking-wide mb-2">Datos de la Empresa</h2>
                 <p class="text-gray-500 text-sm">Información general y detalles administrativos</p>
             </div>
-            <div class="grid md:grid-cols-2 gap-8 text-gray-800 text-[15px] leading-relaxed">
-                <div class="space-y-2">
-                    <p><span class="font-semibold">Nombre:</span> {{ $empresa->nombre }}</p>
-                    <p><span class="font-semibold">CIF:</span> {{ $empresa->cif }}</p>
-                    <p><span class="font-semibold">Colaboración:</span> {{ $empresa->colaboracion }}</p>
-                    <p><span class="font-semibold">Gestiones:</span> {{ $empresa->gestiones }}</p>
-                    <p><span class="font-semibold">Modalidad:</span> {{ $empresa->modalidad }}</p>
-                    <p><span class="font-semibold">Familia Personal:</span> {{ $empresa->familiaPersonal }}</p>
-                    <p><span class="font-semibold">Oferta Laboral:</span> {{ $empresa->ofertaLaboral }}</p>
-                </div>
-                <div class="space-y-2">
-                    <p><span class="font-semibold">Entidad:</span> {{ $empresa->entidad }}</p>
-                    <p><span class="font-semibold">Ubicación:</span> {{ $empresa->ubicacion }}</p>
-                    <p><span class="font-semibold">Municipio:</span> {{ $empresa->municipio }}</p>
-                    <p><span class="font-semibold">Dirección:</span> {{ $empresa->direccion }}</p>
-                    <p><span class="font-semibold">Código Postal:</span> {{ $empresa->codigoPostal }}</p>
-                    <p><span class="font-semibold">Observaciones:</span> {{ $empresa->observaciones }}</p>
-                </div>
-            </div>
 
-            <!-- RESPONSABLES DE CONVENIO -->
-            @foreach ($empresa->responsablesConvenio as $resConv)
-            <div class="bg-white_dull p-6 rounded-xl border-l-4 border-blue shadow-sm">
-                <h3 class="text-xl font-semibold text-blue mb-4">Responsable de Convenio</h3>
-                <div class="grid md:grid-cols-2 gap-6 text-gray-700">
-                    <p><strong>DNI:</strong> {{ $resConv->dni }}</p>
-                    <p><strong>Nombre Completo:</strong> {{ $resConv->nombre }} {{ $resConv->apellido }}</p>
-                    <p><strong>Teléfono:</strong> {{ $resConv->telefono }}</p>
-                    <p><strong>Email:</strong> {{ $resConv->email }}</p>
-                </div>
-            </div>
-            @endforeach
+            <!-- EMPRESA -->
+            @include("pages.partials.detail.empresa")
+
+            <!-- RESPONSABLES CONVENIO -->
+            @include("pages.partials.detail.responsable-convenio")
 
             <!-- CENTROS DE TRABAJO -->
             @foreach ($empresa->centrosTrabajo as $centro)
             <div class="bg-white_dull p-6 rounded-xl border-l-4 border-blue shadow-sm">
                 <h3 class="text-xl font-semibold text-blue mb-4">Centro de Trabajo - {{ $centro->municipio }}</h3>
                 <div class="grid md:grid-cols-2 gap-6 text-gray-700">
-                    <p><strong>Dirección:</strong> {{ $centro->direccion }}</p>
                     <p><strong>Código Postal:</strong> {{ $centro->codigoPostal }}</p>
-                    <p><strong>Ubicación:</strong> {{ $centro->ubicacion }}</p>
+                    <p><strong>Comunidad:</strong> {{ $centro->comunidad }}</p>
+                    <p><strong>Provincia:</strong> {{ $centro->provincia }}</p>
                     <p><strong>Municipio:</strong> {{ $centro->municipio }}</p>
+                    <p><strong>Dirección:</strong> {{ $centro->direccion }}</p>
                 </div>
 
                 @foreach ($centro->personaContacto as $persContacto)
@@ -107,8 +81,45 @@
                 @endforeach
             </div>
             @endforeach
-
         </div>
         @endif
     @endforeach
+
+    <?php
+        function getComunidadAttribute($value) {
+            $key = "bf9bf54cbf3e6f52ea4f61d205d533c745dc29471259d43d982c83081fc3ce06";
+            $url = "https://apiv1.geoapi.es/comunidades?type=JSON&key=$key";
+            
+            $response = file_get_contents($url);
+            $data = json_decode($response, true);
+
+            foreach ($data['data'] as $comunidad) {
+                if ($comunidad['CCOM'] == $value) {
+                    return ucwords(mb_strtolower($comunidad['COM']));
+                }
+            }
+
+            return $value;
+        }
+
+        function getProvinciaAttribute($value) {
+            $key = "bf9bf54cbf3e6f52ea4f61d205d533c745dc29471259d43d982c83081fc3ce06";
+            $url = "https://apiv1.geoapi.es/provincias?type=JSON&key=$key";
+            
+            $response = file_get_contents($url);
+            $data = json_decode($response, true);
+
+            foreach ($data['data'] as $provincias) {
+                if ($provincias['CPRO'] == $value) {
+                    return ucwords(mb_strtolower($provincias['PRO']));
+                }
+            }
+
+            return $value;
+        }
+
+        function getMunicipioAttribute($value) {
+            return ucwords(mb_strtolower($value));
+        }
+    ?>
 </section>

@@ -53,8 +53,9 @@ class Empresa extends Model
         'entidad',
         'direccion',
         'codigoPostal',
+        'comunidad',
+        'provincia',
         'municipio',
-        'ubicacion',
         'familiaPersonal',
         'observaciones',
     ];
@@ -69,61 +70,6 @@ class Empresa extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<string>
-     */
-    protected $hidden = [
-        // Add any fields you want to hide (e.g., sensitive data)
-    ];
-
-    /**
-     * Default values for attributes.
-     *
-     * @var array<string, mixed>
-     */
-    protected $attributes = [
-        'colaboracion' => null,
-        'gestiones' => null,
-        'modalidad' => null,
-        'ofertaLaboral' => null,
-        'entidad' => null,
-        'ubicacion' => null,
-        'municipio' => null,
-        'direccion' => null,
-        'codigoPostal' => null,
-        'familiaPersonal' => null,
-        'observaciones' => null,
-    ];
-
-    /**
-     * Mutator for codigoPostal to ensure it is always 5 digits long.
-     *
-     * @param mixed $value
-     */
-    // public function setCodigoPostalAttribute($value)
-    // {
-    //     if ($value === null || strlen((string)$value) !== 5) {
-    //         throw new \InvalidArgumentException('El código postal debe tener exactamente 5 dígitos.');
-    //     }
-    //     $this->attributes['codigoPostal'] = $value;
-    // }
-
-    /**
-     * Accessor for codigoPostal to ensure it is always returned as a 5-digit string.
-     *
-     * @param mixed $value
-     * @return string|null
-     */
-    // public function getCodigoPostalAttribute($value)
-    // {
-    //     if ($value === null) {
-    //         return null;
-    //     }
-    //     return str_pad($value, 5, '0', STR_PAD_LEFT); // Ensure 5 digits with leading zeros
-    // }
 
     // Accessors
     public function getColaboracionAttribute($value) {
@@ -170,11 +116,11 @@ class Empresa extends Model
             case 'Colaboración':
                 switch ($value) {
                     case 'pendiente_firma_convenio':
-                        return 'E - Pendiente firma Convenio';
+                        return 'C - Pendiente firma Convenio';
                     case 'plazas_conseguidas':
-                        return 'E - Plazas conseguidas';
+                        return 'C - Plazas conseguidas';
                     case 'solicitud_plazas':
-                        return 'E - Solicitud plazas';
+                        return 'C - Solicitud plazas';
                     default:
                         return $value;
                 }
@@ -184,20 +130,7 @@ class Empresa extends Model
     }
 
     public function getOfertaLaboralAttribute($value) {
-        return $value === 'si' ? 'Si' : 'No';
-    }
-
-    public function getUbicacionAttribute($value) {
-        switch ($value) {
-            case 'catalunya':
-                return 'Cataluña';
-            case 'fueraDeCatalunya':
-                return 'Fuera de Cataluña';
-            case 'fueraDeEspanya':
-                return 'Fuera de España';
-            default:
-                return $value;
-        }
+        return ucwords(strtolower($value));
     }
 
     public function getFamiliaPersonalAttribute($value) {
@@ -229,9 +162,9 @@ class Empresa extends Model
     {
         return $this->HasMany(CentroTrabajo::class, 'empresa_id', 'id');
     }
+
     public function practica()
     {
         return $this->HasMany(Practica::class, 'empresa_id', 'id');
     }
-
 }

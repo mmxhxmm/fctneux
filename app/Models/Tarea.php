@@ -49,6 +49,7 @@ class Tarea extends Model
         'estado',
         'descripcion',
         'fecha_limite',
+        'empresa_id',
     ];
 
     /**
@@ -58,6 +59,7 @@ class Tarea extends Model
      */
     protected $casts = [
         'estado' => 'string',
+        'empresa_id' => 'integer',
         'fecha_limite' => 'date',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',

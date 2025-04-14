@@ -10,6 +10,7 @@ use App\Http\Controllers\RegistradorController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\TareaController;
 use App\Http\Controllers\DraftController;
+use App\Http\Controllers\EmpresaUpdateController;
 
 // User Authorization
 Route::get('/', function () {
@@ -41,6 +42,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/store-empresa-2', [EmpresaController::class, 'store_2'])->name('store-empresa-2');
     Route::post('/store-empresa-3', [EmpresaController::class, 'store_3'])->name('store-empresa-3');
     Route::post('/clear-drafts', [DraftController::class, 'clearDrafts'])->name('clear-drafts');
+
+    Route::put('/update-empresa/{id}', [EmpresaUpdateController::class, 'update_empresa'])->name('empresa.update');
+    Route::put('/update-rc/{id}', [EmpresaUpdateController::class, 'update_rc'])->name('responsables.update');
+    Route::put('/delete-rc/{id}', [EmpresaUpdateController::class, 'delete_rc'])->name('responsables.delete');
+
     // Empresa Index
     Route::get('/empresa-index', [EmpresaController::class, 'index'])->name('empresa-index');
     Route::get('/empresa-detail', [EmpresaController::class, 'index_2'])->name('empresa-detail');

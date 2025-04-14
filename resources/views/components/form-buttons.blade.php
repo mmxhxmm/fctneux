@@ -21,34 +21,21 @@
 <div>
     <div class="flex items-center gap-4 pt-12 pb-4" id="bottom">
         <!-- Exit Button -->
-        <!-- To go to Controller -->
-        <!-- <x-primary-button 
+        <x-primary-button 
             name="action" 
             value="exit" 
-            aria-label="Salir del formulario">
+            aria-label="Salir del formulario"
+            formnovalidate>
             {{ __('Exit') }}
-        </x-primary-button> -->
-        <x-primary-nonsubmit-button type="button" value="exit" 
-            onclick="window.location.href='{{ route('empresa-index') }}?status={{ urlencode($status) }}'"
-            aria-label="Salir del formulario">
-                {{ __('Exit') }}
         </x-primary-button>
 
         <!-- Reset Button -->
-        <x-primary-nonsubmit-button 
-            type="button"
+        <!-- <x-primary-nonsubmit-button 
+            type="reset"
             value="reset"
-            onclick="if (confirm('¿Eliminar toda la información?')) {
-                fetch ('{{ route('clear-drafts') }}', {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    }
-                }).then(() => window.location.reload());
-            }" 
-            aria-label="Resetear el formulario">
+            aria-label="Resetear toda la información de esta página">
             {{ __('Reset') }}
-        </x-primary-nonsubmit-button>
+        </x-primary-nonsubmit-button> -->
 
         <!-- Publish Button -->
         <x-primary-button 
@@ -96,18 +83,21 @@
             <x-primary-button 
                 name="action" 
                 value="prev_page" 
-                aria-label="Volver a la página anterior">
+                aria-label="Volver a la página anterior"
+                formnovalidate>
                 {{ __('Página Anterior') }}
             </x-primary-button>
         @endif
 
         <!-- Next Page Button -->
-        <x-primary-button 
-            name="action" 
-            value="next_page" 
-            aria-label="Ir a la siguiente página">
-            {{ __('Siguiente Página') }}
-        </x-primary-button>
+        @if((intval(explode('-', $currentRoute)[2])) !== 3)
+            <x-primary-button 
+                name="action" 
+                value="next_page" 
+                aria-label="Ir a la siguiente página">
+                {{ __('Siguiente Página') }}
+            </x-primary-button>
+        @endif
     </div>
 
     <!-- Status Message -->

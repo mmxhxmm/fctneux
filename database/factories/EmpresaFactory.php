@@ -22,12 +22,13 @@ class EmpresaFactory extends Factory
             'colaboracion' => $this->faker->randomElement(['prospeccion', 'colaboracion', 'inactiva']),
             'gestiones' => $this->faker->randomElement([
                 'P - Primer contacto', 'P - Pendente respuesta', 'P - Volver a contactar', 'P - No acogen alumnado', 
-                'E - Pendiente firma Convenio', 'E - Plazas conseguidas', 'E - Solicitud plazas'
+                'C - Pendiente firma Convenio', 'C - Plazas conseguidas', 'C - Solicitud plazas'
             ]),
             'modalidad' => $this->faker->randomElement(['Presencial', 'Remoto', 'Semipresencial']),
             'ofertaLaboral' => $this->faker->randomElement(['Si', 'No']),
             'entidad' => $this->faker->company,
-            'ubicacion' => $this->faker->randomElement(['Cataluña', 'Fuera de Cataluña', 'Fuera de España']),
+            'comunidad' => $this->faker->randomElement(['Catalunya', 'Aragon', 'Canarias']),
+            'provincia' => $this->faker->randomElement(['Barcelona', 'Zaragoza', 'Sevilla']),
             'municipio' => $this->faker->city,
             'direccion' => $this->faker->address,
             'codigoPostal' => $this->faker->randomNumber(5, true),

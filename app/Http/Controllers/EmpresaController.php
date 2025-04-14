@@ -12,6 +12,7 @@ use App\Models\Tutor;
 use App\Models\TutorEmpresa;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class EmpresaController extends Controller
 {
@@ -34,6 +35,7 @@ class EmpresaController extends Controller
             'page' => 'empresa-detail',
         ],  compact('empresas' , 'id') );
     }
+    
     public function index_3(Request $request)
     {
         $query = $request->input('search');
@@ -99,7 +101,7 @@ class EmpresaController extends Controller
         }
     }
 
-    public function submit($currentForm, $action)
+    public function submit($currentForm, $action, $filled)
     {
         \Log::info($action);
         
@@ -110,38 +112,42 @@ class EmpresaController extends Controller
         switch ($action) {
             case 'publish':
                 $this->saveData();
+                session()->forget([
+                    'empresa_draft',
+                    'responsableConvenio_draft',
+                    'centroTrabajo_draft',
+                    'personaContacto_draft',
+                    'practica_draft',
+                    'tutor_draft',
+                    'tutorEmpresa_draft'
+                ]);
                 return redirect('empresa-index')->with('status', 'La empresa se ha añadido corectamente');
                 break;
+
             case 'save_draft':
                 return redirect('empresa-index')->with('status', 'El draft se ha guardado');
                 break;
-            // TODO: Implement this back later to validate through controller -> add novalidate to form
-            // case 'exit':
-            //     $draftKeys = [
-            //         'empresa_draft',
-            //         'responsableConvenio_draft',
-            //         'centroTrabajo_draft',
-            //         'personaContacto_draft',
-            //         'practica_draft',
-            //         'tutor_draft',
-            //         'tutorEmpresa_draft'
-            //     ];
             
-            //     // Check if a draft is saved or not
-            //     if (session()->hasAny($draftKeys)) {
-            //         return redirect('empresa-index')->with('status', 'El draft se ha guardado');
-            //     } else {
-            //         return redirect('empresa-index')->with('status', 'Nada se ha guardado');
-            //     }
-            //     break;
+            // TODO: Implement this back later to validate through controller -> add novalidate to form
+            case 'exit':            
+                // Check if a form is filled or not
+                if ($filled) {
+                    return redirect('empresa-index')->with('status', 'El draft se ha guardado');
+                } else {
+                    return redirect('empresa-index');
+                }
+                break;
+
             case 'next_page':
                 \Log::info('Going to: empresa-form-' . $nextForm);
                 return redirect(route('empresa-form-' . $nextForm));
                 break;
-            case 'prev_page':
-                \Log::info('Going to: empresa-form-' . $previousForm);
-                return redirect(route('empresa-form-' . $previousForm));
-                break;
+
+            // case 'prev_page':
+            //     \Log::info('Going to: empresa-form-' . $previousForm);
+            //     return redirect(route('empresa-form-' . $previousForm));
+            //     break;
+
             default:
                 return redirect('empresa-index')->with('status', 'Ha ocurrido un error');
         }
@@ -149,7 +155,7 @@ class EmpresaController extends Controller
 
     public function store_1(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'cif' => 'required|string|max:255',
             'nombre' => 'required|string|max:255',
             'colaboracion' => 'nullable|string|max:255',
@@ -158,46 +164,61 @@ class EmpresaController extends Controller
             'modalidad' => 'nullable|string|max:255',
             'ofertaLaboral' => 'nullable|string|max:255',
             'entidad' => 'nullable|string|max:255',
-            'ubicacion' => 'nullable|string|max:255',
+            'comunidad' => 'nullable|string|max:255',
+            'provincia' => 'nullable|string|max:255',
             'municipio' => 'nullable|string|max:255',
             'direccion' => 'nullable|string|max:255',
-            'codigoPostal' => 'nullable|string|size:5',
+            'codigoPostal' => 'nullable|string|digits:5',
             'familiaPersonal' => 'nullable|string|max:255',
             'observaciones' => 'nullable|string',
         ]);
 
-        $empresa = new Empresa;
-        $empresa->cif = $request->cif;
-        $empresa->nombre = $request->nombre;
-        $empresa->colaboracion = $request->colaboracion;
-        if ($request->colaboracion === 'prospeccion') {
-            $empresa->gestiones = $request->gestiones_prospeccion;
-        } elseif ($request->colaboracion === 'colaboracion') {
-            $empresa->gestiones = $request->gestiones_colaboracion;
-        } else {
-            $empresa->gestiones = null;
+        // ResponsableConvenio Validator
+        // TODO: true to condition if 1 rc exists, change to condition like foreach inside to  
+        if (true) {
+            $validator->sometimes('rc_dni', 'required|string|max:255', function () {return true;});
+            $validator->sometimes('rc_nombre', 'required|string|max:255', function () {return true;});
+            $validator->sometimes('rc_apellido', 'required|string|max:255', function () {return true;});
+            $validator->sometimes('rc_telefono', 'nullable|integer|digits:9', function () {return true;});
+            $validator->sometimes('rc_email', 'nullable|string|email', function () {return true;});
         }
-        $empresa->modalidad = $request->modalidad;
-        $empresa->ofertaLaboral = $request->ofertaLaboral;
-        $empresa->entidad = $request->entidad;
-        $empresa->ubicacion = $request->ubicacion;
-        $empresa->municipio = $request->municipio;
-        $empresa->direccion = $request->direccion;
-        $empresa->codigoPostal = $request->codigoPostal;
-        $empresa->familiaPersonal = $request->familiaPersonal;
-        $empresa->observaciones = $request->observaciones;
-        session(['empresa_draft' => $empresa]);
+
+        // Return errors
+        if ($validator->fails()) {
+            if ($request->input('action') === 'exit') {
+                return $this->submit('empresa-form-1', 'exit', false);
+            }
+
+            return back()->withErrors($validator)->withInput();
+        }
+
+        if ($request->cif && $request->nombre) {
+            $empresa = new Empresa;
+            $empresa->cif = $request->cif;
+            $empresa->nombre = $request->nombre;
+            $empresa->colaboracion = $request->colaboracion;
+            if ($request->colaboracion === 'prospeccion') {
+                $empresa->gestiones = $request->gestiones_prospeccion;
+            } elseif ($request->colaboracion === 'colaboracion') {
+                $empresa->gestiones = $request->gestiones_colaboracion;
+            } else {
+                $empresa->gestiones = null;
+            }
+            $empresa->modalidad = $request->modalidad;
+            $empresa->ofertaLaboral = $request->ofertaLaboral;
+            $empresa->entidad = $request->entidad;
+            $empresa->comunidad = $request->comunidad;
+            $empresa->provincia = $request->provincia;
+            $empresa->municipio = $request->municipio;
+            $empresa->direccion = $request->direccion;
+            $empresa->codigoPostal = $request->codigoPostal;
+            $empresa->familiaPersonal = $request->familiaPersonal;
+            $empresa->observaciones = $request->observaciones;
+            session(['empresa_draft' => $empresa]);
+        }
 
         // ResponsableConvenio
         if ($request->rc_dni && $request->rc_nombre && $request->rc_apellido) {
-            $request->validate([
-                'rc_dni' => 'required|string|max:255',
-                'rc_nombre' => 'required|string|max:255',
-                'rc_apellido' => 'required|string|max:255',
-                'rc_telefono' => 'nullable|integer|size:9',
-                'rc_email' => 'nullable|string|email',
-            ]);
-
             $rc = new ResponsableConvenio;
             $rc->dni = $request->rc_dni;
             $rc->nombre = $request->rc_nombre;
@@ -208,36 +229,59 @@ class EmpresaController extends Controller
         }
 
         \Log::debug('Artisan Session Check:', session()->all());
-        return $this->submit('empresa-form-1', ($request->has('action') ? $request->input('action') : 'null'));
+        return $this->submit('empresa-form-1', ($request->has('action') ? $request->input('action') : 'null'), true);
     }
 
     public function store_2(Request $request)
     {
+        if ($request->input('action') === 'exit') {
+            return $this->submit('empresa-form-1', 'exit', false);
+        }
+
+        if ($request->input('action') === 'prev_page') {
+            $previousForm = intval(explode('-', 'empresa-form-2')[2]) - 1;
+            
+            \Log::info('Going to: empresa-form-' . $previousForm);
+            return redirect(route('empresa-form-' . $previousForm));
+        }
+
         // CentroTrabajo
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'direccion' => 'nullable|string|max:255',
-            'codigoPostal' => 'nullable|string|size:5',
-            'ubicacion' => 'nullable|string|max:255',
+            'codigoPostal' => 'nullable|string|digits:5',
+            'comunidad' => 'required|string|max:255',
+            'provincia' => 'required|string|max:255',
             'municipio' => 'nullable|string|max:255',
         ]);
 
+        // PersonaContacto Validator
+        // TODO: true to condition if 1 rc exists, change to condition like foreach inside to  
+        if (true) {
+            $validator->sometimes('pc_dni', 'required|string|max:255', function () {return true;});
+            $validator->sometimes('pc_nombre', 'required|string|max:255', function () {return true;});
+            $validator->sometimes('pc_apellido', 'required|string|max:255', function () {return true;});
+            $validator->sometimes('pc_telefono', 'nullable|integer|digits:9', function () {return true;});
+            $validator->sometimes('pc_email', 'nullable|string|email', function () {return true;});
+        }
+
+        if ($validator->fails()) {
+            if ($request->input('action') === 'exit') {
+                return $this->submit('empresa-form-1', 'exit', false);
+            }
+
+            return back()->withErrors($validator)->withInput();
+        }
+
         $centroTrabajo = new CentroTrabajo;
-        $centroTrabajo->direccion = $request->direccion;
         $centroTrabajo->codigoPostal = $request->codigoPostal;
-        $centroTrabajo->ubicacion = $request->ubicacion;
+        $centroTrabajo->comunidad = $request->comunidad;
+        $centroTrabajo->provincia = $request->provincia;
         $centroTrabajo->municipio = $request->municipio;
+        $centroTrabajo->direccion = $request->direccion;
         session(['centroTrabajo_draft' => $centroTrabajo]);
 
         // PersonaContacto
         if ($request->pc_dni && $request->pc_nombre && $request->pc_apellido) {
-            $request->validate([
-                'pc_dni' => 'required|string|max:255',
-                'pc_nombre' => 'required|string|max:255',
-                'pc_apellido' => 'required|string|max:255',
-                'pc_telefono' => 'nullable|integer|size:9',
-                'pc_email' => 'nullable|string|email',
-            ]);
-
             $pc = new PersonaContacto;
             $pc->dni = $request->pc_dni;
             $pc->nombre = $request->pc_nombre;
@@ -249,16 +293,27 @@ class EmpresaController extends Controller
 
         // Submit
         \Log::debug('Artisan Session Check:', session()->all());
-        return $this->submit('empresa-form-2', ($request->has('action') ? $request->input('action') : 'null'));
+        return $this->submit('empresa-form-2', ($request->has('action') ? $request->input('action') : 'null'), true);
     }
 
     public function store_3(Request $request)
     {
+        // if ($request->input('action') === 'prev_page') {
+        //     $previousForm = intval(explode('-', 'empresa-form-3')[2]) - 1;
+            
+        //     \Log::info('Going to: empresa-form-' . $previousForm);
+        //     return redirect(route('empresa-form-' . $previousForm));
+        // }
+
+        // Exit does not save 
+        if ($request->input('action') === 'exit') {
+            return $this->submit('empresa-form-1', 'exit', false);
+        }
+
         // Practica
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'cicloFormativo' => 'nullable|string|max:255',
             'cursoAcademico' => 'nullable|string|max:255',
-            'numPlazasAsignadas'=> 'nullable|integer|max:255',
             'periodoFrom' => 'nullable|date',
             'periodoTo' => 'nullable|date|after_or_equal:periodoFrom',
             'horarioFrom' => 'nullable|string|max:255',
@@ -267,6 +322,30 @@ class EmpresaController extends Controller
             'usoLogos' => 'nullable|string|max:255',
             'observaciones' => 'nullable|string',
         ]);
+
+        // Tutor Validator
+        // TODO: true to condition if 1 rc exists, change to condition like foreach inside to  
+        if (true) {
+            $validator->sometimes('tutor_dni', 'required|string|max:255', function () {return true;});
+            $validator->sometimes('tutor_nombre', 'required|string|max:255', function () {return true;});
+            $validator->sometimes('tutor_apellido', 'required|string|max:255', function () {return true;});
+            $validator->sometimes('tutor_telefono', 'nullable|integer|digits:9', function () {return true;});
+            $validator->sometimes('tutor_email', 'nullable|string|email', function () {return true;});
+        }
+
+        // TutorEmpresa Validator
+        // TODO: true to condition if 1 rc exists, change to condition like foreach inside to  
+        if (true) {
+            $validator->sometimes('tutorEmpresa_dni', 'required|string|max:255', function () {return true;});
+            $validator->sometimes('tutorEmpresa_nombre', 'required|string|max:255', function () {return true;});
+            $validator->sometimes('tutorEmpresa_apellido', 'required|string|max:255', function () {return true;});
+            $validator->sometimes('tutorEmpresa_telefono', 'nullable|integer|digits:9', function () {return true;});
+            $validator->sometimes('tutorEmpresa_email', 'nullable|string|email', function () {return true;});
+        }
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
 
         $practica = new Practica;
         $practica->cicloFormativo = $request->cicloFormativo;
@@ -283,14 +362,6 @@ class EmpresaController extends Controller
 
         // Tutor
         if ($request->tutor_dni && $request->tutor_nombre && $request->tutor_apellido) {
-            $request->validate([
-                'tutor_dni' => 'required|string|max:255',
-                'tutor_nombre' => 'required|string|max:255',
-                'tutor_apellido' => 'required|string|max:255',
-                'tutor_telefono' => 'nullable|integer|size:9',
-                'tutor_email' => 'nullable|string|email',
-            ]);
-
             $tutor = new Tutor;
             $tutor->dni = $request->tutor_dni;
             $tutor->nombre = $request->tutor_nombre;
@@ -302,14 +373,6 @@ class EmpresaController extends Controller
 
         // TutorEmpresa
         if ($request->tutorEmpresa_dni && $request->tutorEmpresa_nombre && $request->tutorEmpresa_apellido) {
-            $request->validate([
-                'tutorEmpresa_dni' => 'required|string|max:255',
-                'tutorEmpresa_nombre' => 'required|string|max:255',
-                'tutorEmpresa_apellido' => 'required|string|max:255',
-                'tutorEmpresa_telefono' => 'nullable|integer|size:9',
-                'tutorEmpresa_email' => 'nullable|string|email',
-            ]);
-
             $tutorEmpresa = new TutorEmpresa;
             $tutorEmpresa->dni = $request->tutorEmpresa_dni;
             $tutorEmpresa->nombre = $request->tutorEmpresa_nombre;
@@ -320,6 +383,6 @@ class EmpresaController extends Controller
         }
 
         // Submit
-        return $this->submit('empresa-form-3', ($request->has('action') ? $request->input('action') : 'null'));
+        return $this->submit('empresa-form-3', ($request->has('action') ? $request->input('action') : 'null'), true);
     }
 }

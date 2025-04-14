@@ -14,8 +14,8 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @if(request()->routeIs('empresa-form-1') || request()->routeIs('empresa-form-2') ||request()->routeIs('empresa-form-3'))
-            <!-- @vite('resources/js/formEmpresa.js') -->
+        @if (request()->routeIs('empresa-form-1') || request()->routeIs('empresa-form-2'))
+            @vite('resources/js/geoapi.js')
         @endif
         
     </head>
