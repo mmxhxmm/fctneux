@@ -21,7 +21,7 @@ class EmpresaController extends Controller
         $empresas = Empresa::all();
         return view('pages/empresa-index', compact('empresas'));
     }
-
+    
     public function index_2(Request $request)
     {
         // Get the 'id' from the query parameter
@@ -56,6 +56,31 @@ class EmpresaController extends Controller
 
         return view('pages.empresa-index', compact('empresas'));
     }
+
+    public function index_4(Request $request)
+{
+    $query = $request->input('search');
+    $provincia = $request->input('provincia');
+
+    $empresas = Empresa::query()
+        ->when($query, function ($q) use ($query) {
+            $q->where('nombre', 'like', '%' . $query . '%')
+                ->orWhere('colaboracion', 'like', '%' . $query . '%')
+                ->orWhere('modalidad', 'like', '%' . $query . '%')
+                ->orWhere('ofertaLaboral', 'like', '%' . $query . '%')
+                ->orWhere('municipio', 'like', '%' . $query . '%')
+                ->orWhere('familiaPersonal', 'like', '%' . $query . '%')
+                ->orWhereHas('practica', function ($subQuery) use ($query) {
+                    $subQuery->where('cicloFormativo', 'like', '%' . $query . '%');
+                });
+        })
+        ->when($provincia, function ($q) use ($provincia) {
+            $q->where('provincia', $provincia);
+        })
+        ->get();
+
+    return view('pages.empresa-index', compact('empresas'));
+}
 
 
     public function saveData()
@@ -342,6 +367,7 @@ class EmpresaController extends Controller
             $validator->sometimes('tutorEmpresa_telefono', 'nullable|integer|digits:9', function () {return true;});
             $validator->sometimes('tutorEmpresa_email', 'nullable|string|email', function () {return true;});
         }
+        
 
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();

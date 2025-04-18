@@ -22,7 +22,7 @@
         <p><span class="text-blue font-semibold">Gestiones:</span> {{ $empresa->gestiones }}</p>
         <p><span class="text-blue font-semibold">Modalidad:</span> {{ $empresa->modalidad }}</p>
         <p><span class="text-blue font-semibold">Familia Personal:</span> {{ $empresa->familiaPersonal }}</p>
-        <p><span class="text-blue font-semibold">Municipio:</span> {{ $empresa->municipio }}</p>
+        <p><span class="text-blue font-semibold">Provincia:</span> {{ $empresa->provincia }}</p>
 
         @foreach ($empresa->practica as $practica)
             <div class="flex justify-between items-center text-sm text-gray-700">

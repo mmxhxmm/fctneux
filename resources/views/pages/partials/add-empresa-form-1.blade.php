@@ -1,16 +1,21 @@
 <section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-            {{ __('Añadir Nueva Empresa') }}
-        </h2>
+    <div class="flex justify-between items-center">
+        <header>
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                {{ __('Añadir Nueva Empresa') }}
+            </h2>
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __('Aquí se introducen los datos de la Empresa y el del Responsable Convenio.') }}
-        </p>
-    </header>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                {{ __('Aquí se introducen los datos de la Empresa y el del Responsable Convenio.') }}
+            </p>
+        </header>
+
+        <x-button-salir :redirect="route('empresa-index')" />
+    </div>
 
     <form method="POST" id="form" action="{{ route('store-empresa-1') }}" class="mt-6 space-y-6">
         @csrf <!-- CSRF token for security -->
+        <div class="grid grid-cols-2 gap-6">
 
         <!-- CIF -->
         <div>
@@ -235,53 +240,92 @@
             <textarea id="observaciones" name="observaciones" value="{{ old('observaciones', session('empresa_draft')?->observaciones) }}" rows="3" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"></textarea>
             <x-input-error :messages="$errors->get('observaciones')" class="mt-2" />
         </div>
-
+    </div>
         <hr>
 
         <!-- Responsable -->
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 flex justify-between">
-            {{ __('Añadir Responsable Convenio') }}
-            <a href="#secondary_section">
-                <x-primary-nonsubmit-button type="button" id="add_section_button_1">{{ __(' + ') }}</x-primary-nonsubmit-button>
-            </a>
+            {{ __('Añadir Responsable Convenio #1') }}
+            <x-primary-nonsubmit-button type="button" id="add_section_button_1">
+                {{ __(' + ') }}
+            </x-primary-nonsubmit-button>
         </h2>
 
-        <div id="secondary_section" class="space-y-6" style="display:block">
-            <!-- DNI -->
-            <div>
-                <x-input-label-light for="rc_dni" :value="__('DNI <span class=\'text-red-500\'>*</span>')" />
-                <x-text-input id="rc_dni" name="rc_dni" value="{{ old('rc_dni', session('responsableConvenio_draft')?->dni) }}" type="text" class="mt-1 block w-full" autocomplete="dni" required />
-                <x-input-error :messages="$errors->get('rc_dni')" class="mt-2" />
-            </div>
+        <!-- Wrapper where all Responsable Convenio forms will go -->
+        <div id="responsables_wrapper">
+            <div class="grid grid-cols-2 gap-6 mb-6"> 
+                <div>
+                    <x-input-label-light for="rc_dni" :value="__('DNI <span class=\'text-red-500\'>*</span>')" />
+                    <x-text-input id="rc_dni" name="rc_dni" value="{{ old('rc_dni', session('responsableConvenio_draft')?->dni) }}" type="text" class="mt-1 block w-full" autocomplete="dni" required />
+                    <x-input-error :messages="$errors->get('rc_dni')" class="mt-2" />
+                </div>
 
-            <!-- Nombre -->
-            <div>
-                <x-input-label-light for="rc_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
-                <x-text-input id="rc_nombre" name="rc_nombre" value="{{ old('rc_nombre', session('responsableConvenio_draft')?->nombre) }}" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
-                <x-input-error :messages="$errors->get('rc_nombre')" class="mt-2" />
-            </div>
+                <div>
+                    <x-input-label-light for="rc_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
+                    <x-text-input id="rc_nombre" name="rc_nombre" value="{{ old('rc_nombre', session('responsableConvenio_draft')?->nombre) }}" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
+                    <x-input-error :messages="$errors->get('rc_nombre')" class="mt-2" />
+                </div>
 
-            <!-- Apellido -->
-            <div>
-                <x-input-label-light for="rc_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
-                <x-text-input id="rc_apellido" name="rc_apellido" value="{{ old('rc_apellido', session('responsableConvenio_draft')?->apellido) }}" type="text" class="mt-1 block w-full" autocomplete="apellido" required />
-                <x-input-error :messages="$errors->get('rc_apellido')" class="mt-2" />
-            </div>
+                <div>
+                    <x-input-label-light for="rc_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
+                    <x-text-input id="rc_apellido" name="rc_apellido" value="{{ old('rc_apellido', session('responsableConvenio_draft')?->apellido) }}" type="text" class="mt-1 block w-full" autocomplete="apellido" required />
+                    <x-input-error :messages="$errors->get('rc_apellido')" class="mt-2" />
+                </div>
 
-            <!-- Telefono -->
-            <div>
-                <x-input-label-light for="rc_telefono" :value="__('Teléfono')" />
-                <x-text-input id="rc_telefono" name="rc_telefono" value="{{ old('rc_telefono', session('responsableConvenio_draft')?->telefono) }}" type="text" class="mt-1 block w-full" autocomplete="telefono" />
-                <x-input-error :messages="$errors->get('rc_telefono')" class="mt-2" />
-            </div>
+                <div>
+                    <x-input-label-light for="rc_telefono" :value="__('Teléfono')" />
+                    <x-text-input id="rc_telefono" name="rc_telefono" value="{{ old('rc_telefono', session('responsableConvenio_draft')?->telefono) }}" type="text" class="mt-1 block w-full" autocomplete="telefono" />
+                    <x-input-error :messages="$errors->get('rc_telefono')" class="mt-2" />
+                </div>
 
-            <!-- Email -->
-            <div>
-                <x-input-label-light for="rc_email" :value="__('Email')" />
-                <x-text-input id="rc_email" name="rc_email" value="{{ old('rc_email', session('responsableConvenio_draft')?->email) }}" type="text" class="mt-1 block w-full" autocomplete="email" />
-                <x-input-error :messages="$errors->get('rc_email')" class="mt-2" />
+                <div>
+                    <x-input-label-light for="rc_email" :value="__('Email')" />
+                    <x-text-input id="rc_email" name="rc_email" value="{{ old('rc_email', session('responsableConvenio_draft')?->email) }}" type="text" class="mt-1 block w-full" autocomplete="email" />
+                    <x-input-error :messages="$errors->get('rc_email')" class="mt-2" />
+                </div>
             </div>
-        </div>
+        </div> 
+        
+        <template id="responsable_template">
+            <details class="responsable-section bg-white dark:bg-gray-900 border rounded-lg p-4 shadow-sm mb-6" open>
+                <summary class="text-lg font-medium text-gray-900 dark:text-gray-100 cursor-pointer flex justify-between items-center">
+                    <span class="title-label">Responsable Convenio</span>
+                    <button type="button" class="remove-section text-red-500 hover:text-red-700 text-sm ml-4">❌</button>
+                </summary>
+
+                <div class="mt-6 grid grid-cols-2 gap-6">
+                    <div>
+                    <x-input-label-light for="rc_dni" :value="__('DNI <span class=\'text-red-500\'>*</span>')" />
+                        <x-text-input id="rc_dni" name="rc_dni" value="{{ old('rc_dni', session('responsableConvenio_draft')?->dni) }}" type="text" class="mt-1 block w-full" autocomplete="dni" required />
+                        <x-input-error :messages="$errors->get('rc_dni')" class="mt-2" />            
+                    </div>
+
+                    <div>
+                        <x-input-label-light for="rc_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
+                        <x-text-input id="rc_nombre" name="rc_nombre" value="{{ old('rc_nombre', session('responsableConvenio_draft')?->nombre) }}" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
+                        <x-input-error :messages="$errors->get('rc_nombre')" class="mt-2" />            
+                    </div>
+
+                    <div>
+                        <x-input-label-light for="rc_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
+                        <x-text-input id="rc_apellido" name="rc_apellido" value="{{ old('rc_apellido', session('responsableConvenio_draft')?->apellido) }}" type="text" class="mt-1 block w-full" autocomplete="apellido" required />
+                        <x-input-error :messages="$errors->get('rc_apellido')" class="mt-2" />            
+                    </div>
+
+                    <div>
+                        <x-input-label-light for="rc_telefono" :value="__('Teléfono')" />
+                        <x-text-input id="rc_telefono" name="rc_telefono" value="{{ old('rc_telefono', session('responsableConvenio_draft')?->telefono) }}" type="text" class="mt-1 block w-full" autocomplete="telefono" />
+                        <x-input-error :messages="$errors->get('rc_telefono')" class="mt-2" />            
+                    </div>
+
+                    <div>
+                        <x-input-label-light for="rc_email" :value="__('Email')" />
+                        <x-text-input id="rc_email" name="rc_email" value="{{ old('rc_email', session('responsableConvenio_draft')?->email) }}" type="text" class="mt-1 block w-full" autocomplete="email" />
+                        <x-input-error :messages="$errors->get('rc_email')" class="mt-2" />            
+                    </div>
+                </div>
+            </details>
+        </template>
 
         <!-- Bottom button and status bar -->
         <x-form-buttons :currentRoute="route('empresa-form-1')" />
@@ -289,6 +333,44 @@
 </section>
 
 <script>
+
+    let responsableCount = 2;
+
+    function updateTitles() {
+        const sections = document.querySelectorAll('.responsable-section .title-label');
+        sections.forEach((label, index) => {
+            label.textContent = `Responsable Convenio #${index + 2}`;
+        });
+    }
+
+    document.getElementById('add_section_button_1').addEventListener('click', function () {
+        const template = document.getElementById('responsable_template');
+        const clone = template.content.cloneNode(true);
+        const wrapper = document.getElementById('responsables_wrapper');
+
+        // Append the new section
+        wrapper.appendChild(clone);
+
+        // Re-number everything
+        updateTitles();
+    });
+
+    // Handle remove button (event delegation)
+    document.getElementById('responsables_wrapper').addEventListener('click', function (e) {
+        if (e.target && e.target.classList.contains('remove-section')) {
+            e.preventDefault();
+            const section = e.target.closest('.responsable-section');
+            if (section) {
+                section.remove();
+                updateTitles();
+            }
+        }
+    });
+
+    // Initial numbering
+    document.addEventListener('DOMContentLoaded', updateTitles);
+
+
     // Colaboration change
     document.addEventListener('DOMContentLoaded', function () {
         const colaboracionSelect = document.getElementById('colaboracion');

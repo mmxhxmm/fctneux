@@ -18,8 +18,22 @@
                         </a>
                         
                         @if(session()->has('empresa_draft'))
-                            <p class="text-white"><- [Tienes un Draft Guardado]</p>
+                        <div class="flex items-center gap-2 bg-[#1c3b5c]/80 text-white text-sm rounded-full px-4 py-1.5 shadow-sm backdrop-blur-sm border border-white/10">
+                            <a href="{{ route('empresa-form-1') }}"
+                            class="ml-2 text-sm font-semibold text-white hover:text-blue-300 transition duration-200 no-underline hover:underline hover:underline-offset-2">
+                                <svg class="w-4 h-4 inline mr-1 text-blue-200" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M9 12l2 2l4 -4m6 2a10 10 0 11-20 0a10 10 0 0120 0z" />
+                                </svg>
+                                <span>Borrador guardado</span>
+                            </a>
+                        </div>
+
                         @endif
+
+
+
                     </div>
                 </div>
                 <!-- Toggle View Button -->
@@ -39,59 +53,71 @@
                         </div>
                     </div>
 
-                    <!-- Provincias Dropdown -->
-                    <select class="bg-black_transp rounded-[100px] border-2 border-white w-[200px] h-[40px] flex items-center pl-4 pr-2 text-white font-roboto text-base font-medium">
-                        <option value="todos">Todos</option>
-                        <option value="alava">Álava</option>
-                        <option value="albacete">Albacete</option>
-                        <option value="alicante">Alicante</option>
-                        <option value="almeria">Almería</option>
-                        <option value="asturias">Asturias</option>
-                        <option value="avila">Ávila</option>
-                        <option value="badajoz">Badajoz</option>
-                        <option value="barcelona">Barcelona</option>
-                        <option value="burgos">Burgos</option>
-                        <option value="caceres">Cáceres</option>
-                        <option value="cadiz">Cádiz</option>
-                        <option value="cantabria">Cantabria</option>
-                        <option value="castellon">Castellón</option>
-                        <option value="ceuta">Ceuta</option>
-                        <option value="cordoba">Córdoba</option>
-                        <option value="cuenca">Cuenca</option>
-                        <option value="girona">Girona</option>
-                        <option value="granada">Granada</option>
-                        <option value="guadalajara">Guadalajara</option>
-                        <option value="girona">Girona</option>
-                        <option value="huelva">Huelva</option>
-                        <option value="huesca">Huesca</option>
-                        <option value="jaen">Jaén</option>
-                        <option value="la-coruna">La Coruña</option>
-                        <option value="la-rioja">La Rioja</option>
-                        <option value="las-palmas">Las Palmas</option>
-                        <option value="leon">León</option>
-                        <option value="lleida">Lleida</option>
-                        <option value="lugo">Lugo</option>
-                        <option value="madrid">Madrid</option>
-                        <option value="malaga">Málaga</option>
-                        <option value="melilla">Melilla</option>
-                        <option value="murcia">Murcia</option>
-                        <option value="navarra">Navarra</option>
-                        <option value="orense">Ourense</option>
-                        <option value="palencia">Palencia</option>
-                        <option value="pontevedra">Pontevedra</option>
-                        <option value="salamanca">Salamanca</option>
-                        <option value="segovia">Segovia</option>
-                        <option value="sevilla">Sevilla</option>
-                        <option value="soria">Soria</option>
-                        <option value="tarragona">Tarragona</option>
-                        <option value="teruel">Teruel</option>
-                        <option value="toledo">Toledo</option>
-                        <option value="valencia">Valencia</option>
-                        <option value="valladolid">Valladolid</option>
-                        <option value="vizcaya">Vizcaya</option>
-                        <option value="zamora">Zamora</option>
-                        <option value="zaragoza">Zaragoza</option>
-                    </select>
+                    <form method="GET" action="{{ route('empresa.index_4') }}">
+                        <select name="provincia" onchange="this.form.submit()"
+                            class="bg-black_transp rounded-[100px] border-2 border-white w-[200px] h-[40px] flex items-center pl-4 pr-2 text-white font-roboto text-base font-medium">
+                            <option value="">Todos</option>
+                            @php
+                                $provincias = [
+                                    'alava' => 'Álava',
+                                    'albacete' => 'Albacete',
+                                    'alicante' => 'Alicante',
+                                    'almeria' => 'Almería',
+                                    'asturias' => 'Asturias',
+                                    'avila' => 'Ávila',
+                                    'badajoz' => 'Badajoz',
+                                    'barcelona' => 'Barcelona',
+                                    'burgos' => 'Burgos',
+                                    'caceres' => 'Cáceres',
+                                    'cadiz' => 'Cádiz',
+                                    'cantabria' => 'Cantabria',
+                                    'castellon' => 'Castellón',
+                                    'ceuta' => 'Ceuta',
+                                    'cordoba' => 'Córdoba',
+                                    'cuenca' => 'Cuenca',
+                                    'girona' => 'Girona',
+                                    'granada' => 'Granada',
+                                    'guadalajara' => 'Guadalajara',
+                                    'huelva' => 'Huelva',
+                                    'huesca' => 'Huesca',
+                                    'jaen' => 'Jaén',
+                                    'la-coruna' => 'La Coruña',
+                                    'la-rioja' => 'La Rioja',
+                                    'las-palmas' => 'Las Palmas',
+                                    'leon' => 'León',
+                                    'lleida' => 'Lleida',
+                                    'lugo' => 'Lugo',
+                                    'madrid' => 'Madrid',
+                                    'malaga' => 'Málaga',
+                                    'melilla' => 'Melilla',
+                                    'murcia' => 'Murcia',
+                                    'navarra' => 'Navarra',
+                                    'orense' => 'Ourense',
+                                    'palencia' => 'Palencia',
+                                    'pontevedra' => 'Pontevedra',
+                                    'salamanca' => 'Salamanca',
+                                    'segovia' => 'Segovia',
+                                    'sevilla' => 'Sevilla',
+                                    'soria' => 'Soria',
+                                    'tarragona' => 'Tarragona',
+                                    'teruel' => 'Teruel',
+                                    'toledo' => 'Toledo',
+                                    'valencia' => 'Valencia',
+                                    'valladolid' => 'Valladolid',
+                                    'vizcaya' => 'Vizcaya',
+                                    'zamora' => 'Zamora',
+                                    'zaragoza' => 'Zaragoza'
+                                ];
+                            @endphp
+
+                            @foreach ($provincias as $value => $label)
+                                <option value="{{ $value }}" {{ request('provincia') == $value ? 'selected' : '' }}>
+                                    {{ $label }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </form>
+
 
                     <form action="{{ route('empresa-index-3') }}" method="GET" class="relative">
                         <div class="bg-black_transp w-[200px] h-[40px] rounded-[100px] border-2 border-white flex items-center pl-4 pr-2">
@@ -149,14 +175,26 @@
             @if (session('status'))
             <div 
                 x-data="{ show: true }" 
-                x-show="show"
-                x-transition
-                x-init="setTimeout(() => show = false, 5000)"
-                class="bg-transparent border border-transparent border-none rounded-[100px] text-white font-roboto text-xs font-medium outline-none w-full"
+                x-init="setTimeout(() => show = false, 3000)" 
+                x-show="show" 
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 -translate-y-2"
+                x-transition:enter-end="opacity-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-300"
+                x-transition:leave-start="opacity-100 translate-y-0"
+                x-transition:leave-end="opacity-0 -translate-y-2"
+                class="fixed top-20 left-[30.5%] transform -translate-x-1/2 z-50 bg-green-600 text-white px-2 py-1.5 rounded-full shadow-lg text-sm flex items-center gap-3"
+                role="alert"
             >
-                {{ session('status') }}
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 12l2 2l4 -4m6 2a10 10 0 11-20 0a10 10 0 0120 0z" />
+                </svg>
+                <span>{{ session('status') }}</span>
             </div>
-            @endif
+        @endif
+
         </div>
 
         <div class="flex px-6 justify-center bg-white items-center">
@@ -178,13 +216,14 @@
                             <th class="p-4 text-left font-semibold">Modalidad</th>
                             <th class="p-4 text-left font-semibold">Colaboración</th>
                             <th class="p-4 text-left font-semibold">Familia</th>
-                            <th class="p-4 text-left font-semibold">Municipio</th>
+                            <th class="p-4 text-left font-semibold">Provincía</th>
                             <th class="p-4 text-left font-semibold">Ciclo Formativo</th>
                             <th class="p-4 text-left font-semibold text-center">Acción</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         @foreach ($empresas as $empresa)
+                            @if (!request('provincia') || strtolower($empresa->provincia) == strtolower(request('provincia')))
                             <tr class="hover:bg-blue/5 transition-all">
                                 <td class="p-4 text-gray-800">{{ $empresa->nombre }}</td>
                                 <td class="p-4 text-gray-800">{{ $empresa->cif }}</td>
@@ -201,7 +240,7 @@
                                     </span>
                                 </td>
                                 <td class="p-4 text-gray-800">{{ $empresa->familiaPersonal }}</td>
-                                <td class="p-4 text-gray-800">{{ $empresa->municipio }}</td>
+                                <td class="p-4 text-gray-800">{{ $empresa->provincia }}</td>
                                 <td class="p-4 text-gray-800 whitespace-pre-wrap">
                                     @foreach ($empresa->practica as $practica)
                                         • {{ $practica->cicloFormativo }} ({{ $practica->numPlazasAsignadas }} plazas)<br>
@@ -213,6 +252,7 @@
                                     </a>
                                 </td>
                             </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>

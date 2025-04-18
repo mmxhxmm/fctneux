@@ -51,6 +51,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/empresa-index', [EmpresaController::class, 'index'])->name('empresa-index');
     Route::get('/empresa-detail', [EmpresaController::class, 'index_2'])->name('empresa-detail');
     Route::get('/empresa-index-3', [EmpresaController::class, 'index_3'])->name('empresa-index-3');
+    Route::get('/empresa-index-filtrada', [EmpresaController::class, 'index_4'])->name('empresa.index_4');
+
 
     // Tareas
     Route::get('/tareas-index', [TareaController::class, 'index'])->name('tareas-index');
