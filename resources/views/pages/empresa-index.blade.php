@@ -44,16 +44,123 @@
                 <!-- Right Section (Filter, Barcelona / BCN, and Search) -->
                 <div class="flex items-center space-x-4">
                     <!-- Filter Section -->
-                    <div class="relative">
-                        <div class="bg-black_transp w-[200px] h-[40px] rounded-[100px] border-2 border-white flex items-center pl-4 pr-2">
-                            <img class="w-[20px] h-[20px]" src="../images/filter-svg.svg" alt="Filter Icon" />
-                            <div class="text-white text-base font-medium ml-2">
-                                Filter
-                            </div>
+                    <!-- Dropdown to select filters -->
+                    <div class="relative inline-block w-full">
+                    <div 
+                        x-data="{
+                            open: false,
+                            selectedFilters: [
+                                {{ request('modalidad') ? "'modalidad'," : '' }}
+                                {{ request('colaboracion') ? "'colaboracion'," : '' }}
+                                {{ request('ciclo') ? "'ciclo'," : '' }}
+                                {{ request('plazas') ? "'plazas'," : '' }}
+                                {{ request('familia') ? "'familia'," : '' }}
+                            ],
+                            toggleFilter(type) {
+                                if (this.selectedFilters.includes(type)) {
+                                    this.selectedFilters = this.selectedFilters.filter(f => f !== type);
+                                    if (this.selectedFilters.length === 0) {
+                                        window.location.href = '{{ route("empresa-index") }}'; // redirect when none selected
+                                    }
+                                } else {
+                                    this.selectedFilters.push(type);
+                                }
+                            }
+                        }"
+                        class="w-full flex items-center flex-wrap"
+                    >
+                        <!-- Dropdown Filter Trigger -->
+                        <div class="relative">
+                            <select 
+                                @change="toggleFilter($event.target.value); $event.target.value=''" 
+                                class="bg-black_transp w-[109px] text-white font-roboto text-base font-medium rounded-[100px] border-2 border-white w-[200px] h-[40px] px-4 pr-10 appearance-none cursor-pointer"
+                            >
+                                <option value="">+ Filtro</option>
+                                <option value="modalidad" :disabled="selectedFilters.includes('modalidad')">Modalidad</option>
+                                <option value="colaboracion" :disabled="selectedFilters.includes('colaboracion')">Colaboración</option>
+                                <option value="ciclo" :disabled="selectedFilters.includes('ciclo')">Ciclo</option>
+                                <option value="plazas" :disabled="selectedFilters.includes('plazas')">Plazas</option>
+                                <option value="familia" :disabled="selectedFilters.includes('familia')">Familia</option>
+                            </select>
                         </div>
+
+                        <!-- Selected Filters Form -->
+                        <form method="GET" action="{{ route('empresa.index_6') }}" class="flex flex-wrap ml-4 items-center gap-3">
+
+                        <!-- Modalidad -->
+                        <template x-if="selectedFilters.includes('modalidad')">
+                            <div class="relative inline-block">
+                                <select name="modalidad" onchange="this.form.submit()" class="w-[140px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
+                                    <option value="">Modalidad</option>
+                                    @foreach ($modalidades as $value => $label)
+                                        <option value="{{ $value }}" {{ request('modalidad') == $value ? 'selected' : '' }}>{{ $label }}</option>
+                                    @endforeach
+                                </select>
+                                <button type="button" @click="toggleFilter('modalidad')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-lg hover:bg-red-700 transition">&times;</button>
+                            </div>
+                        </template>
+
+                        <!-- Colaboración -->
+                        <template x-if="selectedFilters.includes('colaboracion')">
+                            <div class="relative inline-block">
+                                <select name="colaboracion" onchange="this.form.submit()" class="w-[150px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
+                                    <option value="">Selecciona</option>
+                                    @foreach ($colaboraciones as $value => $label)
+                                        <option value="{{ $value }}" {{ request('colaboracion') == $value ? 'selected' : '' }}>{{ $label }}</option>
+                                    @endforeach
+                                </select>
+                                <button type="button" @click="toggleFilter('colaboracion')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-lg hover:bg-red-700 transition">&times;</button>
+                            </div>
+                        </template>
+
+                        <!-- Ciclo -->
+                        <template x-if="selectedFilters.includes('ciclo')">
+                            <div class="relative inline-block">
+                                <select name="ciclo" onchange="this.form.submit()" class="w-[100px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
+                                    <option value="">Ciclo</option>
+                                    @foreach ($ciclos as $value => $label)
+                                        <option value="{{ $value }}" {{ request('ciclo') == $value ? 'selected' : '' }}>{{ $label }}</option>
+                                    @endforeach
+                                </select>
+                                <button type="button" @click="toggleFilter('ciclo')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-lg hover:bg-red-700 transition">&times;</button>
+                            </div>
+                        </template>
+
+                        <!-- Plazas -->
+                        <template x-if="selectedFilters.includes('plazas')">
+                            <div class="relative inline-block">
+                                <select name="plazas" onchange="this.form.submit()" class=" w-[80px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
+                                    <option value="">Plazas</option>
+                                    @foreach ($plazas as $value => $label)
+                                        <option value="{{ $value }}" {{ request('plazas') == $value ? 'selected' : '' }}>{{ $label }}</option>
+                                    @endforeach
+                                </select>
+                                <button type="button" @click="toggleFilter('plazas')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-lg hover:bg-red-700 transition">&times;</button>
+                            </div>
+                        </template>
+
+                        <!-- Familia -->
+                        <template x-if="selectedFilters.includes('familia')">
+                            <div class="relative inline-block">
+                                <select name="familia" onchange="this.form.submit()" class="w-[111px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
+                                    <option value="">Familia</option>
+                                    @foreach ($familias as $value => $label)
+                                        <option value="{{ $value }}" {{ request('familia') == $value ? 'selected' : '' }}>{{ $label }}</option>
+                                    @endforeach
+                                </select>
+                                <button type="button" @click="toggleFilter('familia')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-lg hover:bg-red-700 transition">&times;</button>
+                            </div>
+                        </template>
+
+
+                        </form>
                     </div>
 
-                    <form method="GET" action="{{ route('empresa.index_4') }}">
+
+                    </div>
+
+
+                    <form method="GET" action="{{ route('empresa.provincias_filtro') }}">
                         <select name="provincia" onchange="this.form.submit()"
                             class="bg-black_transp rounded-[100px] border-2 border-white w-[200px] h-[40px] flex items-center pl-4 pr-2 text-white font-roboto text-base font-medium">
                             <option value="">Todos</option>
@@ -135,7 +242,7 @@
                     </form>
 
 
-                    <button id="toggleView" onclick="toggleLayout()" class="w-10 h-10 rounded-full bg-white text-blue border border-blue flex items-center justify-center hover:bg-blue hover:text-white transition">
+                    <button id="toggleView" onclick="toggleLayout()" class="w-10 h-10 px-2 rounded-full bg-white text-blue border border-blue flex items-center justify-center hover:bg-blue hover:text-white transition">
                         <!-- Grid Icon -->
                         <svg id="iconGrid" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
