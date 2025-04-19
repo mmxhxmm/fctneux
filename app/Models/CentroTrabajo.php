@@ -38,6 +38,19 @@ class CentroTrabajo extends Model
      */
     protected $keyType = 'int';
 
+        /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<string>
+     */
+    protected $fillable = [
+        'codigoPostal',
+        'comunidad',
+        'provincia',
+        'municipio',
+        'direccion',
+    ];
+
     /**
      * The attributes that should be cast.
      *
@@ -49,6 +62,38 @@ class CentroTrabajo extends Model
         'updated_at' => 'datetime',
     ];
 
+    // Api Transform
+    function comunidadToString($value) {
+        $key = "bf9bf54cbf3e6f52ea4f61d205d533c745dc29471259d43d982c83081fc3ce06";
+        $url = "https://apiv1.geoapi.es/comunidades?type=JSON&key=$key";
+        
+        $response = file_get_contents($url);
+        $data = json_decode($response, true);
+
+        foreach ($data['data'] as $comunidad) {
+            if ($comunidad['CCOM'] == $value) {
+                return ucwords(mb_strtolower($comunidad['COM']));
+            }
+        }
+
+        return $value;
+    }
+
+    function provinciaToString($value) {
+        $key = "bf9bf54cbf3e6f52ea4f61d205d533c745dc29471259d43d982c83081fc3ce06";
+        $url = "https://apiv1.geoapi.es/provincias?type=JSON&key=$key";
+        
+        $response = file_get_contents($url);
+        $data = json_decode($response, true);
+
+        foreach ($data['data'] as $provincias) {
+            if ($provincias['CPRO'] == $value) {
+                return ucwords(mb_strtolower($provincias['PRO']));
+            }
+        }
+
+        return $value;
+    }
 
     // Define Relationships
     public function empresa()

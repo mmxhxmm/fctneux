@@ -71,8 +71,41 @@ class Empresa extends Model
         'updated_at' => 'datetime',
     ];
 
+    // Api Transform
+    function comunidadToString($value) {
+        $key = "bf9bf54cbf3e6f52ea4f61d205d533c745dc29471259d43d982c83081fc3ce06";
+        $url = "https://apiv1.geoapi.es/comunidades?type=JSON&key=$key";
+        
+        $response = file_get_contents($url);
+        $data = json_decode($response, true);
+
+        foreach ($data['data'] as $comunidad) {
+            if ($comunidad['CCOM'] == $value) {
+              return ucwords(mb_strtolower($comunidad['COM']));
+            }
+        }
+
+        return $value;
+    }
+
+    function provinciaToString($value) {
+        $key = "bf9bf54cbf3e6f52ea4f61d205d533c745dc29471259d43d982c83081fc3ce06";
+        $url = "https://apiv1.geoapi.es/provincias?type=JSON&key=$key";
+        
+        $response = file_get_contents($url);
+        $data = json_decode($response, true);
+
+        foreach ($data['data'] as $provincias) {
+            if ($provincias['CPRO'] == $value) {
+                return ucwords(mb_strtolower($provincias['PRO']));
+            }
+        }
+
+        return $value;
+    }
+
     // Accessors
-    public function getColaboracionAttribute($value) {
+    public function colaboracionToString($value) {
         switch ($value) {
             case 'prospeccion':
                 return 'Prospección';
@@ -85,22 +118,9 @@ class Empresa extends Model
         }
     }
 
-    public function getModalidadAttribute($value) {
-        switch ($value) {
-            case 'presencial':
-                return 'Presencial';
-            case 'remoto':
-                return 'Remoto';
-            case 'semipresencial':
-                return 'Semipresencial';
-            default:
-                return $value;
-        }
-    }
-
-    public function getGestionesAttribute($value) {
+    public function gestionesToString($value) {
         switch ($this->colaboracion) {
-            case 'Prospección':
+            case 'prospeccion':
                 switch ($value) {
                     case 'primer_contacto':
                         return 'P - Primer contacto';
@@ -113,7 +133,7 @@ class Empresa extends Model
                     default:
                         return $value;
                 }
-            case 'Colaboración':
+            case 'colaboracion':
                 switch ($value) {
                     case 'pendiente_firma_convenio':
                         return 'C - Pendiente firma Convenio';
@@ -129,24 +149,24 @@ class Empresa extends Model
         }
     }
 
-    public function getOfertaLaboralAttribute($value) {
-        return ucwords(strtolower($value));
-    }
+    // public function getOfertaLaboralAttribute($value) {
+    //     return ucwords(strtolower($value));
+    // }
 
-    public function getFamiliaPersonalAttribute($value) {
-        switch ($value) {
-            case 'sanidad':
-                return 'Sanidad';
-            case 'informatica':
-                return 'Informática';
-            case 'hosteleria':
-                return 'Hostelería';
-            case 'marketing':
-                return 'Marketing';
-            default:
-                return $value;
-        }
-    }
+    // public function getFamiliaPersonalAttribute($value) {
+    //     switch ($value) {
+    //         case 'sanidad':
+    //             return 'Sanidad';
+    //         case 'informatica':
+    //             return 'Informática';
+    //         case 'hosteleria':
+    //             return 'Hostelería';
+    //         case 'marketing':
+    //             return 'Marketing';
+    //         default:
+    //             return $value;
+    //     }
+    // }
 
     /**
      * Define the relationship with ResponsableConvenio.

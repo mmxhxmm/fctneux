@@ -113,8 +113,8 @@ class EmpresaController extends Controller
         $empresas = Empresa::all();
 
         // Pass the empresas and the id to the view
-        return view('pages/detail-view', [
-            'page' => 'empresa-detail',
+        return view('pages/empresa-detail-view', [
+            'page' => 'detail/detail-main',
         ],  compact('empresas' , 'id') );
     }
 
@@ -613,7 +613,7 @@ class EmpresaController extends Controller
             $validator->sometimes('rc_dni', 'required|string|max:255', function () {return true;});
             $validator->sometimes('rc_nombre', 'required|string|max:255', function () {return true;});
             $validator->sometimes('rc_apellido', 'required|string|max:255', function () {return true;});
-            $validator->sometimes('rc_telefono', 'nullable|integer|digits:9', function () {return true;});
+            $validator->sometimes('rc_telefono', 'nullable|string|digits:9', function () {return true;});
             $validator->sometimes('rc_email', 'nullable|string|email', function () {return true;});
         }
 

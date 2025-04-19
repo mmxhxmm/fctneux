@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/usuarios-buscar', [UserController::class, 'search'])->name('usuarios-buscar');
 
-    // Empresa
+    // Empresa Forms
     // Checks if empresa_draft exists, redirects to empresa-form-1 if not
     Route::middleware([CheckEmpresa::class])->group(function () {
         Route::get('/empresa-form/pagina-1', function () {
@@ -43,9 +43,22 @@ Route::middleware('auth')->group(function () {
     Route::post('/store-empresa-3', [EmpresaController::class, 'store_3'])->name('store-empresa-3');
     Route::post('/clear-drafts', [DraftController::class, 'clearDrafts'])->name('clear-drafts');
 
+    // Empresa Detail
     Route::put('/update-empresa/{id}', [EmpresaUpdateController::class, 'update_empresa'])->name('empresa.update');
+    Route::put('/delete-empresa/{id}', [EmpresaUpdateController::class, 'delete_empresa'])->name('empresa.delete');
+    Route::put('/add-rc/{id}', [EmpresaUpdateController::class, 'add_rc'])->name('responsables.add');
     Route::put('/update-rc/{id}', [EmpresaUpdateController::class, 'update_rc'])->name('responsables.update');
-    Route::put('/delete-rc/{id}', [EmpresaUpdateController::class, 'delete_rc'])->name('responsables.delete');
+    Route::delete('/delete-rc/{id}', [EmpresaUpdateController::class, 'delete_rc'])->name('responsables.delete');
+    Route::put('/update-ct/{id}', [EmpresaUpdateController::class, 'update_ct'])->name('centroTrabajo.update');
+    Route::put('/delete-ct/{id}', [EmpresaUpdateController::class, 'delete_ct'])->name('centroTrabajo.delete');
+    Route::put('/update-pc/{id}', [EmpresaUpdateController::class, 'update_pc'])->name('personaContacto.update');
+    Route::put('/delete-pc/{id}', [EmpresaUpdateController::class, 'delete_pc'])->name('personaContacto.delete');
+    Route::put('/update-practica/{id}', [EmpresaUpdateController::class, 'update_practica'])->name('practica.update');
+    Route::put('/delete-practica/{id}', [EmpresaUpdateController::class, 'delete_practica'])->name('practica.delete');
+    Route::put('/update-tutor/{id}', [EmpresaUpdateController::class, 'update_tutor'])->name('tutor.update');
+    Route::put('/delete-tutor/{id}', [EmpresaUpdateController::class, 'delete_tutor'])->name('tutor.delete');
+    Route::put('/update-tutor-empresa/{id}', [EmpresaUpdateController::class, 'update_tutor_empresa'])->name('tutor-empresa.update');
+    Route::put('/delete-tutor-empresa/{id}', [EmpresaUpdateController::class, 'delete_tutor_empresa'])->name('tutor-empresa.delete');
 
     // Empresa Index
     Route::get('/empresa-index', [EmpresaController::class, 'index'])->name('empresa-index');
@@ -60,7 +73,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/empresa/familia-filtro', [EmpresaController::class, 'familia_filtro'])->name('empresa.familia_filtro');
 
 
-
     // Tareas
     Route::get('/tareas-index', [TareaController::class, 'index'])->name('tareas-index');
     Route::get('/tareas-historial', function () {
@@ -71,7 +83,6 @@ Route::middleware('auth')->group(function () {
         return view('form-datos-tareas');
     })->name('tareas-form');
     Route::get('/tareas-busqueda', [TareaController::class, 'buscar'])->name('tareas-busqueda');
-
 });
 
 // Pages that only the admin can access

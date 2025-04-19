@@ -123,7 +123,7 @@
                     label="Presencial"
                 />
                 <x-session-option 
-                    value="presencial" 
+                    value="remoto" 
                     :selectedValue="old('modalidad', session('empresa_draft')?->modalidad)" 
                     label="Remoto"
                 />

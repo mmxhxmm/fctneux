@@ -1,30 +1,29 @@
 <section class="flex flex-col space-y-12">
-    @foreach ($empresa->responsablesConvenio as $index => $resConv)
     <div class="p-6 relative">
         <!-- Toggleable Edit Button -->
         <button 
-            id="edit-btn-empresa-{{ $index }}"
+            id="edit-btn-empresa"
             type="button" 
-            class="edit-btn absolute px-2 rounded top-4 right-4 text-blue hover:text-white border border-blue hover:bg-blue transition active:scale-95 duration-80"
-            data-target="empresa-{{ $index }}"> Editar
+            class="edit-btn absolute px-2 rounded top-6 right-6 text-blue hover:text-white border border-blue hover:bg-blue transition active:scale-95 duration-80"
+            data-target="empresa"> Editar
         </button>
         
         <!-- Display Mode -->
-        <div id="display-empresa-{{ $index }}" class="grid md:grid-cols-2 gap-8 text-gray-800 text-[15px] leading-relaxed">
+        <div id="display-empresa" class="grid md:grid-cols-2 gap-8 text-gray-800 text-[15px] leading-relaxed">
             <div class="space-y-2">
                 <p><span class="font-semibold">Nombre:</span> {{ $empresa->nombre }}</p>
                 <p><span class="font-semibold">CIF:</span> {{ $empresa->cif }}</p>
-                <p><span class="font-semibold">Colaboración:</span> {{ $empresa->colaboracion }}</p>
-                <p><span class="font-semibold">Gestiones:</span> {{ $empresa->gestiones }}</p>
-                <p><span class="font-semibold">Modalidad:</span> {{ $empresa->modalidad }}</p>
-                <p><span class="font-semibold">Familia Personal:</span> {{ $empresa->familiaPersonal }}</p>
-                <p><span class="font-semibold">Oferta Laboral:</span> {{ $empresa->ofertaLaboral }}</p>
+                <p><span class="font-semibold">Colaboración:</span> {{ $empresa->colaboracionToString($empresa->colaboracion) }}</p>
+                <p><span class="font-semibold">Gestiones:</span> {{ $empresa->gestionesToString($empresa->gestiones) }}</p>
+                <p><span class="font-semibold">Modalidad:</span> {{ ucwords(strtolower($empresa->modalidad)) }}</p>
+                <p><span class="font-semibold">Familia Personal:</span> {{ ucwords(strtolower($empresa->familiaPersonal)) }}</p>
+                <p><span class="font-semibold">Oferta Laboral:</span> {{ ucwords(strtolower($empresa->ofertaLaboral)) }}</p>
             </div>
             <div class="space-y-2">
                 <p><span class="font-semibold">Entidad:</span> {{ $empresa->entidad }}</p>
-                <p><span class="font-semibold">Comunidad:</span> {{ getComunidadAttribute($empresa->comunidad) }}</p>
-                <p><span class="font-semibold">Provincia:</span> {{ getProvinciaAttribute($empresa->provincia) }}</p>
-                <p><span class="font-semibold">Municipio:</span> {{ getMunicipioAttribute($empresa->municipio) }}</p>
+                <p><span class="font-semibold">Comunidad:</span> {{ $empresa->comunidadToString($empresa->comunidad) }}</p>
+                <p><span class="font-semibold">Provincia:</span> {{ $empresa->provinciaToString($empresa->provincia) }}</p>
+                <p><span class="font-semibold">Municipio:</span> {{ ucwords(mb_strtolower($empresa->municipio)) }}</p>
                 <p><span class="font-semibold">Dirección:</span> {{ $empresa->direccion }}</p>
                 <p><span class="font-semibold">Código Postal:</span> {{ $empresa->codigoPostal }}</p>
                 <p><span class="font-semibold">Observaciones:</span> {{ $empresa->observaciones }}</p>
@@ -32,7 +31,7 @@
         </div>
         
         <!-- Edit Mode (Hidden by default) -->
-        <div id="edit-empresa-{{ $index }}" class="hidden">
+        <div id="edit-empresa" class="hidden">
             <h3 class="text-xl font-semibold text-blue mb-4">Editar Empresa</h3>
             <form id="form" method="POST" action="{{ route('empresa.update', $empresa->id) }}" class="grid md:grid-cols-2 gap-6">
                 @csrf
@@ -40,30 +39,19 @@
                 
                 <div class="md:col-span-1 space-y-4">
                     <div>
-                        <x-input-label for="nombre-{{ $index }}" value="Nombre" />
-                        <x-text-input-light id="nombre-{{ $index }}" name="nombre" value="{{ $empresa->nombre }}" />
+                        <x-input-label for="nombre" value="Nombre" />
+                        <x-text-input-light id="nombre" name="nombre" value="{{ $empresa->nombre }}" />
                     </div>
                 
                     <div>
-                        <x-input-label for="cif-{{ $index }}" value="CIF" />
-                        <x-text-input-light id="cif-{{ $index }}" name="cif" value="{{ $empresa->cif }}" />
+                        <x-input-label for="cif" value="CIF" />
+                        <x-text-input-light id="cif" name="cif" value="{{ $empresa->cif }}" />
                     </div>
-
-                    <!-- <div>
-                        <x-input-label for="colaboracion-{{ $index }}" value="Colaboracion" />
-                        <x-text-input-light id="colaboracion-{{ $index }}" name="colaboracion" value="{{ $empresa->colaboracion }}" />
-                    </div>
-
-                    <div>
-                        <x-input-label for="gestiones-{{ $index }}" value="Gestiones" />
-                        <x-text-input-light id="gestiones-{{ $index }}" name="gestiones" value="{{ $empresa->gestiones }}" />
-                    </div> -->
-
 
                     <!-- Colaboración -->
                     <div>
                         <x-input-label for="colaboracion" :value="__('Colaboración')" />
-                        <x-select-input-light name="colaboracion" id="colaboracion" class="mt-1 block w-full">
+                        <x-select-input-light name="colaboracion" id="colaboracion" class="block w-full">
                             <option value="prospeccion"
                             {{ $empresa->colaboracion == 'prospeccion' ? 'selected' : '' }}>
                                 Prospección</option>
@@ -79,7 +67,7 @@
                         <x-input-label for="gestiones" :value="__('Gestiones')" />
 
                         <div id="prospeccion-options" style="display: none;">
-                            <x-select-input-light name="gestiones_prospeccion" id="gestiones" class="mt-1 block w-full">
+                            <x-select-input-light name="gestiones_prospeccion" id="gestiones">
                                 <x-session-option 
                                     value="primer_contacto" 
                                     :selectedValue="old('gestiones', session('empresa_draft')?->gestiones)" 
@@ -104,7 +92,7 @@
                         </div>
 
                         <div id="colaboracion-options" style="display: none;">
-                            <x-select-input-light name="gestiones_colaboracion" id="gestiones" class="mt-1 block w-full">
+                            <x-select-input-light name="gestiones_colaboracion" id="gestiones">
                                 <x-session-option 
                                     value="pendiente_firma_convenio" 
                                     :selectedValue="old('gestiones', session('empresa_draft')?->gestiones)" 
@@ -124,7 +112,7 @@
                         </div>
 
                         <div id="inactiva-options" style="display: none;">
-                            <x-select-input-light name="gestiones_inactiva" id="gestiones" class="mt-1 block w-full">
+                            <x-select-input-light name="gestiones_inactiva" id="gestiones">
                                 <x-session-option 
                                     value="null" 
                                     :selectedValue="old('gestiones', session('empresa_draft')?->gestiones)" 
@@ -135,60 +123,128 @@
                     </div>
 
                     <div>
-                        <x-input-label for="modalidad-{{ $index }}" value="Modalidad" />
-                        <x-text-input-light id="modalidad-{{ $index }}" name="modalidad" value="{{ $empresa->modalidad }}" />
+                        <x-input-label-light for="modalidad" :value="__('Modalidad')" />
+                        <x-select-input-light name="modalidad" id="modalidad">
+                            <x-session-option 
+                                value="presencial" 
+                                :selectedValue="$empresa->modalidad" 
+                                label="Presencial"
+                            />
+                            <x-session-option 
+                                value="remoto" 
+                                :selectedValue="$empresa->modalidad" 
+                                label="Remoto"
+                            />
+                            <x-session-option 
+                                value="semipresencial" 
+                                :selectedValue="$empresa->modalidad" 
+                                label="Semipresencial"
+                            />
+                        </x-select-input-light>
                     </div>
 
                     <div>
-                        <x-input-label for="familiaPersonal-{{ $index }}" value="Familia Personal" />
-                        <x-text-input-light id="familiaPersonal-{{ $index }}" name="familiaPersonal" value="{{ $empresa->familiaPersonal }}" />
+                        <x-input-label for="familiaPersonal" value="Familia Personal" />
+                        <x-select-input-light name="familiaPersonal" id="familiaPersonal" class="mt-1 block w-full">
+                            <x-session-option 
+                                value="sanidad" 
+                                :selectedValue="$empresa->familiaPersonal" 
+                                label="Sanidad"
+                            />
+                            <x-session-option 
+                                value="informatica" 
+                                :selectedValue="$empresa->familiaPersonal" 
+                                label="Informática"
+                            />
+                            <x-session-option 
+                                value="hosteleria" 
+                                :selectedValue="$empresa->familiaPersonal"  
+                                label="Hostelería"
+                            />
+                            <x-session-option 
+                                value="marketing" 
+                                :selectedValue="$empresa->familiaPersonal" 
+                                label="Marketing"
+                            />
+                        </x-select-input-light>
                     </div>
 
                     <div>
-                        <x-input-label for="ofertaLaboral-{{ $index }}" value="Oferta Laboral" />
-                        <x-text-input-light id="ofertaLaboral-{{ $index }}" name="ofertaLaboral" value="{{ $empresa->ofertaLaboral }}" />
+                        <x-input-label-light for="ofertaLaboral" :value="__('Oferta Laboral')" />
+                        <x-select-input-light name="ofertaLaboral" id="ofertaLaboral">
+                            <x-session-option 
+                                value="" 
+                                :selectedValue="$empresa->ofertaLaboral" 
+                                label="--"
+                            />
+                            <x-session-option 
+                                value="si" 
+                                :selectedValue="$empresa->ofertaLaboral" 
+                                label="Si"
+                            />
+                            <x-session-option 
+                                value="no" 
+                                :selectedValue="$empresa->ofertaLaboral" 
+                                label="No"
+                            />
+                        </x-select-input-light>
                     </div>
                 </div>
 
                 <div class="md:col-span-1 space-y-4">
                     <div>
-                        <x-input-label for="entidad-{{ $index }}" value="Entidad" />
-                        <x-text-input-light id="entidad-{{ $index }}" name="entidad" value="{{ $empresa->entidad }}" />
+                        <x-input-label for="entidad" value="Entidad" />
+                        <x-text-input-light id="entidad" name="entidad" value="{{ $empresa->entidad }}" />
+                    </div>
+
+                    <!-- Comunidad Autónoma -->
+                    <div>
+                        <x-input-label for="comunidad" value="Comunidad" />
+                        <x-select-input-light name="comunidad" id="comunidad"
+                            class="comunidad block border border-gray-300 w-full mt-1 rounded text-gray-900"
+                            data-initial-value="{{ $empresa->comunidad }}">
+                            <option value="">Selecciona una comunidad</option>
+                        </x-select-input-light>
+                    </div>
+
+                    <!-- Provincia -->
+                    <div>
+                        <x-input-label-light for="provincia" :value="__('Provincia')" />
+                        <x-select-input-light name="provincia" id="provincia"
+                            class="provincia block w-full mt-1 border border-gray-300 rounded text-gray-900"
+                            data-initial-value="{{ $empresa->provincia }}">
+                            <option value="">Selecciona una provincia</option>
+                        </x-select-input-light>
+                    </div>
+
+                    <!-- Municipio -->
+                    <div>
+                        <x-input-label-light for="municipio" :value="__('Municipio')" />
+                        <x-select-input-light name="municipio" id="municipio"
+                        class="municipio block w-full mt-1 border border-gray-300 rounded text-gray-900"
+                        data-initial-value="{{ $empresa->municipio }}">
+                            <option value="">Selecciona un municipio</option>
+                        </x-select-input-light>
                     </div>
 
                     <div>
-                        <x-input-label for="comunidad-{{ $index }}" value="Comunidad" />
-                        <x-text-input-light id="comunidad-{{ $index }}" name="comunidad" value="{{ $empresa->comunidad }}" />
+                        <x-input-label for="direccion" value="Dirección" />
+                        <x-text-input-light id="direccion" name="direccion" value="{{ $empresa->direccion }}" />
                     </div>
 
                     <div>
-                        <x-input-label for="provincia-{{ $index }}" value="Provincia" />
-                        <x-text-input-light id="provincia-{{ $index }}" name="provincia" value="{{ $empresa->provincia }}" />
+                        <x-input-label for="codigoPostal" value="Código Postal" />
+                        <x-text-input-light id="codigoPostal" name="codigoPostal" value="{{ $empresa->codigoPostal }}" />
                     </div>
 
                     <div>
-                        <x-input-label for="municipio-{{ $index }}" value="Municipio" />
-                        <x-text-input-light id="municipio-{{ $index }}" name="municipio" value="{{ $empresa->municipio }}" />
-                    </div>
-
-                    <div>
-                        <x-input-label for="direccion-{{ $index }}" value="Dirección" />
-                        <x-text-input-light id="direccion-{{ $index }}" name="direccion" value="{{ $empresa->direccion }}" />
-                    </div>
-
-                    <div>
-                        <x-input-label for="codigoPostal-{{ $index }}" value="Código Postal" />
-                        <x-text-input-light id="codigoPostal-{{ $index }}" name="codigoPostal" value="{{ $empresa->codigoPostal }}" />
-                    </div>
-
-                    <div>
-                        <x-input-label for="observaciones-{{ $index }}" value="Observaciones" />
-                        <x-text-input-light id="observaciones-{{ $index }}" name="observaciones" value="{{ $empresa->observaciones }}" />
+                        <x-input-label for="observaciones" value="Observaciones" />
+                        <textarea id="observaciones" name="observaciones" rows="3" class="block w-full border-gray-700 bg-white focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">{{ $empresa->observaciones }}</textarea>
                     </div>
                 </div>
                 
                 <div class="md:col-span-2 flex justify-end gap-4">
-                    <button type="button" class="cancel-edit-btn" data-target="empresa-{{ $index }}">
+                    <button type="button" class="cancel-edit-btn" data-target="empresa">
                         Cancelar
                     </button>
                     <button type="submit" class="bg-blue text-white px-4 py-2 rounded">
@@ -198,7 +254,6 @@
             </form>
         </div>
     </div>
-    @endforeach
 </section>
 
 <script>
@@ -224,7 +279,6 @@
                 document.getElementById(`edit-btn-${target}`).classList.remove('hidden');
             });
         });
-
 
         // Colaboracion change
         const colaboracionSelect = document.getElementById('colaboracion');
@@ -260,5 +314,89 @@
         if (colaboracionSelect.value) {
             handleColaboracionChange({ target: colaboracionSelect });
         }
+
+        
+        // GEO API
+        const key = "bf9bf54cbf3e6f52ea4f61d205d533c745dc29471259d43d982c83081fc3ce06";
+        const comunidadSelect = document.querySelector(".comunidad");
+        const provinciaSelect = document.querySelector(".provincia");
+        const municipioSelect = document.querySelector(".municipio");
+
+        async function cargarComunidades() {
+            const res = await fetch(`https://apiv1.geoapi.es/comunidades?type=JSON&key=${key}`);
+            const data = await res.json();
+
+            const initialComunidad = comunidadSelect.dataset.initialValue;
+
+            comunidadSelect.innerHTML = `<option value="">Selecciona una comunidad</option>`;
+            data.data.forEach(c => {
+                const option = document.createElement("option");
+                option.value = c.CCOM;
+                option.text = c.COM;
+                if (initialComunidad && c.CCOM === initialComunidad) {
+                    option.selected = true;
+                }
+                comunidadSelect.appendChild(option);
+            });
+
+            if (initialComunidad) {
+                await cargarProvincias(initialComunidad);
+            }
+        }
+
+        async function cargarProvincias(ccom) {
+            const res = await fetch(`https://apiv1.geoapi.es/provincias?CCOM=${ccom}&type=JSON&key=${key}`);
+            const data = await res.json();
+
+            const initialProvincia = provinciaSelect.dataset.initialValue;
+
+            municipioSelect.innerHTML = `<option value="">Selecciona un municipio</option>`;
+            data.data.forEach(p => {
+                const option = document.createElement("option");
+                option.value = p.CPRO;
+                option.text = p.PRO;
+                if (initialProvincia && p.CPRO === initialProvincia) {
+                    option.selected = true;
+                }
+                provinciaSelect.appendChild(option);
+            });
+
+            if (initialProvincia) {
+                await cargarMunicipios(initialProvincia);
+            }
+        }
+
+
+        async function cargarMunicipios(cpro) {
+            const res = await fetch(`https://apiv1.geoapi.es/municipios?CPRO=${cpro}&type=JSON&key=${key}`);
+            const data = await res.json();
+
+            const initialMunicipio = municipioSelect.dataset.initialValue;
+
+            municipioSelect.innerHTML = `<option value="">Selecciona un municipio</option>`;
+            data.data.forEach(m => {
+                const option = document.createElement("option");
+                option.value = m.DMUN50;
+                option.text = m.DMUN50;
+                if (initialMunicipio && m.DMUN50 === initialMunicipio) {
+                    option.selected = true;
+                }
+                municipioSelect.appendChild(option);
+            });
+        }
+
+        // Event Listeners
+        comunidadSelect.addEventListener("change", e => {
+            const ccom = e.target.value;
+            if (ccom) cargarProvincias(ccom);
+        });
+
+        provinciaSelect.addEventListener("change", e => {
+            const cpro = e.target.value;
+            if (cpro) cargarMunicipios(cpro);
+        });
+
+        // Initial load
+        cargarComunidades();
     });
 </script>

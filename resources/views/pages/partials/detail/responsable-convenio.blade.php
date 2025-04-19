@@ -5,7 +5,7 @@
         <button 
             id="edit-btn-res-conv-{{ $index }}"
             type="button" 
-            class="edit-btn absolute px-2 rounded top-4 right-4 text-blue hover:text-white border border-blue hover:bg-blue transition active:scale-95 duration-80"
+            class="edit-btn absolute px-2 rounded top-6 right-6 text-blue hover:text-white border border-blue hover:bg-blue transition active:scale-95 duration-80"
             data-target="res-conv-{{ $index }}"> Editar
         </button>
         
@@ -52,18 +52,93 @@
                     <x-text-input-light id="email-{{ $index }}" name="email" value="{{ $resConv->email }}" />
                 </div>
                 
-                <div class="md:col-span-3 flex justify-end gap-4">
-                    <button type="button" class="cancel-edit-btn" data-target="res-conv-{{ $index }}">
-                        Cancelar
+                <div class="md:col-span-3 flex justify-between gap-4">
+                    <button type="button" onclick="confirmDelete({{ $resConv->id }})" class="bg-red-500 text-white px-4 py-2 rounded">
+                        Eliminar
                     </button>
-                    <button type="submit" class="bg-blue text-white px-4 py-2 rounded">
-                        Guardar Cambios
-                    </button>
+                
+                    <div class="flex gap-6">
+                        <button type="button" class="cancel-edit-btn" data-target="res-conv-{{ $index }}">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="bg-blue text-white px-4 py-2 rounded">
+                            Guardar Cambios
+                        </button>
+                    </div>
                 </div>
             </form>
+
+            <form id="delete-form-{{ $resConv->id }}" method="POST" action="{{ route('responsables.delete', $resConv->id) }}" style="display: none;">
+                @csrf
+                @method('DELETE')
+            </form>
+
+            <script>
+                function confirmDelete(id) {
+                    if (confirm('¿Estás seguro de querer eliminar este responsable?')) {
+                        document.getElementById('delete-form-'+id).submit();
+                    }
+                }
+            </script>
         </div>
     </div>
     @endforeach
+
+        <div>
+            <!-- Display Add -->
+            <div id="add-display-rc" class="bg-white_dull flex justify-between items-center py-3 px-6 rounded-xl border-l-4 border-blue shadow-sm relative">
+                <h3 class="text-xl font-semibold text-blue">Responsable de Convenio</h3>
+                <button 
+                    id="add-btn-res-conv"
+                    type="button" 
+                    class="px-2 rounded text-blue hover:text-white border border-blue hover:bg-blue transition active:scale-95 duration-80">
+                    Añadir +
+                </button>
+            </div>
+
+            <!-- Form Add -->
+            <div id="add-form-rc" class="hidden bg-white_dull p-6 rounded-xl border-l-4 border-blue shadow-sm relative">
+                <h3 class="text-xl font-semibold text-blue mb-4">Añadir Responsable de Convenio</h3>
+                <form method="POST" action="{{ route('responsables.add', $id) }}" class="grid md:grid-cols-3 gap-6">
+                    @csrf
+                    @method('PUT')
+                    
+                    <div>
+                        <x-input-label for="dni" value="DNI" />
+                        <x-text-input-light id="dni" name="dni" />
+                    </div>
+                    
+                    <div>
+                        <x-input-label for="nombre" value="Nombre" />
+                        <x-text-input-light id="nombre" name="nombre" />
+                    </div>
+                    
+                    <div>
+                        <x-input-label for="apellido" value="Apellido" />
+                        <x-text-input-light id="apellido" name="apellido" />
+                    </div>
+                    
+                    <div>
+                        <x-input-label for="telefono" value="Teléfono" />
+                        <x-text-input-light id="telefono" name="telefono" />
+                    </div>
+                    
+                    <div>
+                        <x-input-label for="email" value="Email" />
+                        <x-text-input-light id="email" name="email" />
+                    </div>
+                    
+                    <div class="md:col-span-3 flex justify-end gap-6">
+                        <button type="button" id="cancel-add-btn-rc">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="bg-blue text-white px-4 py-2 rounded">
+                            Añadir
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
 </section>
 
 <script>
@@ -88,6 +163,17 @@
                 document.getElementById(`display-${target}`).classList.remove('hidden');
                 document.getElementById(`edit-btn-${target}`).classList.remove('hidden');
             });
+        });
+
+        // Add button
+        document.getElementById('add-btn-res-conv').addEventListener('click', function() {
+            document.getElementById('add-display-rc').classList.add('hidden');
+            document.getElementById('add-form-rc').classList.remove('hidden');
+        });
+        // Cancel Add Button 
+        document.getElementById('cancel-add-btn-rc').addEventListener('click', function() {
+            document.getElementById('add-display-rc').classList.remove('hidden');
+            document.getElementById('add-form-rc').classList.add('hidden');
         });
     });
 </script>
