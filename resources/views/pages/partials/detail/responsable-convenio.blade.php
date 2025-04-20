@@ -1,4 +1,4 @@
-<section class="flex flex-col space-y-12">
+<section class="grid grid-cols-2 gap-6">
     @foreach ($empresa->responsablesConvenio as $index => $resConv)
     <div class="bg-white_dull p-6 rounded-xl border-l-4 border-blue shadow-sm relative">
         <!-- Toggleable Edit Button -->

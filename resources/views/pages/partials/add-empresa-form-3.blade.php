@@ -8,9 +8,6 @@
             {{ __('Aquí se introducen los datos del Centro Trabajo y el de la Persona Contacto.') }}
         </p>
     </header>  -->
-        <div class="flex items-right justify-end">
-            <x-button-salir :redirect="route('empresa-index')" />
-        </div>
     <form method="POST" id="form" action="{{ route('store-empresa-3') }}" class="min-h-[30em] mt-6 space-y-6">
         @csrf <!-- CSRF token for security -->
 
@@ -21,7 +18,7 @@
             </a>
         </h2>
         <div id="practica_wrapper">
-            <div id="practica" class="grid grid-cols-2 gap-6 mb-6">
+            <div id="practica" >
                 <!-- Nombre -->
                 <!-- <div>
                     <x-input-label-light for="nombre" :value="__('Título de la tarea')" />
@@ -31,132 +28,136 @@
 
                 <!-- Ciclo Formativo -->
                 <!-- TODO: Multiple Selection -->
-                <div>
-                    <x-input-label-light for="cicloFormativo" :value="__('Ciclo/s Formativo/s')" />
-                    <x-select-input name="cicloFormativo" id="cicloFormativo" class="mt-1 block w-full">
-                        <option value="daw">Desarrollo de Aplicaciones Web</option>
-                        <option value="asix">Administración de Sistemas Informáticos</option>
-                        <option value="dam">Desarrollo de Aplicaciones Multiplataforma</option>
-                        <option value="marketing">Marketing Digital</option>
-                    </x-select-input>
-                </div>
+                <div class="grid grid-cols-[52%_17%_25%] gap-6 mb-6">
+                    <div>
+                        <x-input-label-light for="cicloFormativo" :value="__('Ciclo/s Formativo/s')" />
+                        <x-select-input name="cicloFormativo" id="cicloFormativo" class="mt-1 block w-full">
+                            <option value="daw">Desarrollo de Aplicaciones Web</option>
+                            <option value="asix">Administración de Sistemas Informáticos</option>
+                            <option value="dam">Desarrollo de Aplicaciones Multiplataforma</option>
+                            <option value="marketing">Marketing Digital</option>
+                        </x-select-input>
+                    </div>
 
-                <!-- Curso Academico -->
-                <!-- TODO: Multiple Selection -->
-                <div>
-                    <x-input-label-light for="cursoAcademico" :value="__('Curso Academico')" />
-                    <x-select-input name="cursoAcademico" id="cursoAcademico" class="mt-1 block w-full">
-                        <?php
-                            $currentYear = date('Y');
-                        ?>
-                        @for($year = date('Y') + 1; $year >= ($currentYear - 1); $year--)
-                            @if ($year == $currentYear)
-                                <option value="{{ $year }}/{{ $year+1 }}" selected="selected">
-                                    {{ $year }}/{{ $year+1 }}
-                                </option>
-                            @else
-                                <option value="{{ $year }}/{{ $year+1 }}">
-                                    {{ $year }}/{{ $year+1 }}
-                                </option>
-                            @endif
-                        @endfor
-                    </x-select-input>
-                    <x-input-error :messages="$errors->get('cursoAcademico')" class="mt-2" />
-                </div>
-
-                <!-- Periodo From -->
-                <div>
-                    <x-input-label-light for="periodoFrom" :value="__('Periodo From')" />
-                    <x-text-input type="date" value="{{ date('Y-m-d') }}" id="periodoFrom" name="periodoFrom" class="mt-1 block w-full" />
-                    <x-input-error :messages="$errors->get('periodoFrom')" class="mt-2" />
-                </div>
-
-                <!-- Periodo To -->
-                <div>
-                    <x-input-label-light for="periodoTo" :value="__('Periodo To')" />
-                    <x-text-input type="date" value="{{ date('Y-m-d') }}" id="periodoTo" name="periodoTo" class="mt-1 block w-full" />
-                    <x-input-error :messages="$errors->get('periodoTo')" class="mt-2" />
-                </div>
-
-                <!-- Horario From -->
-                <div>
-                    <x-input-label-light for="horarioFrom" :value="__('Horario From')" />
-                    <x-select-input name="horarioFrom" id="horarioFrom" class="mt-1 block w-full">
-                        {{ $is30 = false }}
-                        @for($hora = 0; $hora <= 24; $hora++)
-                            {{ $loop = 2 }}
-                            @while ($loop) 
-                                @if ($hora == 10)
-                                    <option value="{{ $hora }}:{{ $is30 ? '30' : '00' }}" selected="selected">
-                                        {{ $hora }}:{{ $is30 && $loop == 2 ? '30' : '00' }}
+                    <!-- Curso Academico -->
+                    <!-- TODO: Multiple Selection -->
+                    <div>
+                        <x-input-label-light for="cursoAcademico" :value="__('Curso Academico')" />
+                        <x-select-input name="cursoAcademico" id="cursoAcademico" class="mt-1 block w-full">
+                            <?php
+                                $currentYear = date('Y');
+                            ?>
+                            @for($year = date('Y') + 1; $year >= ($currentYear - 1); $year--)
+                                @if ($year == $currentYear)
+                                    <option value="{{ $year }}/{{ $year+1 }}" selected="selected">
+                                        {{ $year }}/{{ $year+1 }}
                                     </option>
                                 @else
-                                    <option value="{{ $hora }}:{{ $is30 ? '30' : '00' }}">
-                                        {{ $hora }}:{{ $is30 ? '30' : '00' }}
+                                    <option value="{{ $year }}/{{ $year+1 }}">
+                                        {{ $year }}/{{ $year+1 }}
                                     </option>
                                 @endif
-                                {{ $is30 ? $is30 = false : $is30 = true }}
-                                {{ $loop-- }}
-                            @endwhile
-                        @endfor
-                    </x-select-input>
-                </div>
+                            @endfor
+                        </x-select-input>
+                        <x-input-error :messages="$errors->get('cursoAcademico')" class="mt-2" />
+                    </div>
 
-                <!-- Horario To -->
-                <div>
-                    <x-input-label-light for="horarioTo" :value="__('Horario To')" />
-                    <x-select-input name="horarioTo" id="horarioTo" class="mt-1 block w-full">
-                        {{ $is30 = false }}
-                        @for($hora = 0; $hora <= 23; $hora++)
-                            {{ $loop = 2 }}
-                            @while ($loop) 
-                                @if ($hora == 14)
-                                    <option value="{{ $hora }}:{{ $is30 ? '30' : '00' }}" selected="selected">
-                                        {{ $hora }}:{{ $is30 && $loop == 2 ? '30' : '00' }}
-                                    </option>
-                                @else
-                                    <option value="{{ $hora }}:{{ $is30 ? '30' : '00' }}">
-                                        {{ $hora }}:{{ $is30 ? '30' : '00' }}
-                                    </option>
-                                @endif
-                                {{ $is30 ? $is30 = false : $is30 = true }}
-                                {{ $loop-- }}
-                            @endwhile
-                        @endfor
-                    </x-select-input>
+                    <!-- Número de Plazas Asignadas -->
+                    <div>
+                        <x-input-label-light for="numPlazasAsignadas" :value="__('Número de Plazas Asignadas')" />
+                        <x-text-input type="number" value='0' min="0" max="100" id="numPlazasAsignadas" name="numPlazasAsignadas" class="mt-1 block w-full" />
+                        <x-input-error :messages="$errors->get('numPlazasAsignadas')" class="mt-2" />
+                    </div>
                 </div>
+                <div class="grid grid-cols-4 gap-6 mb-6">
+                    <!-- Periodo From -->
+                    <div>
+                        <x-input-label-light for="periodoFrom" :value="__('Periodo From')" />
+                        <x-text-input type="date" value="{{ date('Y-m-d') }}" id="periodoFrom" name="periodoFrom" class="mt-1 block w-full" />
+                        <x-input-error :messages="$errors->get('periodoFrom')" class="mt-2" />
+                    </div>
 
-                <!-- Convenio Marco -->
-                <div>
-                    <x-input-label-light for="convenioMarco" :value="__('Convenio Marco')" />
-                    <x-select-input name="convenioMarco" id="convenioMarco" class="mt-1 block w-full">
-                        <option value="ceac">Convenio Marco CEAC</option>
-                        <option value="qbid">Convenio Marco qbid</option>
-                    </x-select-input>
+                    <!-- Periodo To -->
+                    <div>
+                        <x-input-label-light for="periodoTo" :value="__('Periodo To')" />
+                        <x-text-input type="date" value="{{ date('Y-m-d') }}" id="periodoTo" name="periodoTo" class="mt-1 block w-full" />
+                        <x-input-error :messages="$errors->get('periodoTo')" class="mt-2" />
+                    </div>
+
+                    <!-- Horario From -->
+                    <div>
+                        <x-input-label-light for="horarioFrom" :value="__('Horario From')" />
+                        <x-select-input name="horarioFrom" id="horarioFrom" class="mt-1 block w-full">
+                            {{ $is30 = false }}
+                            @for($hora = 0; $hora <= 24; $hora++)
+                                {{ $loop = 2 }}
+                                @while ($loop) 
+                                    @if ($hora == 10)
+                                        <option value="{{ $hora }}:{{ $is30 ? '30' : '00' }}" selected="selected">
+                                            {{ $hora }}:{{ $is30 && $loop == 2 ? '30' : '00' }}
+                                        </option>
+                                    @else
+                                        <option value="{{ $hora }}:{{ $is30 ? '30' : '00' }}">
+                                            {{ $hora }}:{{ $is30 ? '30' : '00' }}
+                                        </option>
+                                    @endif
+                                    {{ $is30 ? $is30 = false : $is30 = true }}
+                                    {{ $loop-- }}
+                                @endwhile
+                            @endfor
+                        </x-select-input>
+                    </div>
+
+                    <!-- Horario To -->
+                    <div>
+                        <x-input-label-light for="horarioTo" :value="__('Horario To')" />
+                        <x-select-input name="horarioTo" id="horarioTo" class="mt-1 block w-full">
+                            {{ $is30 = false }}
+                            @for($hora = 0; $hora <= 23; $hora++)
+                                {{ $loop = 2 }}
+                                @while ($loop) 
+                                    @if ($hora == 14)
+                                        <option value="{{ $hora }}:{{ $is30 ? '30' : '00' }}" selected="selected">
+                                            {{ $hora }}:{{ $is30 && $loop == 2 ? '30' : '00' }}
+                                        </option>
+                                    @else
+                                        <option value="{{ $hora }}:{{ $is30 ? '30' : '00' }}">
+                                            {{ $hora }}:{{ $is30 ? '30' : '00' }}
+                                        </option>
+                                    @endif
+                                    {{ $is30 ? $is30 = false : $is30 = true }}
+                                    {{ $loop-- }}
+                                @endwhile
+                            @endfor
+                        </x-select-input>
+                    </div>
                 </div>
+                <div class="grid grid-cols-3 gap-6 mb-6">
+                        <!-- Convenio Marco -->
+                        <div>
+                            <x-input-label-light for="convenioMarco" :value="__('Convenio Marco')" />
+                            <x-select-input name="convenioMarco" id="convenioMarco" class="mt-1 block w-full">
+                                <option value="ceac">Convenio Marco CEAC</option>
+                                <option value="qbid">Convenio Marco qbid</option>
+                            </x-select-input>
+                        </div>
 
-                <!-- Uso Logos -->
-                <div>
-                    <x-input-label-light for="usoLogos" :value="__('Uso Logos')" />
-                    <x-select-input name="usoLogos" id="usoLogos" class="mt-1 block w-full">
-                        <option value="si">Si</option>
-                        <option value="no">No</option>
-                        <option value="autorizacion">Autorización previa</option>
-                    </x-select-input>
-                </div>
+                        <!-- Uso Logos -->
+                        <div>
+                            <x-input-label-light for="usoLogos" :value="__('Uso Logos')" />
+                            <x-select-input name="usoLogos" id="usoLogos" class="mt-1 block w-full">
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                                <option value="autorizacion">Autorización previa</option>
+                            </x-select-input>
+                        </div>
 
-                <!-- Número de Plazas Asignadas -->
-                <div>
-                    <x-input-label-light for="numPlazasAsignadas" :value="__('Número de Plazas Asignadas')" />
-                    <x-text-input type="number" value='0' min="0" max="100" id="numPlazasAsignadas" name="numPlazasAsignadas" class="mt-1 block w-full" />
-                    <x-input-error :messages="$errors->get('numPlazasAsignadas')" class="mt-2" />
-                </div>
-
-                <!-- Observaciones -->
-                <div>
-                    <x-input-label-light for="observaciones" :value="__('Observaciones')" />
-                    <textarea id="observaciones" name="observaciones" rows="3" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"></textarea>
-                    <x-input-error :messages="$errors->get('observaciones')" class="mt-2" />
+                        <!-- Observaciones -->
+                        <div>
+                            <x-input-label-light for="observaciones" :value="__('Observaciones')" />
+                            <textarea id="observaciones" name="observaciones" rows="3" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"></textarea>
+                            <x-input-error :messages="$errors->get('observaciones')" class="mt-2" />
+                        </div>
                 </div>
             </div>
         </div>
@@ -168,10 +169,19 @@
                     <button type="button" class="remove-practica text-red-500 hover:text-red-700 text-sm ml-4">❌</button>
                 </summary>
 
-                <div class="mt-6 grid grid-cols-2 gap-6 mb-6">
+                <div class="grid grid-cols-[52%_17%_25%] gap-6 my-6">
+                    <!-- Nombre -->
+                    <!-- <div>
+                        <x-input-label-light for="nombre" :value="__('Título de la tarea')" />
+                        <x-text-input id="nombre" name="nombre" type="text" class="mt-1 block w-full" autocomplete="off" />
+                        <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
+                    </div> -->
+
+                    <!-- Ciclo Formativo -->
+                    <!-- TODO: Multiple Selection -->
                     <div>
                         <x-input-label-light for="cicloFormativo" :value="__('Ciclo/s Formativo/s')" />
-                        <x-select-input name="cicloFormativo[]" class="mt-1 block w-full">
+                        <x-select-input name="cicloFormativo" id="cicloFormativo" class="mt-1 block w-full">
                             <option value="daw">Desarrollo de Aplicaciones Web</option>
                             <option value="asix">Administración de Sistemas Informáticos</option>
                             <option value="dam">Desarrollo de Aplicaciones Multiplataforma</option>
@@ -179,77 +189,125 @@
                         </x-select-input>
                     </div>
 
+                    <!-- Curso Academico -->
+                    <!-- TODO: Multiple Selection -->
                     <div>
                         <x-input-label-light for="cursoAcademico" :value="__('Curso Academico')" />
-                        <x-select-input name="cursoAcademico[]" class="mt-1 block w-full">
-                            <?php $currentYear = date('Y'); ?>
+                        <x-select-input name="cursoAcademico" id="cursoAcademico" class="mt-1 block w-full">
+                            <?php
+                                $currentYear = date('Y');
+                            ?>
                             @for($year = date('Y') + 1; $year >= ($currentYear - 1); $year--)
-                                <option value="{{ $year }}/{{ $year+1 }}">
-                                    {{ $year }}/{{ $year+1 }}
-                                </option>
+                                @if ($year == $currentYear)
+                                    <option value="{{ $year }}/{{ $year+1 }}" selected="selected">
+                                        {{ $year }}/{{ $year+1 }}
+                                    </option>
+                                @else
+                                    <option value="{{ $year }}/{{ $year+1 }}">
+                                        {{ $year }}/{{ $year+1 }}
+                                    </option>
+                                @endif
                             @endfor
                         </x-select-input>
                         <x-input-error :messages="$errors->get('cursoAcademico')" class="mt-2" />
                     </div>
 
+                    <!-- Número de Plazas Asignadas -->
+                    <div>
+                        <x-input-label-light for="numPlazasAsignadas" :value="__('Número de Plazas Asignadas')" />
+                        <x-text-input type="number" value='0' min="0" max="100" id="numPlazasAsignadas" name="numPlazasAsignadas" class="mt-1 block w-full" />
+                        <x-input-error :messages="$errors->get('numPlazasAsignadas')" class="mt-2" />
+                    </div>
+                </div>
+                <div class="grid grid-cols-4 gap-6 mb-6">
+                    <!-- Periodo From -->
                     <div>
                         <x-input-label-light for="periodoFrom" :value="__('Periodo From')" />
-                        <x-text-input type="date" name="periodoFrom[]" value="{{ date('Y-m-d') }}" class="mt-1 block w-full" />
+                        <x-text-input type="date" value="{{ date('Y-m-d') }}" id="periodoFrom" name="periodoFrom" class="mt-1 block w-full" />
                         <x-input-error :messages="$errors->get('periodoFrom')" class="mt-2" />
                     </div>
 
+                    <!-- Periodo To -->
                     <div>
                         <x-input-label-light for="periodoTo" :value="__('Periodo To')" />
-                        <x-text-input type="date" name="periodoTo[]" value="{{ date('Y-m-d') }}" class="mt-1 block w-full" />
+                        <x-text-input type="date" value="{{ date('Y-m-d') }}" id="periodoTo" name="periodoTo" class="mt-1 block w-full" />
                         <x-input-error :messages="$errors->get('periodoTo')" class="mt-2" />
                     </div>
 
+                    <!-- Horario From -->
                     <div>
                         <x-input-label-light for="horarioFrom" :value="__('Horario From')" />
-                        <x-select-input name="horarioFrom[]" class="mt-1 block w-full">
-                            @for($h = 0; $h <= 24; $h++) @foreach(['00','30'] as $m)
-                                <option value="{{ $h }}:{{ $m }}">{{ $h }}:{{ $m }}</option>
-                            @endforeach @endfor
+                        <x-select-input name="horarioFrom" id="horarioFrom" class="mt-1 block w-full">
+                            {{ $is30 = false }}
+                            @for($hora = 0; $hora <= 24; $hora++)
+                                {{ $loop = 2 }}
+                                @while ($loop) 
+                                    @if ($hora == 10)
+                                        <option value="{{ $hora }}:{{ $is30 ? '30' : '00' }}" selected="selected">
+                                            {{ $hora }}:{{ $is30 && $loop == 2 ? '30' : '00' }}
+                                        </option>
+                                    @else
+                                        <option value="{{ $hora }}:{{ $is30 ? '30' : '00' }}">
+                                            {{ $hora }}:{{ $is30 ? '30' : '00' }}
+                                        </option>
+                                    @endif
+                                    {{ $is30 ? $is30 = false : $is30 = true }}
+                                    {{ $loop-- }}
+                                @endwhile
+                            @endfor
                         </x-select-input>
                     </div>
 
+                    <!-- Horario To -->
                     <div>
                         <x-input-label-light for="horarioTo" :value="__('Horario To')" />
-                        <x-select-input name="horarioTo[]" class="mt-1 block w-full">
-                            @for($h = 0; $h <= 23; $h++) @foreach(['00','30'] as $m)
-                                <option value="{{ $h }}:{{ $m }}">{{ $h }}:{{ $m }}</option>
-                            @endforeach @endfor
+                        <x-select-input name="horarioTo" id="horarioTo" class="mt-1 block w-full">
+                            {{ $is30 = false }}
+                            @for($hora = 0; $hora <= 23; $hora++)
+                                {{ $loop = 2 }}
+                                @while ($loop) 
+                                    @if ($hora == 14)
+                                        <option value="{{ $hora }}:{{ $is30 ? '30' : '00' }}" selected="selected">
+                                            {{ $hora }}:{{ $is30 && $loop == 2 ? '30' : '00' }}
+                                        </option>
+                                    @else
+                                        <option value="{{ $hora }}:{{ $is30 ? '30' : '00' }}">
+                                            {{ $hora }}:{{ $is30 ? '30' : '00' }}
+                                        </option>
+                                    @endif
+                                    {{ $is30 ? $is30 = false : $is30 = true }}
+                                    {{ $loop-- }}
+                                @endwhile
+                            @endfor
                         </x-select-input>
                     </div>
+                </div>
+                <div class="grid grid-cols-3 gap-6 mb-6">
+                        <!-- Convenio Marco -->
+                        <div>
+                            <x-input-label-light for="convenioMarco" :value="__('Convenio Marco')" />
+                            <x-select-input name="convenioMarco" id="convenioMarco" class="mt-1 block w-full">
+                                <option value="ceac">Convenio Marco CEAC</option>
+                                <option value="qbid">Convenio Marco qbid</option>
+                            </x-select-input>
+                        </div>
 
-                    <div>
-                        <x-input-label-light for="convenioMarco" :value="__('Convenio Marco')" />
-                        <x-select-input name="convenioMarco[]" class="mt-1 block w-full">
-                            <option value="ceac">Convenio Marco CEAC</option>
-                            <option value="qbid">Convenio Marco qbid</option>
-                        </x-select-input>
-                    </div>
+                        <!-- Uso Logos -->
+                        <div>
+                            <x-input-label-light for="usoLogos" :value="__('Uso Logos')" />
+                            <x-select-input name="usoLogos" id="usoLogos" class="mt-1 block w-full">
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                                <option value="autorizacion">Autorización previa</option>
+                            </x-select-input>
+                        </div>
 
-                    <div>
-                        <x-input-label-light for="usoLogos" :value="__('Uso Logos')" />
-                        <x-select-input name="usoLogos[]" class="mt-1 block w-full">
-                            <option value="si">Si</option>
-                            <option value="no">No</option>
-                            <option value="autorizacion">Autorización previa</option>
-                        </x-select-input>
-                    </div>
-
-                    <div>
-                        <x-input-label-light for="numPlazasAsignadas" :value="__('Número de Plazas Asignadas')" />
-                        <x-text-input type="number" value='0' min="0" max="100" name="numPlazasAsignadas[]" class="mt-1 block w-full" />
-                        <x-input-error :messages="$errors->get('numPlazasAsignadas')" class="mt-2" />
-                    </div>
-
-                    <div>
-                        <x-input-label-light for="observaciones" :value="__('Observaciones')" />
-                        <textarea name="observaciones[]" rows="3" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"></textarea>
-                        <x-input-error :messages="$errors->get('observaciones')" class="mt-2" />
-                    </div>
+                        <!-- Observaciones -->
+                        <div>
+                            <x-input-label-light for="observaciones" :value="__('Observaciones')" />
+                            <textarea id="observaciones" name="observaciones" rows="3" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"></textarea>
+                            <x-input-error :messages="$errors->get('observaciones')" class="mt-2" />
+                        </div>
                 </div>
             </details>
         </template>
@@ -266,40 +324,43 @@
         </h2>
 
         <div id="tutor_wrapper">
-            <div id="tutor" class="grid grid-cols-2 gap-6 mb-6">
-                <!-- DNI -->
-                <div>
-                    <x-input-label-light for="tutor_dni" :value="__('DNI/NIE <span class=\'text-red-500\'>*</span>')" />
-                    <x-text-input id="tutor_dni" name="tutor_dni" type="text" class="mt-1 block w-full" autocomplete="dni" required />
-                    <x-input-error :messages="$errors->get('dni')" class="mt-2" />
-                </div>
+            <div id="tutor">
+                <div class="grid grid-cols-3 gap-6 mb-6">
+                    <!-- DNI -->
+                    <div>
+                        <x-input-label-light for="tutor_dni" :value="__('DNI/NIE <span class=\'text-red-500\'>*</span>')" />
+                        <x-text-input id="tutor_dni" name="tutor_dni" type="text" class="mt-1 block w-full" autocomplete="dni" required />
+                        <x-input-error :messages="$errors->get('dni')" class="mt-2" />
+                    </div>
 
-                <!-- Nombre -->
-                <div>
-                    <x-input-label-light for="tutor_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
-                    <x-text-input id="tutor_nombre" name="tutor_nombre" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
-                    <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
-                </div>
+                    <!-- Nombre -->
+                    <div>
+                        <x-input-label-light for="tutor_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
+                        <x-text-input id="tutor_nombre" name="tutor_nombre" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
+                        <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
+                    </div>
 
-                <!-- Apellido -->
-                <div>
-                    <x-input-label-light for="tutor_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
-                    <x-text-input id="tutor_apellido" name="tutor_apellido" type="text" class="mt-1 block w-full" autocomplete="apellido" required />
-                    <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
+                    <!-- Apellido -->
+                    <div>
+                        <x-input-label-light for="tutor_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
+                        <x-text-input id="tutor_apellido" name="tutor_apellido" type="text" class="mt-1 block w-full" autocomplete="apellido" required />
+                        <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
+                    </div>
                 </div>
+                <div class="grid grid-cols-2 gap-6 mb-6">
+                    <!-- Telefono -->
+                    <div>
+                        <x-input-label-light for="tutor_telefono" :value="__('Teléfono')" />
+                        <x-text-input id="tutor_telefono" name="tutor_telefono" type="text" class="mt-1 block w-full" autocomplete="telefono" />
+                        <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
+                    </div>
 
-                <!-- Telefono -->
-                <div>
-                    <x-input-label-light for="tutor_telefono" :value="__('Teléfono')" />
-                    <x-text-input id="tutor_telefono" name="tutor_telefono" type="text" class="mt-1 block w-full" autocomplete="telefono" />
-                    <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
-                </div>
-
-                <!-- Email -->
-                <div>
-                    <x-input-label-light for="tutor_email" :value="__('Email')" />
-                    <x-text-input id="tutor_email" name="tutor_email" type="text" class="mt-1 block w-full" autocomplete="email" />
-                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    <!-- Email -->
+                    <div>
+                        <x-input-label-light for="tutor_email" :value="__('Email')" />
+                        <x-text-input id="tutor_email" name="tutor_email" type="text" class="mt-1 block w-full" autocomplete="email" />
+                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -311,46 +372,45 @@
                     <button type="button" class="remove-tutor text-red-500 hover:text-red-700 text-sm ml-4">❌</button>
                 </summary>
 
-                <div class="mt-6 grid grid-cols-2 gap-6 mb-6">
+                <div class="grid grid-cols-3 gap-6 my-6">
                     <!-- DNI -->
                     <div>
-                        <x-input-label-light :value="__('DNI/NIE *')" />
-                        <x-text-input name="tutor_dni[]" type="text" class="mt-1 block w-full" autocomplete="dni" required />
+                        <x-input-label-light for="tutor_dni" :value="__('DNI/NIE <span class=\'text-red-500\'>*</span>')" />
+                        <x-text-input id="tutor_dni" name="tutor_dni" type="text" class="mt-1 block w-full" autocomplete="dni" required />
                         <x-input-error :messages="$errors->get('dni')" class="mt-2" />
                     </div>
 
                     <!-- Nombre -->
                     <div>
-                        <x-input-label-light :value="__('Nombre *')" />
-                        <x-text-input name="tutor_nombre[]" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
+                        <x-input-label-light for="tutor_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
+                        <x-text-input id="tutor_nombre" name="tutor_nombre" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
                         <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
                     </div>
 
                     <!-- Apellido -->
                     <div>
-                        <x-input-label-light :value="__('Apellido *')" />
-                        <x-text-input name="tutor_apellido[]" type="text" class="mt-1 block w-full" autocomplete="apellido" required />
+                        <x-input-label-light for="tutor_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
+                        <x-text-input id="tutor_apellido" name="tutor_apellido" type="text" class="mt-1 block w-full" autocomplete="apellido" required />
                         <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
                     </div>
-
+                </div>
+                <div class="grid grid-cols-2 gap-6 mb-6">
                     <!-- Telefono -->
                     <div>
-                        <x-input-label-light :value="__('Teléfono')" />
-                        <x-text-input name="tutor_telefono[]" type="text" class="mt-1 block w-full" autocomplete="telefono" />
+                        <x-input-label-light for="tutor_telefono" :value="__('Teléfono')" />
+                        <x-text-input id="tutor_telefono" name="tutor_telefono" type="text" class="mt-1 block w-full" autocomplete="telefono" />
                         <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                     </div>
 
                     <!-- Email -->
                     <div>
-                        <x-input-label-light :value="__('Email')" />
-                        <x-text-input name="tutor_email[]" type="text" class="mt-1 block w-full" autocomplete="email" />
+                        <x-input-label-light for="tutor_email" :value="__('Email')" />
+                        <x-text-input id="tutor_email" name="tutor_email" type="text" class="mt-1 block w-full" autocomplete="email" />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
                 </div>
             </details>
         </template>
-
-
         
         <hr>
 
@@ -362,40 +422,44 @@
             </a>
         </h2>
         <div id="tutorEmpresa_wrapper">
-            <div id="tutorEmpresa" class="grid grid-cols-2 gap-6 mb-6">
-                <!-- DNI -->
-                <div>
-                    <x-input-label-light for="tutorEmpresa_dni" :value="__('DNI/NIE <span class=\'text-red-500\'>*</span>')" />
-                    <x-text-input id="tutorEmpresa_dni" name="tutorEmpresa_dni" type="text" class="mt-1 block w-full" autocomplete="dni" required />
-                    <x-input-error :messages="$errors->get('dni')" class="mt-2" />
+            <div id="tutorEmpresa" >
+                <div class="grid grid-cols-3 gap-6 mb-6">
+                    <!-- DNI -->
+                    <div>
+                        <x-input-label-light for="tutorEmpresa_dni" :value="__('DNI/NIE <span class=\'text-red-500\'>*</span>')" />
+                        <x-text-input id="tutorEmpresa_dni" name="tutorEmpresa_dni" type="text" class="mt-1 block w-full" autocomplete="dni" required />
+                        <x-input-error :messages="$errors->get('dni')" class="mt-2" />
+                    </div>
+
+                    <!-- Nombre -->
+                    <div>
+                        <x-input-label-light for="tutorEmpresa_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
+                        <x-text-input id="tutorEmpresa_nombre" name="tutorEmpresa_nombre" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
+                        <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
+                    </div>
+
+                    <!-- Apellido -->
+                    <div>
+                        <x-input-label-light for="tutorEmpresa_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
+                        <x-text-input id="tutorEmpresa_apellido" name="tutorEmpresa_apellido" type="text" class="mt-1 block w-full" autocomplete="apellido" required />
+                        <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
+                    </div>
                 </div>
 
-                <!-- Nombre -->
-                <div>
-                    <x-input-label-light for="tutorEmpresa_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
-                    <x-text-input id="tutorEmpresa_nombre" name="tutorEmpresa_nombre" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
-                    <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
-                </div>
+                <div class="grid grid-cols-2 gap-6 mb-6">
+                    <!-- Telefono -->
+                    <div>
+                        <x-input-label-light for="tutorEmpresa_telefono" :value="__('Teléfono')" />
+                        <x-text-input id="tutorEmpresa_telefono" name="tutorEmpresa_telefono" type="text" class="mt-1 block w-full" autocomplete="telefono" />
+                        <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
+                    </div>
 
-                <!-- Apellido -->
-                <div>
-                    <x-input-label-light for="tutorEmpresa_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
-                    <x-text-input id="tutorEmpresa_apellido" name="tutorEmpresa_apellido" type="text" class="mt-1 block w-full" autocomplete="apellido" required />
-                    <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
-                </div>
-
-                <!-- Telefono -->
-                <div>
-                    <x-input-label-light for="tutorEmpresa_telefono" :value="__('Teléfono')" />
-                    <x-text-input id="tutorEmpresa_telefono" name="tutorEmpresa_telefono" type="text" class="mt-1 block w-full" autocomplete="telefono" />
-                    <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
-                </div>
-
-                <!-- Email -->
-                <div>
-                    <x-input-label-light for="tutorEmpresa_email" :value="__('Email')" />
-                    <x-text-input id="tutorEmpresa_email" name="tutorEmpresa_email" type="text" class="mt-1 block w-full" autocomplete="email" />
-                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    <!-- Email -->
+                    <div>
+                        <x-input-label-light for="tutorEmpresa_email" :value="__('Email')" />
+                        <x-text-input id="tutorEmpresa_email" name="tutorEmpresa_email" type="text" class="mt-1 block w-full" autocomplete="email" />
+                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -407,39 +471,40 @@
                     <button type="button" class="remove-tutor-empresa text-red-500 hover:text-red-700 text-sm ml-4">❌</button>
                 </summary>
 
-                <div class="mt-6 grid grid-cols-2 gap-6 mb-6">
+                <div class="grid grid-cols-3 gap-6 my-6">
                     <!-- DNI -->
                     <div>
-                        <x-input-label-light :value="__('DNI/NIE *')" />
-                        <x-text-input name="tutorEmpresa_dni[]" type="text" class="mt-1 block w-full" autocomplete="dni" required />
+                        <x-input-label-light for="tutorEmpresa_dni" :value="__('DNI/NIE <span class=\'text-red-500\'>*</span>')" />
+                        <x-text-input id="tutorEmpresa_dni" name="tutorEmpresa_dni" type="text" class="mt-1 block w-full" autocomplete="dni" required />
                         <x-input-error :messages="$errors->get('dni')" class="mt-2" />
                     </div>
 
                     <!-- Nombre -->
                     <div>
-                        <x-input-label-light :value="__('Nombre *')" />
-                        <x-text-input name="tutorEmpresa_nombre[]" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
+                        <x-input-label-light for="tutorEmpresa_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
+                        <x-text-input id="tutorEmpresa_nombre" name="tutorEmpresa_nombre" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
                         <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
                     </div>
 
                     <!-- Apellido -->
                     <div>
-                        <x-input-label-light :value="__('Apellido *')" />
-                        <x-text-input name="tutorEmpresa_apellido[]" type="text" class="mt-1 block w-full" autocomplete="apellido" required />
+                        <x-input-label-light for="tutorEmpresa_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
+                        <x-text-input id="tutorEmpresa_apellido" name="tutorEmpresa_apellido" type="text" class="mt-1 block w-full" autocomplete="apellido" required />
                         <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
                     </div>
-
-                    <!-- Teléfono -->
+                </div>
+                <div class="grid grid-cols-2 gap-6 mb-6">
+                    <!-- Telefono -->
                     <div>
-                        <x-input-label-light :value="__('Teléfono')" />
-                        <x-text-input name="tutorEmpresa_telefono[]" type="text" class="mt-1 block w-full" autocomplete="telefono" />
+                        <x-input-label-light for="tutorEmpresa_telefono" :value="__('Teléfono')" />
+                        <x-text-input id="tutorEmpresa_telefono" name="tutorEmpresa_telefono" type="text" class="mt-1 block w-full" autocomplete="telefono" />
                         <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                     </div>
 
                     <!-- Email -->
                     <div>
-                        <x-input-label-light :value="__('Email')" />
-                        <x-text-input name="tutorEmpresa_email[]" type="text" class="mt-1 block w-full" autocomplete="email" />
+                        <x-input-label-light for="tutorEmpresa_email" :value="__('Email')" />
+                        <x-text-input id="tutorEmpresa_email" name="tutorEmpresa_email" type="text" class="mt-1 block w-full" autocomplete="email" />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
                 </div>

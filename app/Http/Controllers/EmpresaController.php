@@ -311,10 +311,22 @@ class EmpresaController extends Controller
         $query = Empresa::with('practica');
 
         if ($request->filled('plazas')) {
-            $query->whereHas('practica', function ($q) use ($request) {
-                $q->where('numPlazasAsignadas', $request->plazas);
-            });
+            switch ($request->plazas) {
+                case 'lt5':
+                    $query->where('num_plazas', '<', 5);
+                    break;
+                case 'gt5':
+                    $query->where('num_plazas', '>', 5);
+                    break;
+                case 'gt10':
+                    $query->where('num_plazas', '>', 10);
+                    break;
+                default:
+                    $query->where('num_plazas', $request->plazas);
+                    break;
+            }
         }
+        
 
         $empresas = $query->get();
         
@@ -388,14 +400,14 @@ class EmpresaController extends Controller
         $familiaRaw = Empresa::select('familiaPersonal')->distinct()->pluck('familiaPersonal')->toArray();
 
         $familias = collect($familiaRaw)->mapWithKeys(function ($item) {
-            $formatted = match ($item) {
+            $formatted = match (strtolower($item)) {
                 'sanidad' => 'Sanidad',
                 'informatica' => 'Informática',
                 'hosteleria' => 'Hostelería',
                 'marketing' => 'Marketing',
                 default => ucfirst($item)
             };
-            return [$item => $formatted];
+            return [$formatted => $formatted]; 
         });
 
         $colaboracionRaw = Empresa::select('colaboracion')->distinct()->pluck('colaboracion')->toArray();   
@@ -451,18 +463,76 @@ class EmpresaController extends Controller
         $empresas = Empresa::query()
             ->when($query, function ($q) use ($query) {
                 $q->where('nombre', 'like', '%' . $query . '%')
+                ->orWhere('cif', 'like', '%' . $query . '%')
                 ->orWhere('colaboracion', 'like', '%' . $query . '%')
+                ->orWhere('gestiones', 'like', '%' . $query . '%')
                 ->orWhere('modalidad', 'like', '%' . $query . '%')
                 ->orWhere('ofertaLaboral', 'like', '%' . $query . '%')
                 ->orWhere('municipio', 'like', '%' . $query . '%')
                 ->orWhere('familiaPersonal', 'like', '%' . $query . '%')
+                ->orWhere('provincia', 'like', '%' . $query . '%')
                 ->orWhereHas('practica', function ($subQuery) use ($query) {
                     $subQuery->where('cicloFormativo', 'like', '%' . $query . '%');
+                    $subQuery->where('numPlazasAsignadas', 'like', '%' . $query . '%');
                 });
             })
             ->get();
+                // Familia Personal
+                $familiaRaw = Empresa::select('familiaPersonal')->distinct()->pluck('familiaPersonal')->toArray();
 
-        return view('pages.empresa-index', compact('empresas'));
+                $familias = collect($familiaRaw)->mapWithKeys(function ($item) {
+                    $formatted = match (strtolower($item)) {
+                        'sanidad' => 'Sanidad',
+                        'informatica' => 'Informática',
+                        'hosteleria' => 'Hostelería',
+                        'marketing' => 'Marketing',
+                        default => ucfirst($item)
+                    };
+                    return [$formatted => $formatted]; 
+                });
+        
+                $colaboracionRaw = Empresa::select('colaboracion')->distinct()->pluck('colaboracion')->toArray();   
+        
+                $colaboraciones = collect($colaboracionRaw)->mapWithKeys(function ($item) {
+                    $formatted = match ($item) {
+                        'prospeccion' => 'Prospección',
+                        'colaboracion' => 'Colaboración',
+                        'inactiva' => 'Inactiva',
+                        default => ucfirst($item)
+                    };
+                    return [$item => $formatted];
+                });
+        
+                // Also grab modalidades for consistency
+                $modalidadesRaw = Empresa::select('modalidad')->distinct()->pluck('modalidad')->toArray();
+                $modalidades = collect($modalidadesRaw)->mapWithKeys(function ($item) {
+                    $formatted = match ($item) {
+                        'presencial' => 'Presencial',
+                        'remoto' => 'Remoto',
+                        'semipresencial' => 'Semipresencial',
+                        default => ucfirst($item)
+                    };
+                    return [$item => $formatted];
+                });
+                
+        
+                // Obtener todos los ciclos únicos desde la relación practica
+                $ciclosRaw = Practica::select('cicloFormativo')->distinct()->pluck('cicloFormativo')->toArray();
+        
+                $ciclos = collect($ciclosRaw)->mapWithKeys(function ($item) {
+                    return [$item => $item];
+                });
+                
+                // Obtener valores únicos de plazas
+                $plazasRaw = Practica::select('numPlazasAsignadas')->distinct()->pluck('numPlazasAsignadas')->sort()->toArray();
+                $plazas = collect($plazasRaw)->mapWithKeys(fn($item) => [$item => $item]);
+
+        return view('pages.empresa-index', compact('empresas',            
+        'familias',
+        'colaboraciones',
+        'modalidades',
+        'ciclos',
+        'plazas'));
     }
 
     public function provincias_filtro(Request $request)

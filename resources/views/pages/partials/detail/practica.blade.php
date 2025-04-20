@@ -1,4 +1,4 @@
-<section class="flex flex-col space-y-12">
+<section class="grid grid-cols-2 gap-6">
     @foreach ($empresa->practica as $index => $practica)
     <div class="bg-white_dull p-6 rounded-xl border-l-4 border-blue shadow-sm relative">
         <!-- Toggleable Edit Button -->
@@ -52,7 +52,7 @@
         <!-- Edit Mode (Hidden by default) -->
         <div id="edit-res-conv-{{ $index }}" class="hidden">
             <h3 class="text-xl font-semibold text-blue mb-4">Editar Practica</h3>
-            <form method="POST" action="{{ route('practica.update', $practica->id) }}" class="grid md:grid-cols-3 gap-6">
+            <form method="POST" action="{{ route('practica.update', $practica->id) }}" class="py-4">
                 @csrf
                 @method('PUT')
                 
@@ -109,7 +109,7 @@
                     <textarea id="observaciones" name="observaciones" rows="3" class="block w-full border-gray-700 bg-white focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">{{ $practica->observaciones }}</textarea>
                 </div>
                 
-                <div class="md:col-span-3 flex justify-end gap-4">
+                <div class="md:col-span-3 flex justify-end gap-4 mt-4">
                     <button type="button" class="cancel-edit-btn" data-target="res-conv-{{ $index }}">
                         Cancelar
                     </button>

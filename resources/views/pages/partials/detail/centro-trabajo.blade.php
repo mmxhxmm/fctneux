@@ -1,4 +1,4 @@
-<section class="flex flex-col space-y-12">
+<section class="grid grid-cols-2 gap-6">
     @foreach ($empresa->centrosTrabajo as $index => $centro)
     <div class="bg-white_dull p-6 rounded-xl border-l-4 border-blue shadow-sm relative">
         <!-- Toggle Button -->
@@ -24,7 +24,7 @@
         <!-- Edit Mode (Hidden by default) -->
         <div id="edit-cen-trab-{{ $index }}" class="hidden">
             <h3 class="text-xl font-semibold text-blue mb-4">Editar Centro de Trabajo</h3>
-            <form method="POST" action="{{ route('centroTrabajo.update', $centro->id) }}" class="grid md:grid-cols-3 gap-6">
+            <form method="POST" action="{{ route('centroTrabajo.update', $centro->id) }}" class="flex flex-col">
                 @csrf
                 @method('PUT')
 
@@ -68,7 +68,7 @@
                     <x-text-input-light id="direccion-{{ $index }}" name="direccion" value="{{ $centro->direccion }}" />
                 </div>
                 
-                <div class="md:col-span-3 flex justify-end gap-4">
+                <div class="md:col-span-3 flex justify-end gap-4 mt-4">
                     <button type="button" class="cancel-edit-btn" data-target="cen-trab-{{ $index }}">
                         Cancelar
                     </button>

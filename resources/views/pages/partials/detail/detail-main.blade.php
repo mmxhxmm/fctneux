@@ -17,6 +17,7 @@
             <hr>
 
             <!-- CENTROS DE TRABAJO -->
+
             @include("pages.partials.detail.centro-trabajo")
 
             <hr>

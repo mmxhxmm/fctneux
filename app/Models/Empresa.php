@@ -90,19 +90,28 @@ class Empresa extends Model
 
     function provinciaToString($value) {
         $key = "bf9bf54cbf3e6f52ea4f61d205d533c745dc29471259d43d982c83081fc3ce06";
-        $url = "https://apiv1.geoapi.es/provincias?type=JSON&key=$key";
-        
-        $response = file_get_contents($url);
+        $url = "https://apiv1.geoapi.es/provincias?type=JSON&key=$key&sandbox=0";
+    
+        $response = @file_get_contents($url); // Added @ to suppress warnings
+        if ($response === false) {
+            return $value; // fallback if request fails
+        }
+    
         $data = json_decode($response, true);
-
-        foreach ($data['data'] as $provincias) {
-            if ($provincias['CPRO'] == $value) {
-                return ucwords(mb_strtolower($provincias['PRO']));
+    
+        if (!isset($data['data'])) {
+            return $value; // handle unexpected structure
+        }
+    
+        foreach ($data['data'] as $provincia) {
+            if ($provincia['CPRO'] == $value) {
+                return ucwords(mb_strtolower($provincia['PRO']));
             }
         }
-
+    
         return $value;
     }
+    
 
     // Accessors
     public function colaboracionToString($value) {

@@ -15,6 +15,7 @@
         {{ $empresa->colaboracion }}
     </span>
 
+
     <!-- Datos de la empresa -->
     <div class="space-y-3 text-[15px] text-gray-800 font-roboto leading-relaxed">
         <p><span class="text-blue font-semibold">Nombre:</span> {{ $empresa->nombre }}</p>

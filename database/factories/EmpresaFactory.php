@@ -19,7 +19,7 @@ class EmpresaFactory extends Factory
         return [
             'cif' => $this->faker->unique()->regexify('[A-Z]{1}[0-9]{8}'),
             'nombre' => $this->faker->company,
-            'colaboracion' => $this->faker->randomElement(['prospeccion', 'colaboracion', 'inactiva']),
+            'colaboracion' => $this->faker->randomElement(['Prospección', 'Colaboración', 'Inactiva']),
             'gestiones' => $this->faker->randomElement([
                 'P - Primer contacto', 'P - Pendente respuesta', 'P - Volver a contactar', 'P - No acogen alumnado', 
                 'C - Pendiente firma Convenio', 'C - Plazas conseguidas', 'C - Solicitud plazas'

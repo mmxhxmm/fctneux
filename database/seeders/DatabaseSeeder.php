@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Creates 2 empresas each with 1 ResponsableConvenio, 2 CentroTrabajo and 2 PersonaContacto
-        \App\Models\Empresa::factory(2)->create()->each(function ($empresa) {
+        \App\Models\Empresa::factory(8)->create()->each(function ($empresa) {
             \App\Models\ResponsableConvenio::factory(1)->create([
                 'empresa_id' => $empresa->id,
             ]);
