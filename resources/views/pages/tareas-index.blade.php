@@ -125,15 +125,369 @@
 
                 <!-- Right Section (Filter, Barcelona / BCN, and Search) -->
                 <div class="flex items-center space-x-4">
-                    <!-- Filter Section -->
-                    <div class="relative">
-                        <div class="bg-black_transp w-[200px] h-[40px] rounded-[100px] border-2 border-white flex items-center pl-4 pr-2">
-                            <img class="w-[20px] h-[20px]" src="../images/filter-svg.svg" alt="Filter Icon" />
-                            <div class="text-white font-roboto text-base font-medium ml-2">
-                                Filter
+                    <div class="relative inline-block w-full">
+                        <div 
+                            x-data="{
+                                selectedFilters: {{ json_encode(array_values(array_filter([
+                                    request()->has('asignado') ? 'asignado' : null,
+                                    request()->has('estado') ? 'estado' : null,
+                                    request()->has('fecha_limite') ? 'fecha_limite' : null,
+                                    request()->has('empresa_id') ? 'empresa_id' : null,
+                                ]))) }},
+                                toggleFilter(type) {
+                                    if (this.selectedFilters.includes(type)) {
+                                        this.selectedFilters = this.selectedFilters.filter(f => f !== type);
+                                        if (this.selectedFilters.length === 0) {
+                                            window.location.href = '{{ route("tareas.filtro") }}';
+                                        }
+                                    } else {
+                                        this.selectedFilters.push(type);
+                                    }
+                                }
+                            }"
+                            class="w-full flex flex-wrap items-center gap-3"
+                        >
+
+                            <!-- + Filtro Selector -->
+                            <div class="relative">
+                                <select 
+                                    @change="toggleFilter($event.target.value); $event.target.value=''" 
+                                    class="bg-black_transp w-[200px] h-[40px] text-white rounded-full border-2 border-white px-4 pr-10 appearance-none cursor-pointer"
+                                >
+                                    <option value="">+ Filtro</option>
+                                    <option value="asignado" :disabled="selectedFilters.includes('asignado')">Asignado a</option>
+                                    <option value="estado" :disabled="selectedFilters.includes('estado')">Estado</option>
+                                    <option value="fecha_limite" :disabled="selectedFilters.includes('fecha_limite')">Fecha límite</option>
+                                    <option value="empresa_id" :disabled="selectedFilters.includes('empresa_id')">Empresa</option>
+                                </select>
                             </div>
+
+                            <!-- Filter Form -->
+                            <form method="GET" action="{{ route('tareas.filtro') }}" class="flex flex-wrap items-center gap-3">
+
+                                <!-- Asignado Dropdown with Search and Multi-Select -->
+                                <template x-if="selectedFilters.includes('asignado')">
+                                    <div class="relative inline-block w-[200px]">
+                                        <div 
+                                            x-data="{
+                                                open: false,
+                                                search: '',
+                                                selected: @js(request()->input('asignado', [])),
+                                                options: @js(array_values($asignados->toArray())),
+                                                toggle(option) {
+                                                    if (this.selected.includes(option)) {
+                                                        this.selected = this.selected.filter(o => o !== option);
+                                                    } else {
+                                                        this.selected.push(option);
+                                                    }
+                                                }
+                                            }"
+                                        >
+                                            <!-- "Select"-style button -->
+                                            <button type="button" @click="open = !open"
+                                                class="flex items-center justify-between w-full h-[40px] rounded-full border-2 border-white bg-black_transp text-white px-4 cursor-pointer">
+                                                <span class="truncate w-full text-left" x-text="selected.length > 0 ? selected.join(', ') : 'Asignado a'"></span>
+                                                <svg class="w-4 h-4 ml-2 transform transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                                </svg>
+                                            </button>
+
+                                            <!-- Dropdown Content -->
+                                            <div x-show="open" x-transition @click.away="open = false"
+                                                class="absolute z-50 mt-2 w-full bg-black_transp border border-white text-white rounded-xl shadow-lg">
+                                                
+                                                <!-- Search input -->
+                                                <div class="px-3 py-2 border-b border-white flex items-center gap-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l7-7-7-7" />
+                                                    </svg>
+                                                    <input
+                                                        x-model="search"
+                                                        type="text"
+                                                        placeholder="Buscar..."
+                                                        class="w-full bg-transparent text-white placeholder-white outline-none"
+                                                    >
+                                                </div>
+
+                                                <!-- Filtered list of checkboxes -->
+                                                <ul class="max-h-40 overflow-y-auto px-2">
+                                                    <template x-for="option in options.filter(o => o.toLowerCase().includes(search.toLowerCase()))" :key="option">
+                                                        <li @click.stop="toggle(option)" class="flex items-center gap-2 px-2 py-2 cursor-pointer hover:bg-gray-700 rounded">
+                                                            <input type="checkbox" :checked="selected.includes(option)" class="form-checkbox text-white bg-transparent border-white rounded-sm">
+                                                            <span x-text="option"></span>
+                                                        </li>
+                                                    </template>
+                                                    <li x-show="options.filter(o => o.toLowerCase().includes(search.toLowerCase())).length === 0" class="px-4 py-2 text-gray-400">
+                                                        No hay coincidencias
+                                                    </li>
+                                                </ul>
+
+                                                <!-- Submit -->
+                                                <div class="border-t border-white px-4 py-2 text-right">
+                                                    <button type="submit"
+                                                        class="text-sm bg-white text-black font-semibold px-3 py-1 rounded-full hover:bg-gray-200 transition">
+                                                        Aplicar
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Hidden selected values -->
+                                            <template x-for="value in selected" :key="value">
+                                                <input type="hidden" name="asignado[]" :value="value">
+                                            </template>
+                                        </div>
+
+                                        <!-- ❌ Cancel button -->
+                                        <button type="button" @click="toggleFilter('asignado')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow hover:bg-red-700 transition">
+                                            &times;
+                                        </button>
+                                    </div>
+                                </template>
+
+
+                                <!-- Estado Dropdown (No Search, Just Options) -->
+                                <template x-if="selectedFilters.includes('estado')">
+                                    <div class="relative inline-block w-[200px]">
+                                        <div 
+                                            x-data="{
+                                                open: false,
+                                                selected: @js(request()->input('estado', [])),
+                                                options: @js(array_keys($estados)),
+                                                labels: @js($estados),
+                                                toggle(option) {
+                                                    if (this.selected.includes(option)) {
+                                                        this.selected = this.selected.filter(o => o !== option);
+                                                    } else {
+                                                        this.selected.push(option);
+                                                    }
+                                                }
+                                            }"
+                                        >
+                                            <!-- Select-style Button -->
+                                            <button type="button" @click="open = !open"
+                                                class="flex items-center justify-between w-full h-[40px] rounded-full border-2 border-white bg-black_transp text-white px-4 cursor-pointer">
+                                                <span class="truncate w-full text-left" 
+                                                    x-text="selected.length > 0 ? selected.map(k => labels[k]).join(', ') : 'Estado'"></span>
+                                                <svg class="w-4 h-4 ml-2 transform transition-transform" 
+                                                    :class="{ 'rotate-180': open }" 
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                                </svg>
+                                            </button>
+
+                                            <!-- Dropdown -->
+                                            <div x-show="open" x-transition @click.away="open = false"
+                                                class="absolute z-50 mt-2 w-full bg-black_transp border border-white text-white rounded-xl shadow-lg">
+
+                                                <!-- Options -->
+                                                <ul class="max-h-40 overflow-y-auto px-2 py-2">
+                                                    <template x-for="option in options" :key="option">
+                                                        <li @click.stop="toggle(option)" class="flex items-center gap-2 px-2 py-1 cursor-pointer hover:bg-gray-700 rounded">
+                                                            <input type="checkbox" :checked="selected.includes(option)" class="form-checkbox text-white bg-transparent border-white rounded-sm">
+                                                            <span x-text="labels[option]"></span>
+                                                        </li>
+                                                    </template>
+                                                </ul>
+
+                                                <!-- Apply Button -->
+                                                <div class="border-t border-white px-4 py-2 text-right">
+                                                    <button type="submit"
+                                                        class="text-sm bg-white text-black font-semibold px-3 py-1 rounded-full hover:bg-gray-200 transition">
+                                                        Aplicar
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Hidden Inputs -->
+                                            <template x-for="value in selected" :key="value">
+                                                <input type="hidden" name="estado[]" :value="value">
+                                            </template>
+                                        </div>
+
+                                        <!-- ❌ Cancel Button -->
+                                        <button type="button" @click="toggleFilter('estado')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow hover:bg-red-700 transition">
+                                            &times;
+                                        </button>
+                                    </div>
+                                </template>
+
+                                <!-- Fecha límite Dropdown with Search and Multi-Select -->
+                                <template x-if="selectedFilters.includes('fecha_limite')">
+                                    <div class="relative inline-block w-[200px]">
+                                        <div 
+                                            x-data="{
+                                                open: false,
+                                                search: '',
+                                                selected: @js(request()->input('fecha_limite', [])),
+                                                options: @js(array_keys($fechas_limite->toArray())),
+                                                labels: @js($fechas_limite->toArray()),
+                                                toggle(option) {
+                                                    if (this.selected.includes(option)) {
+                                                        this.selected = this.selected.filter(o => o !== option);
+                                                    } else {
+                                                        this.selected.push(option);
+                                                    }
+                                                }
+                                            }"
+                                        >
+                                            <!-- Select-like Button -->
+                                            <button type="button" @click="open = !open"
+                                                class="flex items-center justify-between w-full h-[40px] rounded-full border-2 border-white bg-black_transp text-white px-4 cursor-pointer">
+                                                <span class="truncate w-full text-left" 
+                                                    x-text="selected.length > 0 ? selected.join(', ') : 'Fecha límite'"></span>
+                                                <svg class="w-4 h-4 ml-2 transform transition-transform" 
+                                                    :class="{ 'rotate-180': open }" 
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                                </svg>
+                                            </button>
+
+                                            <!-- Dropdown -->
+                                            <div x-show="open" x-transition @click.away="open = false"
+                                                class="absolute z-50 mt-2 w-full bg-black_transp border border-white text-white rounded-xl shadow-lg">
+                                                
+                                                <!-- Search -->
+                                                <div class="px-3 py-2 border-b border-white flex items-center gap-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l7-7-7-7" />
+                                                    </svg>
+                                                    <input
+                                                        x-model="search"
+                                                        type="text"
+                                                        placeholder="Buscar fecha..."
+                                                        class="w-full bg-transparent text-white placeholder-white outline-none"
+                                                        autocomplete="off"
+                                                    >
+                                                </div>
+
+                                                <!-- Options -->
+                                                <ul class="max-h-40 overflow-y-auto px-2">
+                                                    <template x-for="option in options.filter(o => o.toLowerCase().includes(search.toLowerCase()))" :key="option">
+                                                        <li @click.stop="toggle(option)" class="flex items-center gap-2 px-2 py-2 cursor-pointer hover:bg-gray-700 rounded">
+                                                            <input type="checkbox" :checked="selected.includes(option)" class="form-checkbox text-white bg-transparent border-white rounded-sm">
+                                                            <span x-text="labels[option]"></span>
+                                                        </li>
+                                                    </template>
+                                                    <li x-show="options.filter(o => o.toLowerCase().includes(search.toLowerCase())).length === 0" class="px-4 py-2 text-gray-400">
+                                                        No hay coincidencias
+                                                    </li>
+                                                </ul>
+
+                                                <!-- Apply -->
+                                                <div class="border-t border-white px-4 py-2 text-right">
+                                                    <button type="submit"
+                                                        class="text-sm bg-white text-black font-semibold px-3 py-1 rounded-full hover:bg-gray-200 transition">
+                                                        Aplicar
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Hidden selected inputs -->
+                                            <template x-for="value in selected" :key="value">
+                                                <input type="hidden" name="fecha_limite[]" :value="value">
+                                            </template>
+                                        </div>
+
+                                        <!-- ❌ Cancel -->
+                                        <button type="button" @click="toggleFilter('fecha_limite')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow hover:bg-red-700 transition">
+                                            &times;
+                                        </button>
+                                    </div>
+                                </template>
+
+
+                                <!-- Empresa Dropdown with Search and Multi-Select -->
+                                <template x-if="selectedFilters.includes('empresa_id')">
+                                    <div class="relative inline-block w-[200px]">
+                                        <div 
+                                            x-data="{
+                                                open: false,
+                                                search: '',
+                                                selected: @js(request()->input('empresa_id', [])),
+                                                options: @js(array_keys($empresas->toArray())),
+                                                labels: @js($empresas->toArray()),
+                                                toggle(option) {
+                                                    if (this.selected.includes(option)) {
+                                                        this.selected = this.selected.filter(o => o !== option);
+                                                    } else {
+                                                        this.selected.push(option);
+                                                    }
+                                                }
+                                            }"
+                                        >
+                                            <!-- Select-style Button -->
+                                            <button type="button" @click="open = !open"
+                                                class="flex items-center justify-between w-full h-[40px] rounded-full border-2 border-white bg-black_transp text-white px-4 cursor-pointer">
+                                                <span class="truncate w-full text-left" 
+                                                    x-text="selected.length > 0 ? selected.map(k => labels[k]).join(', ') : 'Empresa'"></span>
+                                                <svg class="w-4 h-4 ml-2 transform transition-transform" 
+                                                    :class="{ 'rotate-180': open }" 
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                                </svg>
+                                            </button>
+
+                                            <!-- Dropdown -->
+                                            <div x-show="open" x-transition @click.away="open = false"
+                                                class="absolute z-50 mt-2 w-full bg-black_transp border border-white text-white rounded-xl shadow-lg">
+                                                
+                                                <!-- Search input -->
+                                                <div class="px-3 py-2 border-b border-white flex items-center gap-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l7-7-7-7" />
+                                                    </svg>
+                                                    <input
+                                                        x-model="search"
+                                                        type="text"
+                                                        placeholder="Buscar empresa..."
+                                                        class="w-full bg-transparent text-white placeholder-white outline-none"
+                                                        autocomplete="off"
+                                                    >
+                                                </div>
+
+                                                <!-- Options -->
+                                                <ul class="max-h-40 overflow-y-auto px-2">
+                                                    <template x-for="option in options.filter(o => labels[o].toLowerCase().includes(search.toLowerCase()))" :key="option">
+                                                        <li @click.stop="toggle(option)" class="flex items-center gap-2 px-2 py-2 cursor-pointer hover:bg-gray-700 rounded">
+                                                            <input type="checkbox" :checked="selected.includes(option)" class="form-checkbox text-white bg-transparent border-white rounded-sm">
+                                                            <span x-text="labels[option]"></span>
+                                                        </li>
+                                                    </template>
+                                                    <li x-show="options.filter(o => labels[o].toLowerCase().includes(search.toLowerCase())).length === 0" class="px-4 py-2 text-gray-400">
+                                                        No hay coincidencias
+                                                    </li>
+                                                </ul>
+
+                                                <!-- Apply Button -->
+                                                <div class="border-t border-white px-4 py-2 text-right">
+                                                    <button type="submit"
+                                                        class="text-sm bg-white text-black font-semibold px-3 py-1 rounded-full hover:bg-gray-200 transition">
+                                                        Aplicar
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Hidden Inputs -->
+                                            <template x-for="value in selected" :key="value">
+                                                <input type="hidden" name="empresa_id[]" :value="value">
+                                            </template>
+                                        </div>
+
+                                        <!-- ❌ Cancel button -->
+                                        <button type="button" @click="toggleFilter('empresa_id')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow hover:bg-red-700 transition">
+                                            &times;
+                                        </button>
+                                    </div>
+                                </template>
+
+
+                            </form>
                         </div>
                     </div>
+
+
+
+
 
                     <!-- Search Section -->
                     <form action="{{ route('tareas-busqueda') }}" method="GET" class="relative">
@@ -150,7 +504,7 @@
                             </button>
                         </div>
                     </form>
-                    <button id="toggleView" onclick="toggleLayout()" class="w-10 h-10 rounded-full bg-white text-blue border border-blue flex items-center justify-center hover:bg-blue hover:text-white transition">
+                    <button id="toggleView" onclick="toggleLayout()" class="w-10 h-10 px-2 rounded-full bg-white text-blue border border-blue flex items-center justify-center hover:bg-blue hover:text-white transition">
                         <!-- Grid Icon -->
                         <svg id="iconGrid" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -215,7 +569,7 @@
                                     <td class="p-4 text-gray-800">{{ $tarea->nombre }}</td>
                                     <td class="p-4 text-gray-800">{{ $tarea->asignado }}</td>
                                     <td class="p-4 text-gray-800"><select name="estado" onchange="this.form.submit()"
-                                        class="text-sm font-semibold shadow-sm rounded-full w-[90%] px-3 py-1 cursor-pointer transition-all
+                                        class="text-sm font-semibold shadow-sm rounded-full w-[120px] px-2 py-1 cursor-pointer transition-all
                                         {{ $tarea->estado === 'done' ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-white_dull text-blue hover:bg-white_dull' }}">
                                         <option value="to_do" {{ $tarea->estado === 'to_do' ? 'selected' : '' }}>Por hacer</option>
                                         <option value="in_progress" {{ $tarea->estado === 'in_progress' ? 'selected' : '' }}>En progreso</option>
@@ -241,8 +595,11 @@
         </div>
     </div>
 
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
     <!-- JavaScript (for Search functionality) -->
     <script>
+        
 
         // Get the modal, open button, and close button
         const modal = document.getElementById("myModal");

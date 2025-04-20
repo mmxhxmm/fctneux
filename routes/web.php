@@ -83,6 +83,8 @@ Route::middleware('auth')->group(function () {
         return view('form-datos-tareas');
     })->name('tareas-form');
     Route::get('/tareas-busqueda', [TareaController::class, 'buscar'])->name('tareas-busqueda');
+    Route::get('/tareas-filtro', [TareaController::class, 'asignado_filtro'])->name('tareas.filtro');
+
 });
 
 // Pages that only the admin can access
