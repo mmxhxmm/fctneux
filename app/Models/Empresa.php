@@ -132,27 +132,66 @@ class Empresa extends Model
             case 'prospeccion':
                 switch ($value) {
                     case 'primer_contacto':
-                        return 'P - Primer contacto';
+                        return 'Primer contacto';
                     case 'pendente_respuesta':
-                        return 'P - Pendente respuesta';
+                        return 'Pendente respuesta';
                     case 'volver_contactar':
-                        return 'P - Volver a contactar';
+                        return 'Volver a contactar';
                     case 'no_acogen_alumnado':
-                        return 'P - No acogen alumnado';
+                        return 'No acogen alumnado';
                     default:
                         return $value;
                 }
             case 'colaboracion':
                 switch ($value) {
                     case 'pendiente_firma_convenio':
-                        return 'C - Pendiente firma Convenio';
+                        return 'Pendiente firma Convenio';
                     case 'plazas_conseguidas':
-                        return 'C - Plazas conseguidas';
+                        return 'Plazas conseguidas';
                     case 'solicitud_plazas':
-                        return 'C - Solicitud plazas';
+                        return 'Solicitud plazas';
                     default:
                         return $value;
                 }
+            default:
+                return $value;
+        }
+    }
+
+    public function convenioMarcoToString($value) {
+        switch ($value) {
+            case 'ceac':
+                return 'Convenio Marco CEAC';
+            case 'qbid':
+                return 'Convenio Marco qbid';
+            default:
+                return $value;
+        }
+    }
+
+    public function usoLogosToString($value) {
+        switch ($value) {
+            case 'si':
+                return 'Si';
+            case 'no':
+                return 'No';
+            case 'autorizacion':
+                return 'Autorización previa';
+            default:
+                return $value;
+        }
+    }
+
+    public function cicloFormativoToString($value) {
+        switch ($value) {
+            case 'daw':
+                return 'Desarrollo de Aplicaciones Web';
+            case 'asix':
+                return 'Administración de Sistemas Informáticos';
+            case 'dam':
+                return 'Desarrollo de Aplicaciones Multiplataforma';
+            case 'marketing':
+                return 'Marketing Digital';
             default:
                 return $value;
         }

@@ -45,20 +45,25 @@ Route::middleware('auth')->group(function () {
 
     // Empresa Detail
     Route::put('/update-empresa/{id}', [EmpresaUpdateController::class, 'update_empresa'])->name('empresa.update');
-    Route::put('/delete-empresa/{id}', [EmpresaUpdateController::class, 'delete_empresa'])->name('empresa.delete');
+    Route::delete('/delete-empresa/{id}', [EmpresaUpdateController::class, 'delete_empresa'])->name('empresa.delete');
     Route::put('/add-rc/{id}', [EmpresaUpdateController::class, 'add_rc'])->name('responsables.add');
     Route::put('/update-rc/{id}', [EmpresaUpdateController::class, 'update_rc'])->name('responsables.update');
     Route::delete('/delete-rc/{id}', [EmpresaUpdateController::class, 'delete_rc'])->name('responsables.delete');
+    Route::put('/add-ct/{id}', [EmpresaUpdateController::class, 'add_ct'])->name('centroTrabajo.add');
     Route::put('/update-ct/{id}', [EmpresaUpdateController::class, 'update_ct'])->name('centroTrabajo.update');
-    Route::put('/delete-ct/{id}', [EmpresaUpdateController::class, 'delete_ct'])->name('centroTrabajo.delete');
+    Route::delete('/delete-ct/{id}', [EmpresaUpdateController::class, 'delete_ct'])->name('centroTrabajo.delete');
+    Route::put('/add-pc/{id}', [EmpresaUpdateController::class, 'add_pc'])->name('personaContacto.add');
     Route::put('/update-pc/{id}', [EmpresaUpdateController::class, 'update_pc'])->name('personaContacto.update');
-    Route::put('/delete-pc/{id}', [EmpresaUpdateController::class, 'delete_pc'])->name('personaContacto.delete');
+    Route::delete('/delete-pc/{id}', [EmpresaUpdateController::class, 'delete_pc'])->name('personaContacto.delete');
+    Route::put('/add-practica/{id}', [EmpresaUpdateController::class, 'add_practica'])->name('practica.add');
     Route::put('/update-practica/{id}', [EmpresaUpdateController::class, 'update_practica'])->name('practica.update');
-    Route::put('/delete-practica/{id}', [EmpresaUpdateController::class, 'delete_practica'])->name('practica.delete');
+    Route::delete('/delete-practica/{id}', [EmpresaUpdateController::class, 'delete_practica'])->name('practica.delete');
+    Route::put('/add-tutor/{id}', [EmpresaUpdateController::class, 'add_tutor'])->name('tutor.add');
     Route::put('/update-tutor/{id}', [EmpresaUpdateController::class, 'update_tutor'])->name('tutor.update');
-    Route::put('/delete-tutor/{id}', [EmpresaUpdateController::class, 'delete_tutor'])->name('tutor.delete');
+    Route::delete('/delete-tutor/{id}', [EmpresaUpdateController::class, 'delete_tutor'])->name('tutor.delete');
+    Route::put('/add-tutor-empresa/{id}', [EmpresaUpdateController::class, 'add_tutor_empresa'])->name('tutor-empresa.add');
     Route::put('/update-tutor-empresa/{id}', [EmpresaUpdateController::class, 'update_tutor_empresa'])->name('tutor-empresa.update');
-    Route::put('/delete-tutor-empresa/{id}', [EmpresaUpdateController::class, 'delete_tutor_empresa'])->name('tutor-empresa.delete');
+    Route::delete('/delete-tutor-empresa/{id}', [EmpresaUpdateController::class, 'delete_tutor_empresa'])->name('tutor-empresa.delete');
 
     // Empresa Index
     Route::get('/empresa-index', [EmpresaController::class, 'index'])->name('empresa-index');
