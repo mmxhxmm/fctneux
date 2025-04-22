@@ -11,7 +11,7 @@
     <form method="POST" id="form" action="{{ route('store-empresa-3') }}" class="min-h-[30em] mt-6 space-y-6">
         @csrf <!-- CSRF token for security -->
 
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 flex justify-between">
+        <h2 class="text-lg font-medium text-gray-900 flex justify-between">
             {{ __('Añadir Práctica') }}
             <a>
                 <x-primary-nonsubmit-button type="button" id="add_section_button_1">{{ __(' + ') }}</x-primary-nonsubmit-button>
@@ -155,7 +155,7 @@
                         <!-- Observaciones -->
                         <div>
                             <x-input-label-light for="observaciones" :value="__('Observaciones')" />
-                            <textarea id="observaciones" name="observaciones" rows="3" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"></textarea>
+                            <textarea id="observaciones" name="observaciones" rows="3" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"></textarea>
                             <x-input-error :messages="$errors->get('observaciones')" class="mt-2" />
                         </div>
                 </div>
@@ -163,8 +163,8 @@
         </div>
         <!-- Hidden template for cloning -->
         <template id="practica_template">
-            <details class="practica-section bg-white dark:bg-gray-900 border border-blue rounded-lg p-4 shadow-sm mb-6" open>
-                <summary class="text-lg font-medium text-gray-900 dark:text-gray-100 cursor-pointer flex justify-between items-center">
+            <details class="practica-section bg-white border border-blue rounded-lg p-4 shadow-sm mb-6" open>
+                <summary class="text-lg font-medium text-gray-900 cursor-pointer flex justify-between items-center">
                     <span class="practica-title-label">Práctica</span>
                     <button type="button" class="remove-practica text-red-500 hover:text-red-700 text-sm ml-4">❌</button>
                 </summary>
@@ -305,7 +305,7 @@
                         <!-- Observaciones -->
                         <div>
                             <x-input-label-light for="observaciones" :value="__('Observaciones')" />
-                            <textarea id="observaciones" name="observaciones" rows="3" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"></textarea>
+                            <textarea id="observaciones" name="observaciones" rows="3" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"></textarea>
                             <x-input-error :messages="$errors->get('observaciones')" class="mt-2" />
                         </div>
                 </div>
@@ -316,7 +316,7 @@
         <hr>
 
         <div id="header_tutor"></div>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 flex justify-between">
+        <h2 class="text-lg font-medium text-gray-900 flex justify-between">
             {{ __('Añadir Tutor') }}
             <a href="#header_tutor">
                 <x-primary-nonsubmit-button type="button" id="add_section_button_2">{{ __(' + ') }}</x-primary-nonsubmit-button>
@@ -366,8 +366,8 @@
         </div>
         <!-- Hidden template for cloning -->
         <template id="tutor_template">
-            <details class="tutor-section bg-white mt-6 dark:bg-gray-900 border border-blue rounded-lg p-4 shadow-sm mb-6" open>
-                <summary class="text-lg font-medium text-gray-900 dark:text-gray-100 cursor-pointer flex justify-between items-center">
+            <details class="tutor-section bg-white mt-6 border border-blue rounded-lg p-4 shadow-sm mb-6" open>
+                <summary class="text-lg font-medium text-gray-900 cursor-pointer flex justify-between items-center">
                     <span class="tutor-title-label">Tutor</span>
                     <button type="button" class="remove-tutor text-red-500 hover:text-red-700 text-sm ml-4">❌</button>
                 </summary>
@@ -415,7 +415,7 @@
         <hr>
 
         <div id="header_tutorEmpresa"></div>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 flex justify-between">
+        <h2 class="text-lg font-medium text-gray-900 flex justify-between">
             {{ __('Añadir Tutor Empresa') }}
             <a href="#header_tutorEmpresa">
                 <x-primary-nonsubmit-button type="button" id="add_section_button_3">{{ __(' + ') }}</x-primary-nonsubmit-button>
@@ -465,8 +465,8 @@
         </div>
         <!-- Hidden template for cloning -->
         <template id="tutorEmpresa_template">
-            <details class="tutor-empresa-section bg-white mt-6 dark:bg-gray-900 border border-blue rounded-lg p-4 shadow-sm mb-6" open>
-                <summary class="text-lg font-medium text-gray-900 dark:text-gray-100 cursor-pointer flex justify-between items-center">
+            <details class="tutor-empresa-section bg-white mt-6 border border-blue rounded-lg p-4 shadow-sm mb-6" open>
+                <summary class="text-lg font-medium text-gray-900 cursor-pointer flex justify-between items-center">
                     <span class="tutor-empresa-title-label">Tutor Empresa</span>
                     <button type="button" class="remove-tutor-empresa text-red-500 hover:text-red-700 text-sm ml-4">❌</button>
                 </summary>

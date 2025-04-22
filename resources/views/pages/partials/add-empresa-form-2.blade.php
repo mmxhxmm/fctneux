@@ -11,7 +11,7 @@
     <form method="POST" id="form" action="{{ route('store-empresa-2') }}" class="min-h-[30em] mt-6 space-y-6">
         @csrf <!-- CSRF token for security -->
 
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 flex justify-between">
+        <h2 class="text-lg font-medium text-gray-900 flex justify-between">
             {{ __('Añadir Centro Trabajo') }}
             <a>
                 <x-primary-nonsubmit-button type="button" id="add_section_button_1">{{ __(' + ') }}</x-primary-nonsubmit-button>
@@ -67,8 +67,8 @@
         </div>
         <!-- Hidden template for cloning -->
         <template id="centro_trabajo_template">
-            <details class="centro-trabajo-section bg-white dark:bg-gray-900 border border-blue rounded-lg p-4 shadow-sm mb-6" open>
-                <summary class="text-lg font-medium text-gray-900 dark:text-gray-100 cursor-pointer flex justify-between items-center">
+            <details class="centro-trabajo-section bg-white border border-blue rounded-lg p-4 shadow-sm mb-6" open>
+                <summary class="text-lg font-medium text-gray-900 cursor-pointer flex justify-between items-center">
                     <span class="centro-title-label">Centro de Trabajo</span>
                     <button type="button" class="remove-centro text-red-500 hover:text-red-700 text-sm ml-4">❌</button>
                 </summary>
@@ -126,7 +126,7 @@
         <hr>
 
         <div id="header_persona_contacto"></div>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 flex justify-between">
+        <h2 class="text-lg font-medium text-gray-900 flex justify-between">
             {{ __('Añadir Persona Contacto') }}
             <a href="#header_persona_contacto">
                 <x-primary-nonsubmit-button type="button" id="add_section_button_2">{{ __(' + ') }}</x-primary-nonsubmit-button>
@@ -173,8 +173,8 @@
         </div>
 
         <template id="persona_contacto_template">
-            <details class="persona-contacto-section bg-white mt-6 dark:bg-gray-900 border border-blue rounded-lg p-4 shadow-sm mb-6" open>
-                <summary class="text-lg font-medium text-gray-900 dark:text-gray-100 cursor-pointer flex justify-between items-center">
+            <details class="persona-contacto-section bg-white mt-6 border border-blue rounded-lg p-4 shadow-sm mb-6" open>
+                <summary class="text-lg font-medium text-gray-900 cursor-pointer flex justify-between items-center">
                     <span class="persona-title-label">Persona de Contacto</span>
                     <button type="button" class="remove-persona text-red-500 hover:text-red-700 text-sm ml-4">❌</button>
                 </summary>

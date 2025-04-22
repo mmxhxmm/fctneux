@@ -1,11 +1,11 @@
 <section>
     <div class="flex justify-between items-center">
         <header>
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+            <h2 class="text-lg font-medium text-gray-900">
                 {{ __('Añadir Nueva Empresa') }}
             </h2>
 
-            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+            <p class="mt-1 text-sm text-gray-600 ">
                 {{ __('Aquí se introducen los datos de la Empresa y el del Responsable Convenio.') }}
             </p>
         </header>
@@ -239,14 +239,14 @@
             <!-- Observaciones -->
             <div>
                 <x-input-label-light for="observaciones" :value="__('Observaciones')" />
-                <textarea id="observaciones" name="observaciones" value="{{ old('observaciones', session('empresa_draft')?->observaciones) }}" rows="3" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"></textarea>
+                <textarea id="observaciones" name="observaciones" value="{{ old('observaciones', session('empresa_draft')?->observaciones) }}" rows="3" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"></textarea>
                 <x-input-error :messages="$errors->get('observaciones')" class="mt-2" />
             </div>
         </div>
         <hr>
 
         <!-- Responsable -->
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 flex justify-between">
+        <h2 class="text-lg font-medium text-gray-900  flex justify-between">
             {{ __('Añadir Responsable Convenio #1') }}
             <x-primary-nonsubmit-button type="button" id="add_section_button_1">
                 {{ __(' + ') }}
@@ -290,8 +290,8 @@
         </div> 
         
         <template id="responsable_template">
-            <details class="responsable-section bg-white dark:bg-gray-900 border rounded-lg p-4 shadow-sm mb-6" open>
-                <summary class="text-lg font-medium text-gray-900 dark:text-gray-100 cursor-pointer flex justify-between items-center">
+            <details class="responsable-section bg-white border rounded-lg p-4 shadow-sm mb-6" open>
+                <summary class="text-lg font-medium text-gray-900 cursor-pointer flex justify-between items-center">
                     <span class="title-label">Responsable Convenio</span>
                     <button type="button" class="remove-section text-red-500 hover:text-red-700 text-sm ml-4">❌</button>
                 </summary>

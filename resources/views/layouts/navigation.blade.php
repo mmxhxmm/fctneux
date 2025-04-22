@@ -93,7 +93,7 @@
         </div>
 
         <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
+        <div class="pt-4 pb-1 border-t border-gray-200 ">
             <div class="px-4">
                 <div class="font-medium text-base">{{ Auth::user()->name }}</div>
                 <div class="font-medium text-sm ">{{ Auth::user()->email }}</div>
