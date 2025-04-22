@@ -31,7 +31,6 @@ class UserFactory extends Factory
             'situacion' => fake()->randomElement(['alta', 'baja']),
             'municipio' => fake()->randomElement(['barcelona', 'madrid','valencia']),
             'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
         ];
     }
 

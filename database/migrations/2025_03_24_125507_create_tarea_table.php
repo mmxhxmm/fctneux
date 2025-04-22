@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('tareas', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('asignado');
-            $table->enum('estado', ['to_do', 'in_progress', 'revision', 'done']);
+            $table->string('nombre')->nullable();
+            $table->string('asignado')->nullable();
+            $table->enum('estado', ['to_do', 'in_progress', 'revision', 'blocked', 'done'])->default('to_do');
             $table->text('descripcion')->nullable();
-            $table->text('comentarios')->nullable();
-            $table->string('empresa_cif'); // FK
+            $table->date('fecha_limite')->nullable();
+            $table->integer('empresa_id'); // FK
             $table->timestamps();
         });
     }

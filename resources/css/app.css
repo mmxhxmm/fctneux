@@ -47,7 +47,10 @@ body {
     font-size: 50px;
 }
 .text-four{
-    font-size: 25px;
+    font-size: 20px;
+}
+.text-five{
+    font-size: 42px;
 }
 /* Fade-in animation for FCT Nexus */
 .fade-in {
@@ -70,6 +73,7 @@ body {
     animation: slideInLeft 1s forwards;
 }
 
+
 @keyframes slideInLeft {
     0% {
         opacity: 0;
@@ -79,6 +83,9 @@ body {
         opacity: 1;
         transform: translateX(0);
     }
+}
+.text-white {
+    color: #fff;
 }
 
 /* Slide-in from right for the 'Acceso al Registro' div */

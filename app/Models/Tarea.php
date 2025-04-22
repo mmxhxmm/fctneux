@@ -48,7 +48,8 @@ class Tarea extends Model
         'asignado',
         'estado',
         'descripcion',
-        'comentarios',
+        'fecha_limite',
+        'empresa_id',
     ];
 
     /**
@@ -58,6 +59,8 @@ class Tarea extends Model
      */
     protected $casts = [
         'estado' => 'string',
+        'empresa_id' => 'integer',
+        'fecha_limite' => 'date',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
@@ -71,6 +74,7 @@ class Tarea extends Model
         'to_do' => 'Por hacer',
         'in_progress' => 'En progreso',
         'revision' => 'En revisión',
+        'blocked' => 'Bloqueado',
         'done' => 'Completada'
     ];
     
@@ -79,19 +83,19 @@ class Tarea extends Model
      *
      * @return string
      */
-    public function getEstadoNombreAttribute()
+    public function getEstadoAttribute($value)
     {
-        return self::ESTADOS[$this->estado] ?? $this->estado;
+        return self::ESTADOS[$value] ?? $value;
     }
 
     /**
-     * Scope for tasks in a specific state.
+     * Filter for tasks in a specific state.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $estado
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWhereEstado($query, $estado)
+    public function filterWhereEstado($query, $estado)
     {
         return $query->where('estado', $estado);
     }
@@ -99,6 +103,6 @@ class Tarea extends Model
     // Define Relationships
     public function empresa()
     {
-        return $this->belongsTo(Empresa::class, 'empresa_cif', 'cif');
+        return $this->belongsTo(Empresa::class, 'empresa_id', 'id');
     }
 }

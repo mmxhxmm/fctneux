@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="w-full flex flex-col bg-white">
         <!-- First Container with Background Image -->
-        <div class="relative h-[450px] flex-grow-0 flex-shrink-0" style="background-image: url('../images/personalactivo.png'); background-size: cover; background-position: center;">
+        <div class="relative h-[350px] mb-10 flex-grow-0 flex-shrink-0" style="background-image: url('../images/personalactivo.png'); background-size: cover; background-position: center;">
             <!-- Opacity overlay -->
             <!-- <div class="absolute inset-0 bg-primary opacity-40"></div> -->
 
@@ -16,105 +16,96 @@
                         </div>
                     </div>
 
-            <!-- The Modal -->
-            <div id="myModal" class="fixed inset-0 flex bg-black bg-opacity-50 hidden justify-center items-center z-50">
-                <div class="bg-white border-2 border-primary w-[60%] h-auto rounded-lg">
-                    <div class="relative">
-                        <div class="bg-primary text-white text-center p-2 text-four">Datos de Usuarios</div>
-                        <div class="p-16 text-primary flex justify-center items-center">
-                            <form action="" class="w-full max-w-3xl">
-                                <!-- First Row -->
-                                <div class="flex gap-6 mb-4 justify-center">
-                                    <div class="flex-1">
-                                        <label for="nif-personal" class="block w-[200px] pb-3">NIF</label>
-                                        <input type="text" name="nif-personal" maxlength="9" required class="ml-2 rounded-lg w-[70%] border-2 border-primary">
-                                    </div>
-                                    <div class="flex-1">
-                                        <label for="nivel-personal" class="block w-[200px] pb-3">Nivel de acceso</label>
-                                        <select name="nivel-personal" id="nivel-personal" class="ml-2 rounded-lg w-[70%] border-2 border-primary">
-                                            <option value="Coodinador">Coordinador</option>
-                                            <option value="Registrador">Registrador</option>
-                                        </select>
-                                    </div>
-                                </div>
+                    <div id="myModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                        <div class="w-full max-w-5xl bg-white rounded-xl shadow-2xl overflow-hidden border-t-4 border-blue">
+                            <!-- Modal Header -->
+                            <div class="bg-blue px-6 py-4 flex justify-between items-center">
+                                <h2 class="text-xl font-semibold text-white">Datos del Usuario</h2>
+                                <button id="closeModal" class="text-white text-xl hover:text-orange transition-all">✕</button>
+                            </div>
 
-                                <!-- Second Row -->
-                                <div class="flex gap-6 mb-4 justify-center">
-                                    <div class="flex-1">
-                                        <label for="nombre-personal" class="block w-[200px] pb-3">Nombre</label>
-                                        <input type="text" name="nombre-personal" required class="ml-2 rounded-lg w-[70%] border-2 border-primary">
+                            <!-- Modal Body -->
+                            <div class="px-10 py-8">
+                                <form action="" class="space-y-6 font-roboto text-gray-800">
+                                    <!-- Row 1 -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label for="nif-personal" class="block text-sm font-medium mb-1">NIF</label>
+                                            <input type="text" name="nif-personal" maxlength="9" required
+                                                class="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-blue focus:border-blue shadow-sm">
+                                        </div>
+                                        <div>
+                                            <label for="nivel-personal" class="block text-sm font-medium mb-1">Nivel de acceso</label>
+                                            <select name="nivel-personal" id="nivel-personal"
+                                                class="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-blue focus:border-blue shadow-sm">
+                                                <option value="Coodinador">Coordinador</option>
+                                                <option value="Registrador">Registrador</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="flex-1">
-                                        <label for="apellido-personal" class="block w-[200px] pb-3">Apellido</label>
-                                        <input type="text" name="apellido-personal" class="ml-2 rounded-lg w-[70%] border-2 border-primary">
-                                    </div>
-                                </div>
 
-                                <!-- Third Row -->
-                                <div class="flex gap-6 mb-4 justify-center">
-                                    <div class="flex-1">
-                                        <label for="correo-personal" class="block w-[200px] pb-3">Correo Electronico</label>
-                                        <input type="email" name="correo-personal" class="ml-2 rounded-lg w-[70%] border-2 border-primary">
+                                    <!-- Row 2 -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label for="nombre-personal" class="block text-sm font-medium mb-1">Nombre</label>
+                                            <input type="text" name="nombre-personal" required
+                                                class="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-blue focus:border-blue shadow-sm">
+                                        </div>
+                                        <div>
+                                            <label for="apellido-personal" class="block text-sm font-medium mb-1">Apellido</label>
+                                            <input type="text" name="apellido-personal"
+                                                class="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-blue focus:border-blue shadow-sm">
+                                        </div>
                                     </div>
-                                    <div class="flex-1">
-                                        <label for="tel-personal" class="block w-[200px] pb-3">Teléfono</label>
-                                        <input type="tel" name="tel-personal" maxlength="9" class="ml-2 rounded-lg w-[70%] border-2 border-primary">
-                                    </div>
-                                </div>
 
-                                <!-- Fourth Row -->
-                                <div class="flex gap-6 mb-4 justify-center">
-                                    <div class="flex-1">
-                                        <label for="municipio-personal" class="block w-[200px] pb-3">Municipio</label>
-                                        <input type="text" name="municipio-personal" class="ml-2 rounded-lg w-[70%] border-2 border-primary">
+                                    <!-- Row 3 -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label for="correo-personal" class="block text-sm font-medium mb-1">Correo Electrónico</label>
+                                            <input type="email" name="correo-personal"
+                                                class="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-blue focus:border-blue shadow-sm">
+                                        </div>
+                                        <div>
+                                            <label for="tel-personal" class="block text-sm font-medium mb-1">Teléfono</label>
+                                            <input type="tel" name="tel-personal" maxlength="9"
+                                                class="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-blue focus:border-blue shadow-sm">
+                                        </div>
                                     </div>
-                                    <div class="flex-1">
-                                        <label for="situacion-personal" class="block w-[200px] pb-3">Situación</label>
-                                        <select name="situacion-personal" id="situacion-personal" class="ml-2 rounded-lg w-auto mb-4 border-2 border-primary">
-                                            <option value="Alta">Alta</option>
-                                            <option value="Baja">Baja</option>
-                                        </select>
-                                    </div>
-                                </div>
 
-                                <!-- Buttons Section -->
-                                <div class="flex gap-6 mt-4 justify-end">
-                                    <button type="submit" class="bg-primary text-white p-3 px-6 rounded-lg">Guardar</button>
-                                    <button type="button" class="bg-orange text-white p-3 px-6 rounded-lg">Eliminar</button>
-                                </div>
-                            </form>
+                                    <!-- Row 4 -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label for="municipio-personal" class="block text-sm font-medium mb-1">Municipio</label>
+                                            <input type="text" name="municipio-personal"
+                                                class="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-blue focus:border-blue shadow-sm">
+                                        </div>
+                                        <div>
+                                            <label for="situacion-personal" class="block text-sm font-medium mb-1">Situación</label>
+                                            <select name="situacion-personal" id="situacion-personal"
+                                                class="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-blue focus:border-blue shadow-sm">
+                                                <option value="Alta">Alta</option>
+                                                <option value="Baja">Baja</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Action Buttons -->
+                                    <div class="flex justify-end gap-4 pt-6">
+                                        <button type="submit"
+                                            class="bg-blue hover:bg-blue-700 transition text-white font-semibold px-5 py-2 rounded-full shadow-sm">
+                                            Guardar
+                                        </button>
+                                        <button type="button"
+                                            class="bg-orange hover:bg-orange-600 transition text-white font-semibold px-5 py-2 rounded-full shadow-sm">
+                                            Eliminar
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-
-                        <!-- Close Button -->
-                         
-                        <button id="closeModal" class="absolute top-0 w-10 h-10 right-0 bg-orange text-white rounded-[100px] m-2">X</button>
                     </div>
-                </div>
-            </div>
-                <script>
-                    // Get the modal, open button, and close button
-                            const modal = document.getElementById("myModal");
-                            const openModalBtn = document.getElementById("openModal");
-                            const closeModalBtn = document.getElementById("closeModal");
 
-                            // Open the modal
-                            openModalBtn.onclick = function() {
-                                modal.classList.remove("hidden"); // Show the modal
-                            };
 
-                            // Close the modal
-                            closeModalBtn.onclick = function() {
-                                modal.classList.add("hidden"); // Hide the modal
-                            };
-
-                            // Close the modal if clicked outside the modal content
-                            window.onclick = function(event) {
-                                if (event.target === modal) {
-                                    modal.classList.add("hidden"); // Hide the modal if clicked outside
-                                }
-                            };
-
-                </script>
                     <!-- Eliminar button -->
                     <!-- <div class="w-[110px] h-10">
                         <div class="bg-[#002f86] rounded-[100px] w-[110px] h-10 flex justify-center items-center">
@@ -125,17 +116,6 @@
 
                 <!-- Right Section (Filter, Barcelona / BCN, Situación, and Search) -->
                 <div class="flex items-center space-x-4">
-                    <!-- Filter Section
-                    <div class="relative">
-                        <div class="bg-black_transp w-[200px] h-[40px] rounded-[100px] border-2 border-white flex items-center pl-4 pr-2">
-                            <img class="w-[20px] h-[20px]" src="../images/filter-svg.svg" alt="Filter Icon" />
-                            <div class="text-white font-roboto text-base font-medium ml-2">
-                                Filter
-                            </div>
-                        </div>
-                    </div> -->
-
-                    <!-- Barcelona / BCN Dropdown -->
                     <select id="filter_municipio" class="bg-black_transp rounded-[100px] border-2 border-white w-[200px] h-[40px] flex items-center pl-4 pr-2 text-white font-roboto text-base font-medium" onchange="filterUsers()">
                         <option value="all">Municipio</option>
                         <option value="barcelona">Barcelona / BCN</option>
@@ -144,35 +124,48 @@
                     </select>
 
                     <!-- Search Section -->
-                    <div class="relative">
-                        <!-- Search Container -->
-                        <div class="bg-black_transp w-[200px] h-[40px] rounded-[100px] border-2 border-white flex items-center pl-4 pr-2">
-                            <!-- Search Input -->
+                    <form action="{{ route('usuarios-buscar') }}" method="GET" class="relative">
+                        <div class="bg-black_transp w-[250px] h-[40px] rounded-full border-2 border-white flex items-center px-4">
                             <input
                                 type="text"
-                                id="searchInput"
-                                placeholder="Search"
-                                class="bg-transparent border-none rounded-[100px] text-white font-roboto text-xs font-medium outline-none w-full"
-                                onkeyup="handleSearch()"
+                                name="search"
+                                placeholder="Buscar usuario"
+                                value="{{ request('search') }}"
+                                class="bg-transparent border border-transparent focus:outline-none placeholder-white text-white text-sm font-medium w-full outline-none"
                             />
-                            <!-- Search Icon -->
-                            <img class="w-[20px] h-[20px]" src="../images/svg-buscar.svg" alt="Search Icon" />
+                            <button type="submit" class="ml-2 focus:outline-none">
+                                <img class="w-5 h-5" src="../images/svg-buscar.svg" alt="Buscar" />
+                            </button>
                         </div>
-                    </div>
+                    </form>
+                    <button id="toggleView" onclick="toggleLayout()" class="w-10 h-10 rounded-full bg-white text-blue border border-blue flex items-center justify-center hover:bg-blue hover:text-white transition">
+                        <!-- Grid Icon -->
+                        <svg id="iconGrid" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h4v4H4V6zM10 6h4v4h-4V6zM16 6h4v4h-4V6zM4 12h4v4H4v-4zM10 12h4v4h-4v-4zM16 12h4v4h-4v-4z"/>
+                        </svg>
+
+                        <!-- List Icon (initially hidden) -->
+                        <svg id="iconList" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+
                 </div>
                 
             </div>
             <div class="w-full h-full flex flex-col absolute px-4">
-                <div class="absolute left-0 top-[6em] animate-left">
-                    <a href="/" class="p-2 hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6 flex items-center"><img src="../images/flechas-izquierda.png" alt="" class="h-[13px] w-[13px] mr-2"> Volver al inicio</a>
+                <div class="absolute left-0 top-[4em] animate-left">
+                    <a href="/" class="p-2 hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6"><<< Volver al inicio</a>
                 </div>
-                <div class="absolute right-0 top-[10em] animate-right">
-                    <a href="{{ $state == 'activo' ? 'personal-no-activo' : 'personal-activo' }}" class="hover:text-white hover:border-none justify-end px-4 rounded-tl-[0px] rounded-tl-[50px] rounded-bl-[50px] rounded-bl-[0px] px-4 bg-primary w-[220px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 flex justify-end items-center flex">
-                        Usuarios {{ $state == 'activo' ? 'No Activos' : 'activos'}} <img src="../images/flechas-a-la-derecha.png" alt="" class="h-[13px] w-[13px] ml-2">
+                <div class="absolute right-0 top-[7em] animate-right">
+                    <a href="{{ $state == 'activo' ? 'personal-no-activo' : 'personal-activo' }}" class="hover:text-white hover:border-none justify-end px-4 rounded-tl-[0px] rounded-tl-[50px] rounded-bl-[50px] rounded-bl-[0px] px-4 bg-blue w-[220px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 flex justify-end items-center">
+                        Usuarios {{ $state == 'activo' ? 'No Activos' : 'activos'}} >>>
                     </a>
                 </div>
 
-                <div class="text-center justify-center mt-24 fade-in">
+                <div class="text-center justify-center mt-14 fade-in">
                     <p class="text-white text-three " style="text-shadow: 2px 4px 2px rgba(0,0,0,0.40)">
                         Personal 
                         <span class="text-three font-roboto_condensed_bold text-orange">
@@ -185,14 +178,42 @@
 
         <!-- User Cards Section -->
         <div class="flex justify-center bg-white items-center" id="userGrid">
-            <div class="grid grid-cols-3 gap-6">
+            <div id="userContainer" class="grid grid-cols-3 gap-6">
                 <!-- Display first 9 users by default -->
                 @foreach ($users as $key => $user)
                     <x-index.personal :user="$user"></x-index-box>
-                    @if ($key == 8) <!-- After the 9th user, break the loop -->
+                    @if ($key == 12) <!-- After the 9th user, break the loop -->
                         @break
                     @endif
                 @endforeach
+            </div>
+            <div id="userList" class="hidden w-[90%] px-5 py-6 transition-all">
+                <div class="overflow-x-auto bg-white rounded-xl shadow-md border border-gray-200">
+                    <table class="min-w-full divide-y divide-gray-200 text-sm font-roboto">
+                        <thead class="bg-blue text-white rounded-t-xl">
+                            <tr>
+                                <th class="p-4 text-left font-semibold">Nombre</th>
+                                <th class="p-4 text-left font-semibold">Email</th>
+                                <th class="p-4 text-left font-semibold">Telefono</th>
+                                <th class="p-4 text-left font-semibold">Situacion</th>
+                                <th class="p-4 text-left font-semibold">Municipio</th>
+                                <th class="p-4 text-left font-semibold">Role</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            @foreach ($users as $key => $user)
+                                <tr class="hover:bg-blue/5 transition-all">
+                                    <td class="p-4 text-gray-800">{{ $user->name }}</td>
+                                    <td class="p-4 text-gray-800">{{ $user->email }}</td>
+                                    <td class="p-4 text-gray-800">{{ $user->telefono }}</td>
+                                    <td class="p-4 text-gray-800">{{ $user->situacion }}</td>
+                                    <td class="p-4 text-gray-800">{{ $user->municipio }}</td>
+                                    <td class="p-4 text-gray-800">{{ $user->role }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -201,19 +222,18 @@
             <div class="flex justify-center bg-white items-center">
                 <div class="grid grid-cols-3 gap-6">
                     @foreach ($users as $key => $user)
-                        @if ($key > 8) <!-- Only show users after the 9th one -->
+                        @if ($key > 12) <!-- Only show users after the 9th one -->
                             <x-index.personal :user="$user"></x-index-box>
                         @endif
                     @endforeach
                 </div>
             </div>
         </div>
-
         <div class="relative h-[420px] flex-grow-0 flex-shrink-0" style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 15), rgba(255, 255, 255, 0) ), url('../images/personalbottom.png'); background-size: cover; background-position: center;">
             <!-- Button is absolutely positioned in the center of the image -->
-            <div class="absolute inset-0 flex justify-center items-center">
-                <button id="see-more" class="p-4 bg-primary rounded-lg text-white w-[120px]"  onclick="toggleUserVisibility()">Ver todos</button>
-            </div>
+            <!-- <div class="absolute inset-0 flex justify-center items-center">
+                <button class="p-4 bg-blue rounded-lg text-white w-[120px]">Ver todos</button>
+            </div> -->
         </div>
     </div>
 
@@ -223,19 +243,19 @@
             filterUsers();
         });
 
-        function toggleUserVisibility() {
-            const hiddenUsers = document.querySelector('#hiddenUsers');
-            const button = document.querySelector('#see-more');
+        // function toggleUserVisibility() {
+        //     const hiddenUsers = document.querySelector('#hiddenUsers');
+        //     const button = document.querySelector('#see-more');
 
-            // Toggle hidden users visibility
-            if (hiddenUsers.classList.contains('hidden')) {
-                hiddenUsers.classList.remove('hidden');
-                button.innerText = 'Ver menos';
-            } else {
-                hiddenUsers.classList.add('hidden');
-                button.innerText = 'Ver todos';
-            }
-        }
+        //     // Toggle hidden users visibility
+        //     if (hiddenUsers.classList.contains('hidden')) {
+        //         hiddenUsers.classList.remove('hidden');
+        //         button.innerText = 'Ver menos';
+        //     } else {
+        //         hiddenUsers.classList.add('hidden');
+        //         button.innerText = 'Ver todos';
+        //     }
+        // }
 
         // Function to filter users based on selected municipio and situacion
         function filterUsers() {
@@ -252,5 +272,64 @@
                 }
             });
         }
+
+        // Get the modal, open button, and close button
+        const modal = document.getElementById("myModal");
+        const openModalBtn = document.getElementById("openModal");
+        const closeModalBtn = document.getElementById("closeModal");
+
+        // Open the modal
+        openModalBtn.onclick = function() {
+            modal.classList.remove("hidden"); // Show the modal
+        };
+
+        // Close the modal
+        closeModalBtn.onclick = function() {
+            modal.classList.add("hidden"); // Hide the modal
+        };
+
+        // Close the modal if clicked outside the modal content
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.classList.add("hidden"); // Hide the modal if clicked outside
+            }
+        };
+        document.getElementById('searchForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default form behavior
+            const query = document.getElementById('searchInput').value.trim();
+
+            if (query) {
+                console.log('Searching for:', query);
+
+                // Example of filtering logic (adapt to your needs)
+                // You can also make an AJAX request here if needed
+
+                // Or redirect:
+                // window.location.href = `?search=${encodeURIComponent(query)}`;
+            }
+        });
+        function toggleLayout() {
+            const grid = document.getElementById('userContainer');
+            const list = document.getElementById('userList');
+            const iconGrid = document.getElementById('iconList');
+            const iconList = document.getElementById('iconGrid');
+
+            const isGridVisible = !grid.classList.contains('hidden');
+
+            if (isGridVisible) {
+                grid.classList.add('hidden');
+                list.classList.remove('hidden');
+                iconGrid.classList.add('hidden');
+                iconList.classList.remove('hidden');
+            } else {
+                grid.classList.remove('hidden');
+                list.classList.add('hidden');
+                iconGrid.classList.remove('hidden');
+                iconList.classList.add('hidden');
+            }
+        }
+
+
     </script>
+
 </x-app-layout>

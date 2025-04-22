@@ -48,7 +48,7 @@ class ResponsableConvenio extends Model
         'apellido',
         'telefono',
         'email',
-        'empresa_cif', // Foreign key
+        'empresa_id', // Foreign key
     ];
 
     /**
@@ -82,7 +82,7 @@ class ResponsableConvenio extends Model
         'apellido' => null,
         'telefono' => null,
         'email' => null,
-        'empresa_cif' => null,
+        'empresa_id' => null,
     ];
 
     /**
@@ -92,6 +92,6 @@ class ResponsableConvenio extends Model
      */
     public function empresa()
     {
-        return $this->belongsTo(Empresa::class, 'empresa_cif', 'cif');
+        return $this->belongsTo(Empresa::class, 'empresa_id', 'id');
     }
 }

@@ -35,14 +35,14 @@
         <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-[12px] text-white dark:text-gray-400">Remember me</span>
+                <input id="remember_me" type="checkbox" class="rounded border-gray-300  text-indigo-600 shadow-sm focus:ring-indigo-500 " name="remember">
+                <span class="ms-2 text-[12px] text-white">Remember me</span>
             </label>
         </div>
 
         <div class="flex items-center justify-center mt-2">
             @if (Route::has('password.request'))
-            <a class="underline hover:no-underline text-[12px] mt-2 mb-2 text-sm text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
+            <a class="underline hover:no-underline text-[12px] mt-2 mb-2 text-sm text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 " href="{{ route('password.request') }}">
                 Solicitar restablecer la contraseña
             </a>
             @endif

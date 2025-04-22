@@ -15,16 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('cicloFormativo')->nullable();
             $table->string('cursoAcademico')->nullable();
-            $table->integer('numPlazasAsignadas')->nullable();
             $table->date('periodoFrom')->nullable();
             $table->date('periodoTo')->nullable();
-            $table->time('horarioFrom')->nullable();
-            $table->time('horarioTo')->nullable();
+            $table->string('horarioFrom')->nullable();
+            $table->string('horarioTo')->nullable();
             $table->string('convenioMarco')->nullable();
             $table->string('usoLogos')->nullable();
-            $table->string('tecnicoGestion')->nullable();
             $table->text('observaciones')->nullable();
-            $table->string('empresa_cif'); // FK
+            $table->integer('numPlazasAsignadas')->nullable();
+            $table->integer('tecnicoGestion'); // FK user
+            $table->integer('empresa_id'); // FK
             $table->timestamps();
         });
 

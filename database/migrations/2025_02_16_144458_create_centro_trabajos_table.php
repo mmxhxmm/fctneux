@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('centros_trabajo', function (Blueprint $table) {
             $table->id();
-            $table->string('direccion')->nullable();
             $table->integer('codigoPostal')->nullable();
-            $table->string('ubicacion')->nullable();
+            $table->string('comunidad')->nullable();
+            $table->string('provincia')->nullable();
             $table->string('municipio')->nullable();
-            $table->string('empresa_cif'); // FK
+            $table->string('direccion')->nullable();
+            $table->integer('empresa_id'); // FK
             $table->timestamps();
         });
 

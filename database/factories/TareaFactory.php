@@ -21,8 +21,8 @@ class TareaFactory extends Factory
             'asignado' => $this->faker->name,
             'estado' => $this->faker->randomElement(['to_do', 'in_progress', 'revision', 'done']),
             'descripcion' => $this->faker->optional()->paragraph,
-            'comentarios' => $this->faker->optional()->text,
-            'empresa_cif' => null,
+            'fecha_limite' => $this->faker->date,
+            'empresa_id' => null,
             'created_at' => now(),
             'updated_at' => now(),
         ];

@@ -20,9 +20,9 @@ class ResponsableConvenioFactory extends Factory
             'dni' => $this->faker->unique()->regexify('[0-9]{8}[A-Z]{1}'),
             'nombre' => $this->faker->firstName,
             'apellido' => $this->faker->lastName,
-            'telefono' => $this->faker->numerify('########'),
+            'telefono' => $this->faker->numerify('#########'),
             'email' => $this->faker->unique()->safeEmail,
-            'empresa_cif' => null, // This will be overridden in the seeder
+            'empresa_id' => null, // This will be overridden in the seeder
             'created_at' => now(),
             'updated_at' => now(),
         ];

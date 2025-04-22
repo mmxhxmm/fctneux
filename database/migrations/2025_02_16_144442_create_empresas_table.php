@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('modalidad')->nullable();
             $table->string('ofertaLaboral')->nullable();
             $table->string('entidad')->nullable();
-            $table->string('ubicacion')->nullable();
+            $table->string('comunidad')->nullable();
+            $table->string('provincia')->nullable();
             $table->string('municipio')->nullable();
             $table->string('direccion')->nullable();
             $table->integer('codigoPostal')->nullable();
@@ -36,8 +37,8 @@ return new class extends Migration
             $table->string('apellido');
             $table->integer('telefono')->nullable();
             $table->string('email')->nullable();
-            $table->string('empresa_cif'); // FK
-            // $table->foreign('empresa_cif')->references('cif')->on('empresas')->onDelete('cascade'); // Optional: delete child records when empresa is deleted
+            $table->integer('empresa_id'); // FK
+            // $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade'); // Optional: delete child records when empresa is deleted
             $table->timestamps();
         });
     }

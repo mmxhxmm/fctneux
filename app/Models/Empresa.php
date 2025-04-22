@@ -53,8 +53,9 @@ class Empresa extends Model
         'entidad',
         'direccion',
         'codigoPostal',
+        'comunidad',
+        'provincia',
         'municipio',
-        'ubicacion',
         'familiaPersonal',
         'observaciones',
     ];
@@ -70,63 +71,49 @@ class Empresa extends Model
         'updated_at' => 'datetime',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<string>
-     */
-    protected $hidden = [
-        // Add any fields you want to hide (e.g., sensitive data)
-    ];
+    // Api Transform
+    function comunidadToString($value) {
+        $key = "bf9bf54cbf3e6f52ea4f61d205d533c745dc29471259d43d982c83081fc3ce06";
+        $url = "https://apiv1.geoapi.es/comunidades?type=JSON&key=$key";
+        
+        $response = file_get_contents($url);
+        $data = json_decode($response, true);
 
-    /**
-     * Default values for attributes.
-     *
-     * @var array<string, mixed>
-     */
-    protected $attributes = [
-        'colaboracion' => null,
-        'gestiones' => null,
-        'modalidad' => null,
-        'ofertaLaboral' => null,
-        'entidad' => null,
-        'ubicacion' => null,
-        'municipio' => null,
-        'direccion' => null,
-        'codigoPostal' => null,
-        'familiaPersonal' => null,
-        'observaciones' => null,
-    ];
+        foreach ($data['data'] as $comunidad) {
+            if ($comunidad['CCOM'] == $value) {
+              return ucwords(mb_strtolower($comunidad['COM']));
+            }
+        }
 
-    /**
-     * Mutator for codigoPostal to ensure it is always 5 digits long.
-     *
-     * @param mixed $value
-     */
-    // public function setCodigoPostalAttribute($value)
-    // {
-    //     if ($value === null || strlen((string)$value) !== 5) {
-    //         throw new \InvalidArgumentException('El código postal debe tener exactamente 5 dígitos.');
-    //     }
-    //     $this->attributes['codigoPostal'] = $value;
-    // }
+        return $value;
+    }
 
-    /**
-     * Accessor for codigoPostal to ensure it is always returned as a 5-digit string.
-     *
-     * @param mixed $value
-     * @return string|null
-     */
-    // public function getCodigoPostalAttribute($value)
-    // {
-    //     if ($value === null) {
-    //         return null;
-    //     }
-    //     return str_pad($value, 5, '0', STR_PAD_LEFT); // Ensure 5 digits with leading zeros
-    // }
+    function provinciaToString($value) {
+        $key = "bf9bf54cbf3e6f52ea4f61d205d533c745dc29471259d43d982c83081fc3ce06";
+        $url = "https://apiv1.geoapi.es/provincias?type=JSON&key=$key&sandbox=0";
+    
+        $response = @file_get_contents($url); // Added @ to suppress warnings
+        if ($response === false) {
+            return $value; // fallback if request fails
+        }
+    
+        $data = json_decode($response, true);
+    
+        if (!isset($data['data'])) {
+            return $value; // handle unexpected structure
+        }
+    
+        foreach ($data['data'] as $provincia) {
+            if ($provincia['CPRO'] == $value) {
+                return ucwords(mb_strtolower($provincia['PRO']));
+            }
+        }
+    
+        return $value;
+    }
+    
 
-    // Accessors
-    public function getColaboracionAttribute($value) {
+    public function colaboracionToString($value) {
         switch ($value) {
             case 'prospeccion':
                 return 'Prospección';
@@ -139,42 +126,29 @@ class Empresa extends Model
         }
     }
 
-    public function getModalidadAttribute($value) {
-        switch ($value) {
-            case 'presencial':
-                return 'Presencial';
-            case 'remoto':
-                return 'Remoto';
-            case 'semipresencial':
-                return 'Semipresencial';
-            default:
-                return $value;
-        }
-    }
-
-    public function getGestionesAttribute($value) {
+    public function gestionesToString($value) {
         switch ($this->colaboracion) {
-            case 'Prospección':
+            case 'prospeccion':
                 switch ($value) {
                     case 'primer_contacto':
-                        return 'P - Primer contacto';
+                        return 'Primer contacto';
                     case 'pendente_respuesta':
-                        return 'P - Pendente respuesta';
+                        return 'Pendente respuesta';
                     case 'volver_contactar':
-                        return 'P - Volver a contactar';
+                        return 'Volver a contactar';
                     case 'no_acogen_alumnado':
-                        return 'P - No acogen alumnado';
+                        return 'No acogen alumnado';
                     default:
                         return $value;
                 }
-            case 'Colaboración':
+            case 'colaboracion':
                 switch ($value) {
                     case 'pendiente_firma_convenio':
-                        return 'E - Pendiente firma Convenio';
+                        return 'Pendiente firma Convenio';
                     case 'plazas_conseguidas':
-                        return 'E - Plazas conseguidas';
+                        return 'Plazas conseguidas';
                     case 'solicitud_plazas':
-                        return 'E - Solicitud plazas';
+                        return 'Solicitud plazas';
                     default:
                         return $value;
                 }
@@ -183,37 +157,63 @@ class Empresa extends Model
         }
     }
 
-    public function getOfertaLaboralAttribute($value) {
-        return $value === 'si' ? 'Si' : 'No';
-    }
-
-    public function getUbicacionAttribute($value) {
+    public function convenioMarcoToString($value) {
         switch ($value) {
-            case 'catalunya':
-                return 'Cataluña';
-            case 'fueraDeCatalunya':
-                return 'Fuera de Cataluña';
-            case 'fueraDeEspanya':
-                return 'Fuera de España';
+            case 'ceac':
+                return 'Convenio Marco CEAC';
+            case 'qbid':
+                return 'Convenio Marco qbid';
             default:
                 return $value;
         }
     }
 
-    public function getFamiliaPersonalAttribute($value) {
+    public function usoLogosToString($value) {
         switch ($value) {
-            case 'sanidad':
-                return 'Sanidad';
-            case 'informatica':
-                return 'Informática';
-            case 'hostelería':
-                return 'Hostelería';
+            case 'si':
+                return 'Si';
+            case 'no':
+                return 'No';
+            case 'autorizacion':
+                return 'Autorización previa';
+            default:
+                return $value;
+        }
+    }
+
+    public function cicloFormativoToString($value) {
+        switch ($value) {
+            case 'daw':
+                return 'Desarrollo de Aplicaciones Web';
+            case 'asix':
+                return 'Administración de Sistemas Informáticos';
+            case 'dam':
+                return 'Desarrollo de Aplicaciones Multiplataforma';
             case 'marketing':
-                return 'Marketing';
+                return 'Marketing Digital';
             default:
                 return $value;
         }
     }
+
+    // public function getOfertaLaboralAttribute($value) {
+    //     return ucwords(strtolower($value));
+    // }
+
+    // public function getFamiliaPersonalAttribute($value) {
+    //     switch ($value) {
+    //         case 'sanidad':
+    //             return 'Sanidad';
+    //         case 'informatica':
+    //             return 'Informática';
+    //         case 'hosteleria':
+    //             return 'Hostelería';
+    //         case 'marketing':
+    //             return 'Marketing';
+    //         default:
+    //             return $value;
+    //     }
+    // }
 
     /**
      * Define the relationship with ResponsableConvenio.
@@ -222,11 +222,16 @@ class Empresa extends Model
      */
     public function responsablesConvenio()
     {
-        return $this->HasMany(ResponsableConvenio::class, 'empresa_cif', 'cif');
+        return $this->HasMany(ResponsableConvenio::class, 'empresa_id', 'id');
     }
 
     public function centrosTrabajo()
     {
-        return $this->HasMany(CentroTrabajo::class, 'empresa_cif', 'cif');
+        return $this->HasMany(CentroTrabajo::class, 'empresa_id', 'id');
+    }
+
+    public function practica()
+    {
+        return $this->HasMany(Practica::class, 'empresa_id', 'id');
     }
 }

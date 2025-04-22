@@ -38,16 +38,17 @@ class CentroTrabajo extends Model
      */
     protected $keyType = 'int';
 
-    /**
+        /**
      * The attributes that are mass assignable.
      *
      * @var array<string>
      */
     protected $fillable = [
-        'direccion',
         'codigoPostal',
-        'ubicacion',
+        'comunidad',
+        'provincia',
         'municipio',
+        'direccion',
     ];
 
     /**
@@ -56,40 +57,51 @@ class CentroTrabajo extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'codigoPostal' => 'integer', // Cast codigoPostal to integer
+        'codigoPostal' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<string>
-     */
-    protected $hidden = [
-        // Add any fields you want to hide (e.g., sensitive data)
-    ];
+    // Api Transform
+    function comunidadToString($value) {
+        $key = "bf9bf54cbf3e6f52ea4f61d205d533c745dc29471259d43d982c83081fc3ce06";
+        $url = "https://apiv1.geoapi.es/comunidades?type=JSON&key=$key";
+        
+        $response = file_get_contents($url);
+        $data = json_decode($response, true);
 
-    /**
-     * Default values for attributes.
-     *
-     * @var array<string, mixed>
-     */
-    protected $attributes = [
-        'direccion' => null,
-        'codigoPostal' => null,
-        'ubicacion' => null,
-        'municipio' => null,
-    ];
+        foreach ($data['data'] as $comunidad) {
+            if ($comunidad['CCOM'] == $value) {
+                return ucwords(mb_strtolower($comunidad['COM']));
+            }
+        }
 
+        return $value;
+    }
+
+    function provinciaToString($value) {
+        $key = "bf9bf54cbf3e6f52ea4f61d205d533c745dc29471259d43d982c83081fc3ce06";
+        $url = "https://apiv1.geoapi.es/provincias?type=JSON&key=$key";
+        
+        $response = file_get_contents($url);
+        $data = json_decode($response, true);
+
+        foreach ($data['data'] as $provincias) {
+            if ($provincias['CPRO'] == $value) {
+                return ucwords(mb_strtolower($provincias['PRO']));
+            }
+        }
+
+        return $value;
+    }
 
     // Define Relationships
     public function empresa()
     {
-        return $this->belongsTo(Empresa::class, 'empresa_cif', 'cif');
+        return $this->belongsTo(Empresa::class, 'empresa_id', 'id');
     }
 
-    public function responsablesConvenio()
+    public function personaContacto()
     {
         return $this->HasMany(PersonaContacto::class, 'id_centrosTrabajo', 'id');
     }
