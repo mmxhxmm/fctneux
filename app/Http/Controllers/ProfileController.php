@@ -22,6 +22,17 @@ class ProfileController extends Controller
     }
 
     /**
+     * Muestra la tarea asignada al id del usuario.
+     */
+    public function mostrarTareas()
+    {
+        $id = Auth::id();
+        $tareas = Tarea::where('asignado', $id)->get();
+
+        return view('profile.perfil', compact('tareas'));
+    }
+
+    /**
      * Update the user's profile information.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
