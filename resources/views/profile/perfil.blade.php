@@ -41,7 +41,13 @@
                                             @for ($i = 0; $i < 6; $i++)
                                                 <li class="flex items-center text-orange font-semibold {{ $i >= 4 ? 'hidden peer-checked:flex' : '' }}">
                                                     <div class="w-8 h-8 flex items-center justify-center bg-orange text-white rounded-full text-lg">!</div>
-                                                    <span class="ml-3"> <!-- Aquí la tarea {{ $i + 1 }} --> </span>
+                                                    <span class="ml-3"> 
+                                                        @forelse($tareas as $tarea)
+                                                            <li>{{ $tarea->nombre }}</li>
+                                                        @empty
+                                                            <li>No tienes tareas asignadas.</li>
+                                                        @endforelse
+                                                    </span>
                                                 </li>
                                             @endfor
                                         </ul>
