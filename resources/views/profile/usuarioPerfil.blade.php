@@ -1,7 +1,7 @@
 <x-app-layout>
     <section class="bg-white overflow-hidden">
         <section class="relative bg-cover bg-center bg-fixed mb-16" style="background-image: url('../images/Group 58.png');">
-            @if(count($users) > 0)
+            @if(is_countable($users) && count($users) > 0)
                 @foreach ($users as $key => $user)
                     @if (Auth::user()->id == $user->id)
                         <!-- User Name Badge -->
@@ -13,7 +13,6 @@
                             </div>
                         </div>
 
-
                         <!-- Info and Tasks -->
                         <section class="pt-[7%]">
                             <div class="md:mx-[9%] sm:mx-[3%] p-6">
@@ -23,7 +22,7 @@
                                     <div class="bg-primary text-white rounded-xl shadow-lg p-8 sm:w-full md:w-[50%] h-auto">
                                         <h2 class="text-3xl font-bold mt-3 mb-12"> Usuario</h2>
 
-                                        <div class="space-y-4  text-base">
+                                        <div class="space-y-4 text-base">
                                             <p><strong>Nombre:</strong> <span class="float-right">{{ $user->name }}</span></p>
                                             <p><strong>Provincia:</strong> <span class="float-right">{{ $user->municipio }}</span></p>
                                             <p><strong>Teléfono:</strong> <span class="float-right">{{ $user->telefono }}</span></p>
@@ -38,18 +37,12 @@
                                         <h3 class="text-2xl text-primary font-bold text-center mb-6"> Tareas Pendientes</h3>
 
                                         <ul class="space-y-4">
-                                            @for ($i = 0; $i < 6; $i++)
+                                            @foreach ($tareas->take(6) as $i => $tarea)
                                                 <li class="flex items-center text-orange font-semibold {{ $i >= 4 ? 'hidden peer-checked:flex' : '' }}">
                                                     <div class="w-8 h-8 flex items-center justify-center bg-orange text-white rounded-full text-lg">!</div>
-                                                    <span class="ml-3"> 
-                                                        @forelse($tareas as $tarea)
-                                                            <li>{{ $tarea->nombre }}</li>
-                                                        @empty
-                                                            <li>No tienes tareas asignadas.</li>
-                                                        @endforelse
-                                                    </span>
+                                                    <span class="ml-3">{{ $tarea->nombre }}</span>
                                                 </li>
-                                            @endfor
+                                            @endforeach
                                         </ul>
 
                                         <!-- Toggle Button -->

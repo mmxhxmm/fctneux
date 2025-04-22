@@ -14,7 +14,7 @@ class UserController extends Controller
         $users = User::all();
 
         // Pass the users to the view
-        return view('profile/perfil', compact('users'));
+        return view('profile/usuarioPerfil', compact('users'));
     }
 
     public function active()

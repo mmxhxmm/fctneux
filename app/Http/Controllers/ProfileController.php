@@ -29,7 +29,7 @@ class ProfileController extends Controller
         $id = Auth::id();
         $tareas = Tarea::where('asignado', $id)->get();
 
-        return view('profile.perfil', compact('tareas'));
+        return view('profile.usuarioPerfil', compact('tareas'));
     }
 
     /**
