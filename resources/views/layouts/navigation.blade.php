@@ -43,7 +43,7 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.usuarioPerfil')">
+                        <x-dropdown-link :href="route('usuarioPerfil')">
                             <img src="{{ asset('images/icons/icons8-person-96.png') }}" alt="User Icon" width="20px" class="mr-2 invert brightness-0">
                             {{ __('Perfil') }}
                         </x-dropdown-link>

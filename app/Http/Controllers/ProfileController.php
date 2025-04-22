@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Tarea;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -29,7 +31,9 @@ class ProfileController extends Controller
         $id = Auth::id();
         $tareas = Tarea::where('asignado', $id)->get();
 
-        return view('profile.usuarioPerfil', compact('tareas'));
+        $users = User::all();
+
+        return view('profile.usuarioPerfil', compact('tareas', 'users'));
     }
 
     /**
