@@ -50,6 +50,7 @@
                             x-data="{
                                 open: false,
                                 selectedFilters: [
+                                    'provincia', 
                                     {{ request('modalidad') ? "'modalidad'," : '' }}
                                     {{ request('colaboracion') ? "'colaboracion'," : '' }}
                                     {{ request('ciclo') ? "'ciclo'," : '' }}
@@ -81,11 +82,12 @@
                                     <option value="ciclo" :disabled="selectedFilters.includes('ciclo')">Ciclo</option>
                                     <option value="plazas" :disabled="selectedFilters.includes('plazas')">Plazas</option>
                                     <option value="familia" :disabled="selectedFilters.includes('familia')">Familia</option>
+                                    <option value="provincia" :disabled="selectedFilters.includes('provincia')">Provincia</option>
                                 </select>
                             </div>
 
                             <!-- Selected Filters Form -->
-                            <form method="GET" action="{{ route('empresa.index_6') }}" class="flex flex-wrap ml-4 items-center gap-3">
+                            <form method="GET" action="{{ route('empresa.filtro') }}" class="flex flex-wrap ml-4 items-center gap-3">
 
                             <!-- Modalidad -->
                             <template x-if="selectedFilters.includes('modalidad') || '{{ request('modalidad') }}' !== ''">
@@ -142,8 +144,6 @@
                                 </div>
                             </template>
 
-
-
                             <!-- Familia -->
                             <template x-if="selectedFilters.includes('familia') || '{{ request('familia') }}' !== ''">
                                 <div class="relative inline-block">
@@ -157,75 +157,78 @@
                                 </div>
                             </template>
 
+                            <!-- Provincia -->
+                            <template x-if="selectedFilters.includes('provincia') || '{{ request('provincia') }}' !== ''">
+                                <div class="relative inline-block">
+                                    <select name="provincia" onchange="this.form.submit()" class="w-[160px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
+                                        <option value="" class="bg-stone-700 text-white">Provincia</option>
+                                            @php
+                                                $provincias = [
+                                                    'alava' => 'Álava',
+                                                    'albacete' => 'Albacete',
+                                                    'alicante' => 'Alicante',
+                                                    'almeria' => 'Almería',
+                                                    'asturias' => 'Asturias',
+                                                    'avila' => 'Ávila',
+                                                    'badajoz' => 'Badajoz',
+                                                    'barcelona' => 'Barcelona',
+                                                    'burgos' => 'Burgos',
+                                                    'caceres' => 'Cáceres',
+                                                    'cadiz' => 'Cádiz',
+                                                    'cantabria' => 'Cantabria',
+                                                    'castellon' => 'Castellón',
+                                                    'ceuta' => 'Ceuta',
+                                                    'cordoba' => 'Córdoba',
+                                                    'cuenca' => 'Cuenca',
+                                                    'girona' => 'Girona',
+                                                    'granada' => 'Granada',
+                                                    'guadalajara' => 'Guadalajara',
+                                                    'huelva' => 'Huelva',
+                                                    'huesca' => 'Huesca',
+                                                    'jaen' => 'Jaén',
+                                                    'la-coruna' => 'La Coruña',
+                                                    'la-rioja' => 'La Rioja',
+                                                    'las-palmas' => 'Las Palmas',
+                                                    'leon' => 'León',
+                                                    'lleida' => 'Lleida',
+                                                    'lugo' => 'Lugo',
+                                                    'madrid' => 'Madrid',
+                                                    'malaga' => 'Málaga',
+                                                    'melilla' => 'Melilla',
+                                                    'murcia' => 'Murcia',
+                                                    'navarra' => 'Navarra',
+                                                    'orense' => 'Ourense',
+                                                    'palencia' => 'Palencia',
+                                                    'pontevedra' => 'Pontevedra',
+                                                    'salamanca' => 'Salamanca',
+                                                    'segovia' => 'Segovia',
+                                                    'sevilla' => 'Sevilla',
+                                                    'soria' => 'Soria',
+                                                    'tarragona' => 'Tarragona',
+                                                    'teruel' => 'Teruel',
+                                                    'toledo' => 'Toledo',
+                                                    'valencia' => 'Valencia',
+                                                    'valladolid' => 'Valladolid',
+                                                    'vizcaya' => 'Vizcaya',
+                                                    'zamora' => 'Zamora',
+                                                    'zaragoza' => 'Zaragoza'
+                                                ];
+                                            @endphp
+
+                                            @foreach ($provincias as $value => $label)
+                                                <option value="{{ $value }}" {{ request('provincia') == $value ? 'selected' : '' }}>
+                                                    {{ $label }}
+                                                </option>
+                                            @endforeach
+                                    </select>
+                                    <button type="button" @click="toggleFilter('provincia')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-lg hover:bg-red-700 transition">&times;</button>
+                                </div>
+                            </template>
+
+
                             </form>
                         </div>
                     </div>
-
-
-                    <form method="GET" action="{{ route('empresa.provincias_filtro') }}">
-                        <select name="provincia" onchange="this.form.submit()"
-                            class="bg-black_transp rounded-[100px] border-2 border-white w-[200px] h-[40px] flex items-center pl-4 pr-2 text-white font-roboto text-base font-medium">
-                            <option value="">Todos</option>
-                            @php
-                                $provincias = [
-                                    'alava' => 'Álava',
-                                    'albacete' => 'Albacete',
-                                    'alicante' => 'Alicante',
-                                    'almeria' => 'Almería',
-                                    'asturias' => 'Asturias',
-                                    'avila' => 'Ávila',
-                                    'badajoz' => 'Badajoz',
-                                    'barcelona' => 'Barcelona',
-                                    'burgos' => 'Burgos',
-                                    'caceres' => 'Cáceres',
-                                    'cadiz' => 'Cádiz',
-                                    'cantabria' => 'Cantabria',
-                                    'castellon' => 'Castellón',
-                                    'ceuta' => 'Ceuta',
-                                    'cordoba' => 'Córdoba',
-                                    'cuenca' => 'Cuenca',
-                                    'girona' => 'Girona',
-                                    'granada' => 'Granada',
-                                    'guadalajara' => 'Guadalajara',
-                                    'huelva' => 'Huelva',
-                                    'huesca' => 'Huesca',
-                                    'jaen' => 'Jaén',
-                                    'la-coruna' => 'La Coruña',
-                                    'la-rioja' => 'La Rioja',
-                                    'las-palmas' => 'Las Palmas',
-                                    'leon' => 'León',
-                                    'lleida' => 'Lleida',
-                                    'lugo' => 'Lugo',
-                                    'madrid' => 'Madrid',
-                                    'malaga' => 'Málaga',
-                                    'melilla' => 'Melilla',
-                                    'murcia' => 'Murcia',
-                                    'navarra' => 'Navarra',
-                                    'orense' => 'Ourense',
-                                    'palencia' => 'Palencia',
-                                    'pontevedra' => 'Pontevedra',
-                                    'salamanca' => 'Salamanca',
-                                    'segovia' => 'Segovia',
-                                    'sevilla' => 'Sevilla',
-                                    'soria' => 'Soria',
-                                    'tarragona' => 'Tarragona',
-                                    'teruel' => 'Teruel',
-                                    'toledo' => 'Toledo',
-                                    'valencia' => 'Valencia',
-                                    'valladolid' => 'Valladolid',
-                                    'vizcaya' => 'Vizcaya',
-                                    'zamora' => 'Zamora',
-                                    'zaragoza' => 'Zaragoza'
-                                ];
-                            @endphp
-
-                            @foreach ($provincias as $value => $label)
-                                <option value="{{ $value }}" {{ request('provincia') == $value ? 'selected' : '' }}>
-                                    {{ $label }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </form>
 
 
                     <form action="{{ route('empresa-index-3') }}" method="GET" class="relative">

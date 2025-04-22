@@ -70,42 +70,80 @@ class EmpresaController extends Controller
         return view('pages.empresa-index', compact('empresas', 'modalidades', 'colaboraciones', 'ciclos', 'plazas','familias'));
     }
 
-    // Overall functon for getting all filters and stuff in one
-    public function index_6(Request $request)
-    {
-        $query = Empresa::with('practica');
+    public function filtro(Request $request)
+{
+    $query = Empresa::with('practica');
 
-        if ($request->filled('modalidad')) {
-            $query->where('modalidad', $request->modalidad);
-        }
-    
-        if ($request->filled('colaboracion')) {
-            $query->where('colaboracion', $request->colaboracion);
-        }
-    
-        if ($request->filled('ciclo')) {
-            $query->whereHas('practica', fn ($q) => $q->where('cicloFormativo', $request->ciclo));
-        }
-    
-        if ($request->filled('plazas')) {
-            $query->whereHas('practica', fn ($q) => $q->where('numPlazasAsignadas', $request->plazas));
-        }
-        
-        if ($request->filled('familias')) {
-            $query->whereHas('familias', fn ($q) => $q->where('familiaPersonal', $request->familias));
-        }
-        $empresas = $query->get();
-    
-        $modalidades = Empresa::select('modalidad')->distinct()->pluck('modalidad')->mapWithKeys(fn($i) => [$i => ucfirst($i)]);
-        $colaboraciones = Empresa::select('colaboracion')->distinct()->pluck('colaboracion')->mapWithKeys(fn($i) => [$i => ucfirst($i)]);
-        $ciclos = Practica::select('cicloFormativo')->distinct()->pluck('cicloFormativo')->mapWithKeys(fn($i) => [$i => $i]);
-        $plazas = Practica::select('numPlazasAsignadas')->distinct()->pluck('numPlazasAsignadas')->sort()->mapWithKeys(fn($i) => [$i => $i]);
-        $familias = Empresa::select('familiaPersonal')->distinct()->pluck('familiaPersonal')->mapWithKeys(fn($i) => [$i => ucfirst($i)]);
-        
-        return view('pages.empresa-index', compact('empresas', 'modalidades', 'colaboraciones', 'ciclos', 'plazas','familias'));
-    
+    // 🔍 Search text
+    if ($request->filled('search')) {
+        $search = $request->search;
+        $query->where(function ($q) use ($search) {
+            $q->where('nombre', 'like', "%$search%")
+              ->orWhere('colaboracion', 'like', "%$search%")
+              ->orWhere('modalidad', 'like', "%$search%")
+              ->orWhere('ofertaLaboral', 'like', "%$search%")
+              ->orWhere('municipio', 'like', "%$search%")
+              ->orWhere('familiaPersonal', 'like', "%$search%")
+              ->orWhereHas('practica', fn($sub) => $sub->where('cicloFormativo', 'like', "%$search%"));
+        });
     }
-    
+
+    if ($request->filled('modalidad')) {
+        $query->where('modalidad', $request->modalidad);
+    }
+
+    if ($request->filled('colaboracion')) {
+        $query->where('colaboracion', $request->colaboracion);
+    }
+
+    if ($request->filled('familia')) {
+        $query->where('familiaPersonal', $request->familia);
+    }
+
+    if ($request->filled('provincia')) {
+        $query->where('provincia', $request->provincia);
+    }
+
+    if ($request->filled('ciclo')) {
+        $query->whereHas('practica', fn($q) => $q->where('cicloFormativo', $request->ciclo));
+    }
+
+    if ($request->filled('plazas')) {
+        $query->whereHas('practica', fn($q) => $q->where('numPlazasAsignadas', $request->plazas));
+    }
+
+    $empresas = $query->get();
+
+    $modalidades = Empresa::select('modalidad')->distinct()->pluck('modalidad')->filter()->mapWithKeys(fn($i) => [$i => ucfirst($i)]);
+    $colaboraciones = Empresa::select('colaboracion')->distinct()->pluck('colaboracion')->filter()->mapWithKeys(fn($i) => [$i => match ($i) {
+        'prospeccion' => 'Prospección',
+        'colaboracion' => 'Colaboración',
+        'inactiva' => 'Inactiva',
+        default => ucfirst($i),
+    }]);
+    $familias = Empresa::select('familiaPersonal')->distinct()->pluck('familiaPersonal')->filter()->mapWithKeys(fn($i) => [$i => match (strtolower($i)) {
+        'sanidad' => 'Sanidad',
+        'informatica' => 'Informática',
+        'hosteleria' => 'Hostelería',
+        'marketing' => 'Marketing',
+        default => ucfirst($i),
+    }]);
+    $provincia = Empresa::select('provincia')->distinct()->pluck('provincia')->filter()->mapWithKeys(fn($i) => [$i => ucfirst($i)]);
+    $ciclos = Practica::select('cicloFormativo')->distinct()->pluck('cicloFormativo')->filter()->mapWithKeys(fn($i) => [$i => $i]);
+    $plazas = Practica::select('numPlazasAsignadas')->distinct()->pluck('numPlazasAsignadas')->sort()->mapWithKeys(fn($i) => [$i => $i]);
+
+    return view('pages.empresa-index', compact(
+        'empresas',
+        'modalidades',
+        'colaboraciones',
+        'familias',
+        'provincia',
+        'ciclos',
+        'plazas'
+    ));
+}
+
+
     // function to connect id of empresas to show specific empresa's detail
     public function index_2(Request $request)
     {
@@ -119,343 +157,6 @@ class EmpresaController extends Controller
         return view('pages/empresa-detail-view', [
             'page' => 'detail/detail-main',
         ],  compact('empresas' , 'id') );
-    }
-
-    // modalidad filter (into combined filtro)
-    public function modalidad_filtro(Request $request)
-    {
-        $query = Empresa::query();
-
-        if ($request->filled('modalidad')) {
-            $query->where('modalidad', $request->modalidad);
-        }
-
-        $empresas = $query->get();
-
-        // Get distinct modalidades
-        $modalidadesRaw = Empresa::select('modalidad')->distinct()->pluck('modalidad')->toArray();
-
-        $modalidades = collect($modalidadesRaw)->mapWithKeys(function ($item) {
-            $formatted = match ($item) {
-                'presencial' => 'Presencial',
-                'remoto' => 'Remoto',
-                'semipresencial' => 'Semipresencial',
-                default => ucfirst($item)
-            };
-            return [$item => $formatted];
-        });
-
-        // También recogemos colaboraciones para que el filtro esté siempre disponible
-        $colaboracionRaw = Empresa::select('colaboracion')->distinct()->pluck('colaboracion')->toArray();
-
-        $colaboraciones = collect($colaboracionRaw)->mapWithKeys(function ($item) {
-            $formatted = match ($item) {
-                'prospeccion' => 'Prospección',
-                'colaboracion' => 'Colaboración',
-                'inactiva' => 'Inactiva',
-                default => ucfirst($item)
-            };
-            return [$item => $formatted];
-        });
-        $ciclosRaw = Practica::select('cicloFormativo')->distinct()->pluck('cicloFormativo')->toArray();
-
-        $ciclos = collect($ciclosRaw)->mapWithKeys(function ($item) {
-            return [$item => $item];
-        });
-
-        $plazasRaw = Practica::select('numPlazasAsignadas')->distinct()->pluck('numPlazasAsignadas')->sort()->toArray();
-        $plazas = collect($plazasRaw)->mapWithKeys(fn($item) => [$item => $item]);
-
-        $familiaRaw = Empresa::select('familiaPersonal')->distinct()->pluck('familiaPersonal')->toArray();
-
-        $familias = collect($familiaRaw)->mapWithKeys(function ($item) {
-            $formatted = match ($item) {
-                'sanidad' => 'Sanidad',
-                'informatica' => 'Informática',
-                'hosteleria' => 'Hostelería',
-                'marketing' => 'Marketing',
-                default => ucfirst($item)
-            };
-            return [$item => $formatted];
-        });
-
-        return view('pages.empresa-index', compact('empresas', 'modalidades', 'colaboraciones', 'ciclos', 'plazas', 'familias'));
-    }
-
-    // colaboracion filter (into combined filtro)
-    public function colaboracion_filtro(Request $request)
-    {
-        $query = Empresa::query();
-
-        if ($request->filled('colaboracion')) {
-            $query->where('colaboracion', $request->colaboracion);
-        }
-
-        $empresas = $query->get();
-
-        // Get distinct colaboracion values and format them
-        $colaboracionRaw = Empresa::select('colaboracion')->distinct()->pluck('colaboracion')->toArray();
-
-        $colaboraciones = collect($colaboracionRaw)->mapWithKeys(function ($item) {
-            $formatted = match ($item) {
-                'prospeccion' => 'Prospección',
-                'colaboracion' => 'Colaboración',
-                'inactiva' => 'Inactiva',
-                default => ucfirst($item)
-            };
-            return [$item => $formatted];
-        });
-
-        // Also grab modalidades for consistency
-        $modalidadesRaw = Empresa::select('modalidad')->distinct()->pluck('modalidad')->toArray();
-        $modalidades = collect($modalidadesRaw)->mapWithKeys(function ($item) {
-            $formatted = match ($item) {
-                'presencial' => 'Presencial',
-                'remoto' => 'Remoto',
-                'semipresencial' => 'Semipresencial',
-                default => ucfirst($item)
-            };
-            return [$item => $formatted];
-        });
-        
-        $ciclosRaw = Practica::select('cicloFormativo')->distinct()->pluck('cicloFormativo')->toArray();
-
-        $ciclos = collect($ciclosRaw)->mapWithKeys(function ($item) {
-            return [$item => $item];
-        });
-
-        $plazasRaw = Practica::select('numPlazasAsignadas')->distinct()->pluck('numPlazasAsignadas')->sort()->toArray();
-        $plazas = collect($plazasRaw)->mapWithKeys(fn($item) => [$item => $item]);
-
-        $familiaRaw = Empresa::select('familiaPersonal')->distinct()->pluck('familiaPersonal')->toArray();
-
-        $familias = collect($familiaRaw)->mapWithKeys(function ($item) {
-            $formatted = match ($item) {
-                'sanidad' => 'Sanidad',
-                'informatica' => 'Informática',
-                'hosteleria' => 'Hostelería',
-                'marketing' => 'Marketing',
-                default => ucfirst($item)
-            };
-            return [$item => $formatted];
-        });
-
-        return view('pages.empresa-index', compact('empresas', 'colaboraciones', 'modalidades', 'ciclos', 'plazas', 'familias'));
-    }
-
-    // ciclo filter (into combined filtro)
-    public function ciclo_filtro(Request $request)
-    {
-        // Filtrar empresas según ciclo formativo
-        $query = Empresa::with('practica');
-
-        if ($request->filled('ciclo')) {
-            $query->whereHas('practica', function ($q) use ($request) {
-                $q->where('cicloFormativo', $request->ciclo);
-            });
-        }
-
-        $empresas = $query->get();
-
-        $colaboracionRaw = Empresa::select('colaboracion')->distinct()->pluck('colaboracion')->toArray();
-
-        $colaboraciones = collect($colaboracionRaw)->mapWithKeys(function ($item) {
-            $formatted = match ($item) {
-                'prospeccion' => 'Prospección',
-                'colaboracion' => 'Colaboración',
-                'inactiva' => 'Inactiva',
-                default => ucfirst($item)
-            };
-            return [$item => $formatted];
-        });
-
-        // Also grab modalidades for consistency
-        $modalidadesRaw = Empresa::select('modalidad')->distinct()->pluck('modalidad')->toArray();
-        $modalidades = collect($modalidadesRaw)->mapWithKeys(function ($item) {
-            $formatted = match ($item) {
-                'presencial' => 'Presencial',
-                'remoto' => 'Remoto',
-                'semipresencial' => 'Semipresencial',
-                default => ucfirst($item)
-            };
-            return [$item => $formatted];
-        });
-        
-
-        // Obtener todos los ciclos únicos desde la relación practica
-        $ciclosRaw = Practica::select('cicloFormativo')->distinct()->pluck('cicloFormativo')->toArray();
-
-        $ciclos = collect($ciclosRaw)->mapWithKeys(function ($item) {
-            return [$item => $item];
-        });
-        
-        $plazasRaw = Practica::select('numPlazasAsignadas')->distinct()->pluck('numPlazasAsignadas')->sort()->toArray();
-        $plazas = collect($plazasRaw)->mapWithKeys(fn($item) => [$item => $item]);
-
-        $familiaRaw = Empresa::select('familiaPersonal')->distinct()->pluck('familiaPersonal')->toArray();
-
-        $familias = collect($familiaRaw)->mapWithKeys(function ($item) {
-            $formatted = match ($item) {
-                'sanidad' => 'Sanidad',
-                'informatica' => 'Informática',
-                'hosteleria' => 'Hostelería',
-                'marketing' => 'Marketing',
-                default => ucfirst($item)
-            };
-            return [$item => $formatted];
-        });
-
-        return view('pages.empresa-index', compact('empresas', 'ciclos','modalidades','colaboraciones', 'plazas', 'familias'));
-    }
-
-    // plazas filter (into combined filtro)
-    public function plazas_filtro(Request $request)
-    {
-        $query = Empresa::with('practica');
-
-        if ($request->filled('plazas')) {
-            switch ($request->plazas) {
-                case 'lt5':
-                    $query->where('num_plazas', '<', 5);
-                    break;
-                case 'gt5':
-                    $query->where('num_plazas', '>', 5);
-                    break;
-                case 'gt10':
-                    $query->where('num_plazas', '>', 10);
-                    break;
-                default:
-                    $query->where('num_plazas', $request->plazas);
-                    break;
-            }
-        }
-        
-
-        $empresas = $query->get();
-        
-        $colaboracionRaw = Empresa::select('colaboracion')->distinct()->pluck('colaboracion')->toArray();
-
-        $colaboraciones = collect($colaboracionRaw)->mapWithKeys(function ($item) {
-            $formatted = match ($item) {
-                'prospeccion' => 'Prospección',
-                'colaboracion' => 'Colaboración',
-                'inactiva' => 'Inactiva',
-                default => ucfirst($item)
-            };
-            return [$item => $formatted];
-        });
-
-        // Also grab modalidades for consistency
-        $modalidadesRaw = Empresa::select('modalidad')->distinct()->pluck('modalidad')->toArray();
-        $modalidades = collect($modalidadesRaw)->mapWithKeys(function ($item) {
-            $formatted = match ($item) {
-                'presencial' => 'Presencial',
-                'remoto' => 'Remoto',
-                'semipresencial' => 'Semipresencial',
-                default => ucfirst($item)
-            };
-            return [$item => $formatted];
-        });
-        
-
-        // Obtener todos los ciclos únicos desde la relación practica
-        $ciclosRaw = Practica::select('cicloFormativo')->distinct()->pluck('cicloFormativo')->toArray();
-
-        $ciclos = collect($ciclosRaw)->mapWithKeys(function ($item) {
-            return [$item => $item];
-        });
-        
-        // Obtener valores únicos de plazas
-        $plazasRaw = Practica::select('numPlazasAsignadas')->distinct()->pluck('numPlazasAsignadas')->sort()->toArray();
-        $plazas = collect($plazasRaw)->mapWithKeys(fn($item) => [$item => $item]);
-
-        $familiaRaw = Empresa::select('familiaPersonal')->distinct()->pluck('familiaPersonal')->toArray();
-
-        $familias = collect($familiaRaw)->mapWithKeys(function ($item) {
-            $formatted = match ($item) {
-                'sanidad' => 'Sanidad',
-                'informatica' => 'Informática',
-                'hosteleria' => 'Hostelería',
-                'marketing' => 'Marketing',
-                default => ucfirst($item)
-            };
-            return [$item => $formatted];
-        });
-
-        
-
-
-        return view('pages.empresa-index', compact('empresas', 'plazas', 'modalidades', 'colaboraciones', 'ciclos','familias'));
-    }
-
-    // familia filter (into combined filtro)
-    public function familia_filtro(Request $request)
-    {
-        $query = Empresa::query();
-
-        if ($request->filled('familia')) {
-            $query->where('familiaPersonal', $request->familia);
-        }
-
-        $empresas = $query->get();
-
-        // Familia Personal
-        $familiaRaw = Empresa::select('familiaPersonal')->distinct()->pluck('familiaPersonal')->toArray();
-
-        $familias = collect($familiaRaw)->mapWithKeys(function ($item) {
-            $formatted = match (strtolower($item)) {
-                'sanidad' => 'Sanidad',
-                'informatica' => 'Informática',
-                'hosteleria' => 'Hostelería',
-                'marketing' => 'Marketing',
-                default => ucfirst($item)
-            };
-            return [$formatted => $formatted]; 
-        });
-
-        $colaboracionRaw = Empresa::select('colaboracion')->distinct()->pluck('colaboracion')->toArray();   
-
-        $colaboraciones = collect($colaboracionRaw)->mapWithKeys(function ($item) {
-            $formatted = match ($item) {
-                'prospeccion' => 'Prospección',
-                'colaboracion' => 'Colaboración',
-                'inactiva' => 'Inactiva',
-                default => ucfirst($item)
-            };
-            return [$item => $formatted];
-        });
-
-        // Also grab modalidades for consistency
-        $modalidadesRaw = Empresa::select('modalidad')->distinct()->pluck('modalidad')->toArray();
-        $modalidades = collect($modalidadesRaw)->mapWithKeys(function ($item) {
-            $formatted = match ($item) {
-                'presencial' => 'Presencial',
-                'remoto' => 'Remoto',
-                'semipresencial' => 'Semipresencial',
-                default => ucfirst($item)
-            };
-            return [$item => $formatted];
-        });
-        
-
-        // Obtener todos los ciclos únicos desde la relación practica
-        $ciclosRaw = Practica::select('cicloFormativo')->distinct()->pluck('cicloFormativo')->toArray();
-
-        $ciclos = collect($ciclosRaw)->mapWithKeys(function ($item) {
-            return [$item => $item];
-        });
-        
-        // Obtener valores únicos de plazas
-        $plazasRaw = Practica::select('numPlazasAsignadas')->distinct()->pluck('numPlazasAsignadas')->sort()->toArray();
-        $plazas = collect($plazasRaw)->mapWithKeys(fn($item) => [$item => $item]);
-
-        return view('pages.empresa-index', compact(
-            'familias',
-            'colaboraciones',
-            'modalidades',
-            'ciclos',
-            'plazas'
-        ));
     }
 
     // search purpose 
@@ -536,80 +237,6 @@ class EmpresaController extends Controller
         'modalidades',
         'ciclos',
         'plazas'));
-    }
-
-    // provincias filtro
-    public function provincias_filtro(Request $request)
-    {
-        $query = $request->input('search');
-        $provincia = $request->input('provincia');
-
-        $empresas = Empresa::query()
-            ->when($query, function ($q) use ($query) {
-                $q->where('nombre', 'like', '%' . $query . '%')
-                    ->orWhere('colaboracion', 'like', '%' . $query . '%')
-                    ->orWhere('modalidad', 'like', '%' . $query . '%')
-                    ->orWhere('ofertaLaboral', 'like', '%' . $query . '%')
-                    ->orWhere('municipio', 'like', '%' . $query . '%')
-                    ->orWhere('familiaPersonal', 'like', '%' . $query . '%')
-                    ->orWhereHas('practica', function ($subQuery) use ($query) {
-                        $subQuery->where('cicloFormativo', 'like', '%' . $query . '%');
-                    });
-            })
-            ->when($provincia, function ($q) use ($provincia) {
-                $q->where('provincia', $provincia);
-            })
-            ->get();
-            $familiaRaw = Empresa::select('familiaPersonal')->distinct()->pluck('familiaPersonal')->toArray();
-
-            $familias = collect($familiaRaw)->mapWithKeys(function ($item) {
-                $formatted = match (strtolower($item)) {
-                    'sanidad' => 'Sanidad',
-                    'informatica' => 'Informática',
-                    'hosteleria' => 'Hostelería',
-                    'marketing' => 'Marketing',
-                    default => ucfirst($item)
-                };
-                return [$formatted => $formatted]; 
-            });
-    
-            $colaboracionRaw = Empresa::select('colaboracion')->distinct()->pluck('colaboracion')->toArray();   
-    
-            $colaboraciones = collect($colaboracionRaw)->mapWithKeys(function ($item) {
-                $formatted = match ($item) {
-                    'prospeccion' => 'Prospección',
-                    'colaboracion' => 'Colaboración',
-                    'inactiva' => 'Inactiva',
-                    default => ucfirst($item)
-                };
-                return [$item => $formatted];
-            });
-    
-            // Also grab modalidades for consistency
-            $modalidadesRaw = Empresa::select('modalidad')->distinct()->pluck('modalidad')->toArray();
-            $modalidades = collect($modalidadesRaw)->mapWithKeys(function ($item) {
-                $formatted = match ($item) {
-                    'presencial' => 'Presencial',
-                    'remoto' => 'Remoto',
-                    'semipresencial' => 'Semipresencial',
-                    default => ucfirst($item)
-                };
-                return [$item => $formatted];
-            });
-            
-    
-            // Obtener todos los ciclos únicos desde la relación practica
-            $ciclosRaw = Practica::select('cicloFormativo')->distinct()->pluck('cicloFormativo')->toArray();
-    
-            $ciclos = collect($ciclosRaw)->mapWithKeys(function ($item) {
-                return [$item => $item];
-            });
-            
-            // Obtener valores únicos de plazas
-            $plazasRaw = Practica::select('numPlazasAsignadas')->distinct()->pluck('numPlazasAsignadas')->sort()->toArray();
-            $plazas = collect($plazasRaw)->mapWithKeys(fn($item) => [$item => $item]);
-
-        return view('pages.empresa-index', compact('empresas', 'plazas', 'modalidades', 'colaboraciones', 'ciclos','familias'));
     }
         
 
