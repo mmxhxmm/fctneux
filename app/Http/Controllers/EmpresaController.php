@@ -805,8 +805,8 @@ class EmpresaController extends Controller
         $validator = Validator::make($request->all(), [
             'direccion' => 'nullable|string|max:255',
             'codigoPostal' => 'nullable|string|digits:5',
-            'comunidad' => 'required|string|max:255',
-            'provincia' => 'required|string|max:255',
+            'comunidad' => 'nullable|string|max:255',
+            'provincia' => 'nullable|string|max:255',
             'municipio' => 'nullable|string|max:255',
         ]);
 
@@ -868,6 +868,7 @@ class EmpresaController extends Controller
 
         // Practica
         $validator = Validator::make($request->all(), [
+            'numPlazasAsignadas' => 'nullable|integer',
             'cicloFormativo' => 'nullable|string|max:255',
             'cursoAcademico' => 'nullable|string|max:255',
             'periodoFrom' => 'nullable|date',
@@ -909,6 +910,7 @@ class EmpresaController extends Controller
         $practica->cursoAcademico = $request->cursoAcademico;
         $practica->numPlazasAsignadas = $request->numPlazasAsignadas;
         $practica->periodoFrom = $request->periodoFrom;
+        $practica->periodoTo = $request->periodoFrom;
         $practica->horarioFrom = $request->horarioFrom;
         $practica->horarioTo = $request->horarioTo;
         $practica->convenioMarco = $request->convenioMarco;

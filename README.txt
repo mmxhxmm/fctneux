@@ -54,5 +54,8 @@ foreach ($array as $p) {
     \Log::info("API Response: " . $p->DMUN50);
 }
 
-Add to visulaize data (to lowercase and first letter uppercase) ->
+// Add to visulaize data (to lowercase and first letter uppercase) ->
 ucwords(mb_strtolower())
+
+// Parse date
+\Carbon\Carbon::parse($date)->format('d-m-Y');

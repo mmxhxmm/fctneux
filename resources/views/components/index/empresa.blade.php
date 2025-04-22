@@ -20,14 +20,14 @@
     <div class="space-y-3 text-[15px] text-gray-800 font-roboto leading-relaxed">
         <p><span class="text-blue font-semibold">Nombre:</span> {{ $empresa->nombre }}</p>
         <p><span class="text-blue font-semibold">CIF:</span> {{ $empresa->cif }}</p>
-        <p><span class="text-blue font-semibold">Gestiones:</span> {{ $empresa->gestiones }}</p>
-        <p><span class="text-blue font-semibold">Modalidad:</span> {{ $empresa->modalidad }}</p>
-        <p><span class="text-blue font-semibold">Familia Personal:</span> {{ $empresa->familiaPersonal }}</p>
+        <p><span class="text-blue font-semibold">Gestiones:</span> {{ $empresa->gestionesToString($empresa->gestiones) }}</p>
+        <p><span class="text-blue font-semibold">Modalidad:</span> {{ ucwords(mb_strtolower($empresa->modalidad)) }}</p>
+        <p><span class="text-blue font-semibold">Familia Personal:</span> {{ ucwords(mb_strtolower($empresa->familiaPersonal)) }}</p>
         <p><span class="text-blue font-semibold">Provincia:</span> {{ $empresa->provinciaToString($empresa->provincia) }}</p>
 
         @foreach ($empresa->practica as $practica)
             <div class="flex justify-between items-center text-sm text-gray-700">
-                <span><span class="text-blue font-semibold">Ciclo:</span> {{ ucwords(mb_strtolower($practica->cicloFormativo)) }}</span>
+                <span><span class="text-blue font-semibold">Ciclo:</span> {{ $empresa->cicloFormativoToString($practica->cicloFormativo) }}</span>
                 <span class="text-gray-500">({{ $practica->numPlazasAsignadas }} plazas)</span>
             </div>
         @endforeach
