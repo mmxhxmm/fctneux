@@ -83,6 +83,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/tareas-historial', function () {
         return view('pages/tareas-historial');
     })->name('tareas-historial');
+    Route::get('/tareas-store', [TareaController::class, 'store'])->name('tareas-store');
+    // Route::put('/tareas-store/{id}', [TareaController::class, 'store'])->name('tareas-store');
     Route::patch('/tareas/{id}/done', [TareaController::class, 'markAsDone'])->name('tarea.markAsDone');
     Route::get('/tareas-form', function () {
         return view('form-datos-tareas');

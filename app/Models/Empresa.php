@@ -113,7 +113,6 @@ class Empresa extends Model
     }
     
 
-    // Accessors
     public function colaboracionToString($value) {
         switch ($value) {
             case 'prospeccion':

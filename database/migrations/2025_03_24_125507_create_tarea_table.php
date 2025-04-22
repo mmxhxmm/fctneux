@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tareas', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('asignado');
+            $table->string('nombre')->nullable();
+            $table->string('asignado')->nullable();
             $table->enum('estado', ['to_do', 'in_progress', 'revision', 'blocked', 'done'])->default('to_do');
             $table->text('descripcion')->nullable();
             $table->date('fecha_limite')->nullable();

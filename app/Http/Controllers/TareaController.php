@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Tarea;
+use App\Models\User;
 
 class TareaController extends Controller
 {
     public function index()
     {
-        $tareas = Tarea::all();
+        $tareas = Tarea::all()->reverse();
 
         // Get unique "asignado" values
         $asignadoRaw = Tarea::select('asignado')->distinct()->pluck('asignado')->filter()->toArray();
@@ -36,11 +38,48 @@ class TareaController extends Controller
         return view('pages/tareas-index', compact('tareas', 'asignados', 'estados', 'fechas_limite', 'empresas'));
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        $tareas = Tarea::all();
-        return view('pages/tareas-index');
+        $validator = Validator::make($request->all(), [
+            'nombre' => 'nullable|string|max:255',
+            'asignado' => 'nullable|string|max:255',
+            'estado' => 'nullable|string|max:255',
+            'fecha_limite' => 'nullable|date',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $asignadoArray = explode(',', $request->asignado);
+        $asignadosSelected = '';
+
+        foreach ($asignadoArray as $asignadoID) {
+            \Log::info($asignadoID);
+
+            if (User::where('id', $asignadoID)->exists()) {
+                $user = User::find($asignadoID);
+                \Log::info($user);
+
+                $asignadosSelected .= $user->name;
+
+                $asignadosSelected .= ', ';
+            }
+        }
+        $asignadosSelected = substr_replace($asignadosSelected, '', -2);
+
+        $tarea = new Tarea;
+        $tarea->nombre = $request->nombre;
+        $tarea->asignado = $asignadosSelected;
+        $tarea->estado = $request->estado;
+        $tarea->descripcion = $request->descripcion;
+        $tarea->fecha_limite = $request->fecha_limite;
+        $tarea->empresa_id = 1; // TODO needs multiselect value
+        $tarea->save();
+
+        return redirect()->back()->with('success', 'Tarea añadido correctamente');
     }
+
     public function markAsDone(Request $request, $id)
     {
         $tarea = Tarea::findOrFail($id);
@@ -113,7 +152,4 @@ class TareaController extends Controller
     
         return view('pages/tareas-index', compact('tareas', 'asignados', 'estados', 'fechas_limite', 'empresas'));
     }
-    
-
-
 }
