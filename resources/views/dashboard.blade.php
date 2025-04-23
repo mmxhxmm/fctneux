@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="w-full flex flex-col grid-rows-3 bg-white h-[calc(100vh-50px)]">
+    <div class="w-full flex flex-col grid-rows-3 bg-white">
         <!-- Background Image Section -->
         <div class="relative h-[250px] flex-grow-0 flex-shrink-0" style="background-image: url('../images/fct-bg.png'); background-size: cover; background-position: center;">
             <!-- Opacity overlay -->
@@ -16,7 +16,7 @@
         </div>
 
         <!-- Buttons Section -->
-        <div class="w-full relative mt-12 mb-14 sm:h-[18em] flex flex-col sm:flex-row items-start justify-center">
+        <div class="w-full relative my-14 sm:h-[18em] flex flex-col sm:flex-row items-start justify-center">
             <!-- First Button (Acceso a Plataforma) -->
             <div class="relative w-full h-[15em] sm:h-full animate-left">
                 <a href="{{ route('empresa-index') }}">
