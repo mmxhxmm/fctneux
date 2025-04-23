@@ -16,7 +16,7 @@
         </div>
 
         <!-- Buttons Section -->
-        <div class="w-full relative mt-12 mb-14 sm:h-[18em] flex flex-col sm:flex-row items-start justify-center">
+        <div class="w-full relative my-14 sm:h-[18em] flex flex-col sm:flex-row items-start justify-center">
             <!-- First Button (Acceso a Plataforma) -->
             <div class="relative w-full h-[15em] sm:h-full animate-left">
                 <a href="{{ route('empresa-index') }}">
