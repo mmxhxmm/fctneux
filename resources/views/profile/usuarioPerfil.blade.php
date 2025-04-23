@@ -37,12 +37,18 @@
                                         <h3 class="text-2xl text-primary font-bold text-center mb-6"> Tareas Pendientes</h3>
 
                                         <ul class="space-y-4">
+                                        @if(is_countable($tareas) && count($tareas) > 0)
                                             @foreach ($tareas->take(6) as $i => $tarea)
                                                 <li class="flex items-center text-orange font-semibold {{ $i >= 4 ? 'hidden peer-checked:flex' : '' }}">
                                                     <div class="w-8 h-8 flex items-center justify-center bg-orange text-white rounded-full text-lg">!</div>
                                                     <span class="ml-3">{{ $tarea->nombre }}</span>
+                                                    <span>{{ $tarea->fecha_limite }}</span>
+                                                    <span>{{ $tarea->descripcion }}</span>
                                                 </li>
                                             @endforeach
+                                        @else
+                                            <li class="text-center text-gray-600">No hay tareas pendientes.</li>
+                                        @endif
                                         </ul>
 
                                         <!-- Toggle Button -->

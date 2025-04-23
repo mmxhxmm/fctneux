@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="w-full flex flex-col grid-rows-3 bg-white h-[calc(100vh-50px)]">
+    <div class="w-full flex flex-col grid-rows-3 bg-white">
         <!-- Background Image Section -->
         <div class="relative h-[250px] flex-grow-0 flex-shrink-0" style="background-image: url('../images/fct-bg.png'); background-size: cover; background-position: center;">
             <!-- Opacity overlay -->
