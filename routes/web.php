@@ -78,13 +78,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/empresa-index', [EmpresaController::class, 'index'])->name('empresa-index');
     Route::get('/empresa-detail', [EmpresaController::class, 'index_2'])->name('empresa-detail');
     Route::get('/empresa-index-3', [EmpresaController::class, 'index_3'])->name('empresa-index-3');
-    Route::get('/empresa-index-filtrada', [EmpresaController::class, 'provincias_filtro'])->name('empresa.provincias_filtro');
-    Route::get('/empresas/filtro-modalidad', [EmpresaController::class, 'modalidad_filtro'])->name('empresa.modalidad_filtro');
-    Route::get('/empresa/colaboracion_filtro', [EmpresaController::class, 'colaboracion_filtro'])->name('empresa.colaboracion_filtro');
-    Route::get('/empresas/filtro-ciclo', [EmpresaController::class, 'ciclo_filtro'])->name('empresa.ciclo_filtro');
-    Route::get('/empresa/filtro/plazas', [EmpresaController::class, 'plazas_filtro'])->name('empresa.plazas_filtro');
-    Route::get('/empresas/filtros', [EmpresaController::class, 'index_6'])->name('empresa.index_6');
-    Route::get('/empresa/familia-filtro', [EmpresaController::class, 'familia_filtro'])->name('empresa.familia_filtro');
+    Route::get('/empresas/filtros', [EmpresaController::class, 'filtro'])->name('empresa.filtro');
+
 
 
     // Tareas

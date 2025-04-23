@@ -398,6 +398,7 @@
                             </button>
                         </div>
                     </form>
+
                     <button id="toggleView" onclick="toggleLayout()" class="w-10 h-10 px-2 rounded-full bg-white text-blue border border-blue flex items-center justify-center hover:bg-blue hover:text-white transition">
                         <!-- Grid Icon -->
                         <svg id="iconGrid" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
