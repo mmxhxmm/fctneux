@@ -100,9 +100,7 @@ Route::middleware('auth')->group(function () {
 
     // Tareas
     Route::get('/tareas-index', [TareaController::class, 'index'])->name('tareas-index');
-    Route::get('/tareas-historial', function () {
-        return view('pages/tareas-historial');
-    })->name('tareas-historial');
+    Route::get('/tareas-historial', [TareaController::class, 'historial'])->name('tareas-historial');
     Route::get('/tareas-store', [TareaController::class, 'store'])->name('tareas-store');
     // Route::put('/tareas-store/{id}', [TareaController::class, 'store'])->name('tareas-store');
     Route::patch('/tareas/{id}/done', [TareaController::class, 'markAsDone'])->name('tarea.markAsDone');
@@ -116,10 +114,12 @@ Route::middleware('auth')->group(function () {
 
 // Pages that only the admin can access
 Route::middleware(['auth', 'role:admin'])->group(function(){ 
-    // Personal
-    Route::get('/personal-form', function () {
-        return view('pages/user/form-datos-personal');
-    })->name('personal-form');
+
+});
+
+// Error route
+Route::fallback(function () {
+    return view('pages/errors/404');
 });
 
 require __DIR__.'/auth.php';

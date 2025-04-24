@@ -7,9 +7,9 @@ Nombre: <b>{{ $user->name }}</b>
 
 Email: <b>{{ $user->email }}</b>
 
-Situación: <b>{{ $user->situacion }}</b>
+Situación: <b>{{ ucfirst($user->situacion) }}</b>
 
-Municipio: <b>{{ $user->municipio }}</b>
+Municipio: <b>{{ ucfirst($user->municipio) }}</b>
 
 <br>
 Si piensas que fuera un error, ignora este email.
