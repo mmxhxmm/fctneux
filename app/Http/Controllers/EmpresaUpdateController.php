@@ -262,6 +262,7 @@ class EmpresaUpdateController extends Controller
         $practica = Practica::findOrFail($id);
 
         $validated = $request->validate([
+            'numPlazasAsignadas' => 'nullable|integer',
             'cicloFormativo' => 'nullable|string|max:255',
             'cursoAcademico' => 'nullable|string|max:255',
             'periodoFrom' => 'nullable|date',

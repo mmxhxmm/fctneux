@@ -29,7 +29,7 @@ class UserFactory extends Factory
             // 'email_verified_at' => now(),
             'telefono' => fake()->numerify('#########'),
             'situacion' => fake()->randomElement(['alta', 'baja']),
-            'municipio' => fake()->randomElement(['barcelona', 'madrid','valencia']),
+            'municipio' => fake()->randomElement(['barcelona', 'madrid', 'valencia']),
             'password' => static::$password ??= Hash::make('password'),
         ];
     }

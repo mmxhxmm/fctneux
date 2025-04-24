@@ -27,8 +27,8 @@
             <div class="mt-10"></div>
             
             <!-- Display TUTORES ACADÉMICOS -->
-            @foreach ($practica->tutores as $index2 => $tutor)
-                <div id="display-tutor-{{ $index2 }}">
+            @foreach ($practica->tutores as $tutor)
+                <div id="display-tutor-{{ $tutor->id }}">
                     <details class="mt-6 bg-white border border-blue rounded-lg p-4">
                         <summary class="cursor-pointer text-blue font-semibold">Tutor Académico - {{ $tutor->nombre }} {{ $tutor->apellido }}</summary>
                         <!-- Edit Button -->
@@ -38,10 +38,10 @@
                                 Eliminar
                             </button>
                             <button 
-                                id="edit-btn-tutor-{{ $index }}"
+                                id="edit-btn-tutor-{{ $tutor->id }}"
                                 type="button" 
                                 class="edit-btn mt-[-25px] px-2 rounded text-blue hover:text-white border border-blue hover:bg-blue transition active:scale-95 duration-80"
-                                data-target="tutor-{{ $index }}"> Editar
+                                data-target="tutor-{{ $tutor->id }}"> Editar
                             </button>
                         </div>
 
@@ -65,6 +65,50 @@
                             }
                         }
                     </script>
+                </div>
+
+                <div id="edit-tutor-{{ $tutor->id }}" class="hidden mt-6 bg-white border border-blue rounded-lg p-4">
+                    <p class="text-blue font-semibold mb-6">Editar Tutor Académico - {{ $tutor->nombre }} {{ $tutor->apellido }}</p>
+                    <form method="POST" action="{{ route('tutor.update', $tutor->id) }}" class="grid md:grid-cols-3 gap-6">
+                        @csrf
+                        @method('PUT')
+                        
+                        <div>
+                            <x-input-label for="dni-{{ $tutor->id }}" value="DNI <span class='text-red-500'>*</span>" />
+                            <x-text-input-light id="dni-{{ $tutor->id }}" name="dni" value="{{ $tutor->dni }}" />
+                        </div>
+                        
+                        <div>
+                            <x-input-label for="nombre-{{ $tutor->id }}" value="Nombre <span class='text-red-500'>*</span>" />
+                            <x-text-input-light id="nombre-{{ $tutor->id }}" name="nombre" value="{{ $tutor->nombre }}" />
+                        </div>
+                        
+                        <div>
+                            <x-input-label for="apellido-{{ $tutor->id }}" value="Apellido <span class='text-red-500'>*</span>" />
+                            <x-text-input-light id="apellido-{{ $tutor->id }}" name="apellido" value="{{ $tutor->apellido }}" />
+                        </div>
+                        
+                        <div>
+                            <x-input-label for="telefono-{{ $tutor->id }}" value="Teléfono" />
+                            <x-text-input-light id="telefono-{{ $tutor->id }}" name="telefono" value="{{ $tutor->telefono }}" />
+                            <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
+                        </div>
+                        
+                        <div>
+                            <x-input-label for="email-{{ $tutor->id }}" value="Email" />
+                            <x-text-input-light id="email-{{ $tutor->id }}" name="email" value="{{ $tutor->email }}" />
+                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        </div>
+                        
+                        <div class="md:col-span-3 flex justify-end gap-6 mt-4">
+                            <button type="button" class="cancel-edit-btn" data-target="tutor-{{ $tutor->id }}">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="bg-blue text-white px-4 py-2 rounded">
+                                Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
                 </div>
             @endforeach
 
@@ -129,8 +173,8 @@
             <hr class="my-6 border-blue">
             
             <!-- Display TUTORES EMPRESA -->
-            @foreach ($practica->tutoresEmpresa as $index3 => $tutor)
-                <div id="display-tutor-empresa-{{ $index3 }}">
+            @foreach ($practica->tutoresEmpresa as $tutor)
+                <div id="display-tutor-empresa-{{ $tutor->id }}">
                     <details class="mt-6 bg-white border border-blue rounded-lg p-4">
                         <summary class="cursor-pointer text-blue font-semibold">Tutor de Empresa - {{ $tutor->nombre }} {{ $tutor->apellido }}</summary>
                         <!-- Edit Button -->
@@ -140,10 +184,10 @@
                                 Eliminar
                             </button>
                             <button 
-                                id="edit-btn-tutor-empresa-{{ $index }}"
+                                id="edit-btn-tutor-empresa-{{ $tutor->id }}"
                                 type="button" 
                                 class="edit-btn mt-[-25px] px-2 rounded text-blue hover:text-white border border-blue hover:bg-blue transition active:scale-95 duration-80"
-                                data-target="tutor-empresa-{{ $index }}"> Editar
+                                data-target="tutor-empresa-{{ $tutor->id }}"> Editar
                             </button>
                         </div>
 
@@ -167,6 +211,50 @@
                             }
                         }
                     </script>
+                </div>
+
+                <div id="edit-tutor-empresa-{{ $tutor->id }}" class="hidden mt-6 bg-white border border-blue rounded-lg p-4">
+                    <p class="text-blue font-semibold mb-6">Editar Tutor de Empresa - {{ $tutor->nombre }} {{ $tutor->apellido }}</p>
+                    <form method="POST" action="{{ route('tutor-empresa.update', $tutor->id) }}" class="grid md:grid-cols-3 gap-6">
+                        @csrf
+                        @method('PUT')
+                        
+                        <div>
+                            <x-input-label for="dni-{{ $tutor->id }}" value="DNI <span class='text-red-500'>*</span>" />
+                            <x-text-input-light id="dni-{{ $tutor->id }}" name="dni" value="{{ $tutor->dni }}" />
+                        </div>
+                        
+                        <div>
+                            <x-input-label for="nombre-{{ $tutor->id }}" value="Nombre <span class='text-red-500'>*</span>" />
+                            <x-text-input-light id="nombre-{{ $tutor->id }}" name="nombre" value="{{ $tutor->nombre }}" />
+                        </div>
+                        
+                        <div>
+                            <x-input-label for="apellido-{{ $tutor->id }}" value="Apellido <span class='text-red-500'>*</span>" />
+                            <x-text-input-light id="apellido-{{ $tutor->id }}" name="apellido" value="{{ $tutor->apellido }}" />
+                        </div>
+                        
+                        <div>
+                            <x-input-label for="telefono-{{ $tutor->id }}" value="Teléfono" />
+                            <x-text-input-light id="telefono-{{ $tutor->id }}" name="telefono" value="{{ $tutor->telefono }}" />
+                            <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
+                        </div>
+                        
+                        <div>
+                            <x-input-label for="email-{{ $tutor->id }}" value="Email" />
+                            <x-text-input-light id="email-{{ $tutor->id }}" name="email" value="{{ $tutor->email }}" />
+                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        </div>
+                        
+                        <div class="md:col-span-3 flex justify-end gap-6 mt-4">
+                            <button type="button" class="cancel-edit-btn" data-target="tutor-empresa-{{ $tutor->id }}">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="bg-blue text-white px-4 py-2 rounded">
+                                Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
                 </div>
             @endforeach
 
@@ -241,10 +329,10 @@
                     <div>
                         <x-input-label-light for="cicloFormativo-{{ $index }}" value="Ciclo Formativo" />
                         <x-select-input-light name="cicloFormativo" id="cicloFormativo-{{ $index }}" class="mt-1 block w-full">
-                            <option value="daw">Desarrollo de Aplicaciones Web</option>
-                            <option value="asix">Administración de Sistemas Informáticos</option>
-                            <option value="dam">Desarrollo de Aplicaciones Multiplataforma</option>
-                            <option value="marketing">Marketing Digital</option>
+                            <option value="daw" {{ $practica->cicloFormativo == 'daw' ? 'selected' : '' }}>Desarrollo de Aplicaciones Web</option>
+                            <option value="asix" {{ $practica->cicloFormativo == 'asix' ? 'selected' : '' }}>Administración de Sistemas Informáticos</option>
+                            <option value="dam" {{ $practica->cicloFormativo == 'dam' ? 'selected' : '' }}>Desarrollo de Aplicaciones Multiplataforma</option>
+                            <option value="marketing" {{ $practica->cicloFormativo == 'marketing' ? 'selected' : '' }}>Marketing Digital</option>
                         </x-select-input-light>
                     </div>
 
@@ -253,30 +341,43 @@
                         <x-text-input-light type="date" id="periodoFrom-{{ $index }}" name="periodoFrom" value="{{ \Carbon\Carbon::parse($practica->periodoFrom)->format('Y-m-d') }}" />
                     </div>
 
-                    <!-- <div>
-                        <x-input-label for="horarioFrom-{{ $index }}" value="Horario From" />
-                        <x-text-input-light id="horarioFrom-{{ $index }}" name="horarioFrom" value="{{ $practica->horarioFrom }}" />
-                    </div> -->
-
                     <!-- Horario From -->
                     <div>
                         <x-input-label-light for="horarioFrom-{{ $index }}" :value="__('Horario From')" />
                         <x-select-input-light name="horarioFrom" id="horarioFrom-{{ $index }}" class="mt-1 block w-full">
-                            {{ $is30 = false }}
-                            @for($hora = 0; $hora <= 24; $hora++)
-                                {{ $loop = 2 }}
-                                @while ($loop) 
-                                    @if ($hora == 10)
-                                        <option value="{{ $hora }}:{{ $is30 ? '30' : '00' }}" selected="selected">
-                                            {{ $hora }}:{{ $is30 && $loop == 2 ? '30' : '00' }}
+                            @php
+                                $is30 = false;
+                                $targetTime = explode(':', $practica->horarioFrom);
+                                $targetHour = $targetTime[0];
+                                $targetMinute = $targetTime[1];
+                            @endphp
+
+                            @for($hora = 0; $hora <= 23; $hora++)
+                                @php $iterations = 2; @endphp
+                                @while ($iterations > 0)
+                                    @php
+                                        $is30Value = false;
+                                        if ($targetMinute == '00' && !$is30) {
+                                            $is30Value = true;
+                                        } elseif ($targetMinute == '30' && $is30) {
+                                            $is30Value = true;
+                                        }
+                                    @endphp
+
+                                    @if ($hora == $targetHour && $is30Value)
+                                        <option value="{{ $hora }}:{{ $is30 ? '30' : '00' }}" selected>
+                                            {{ $hora }}:{{ $is30 ? '30' : '00' }}
                                         </option>
                                     @else
                                         <option value="{{ $hora }}:{{ $is30 ? '30' : '00' }}">
                                             {{ $hora }}:{{ $is30 ? '30' : '00' }}
                                         </option>
                                     @endif
-                                    {{ $is30 ? $is30 = false : $is30 = true }}
-                                    {{ $loop-- }}
+
+                                    @php
+                                        $is30 = !$is30;
+                                        $iterations--;
+                                    @endphp
                                 @endwhile
                             @endfor
                         </x-select-input-light>
@@ -286,48 +387,58 @@
                 <div class="md:col-span-1 space-y-4">
                     <div>
                         <x-input-label for="numPlazasAsignadas-{{ $index }}" value="Numero de Plazas Asignadas" />
-                        <x-text-input-light type="number" id="numPlazasAsignadas-{{ $index }}" name="numPlazasAsignadas" value="{{ $practica->numPlazasAsignadas }}" min=0 />
+                        <x-text-input-light type="number" value='0' min="0" id="numPlazasAsignadas-{{ $index }}" name="numPlazasAsignadas" value="{{ $practica->numPlazasAsignadas }}" />
+                        <x-input-error :messages="$errors->get('numPlazasAsignadas')" class="mt-2" />
                     </div>
 
                     <div>
                         <x-input-label for="periodoTo-{{ $index }}" value="Periodo To" />
                         <x-text-input-light type="date" id="periodoTo-{{ $index }}" name="periodoTo" value="{{ \Carbon\Carbon::parse($practica->periodoTo)->format('Y-m-d') }}"  />
                     </div>
-                    
-                    <!-- <div>
-                        <x-input-label for="horarioTo-{{ $index }}" value="Horario To" />
-                        <x-text-input-light id="horarioTo-{{ $index }}" name="horarioTo" value="{{ $practica->horarioTo }}" />
-                    </div> -->
 
                     <!-- Horario To -->
                     <div>
                         <x-input-label-light for="horarioTo-{{ $index }}" :value="__('Horario To')" />
                         <x-select-input-light name="horarioTo" id="horarioTo-{{ $index }}" class="mt-1 block w-full">
-                            {{ $is30 = false }}
+                            @php
+                                $is30 = false;
+                                $targetTime = explode(':', $practica->horarioTo);
+                                $targetHour = $targetTime[0];
+                                $targetMinute = $targetTime[1];
+                            @endphp
+
                             @for($hora = 0; $hora <= 23; $hora++)
-                                {{ $loop = 2 }}
-                                @while ($loop) 
-                                    @if ($hora == 14)
-                                        <option value="{{ $hora }}:{{ $is30 ? '30' : '00' }}" selected="selected">
-                                            {{ $hora }}:{{ $is30 && $loop == 2 ? '30' : '00' }}
+                                @php $iterations = 2; @endphp
+                                @while ($iterations > 0)
+                                    @php
+                                        $is30Value = false;
+                                        if ($targetMinute == '00' && !$is30) {
+                                            $is30Value = true;
+                                        } elseif ($targetMinute == '30' && $is30) {
+                                            $is30Value = true;
+                                        }
+                                    @endphp
+
+                                    @if ($hora == $targetHour && $is30Value)
+                                        <option value="{{ $hora }}:{{ $is30 ? '30' : '00' }}" selected>
+                                            {{ $hora }}:{{ $is30 ? '30' : '00' }}
                                         </option>
                                     @else
                                         <option value="{{ $hora }}:{{ $is30 ? '30' : '00' }}">
                                             {{ $hora }}:{{ $is30 ? '30' : '00' }}
                                         </option>
                                     @endif
-                                    {{ $is30 ? $is30 = false : $is30 = true }}
-                                    {{ $loop-- }}
+
+                                    @php
+                                        $is30 = !$is30;
+                                        $iterations--;
+                                    @endphp
                                 @endwhile
                             @endfor
                         </x-select-input-light>
                     </div>
                 </div>
 
-                <!-- <div>
-                    <x-input-label for="cursoAcademico-{{ $index }}" value="Curso Academico" />
-                    <x-text-input-light id="cursoAcademico-{{ $index }}" name="cursoAcademico" value="{{ $practica->cursoAcademico }}" />
-                </div> -->
                 <div>
                     <x-input-label-light for="cursoAcademico-{{ $index }}" :value="__('Curso Academico')" />
                     <x-select-input-light name="cursoAcademico" id="cursoAcademico-{{ $index }}" class="mt-1 block w-full">
@@ -335,7 +446,7 @@
                             $currentYear = date('Y');
                         ?>
                         @for($year = date('Y') + 1; $year >= ($currentYear - 1); $year--)
-                            @if ($year == $currentYear)
+                            @if ($year . '/' . ($year+1) == $practica->cursoAcademico)
                                 <option value="{{ $year }}/{{ $year+1 }}" selected="selected">
                                     {{ $year }}/{{ $year+1 }}
                                 </option>
@@ -358,8 +469,8 @@
                     <div>
                         <x-input-label-light for="convenioMarco-{{ $index }}" :value="__('Convenio Marco')" />
                         <x-select-input-light name="convenioMarco" id="convenioMarco-{{ $index }}" class="mt-1 block w-full">
-                            <option value="ceac">Convenio Marco CEAC</option>
-                            <option value="qbid">Convenio Marco qbid</option>
+                            <option value="ceac" {{ $practica->convenioMarco == 'ceac' ? 'selected' : '' }}>Convenio Marco CEAC</option>
+                            <option value="qbid" {{ $practica->convenioMarco == 'qbid' ? 'selected' : '' }}>Convenio Marco qbid</option>
                         </x-select-input-light>
                     </div>
                 </div>
@@ -374,9 +485,9 @@
                     <div>
                         <x-input-label-light for="usoLogos-{{ $index }}" :value="__('Uso Logos')" />
                         <x-select-input-light name="usoLogos" id="usoLogos-{{ $index }}" class="mt-1 block w-full">
-                            <option value="si">Si</option>
-                            <option value="no">No</option>
-                            <option value="autorizacion">Autorización previa</option>
+                            <option value="si" {{ $practica->usoLogos == 'si' ? 'selected' : '' }}>Si</option>
+                            <option value="no" {{ $practica->usoLogos == 'no' ? 'selected' : '' }}>No</option>
+                            <option value="autorizacion" {{ $practica->usoLogos == 'autorizacion' ? 'selected' : '' }}>Autorización previa</option>
                         </x-select-input-light>
                     </div>
                 </div>

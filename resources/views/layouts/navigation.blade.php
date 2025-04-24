@@ -18,7 +18,7 @@
                     <x-nav-link :href="route('tareas-index')" :active="request()->routeIs('tareas-index')">
                         {{ __('Tareas') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('personal-activo')" :active="request()->routeIs('personal-activo')">
+                    <x-nav-link :href="route('user.active')" :active="request()->routeIs('user.active')">
                         {{ __('Usuarios') }}
                     </x-nav-link>
                 </div>
@@ -48,8 +48,8 @@
                             {{ __('Perfil') }}
                         </x-dropdown-link>
 
-                        @if (Auth::user()->role == 'Admin')
-                        <x-dropdown-link :href="route('personal-activo')">
+                        @if (Auth::user()->role == 'admin')
+                        <x-dropdown-link :href="route('user.active')">
                             <div class="flex items-center">
                                 <img src="{{ asset('images/icons/icons8-people-96.png') }}" alt="User Group Icon" width="20px" class="mr-2 invert brightness-0">
                                 {{ __('Ver todos Perfiles') }}

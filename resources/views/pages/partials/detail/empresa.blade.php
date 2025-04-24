@@ -70,22 +70,22 @@
                             <x-select-input-light name="gestiones_prospeccion" id="gestiones">
                                 <x-session-option 
                                     value="primer_contacto" 
-                                    :selectedValue="old('gestiones', session('empresa_draft')?->gestiones)" 
+                                    :selectedValue="$empresa->gestiones" 
                                     label="P - Primer contacto"
                                 />
                                 <x-session-option 
                                     value="pendente_respuesta" 
-                                    :selectedValue="old('gestiones', session('empresa_draft')?->gestiones)" 
+                                    :selectedValue="$empresa->gestiones" 
                                     label="P - Pendente respuesta"
                                 />
                                 <x-session-option 
                                     value="volver_contactar" 
-                                    :selectedValue="old('gestiones', session('empresa_draft')?->gestiones)" 
+                                    :selectedValue="$empresa->gestiones" 
                                     label="P - Volver a contactar"
                                 />
                                 <x-session-option 
                                     value="no_acogen_alumnado" 
-                                    :selectedValue="old('gestiones', session('empresa_draft')?->gestiones)" 
+                                    :selectedValue="$empresa->gestiones" 
                                     label="P - No acogen alumnado"
                                 />
                             </x-select-input-light>
@@ -95,17 +95,17 @@
                             <x-select-input-light name="gestiones_colaboracion" id="gestiones">
                                 <x-session-option 
                                     value="pendiente_firma_convenio" 
-                                    :selectedValue="old('gestiones', session('empresa_draft')?->gestiones)" 
+                                    :selectedValue="$empresa->gestiones" 
                                     label="C - Pendiente firma Convenio"
                                 />
                                 <x-session-option 
                                     value="plazas_conseguidas" 
-                                    :selectedValue="old('gestiones', session('empresa_draft')?->gestiones)" 
+                                    :selectedValue="$empresa->gestiones" 
                                     label="C - Plazas conseguidas"
                                 />
                                 <x-session-option 
                                     value="solicitud_plazas" 
-                                    :selectedValue="old('gestiones', session('empresa_draft')?->gestiones)" 
+                                    :selectedValue="$empresa->gestiones" 
                                     label="C - Solicitud plazas"
                                 />
                             </x-select-input-light>
@@ -115,7 +115,7 @@
                             <x-select-input-light name="gestiones_inactiva" id="gestiones">
                                 <x-session-option 
                                     value="null" 
-                                    :selectedValue="old('gestiones', session('empresa_draft')?->gestiones)" 
+                                    :selectedValue="$empresa->gestiones" 
                                     label="--"
                                 />
                             </x-select-input>

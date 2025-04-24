@@ -11,11 +11,24 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\TareaController;
 use App\Http\Controllers\DraftController;
 use App\Http\Controllers\EmpresaUpdateController;
+use App\Mail\UserResetEmail;
+use App\Models\User;
 
 // User Authorization
 Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+// Email Test
+Route::get('email', function () {
+    $user = User::find(1);
+
+    // Mail::to('Wd4lE@example.com')->send(new RegistrationSecond($registration));
+
+    $mail = new UserResetEmail($user);
+    return $mail;
+});
 
 // Pages that will run only after logging in
 Route::middleware('auth')->group(function () {
@@ -23,15 +36,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/usuarios-buscar', [UserController::class, 'search'])->name('usuarios-buscar');
+    Route::get('/usuarioPerfil', [ProfileController::class, 'mostrarTareas'])->name('usuarioPerfil');
 
-    // Usuario perfil
+    // Usuario Index
+    Route::get('/usuarios-active-index', [UserController::class, 'active'])->name('user.active');
+    Route::get('/usuarios-no_active-index', [UserController::class, 'no_active'])->name('user.no_active');
+    Route::get('/usuarios-search', [UserController::class, 'search'])->name('user.search');
+    Route::put('/usuarios-store', [UserController::class, 'store'])->name('user.add');
+
+    // Usuario Perfil
     Route::get('/perfil', function () {
         return view('profile/perfil');
     })->name('perfil');
     Route::get('/perfil', [UserController::class, 'all'])->name('perfil');
-
-    Route::get('/usuarioPerfil', [ProfileController::class, 'mostrarTareas'])->name('usuarioPerfil');
 
     // Empresa Forms
     // Checks if empresa_draft exists, redirects to empresa-form-1 if not
@@ -81,7 +98,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/empresas/filtros', [EmpresaController::class, 'filtro'])->name('empresa.filtro');
 
 
-
     // Tareas
     Route::get('/tareas-index', [TareaController::class, 'index'])->name('tareas-index');
     Route::get('/tareas-historial', function () {
@@ -99,12 +115,10 @@ Route::middleware('auth')->group(function () {
 });
 
 // Pages that only the admin can access
-Route::middleware(['auth', 'role:Admin'])->group(function(){ 
+Route::middleware(['auth', 'role:admin'])->group(function(){ 
     // Personal
-    Route::get('/admin/personal-activo', [UserController::class, 'active'])->name('personal-activo');
-    Route::get('/admin/personal-no-activo', [UserController::class, 'no_active'])->name('personal-no-activo');
-    Route::get('/admin/personal-form', function () {
-        return view('/admin/form-datos-personal');
+    Route::get('/personal-form', function () {
+        return view('pages/user/form-datos-personal');
     })->name('personal-form');
 });
 

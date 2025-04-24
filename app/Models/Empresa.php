@@ -127,31 +127,21 @@ class Empresa extends Model
     }
 
     public function gestionesToString($value) {
-        switch ($this->colaboracion) {
-            case 'prospeccion':
-                switch ($value) {
-                    case 'primer_contacto':
-                        return 'Primer contacto';
-                    case 'pendente_respuesta':
-                        return 'Pendente respuesta';
-                    case 'volver_contactar':
-                        return 'Volver a contactar';
-                    case 'no_acogen_alumnado':
-                        return 'No acogen alumnado';
-                    default:
-                        return $value;
-                }
-            case 'colaboracion':
-                switch ($value) {
-                    case 'pendiente_firma_convenio':
-                        return 'Pendiente firma Convenio';
-                    case 'plazas_conseguidas':
-                        return 'Plazas conseguidas';
-                    case 'solicitud_plazas':
-                        return 'Solicitud plazas';
-                    default:
-                        return $value;
-                }
+        switch ($value) {
+            case 'primer_contacto':
+                return 'Primer contacto';
+            case 'pendente_respuesta':
+                return 'Pendente respuesta';
+            case 'volver_contactar':
+                return 'Volver a contactar';
+            case 'no_acogen_alumnado':
+                return 'No acogen alumnado';
+            case 'pendiente_firma_convenio':
+                return 'Pendiente firma Convenio';
+            case 'plazas_conseguidas':
+                return 'Plazas conseguidas';
+            case 'solicitud_plazas':
+                return 'Solicitud plazas';
             default:
                 return $value;
         }
