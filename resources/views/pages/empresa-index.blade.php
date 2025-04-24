@@ -218,7 +218,6 @@
                                                 </option>
                                             @endforeach
                                     </select>
-                                    <button type="button" @click="toggleFilter('provincia')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-lg hover:bg-red-700 transition">&times;</button>
                                 </div>
                             </template>
 
