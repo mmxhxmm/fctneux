@@ -10,11 +10,17 @@
                 <!-- Left buttons (Añadir and Eliminar) -->
             <div class="flex items-center">
                     <!-- Añadir button -->
+                    @if (Auth::user()->role == 'registrador')
+                    <div></div>
+                    @else 
                     <div class="w-[110px] h-10">
                         <button id="openModal" class="bg-orange rounded-[100px] w-[110px] h-10 flex justify-center items-center">
                             <p class="text-white text-base font-bold">+ Añadir</p>
                         </button>
                     </div>
+                    
+                    @endif
+
 
                     @include("pages.user.partials.user-form")
                 </div>
@@ -82,7 +88,7 @@
 
         <!-- User Cards Section -->
         <div class="flex justify-center bg-white items-center" id="userGrid">
-            <div id="userContainer" class="grid grid-cols-3 gap-6">
+            <div id="userContainer" class="grid grid-cols-3 gap-6 px-6">
                 <!-- Display first 9 users by default -->
                 @foreach ($users as $key => $user)
                     <x-index.personal :user="$user"></x-index-box>
@@ -108,7 +114,14 @@
                                     <td class="p-4 text-gray-800">{{ $user->name }}</td>
                                     <td class="p-4 text-gray-800">{{ $user->email }}</td>
                                     <td class="p-4 text-gray-800">{{ $user->telefono }}</td>
-                                    <td class="p-4 text-gray-800">{{ ucfirst($user->situacion) }}</td>
+                                    @php
+                                        $statusClass = match($user->situacion) {
+                                            'alta' => ' text-green-700',
+                                            'baja' => 'text-red-700',
+                                            default => 'text-gray-700',
+                                        };
+                                    @endphp
+                                    <td class="p-4 text-gray-800 {{ $statusClass }}">{{ ucfirst($user->situacion) }}</td>
                                     <td class="p-4 text-gray-800">{{ ucfirst($user->municipio) }}</td>
                                     <td class="p-4 text-gray-800">{{ ucfirst($user->role) }}</td>
                                 </tr>

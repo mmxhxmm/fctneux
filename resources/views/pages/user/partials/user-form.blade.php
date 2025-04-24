@@ -1,5 +1,5 @@
 <section id="myModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
-    <div class="w-full max-w-5xl bg-white rounded-xl shadow-2xl overflow-hidden border-t-4 border-blue">
+    <div class="w-full max-w-3xl bg-white rounded-xl shadow-2xl overflow-hidden border-t-4 border-blue">
         <!-- Modal Header -->
         <div class="bg-blue px-6 py-4 flex justify-between items-center">
             <h2 class="text-xl font-semibold text-white">Datos del Usuario</h2>
@@ -56,9 +56,7 @@
                         <x-text-input-light type="text" name="password" id="password" />
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
-                </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <x-input-label for="telefono" value="Teléfono" />
                         <x-text-input-light type="tel" name="telefono" id="telefono" maxlength="9" value="{{ old('telefono') }}" />
