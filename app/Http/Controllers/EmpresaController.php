@@ -19,7 +19,7 @@ class EmpresaController extends Controller
     // Function index
     public function index(Request $request)
     {
-        $empresas = Empresa::all();
+        $empresas = Empresa::all()->reverse();
     
         // Get all distinct modalidades
         $modalidadesRaw = Empresa::select('modalidad')->distinct()->pluck('modalidad')->toArray();
@@ -355,16 +355,21 @@ class EmpresaController extends Controller
             'familiaPersonal' => 'nullable|string|max:255',
             'observaciones' => 'nullable|string',
         ]);
+        $responsableCount = $request->input('responsable_count', 0);
+
 
         // ResponsableConvenio Validator
         // TODO: true to condition if 1 rc exists, change to condition like foreach inside to  
-        if (true) {
-            $validator->sometimes('rc_dni', 'required|string|max:255', function () {return true;});
-            $validator->sometimes('rc_nombre', 'required|string|max:255', function () {return true;});
-            $validator->sometimes('rc_apellido', 'required|string|max:255', function () {return true;});
-            $validator->sometimes('rc_telefono', 'nullable|string|digits:9', function () {return true;});
-            $validator->sometimes('rc_email', 'nullable|string|email', function () {return true;});
+        if (
+            $request->filled('rc_dni') || $request->filled('rc_nombre') || $request->filled('rc_apellido') || $request->filled('rc_telefono') || $request->filled('rc_email')
+        ) {
+            $validator->sometimes('rc_dni', 'required|string|max:255', fn () => true);
+            $validator->sometimes('rc_nombre', 'required|string|max:255', fn () => true);
+            $validator->sometimes('rc_apellido', 'required|string|max:255', fn () => true);
+            $validator->sometimes('rc_telefono', 'nullable|string|digits:9', fn () => true);
+            $validator->sometimes('rc_email', 'nullable|string|email', fn () => true);
         }
+        
 
         // Return errors
         if ($validator->fails()) {
@@ -439,7 +444,9 @@ class EmpresaController extends Controller
 
         // PersonaContacto Validator
         // TODO: true to condition if 1 rc exists, change to condition like foreach inside to  
-        if (true) {
+        if (
+            $request->filled('pc_dni') || $request->filled('pc_nombre') || $request->filled('pc_apellido') || $request->filled('pc_telefono') || $request->filled('pc_email')
+        ) {
             $validator->sometimes('pc_dni', 'required|string|max:255', function () {return true;});
             $validator->sometimes('pc_nombre', 'required|string|max:255', function () {return true;});
             $validator->sometimes('pc_apellido', 'required|string|max:255', function () {return true;});
@@ -509,7 +516,9 @@ class EmpresaController extends Controller
 
         // Tutor Validator
         // TODO: true to condition if 1 rc exists, change to condition like foreach inside to  
-        if (true) {
+        if (
+            $request->filled('tutor_dni') || $request->filled('tutor_nombre') || $request->filled('tutor_apellido') || $request->filled('tutor_telefono') || $request->filled('tutor_email')
+        ) {
             $validator->sometimes('tutor_dni', 'required|string|max:255', function () {return true;});
             $validator->sometimes('tutor_nombre', 'required|string|max:255', function () {return true;});
             $validator->sometimes('tutor_apellido', 'required|string|max:255', function () {return true;});
@@ -519,7 +528,9 @@ class EmpresaController extends Controller
 
         // TutorEmpresa Validator
         // TODO: true to condition if 1 rc exists, change to condition like foreach inside to  
-        if (true) {
+        if (
+            $request->filled('tutorEmpresa_dni') || $request->filled('tutorEmpresa_nombre') || $request->filled('tutorEmpresa_apellido') || $request->filled('tutorEmpresa_telefono') || $request->filled('tutorEmpresa_email')
+        ) {
             $validator->sometimes('tutorEmpresa_dni', 'required|string|max:255', function () {return true;});
             $validator->sometimes('tutorEmpresa_nombre', 'required|string|max:255', function () {return true;});
             $validator->sometimes('tutorEmpresa_apellido', 'required|string|max:255', function () {return true;});
