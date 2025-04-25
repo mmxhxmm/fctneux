@@ -398,21 +398,6 @@
                             </button>
                         </div>
                     </form>
-
-                    <button id="toggleView" onclick="toggleLayout()" class="w-10 h-10 px-2 rounded-full bg-white text-blue border border-blue flex items-center justify-center hover:bg-blue hover:text-white transition">
-                        <!-- Grid Icon -->
-                        <svg id="iconGrid" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 6h4v4H4V6zM10 6h4v4h-4V6zM16 6h4v4h-4V6zM4 12h4v4H4v-4zM10 12h4v4h-4v-4zM16 12h4v4h-4v-4z"/>
-                        </svg>
-
-                        <!-- List Icon (initially hidden) -->
-                        <svg id="iconList" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
-                    </button>
-
                 </div>
             </div>
 
@@ -423,56 +408,69 @@
                         {{ __('<<< Volver al inicio') }}
                     </x-nav-link> -->
                 </div>
-                <div class="absolute right-0 top-[8em] animate-right">
-                    <a href="{{ route('tareas-historial') }}" class="hover:text-white hover:border-none justify-end px-4 rounded-tl-[0px] rounded-tl-[50px] rounded-bl-[50px] rounded-bl-[0px] px-4 bg-blue w-[200px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 flex justify-end items-center"> Historial de tareas >>></a>
-                    <!-- <x-nav-link :href="route('tareas-historial')" :active="request()->routeIs('tareas-historial')" class="hover:text-white hover:border-none justify-end px-4 rounded-tl-[0px] rounded-tl-[50px] rounded-bl-[50px] rounded-bl-[0px] px-4 bg-blue w-[200px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 flex justify-end items-center">
-                    {{__('Historial de tareas >>>') }} </a> 
+                <div class="absolute left-0 top-[7em] animate-left2">
+                    <a href="{{ route('tareas-index') }}"  class="hover:text-white hover:border-none rounded-tl-[0px] rounded-tr-[50px] px-4 rounded-br-[50px] rounded-bl-[0px] bg-blue w-[200px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex justify-start items-center"><<< Tareas pendientes</a>
+                    <!-- <x-nav-link :href="route('tareas-index')" :active="request()->routeIs('tareas-index')" 
+                        class="hover:text-white hover:border-none rounded-tl-[0px] rounded-tr-[50px] px-4 rounded-br-[50px] rounded-bl-[0px] bg-primary w-[200px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex justify-start items-center">
+                        {{ __('<<< Tareas pendientes') }}
                     </x-nav-link> -->
                 </div>
                 <div class="text-center justify-center mt-14 fade-in">
-                    <p class="text-white text-three " style="text-shadow: 2px 4px 2px rgba(0,0,0,0.40)">
-                        Plataforma de <span class="text-two font-roboto_condensed_bold text-orange">Tareas</span>
+                    <p class="text-white text-three" style="text-shadow: 2px 4px 2px rgba(0,0,0,0.40)">
+                        Historial de <span class="text-two font-roboto_condensed_bold tracking-wide text-orange">Tareas</span>
                     </p>
                 </div>
             </div>
         </div>
 
-        <div  class="flex justify-center bg-white items-center">
-            <div id="tareasContainer" class="grid grid-cols-3 gap-6">
-                @foreach ($tareas as $key => $tarea)
-                    <x-index.tarea :tarea="$tarea"></x-index-box>
-                @endforeach
-            </div>
-            <div id="tareasList" class="hidden w-[90%] px-5 py-6 transition-all">
+        <div class="flex justify-center bg-white items-center">
+
+            <div id="tareasList" class="w-[90%] px-5 py-6 transition-all">
                 <div class="overflow-x-auto bg-white rounded-xl shadow-md border border-gray-200">
                     <table class="min-w-full divide-y divide-gray-200 text-sm font-roboto">
                         <thead class="bg-blue text-white rounded-t-xl">
                             <tr>
-                                <th class="p-4 text-left font-semibold">Nombre</th>
                                 <th class="p-4 text-left font-semibold">Asignado a</th>
-                                <th class="p-4 text-left font-semibold">Estado</th>
+                                <th class="p-4 text-left font-semibold">Empresa</th>
+                                <th class="p-4 text-left font-semibold">Nombre</th>
                                 <th class="p-4 text-left font-semibold">Descripcion</th>
                                 <th class="p-4 text-left font-semibold">Fecha limite</th>
+                                <th class="p-4 text-left font-semibold">Estado</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
-                            @foreach ($tareas as $key => $tarea)
+                            @forelse ($tareas->where('estado', 'done') as $tarea)
                                 <tr class="hover:bg-blue/5 transition-all">
+                                    <td class="p-4 text-gray-800 font-bold">{{ $tarea->asignado }}</td>
+                                    <td class="min-w-60 p-4 text-gray-800 text-sm">
+                                        <a href="{{ route('empresa-detail', ['id' => $tarea->empresa->id]) }}">
+                                            <p class="bg-blue text-white font-semibold text-sm px-5 py-2 flex items-center justify-center gap-x-2 rounded-full hover:bg-blue/90 transition shadow-sm">
+                                                <img src="{{ asset('images/icons/icons8-business-96.png') }}" alt="Icono de Empresa" width="20px" class="invert brightness-0">
+                                                {{ $tarea->empresa->nombre }}
+                                            </p>
+                                        </a>
+                                    </td>
                                     <td class="p-4 text-gray-800">{{ $tarea->nombre }}</td>
-                                    <td class="p-4 text-gray-800">{{ $tarea->asignado }}</td>
-                                    <td class="p-4 text-gray-800"><select name="estado" onchange="this.form.submit()"
-                                        class="text-sm font-semibold shadow-sm rounded-full w-[120px] px-2 py-1 cursor-pointer transition-all
-                                        {{ $tarea->estado === 'done' ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-white_dull text-blue hover:bg-white_dull' }}">
-                                        <option value="to_do" {{ $tarea->estado === 'to_do' ? 'selected' : '' }}>Por hacer</option>
-                                        <option value="in_progress" {{ $tarea->estado === 'in_progress' ? 'selected' : '' }}>En progreso</option>
-                                        <option value="revision" {{ $tarea->estado === 'revision' ? 'selected' : '' }}>En revisión</option>
-                                        <option value="blocked" {{ $tarea->estado === 'blocked' ? 'selected' : '' }}>Bloqueado</option>
-                                        <option value="done" {{ $tarea->estado === 'done' ? 'selected' : '' }}>Completada</option>
-                                    </select></td>
                                     <td class="p-4 text-gray-800">{{ $tarea->descripcion }}</td>
-                                    <td class="p-4 text-gray-800">{{ $tarea->fecha_limite }}</td>
+                                    <td class="p-4 text-gray-800">{{ \Carbon\Carbon::parse($tarea->fecha_limite)->format('d-m-Y') }}</td>
+                                    <td class="p-4 text-gray-800">
+                                        <form method="POST" action="{{ route('tarea.update_estado', ['id' => $tarea->id]) }}">
+                                            @csrf
+                                            @method('PATCH')
+                                            <select name="estado" onchange="this.form.submit()"
+                                                class="text-sm font-semibold shadow-sm rounded-full w-[120px] px-2 py-1 cursor-pointer transition-all bg-white_dull text-blue">
+                                                <option value="to_do" {{ $tarea->estado === 'to_do' ? 'selected' : '' }}>Por hacer</option>
+                                                <option value="in_progress" {{ $tarea->estado === 'in_progress' ? 'selected' : '' }}>En progreso</option>
+                                                <option value="revision" {{ $tarea->estado === 'revision' ? 'selected' : '' }}>En revisión</option>
+                                                <option value="blocked" {{ $tarea->estado === 'blocked' ? 'selected' : '' }}>Bloqueado</option>
+                                                <option value="done" {{ $tarea->estado === 'done' ? 'selected' : '' }}>Completada</option>
+                                            </select>
+                                        </form>
+                                    </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <p class="col-span-3 text-center text-gray-500">No hay tareas</p>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

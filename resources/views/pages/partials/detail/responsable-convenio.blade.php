@@ -55,9 +55,12 @@
                 </div>
                 
                 <div class="md:col-span-3 flex justify-between gap-4 mt-4">
+                    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'coordinador')
                     <button type="button" onclick="confirmDeleteRC({{ $resConv->id }})" class="bg-red-500 text-white px-4 py-2 rounded">
                         Eliminar
                     </button>
+                    @endif
+                    <div></div>
                 
                     <div class="flex gap-6">
                         <button type="button" class="cancel-edit-btn" data-target="res-conv-{{ $index }}">

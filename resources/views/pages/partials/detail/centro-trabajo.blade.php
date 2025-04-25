@@ -1,4 +1,8 @@
 <section class="flex flex-col space-y-12">
+    <?php
+        $index2Sum = 0
+    ?>
+
     @foreach ($empresa->centrosTrabajo as $index => $centro)
     <div class="bg-white_dull p-6 rounded-xl border-l-4 border-blue shadow-sm relative">
         <!-- Toggle Button -->
@@ -24,21 +28,27 @@
             <div class="mt-10"></div>
 
             <!-- Display Persona Contacto -->
-            @foreach ($centro->personaContacto as $index2 => $persContacto)
-                <div id="display-cen-trab-pc-{{ $index2 }}">
+            @foreach ($centro->personaContacto as $persContacto)
+                <?php
+                    $index2Sum++
+                ?>
+                <div id="display-pc-{{ $index2Sum }}">
                     <details class="mt-6 bg-white border border-blue rounded-lg p-4">
                         <summary class="cursor-pointer text-blue font-semibold">Persona de Contacto - {{ $persContacto->nombre }} {{ $persContacto->apellido }}</summary>
                         <!-- Edit Button -->
                         <div class="w-full flex justify-end gap-2">
+                            @if (Auth::user()->role == 'admin' || Auth::user()->role == 'coordinador')
                             <button type="button" onclick="confirmDeletePC({{ $persContacto->id }})"
                                 class="mt-[-25px] bg-red-500 text-white px-2 py-1 rounded">
                                 Eliminar
                             </button>
+                            @endif
+
                             <button 
-                                id="edit-btn-cen-trab-{{ $index }}"
+                                id="edit-btn-pc-{{ $index2Sum }}"
                                 type="button" 
                                 class="edit-btn mt-[-25px] px-2 rounded text-blue hover:text-white border border-blue hover:bg-blue transition active:scale-95 duration-80"
-                                data-target="cen-trab-{{ $index }}"> Editar
+                                data-target="pc-{{ $index2Sum }}"> Editar
                             </button>
                         </div>
 
@@ -62,6 +72,53 @@
                             }
                         }
                     </script>
+                </div>
+
+                <div id="edit-pc-{{ $index2Sum }}" class="hidden mt-6 bg-white border border-blue rounded-lg p-4">
+                    <p class="text-blue font-semibold mb-6">Editar Persona de Contacto - {{ $persContacto->nombre }} {{ $persContacto->apellido }}</p>
+                    <form method="POST" action="{{ route('personaContacto.update', $persContacto->id) }}" class="grid md:grid-cols-3 gap-6">
+                        @csrf
+                        @method('PUT')
+                        
+                        <div>
+                            <x-input-label for="dni-{{ $index2Sum }}" value="DNI <span class='text-red-500'>*</span>" />
+                            <x-text-input-light id="dni-{{ $index2Sum }}" name="dni" value="{{ $persContacto->dni }}" />
+                            <x-input-error :messages="$errors->get('dni')" class="mt-2" />
+                        </div>
+                        
+                        <div>
+                            <x-input-label for="nombre-{{ $index2Sum }}" value="Nombre <span class='text-red-500'>*</span>" />
+                            <x-text-input-light id="nombre-{{ $index2Sum }}" name="nombre" value="{{ $persContacto->nombre }}" />
+                            <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
+                        </div>
+                        
+                        <div>
+                            <x-input-label for="apellido-{{ $index2Sum }}" value="Apellido <span class='text-red-500'>*</span>" />
+                            <x-text-input-light id="apellido-{{ $index2Sum }}" name="apellido" value="{{ $persContacto->apellido }}" />
+                            <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
+                        </div>
+                        
+                        <div>
+                            <x-input-label for="telefono-{{ $index2Sum }}" value="Teléfono" />
+                            <x-text-input-light id="telefono-{{ $index2Sum }}" name="telefono" value="{{ $persContacto->telefono }}" />
+                            <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
+                        </div>
+                        
+                        <div>
+                            <x-input-label for="email-{{ $index2Sum }}" value="Email" />
+                            <x-text-input-light id="email-{{ $index2Sum }}" name="email" value="{{ $persContacto->email }}" />
+                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        </div>
+                        
+                        <div class="md:col-span-3 flex justify-end gap-6 mt-4">
+                            <button type="button" class="cancel-edit-btn" data-target="pc-{{ $index2Sum }}">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="bg-blue text-white px-4 py-2 rounded">
+                                Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
                 </div>
             @endforeach
 
@@ -172,9 +229,12 @@
                 </div>
                 
                 <div class="md:col-span-3 flex justify-between gap-4 mt-4">
+                    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'coordinador')
                     <button type="button" onclick="confirmDeleteCT({{ $centro->id }})" class="bg-red-500 text-white px-4 py-2 rounded">
                         Eliminar
                     </button>
+                    @endif
+                    <div></div>
                 
                     <div class="flex gap-6">
                         <button type="button" class="cancel-edit-btn" data-target="cen-trab-{{ $index }}">
@@ -296,6 +356,28 @@
                 document.getElementById(`edit-btn-${target}`).classList.remove('hidden');
             });
         });
+
+        // // Edit buttons
+        // document.querySelectorAll('.edit-btn').forEach(button => {
+        //     button.addEventListener('click', function() {
+        //         const target = this.getAttribute('data-target');
+
+        //         document.getElementById(`display-${target}`).classList.add('hidden');
+        //         document.getElementById(`edit-${target}`).classList.remove('hidden');
+        //         document.getElementById(`edit-btn-${target}`).classList.add('hidden');
+        //     });
+        // });
+        
+        // // Cancel buttons
+        // document.querySelectorAll('.cancel-edit-btn').forEach(button => {
+        //     button.addEventListener('click', function() {
+        //         const target = this.getAttribute('data-target');
+
+        //         document.getElementById(`edit-${target}`).classList.add('hidden');
+        //         document.getElementById(`display-${target}`).classList.remove('hidden');
+        //         document.getElementById(`edit-btn-${target}`).classList.remove('hidden');
+        //     });
+        // });
 
         // Add button
         document.getElementById('add-btn-ct').addEventListener('click', function() {

@@ -33,10 +33,13 @@
                         <summary class="cursor-pointer text-blue font-semibold">Tutor Académico - {{ $tutor->nombre }} {{ $tutor->apellido }}</summary>
                         <!-- Edit Button -->
                         <div class="w-full flex justify-end gap-2">
+                            @if (Auth::user()->role == 'admin' || Auth::user()->role == 'coordinador')
                             <button type="button" onclick="confirmDeleteTutorA({{ $tutor->id }})"
                                 class="mt-[-25px] bg-red-500 text-white px-2 py-1 rounded">
                                 Eliminar
                             </button>
+                            @endif
+
                             <button 
                                 id="edit-btn-tutor-{{ $tutor->id }}"
                                 type="button" 
@@ -179,10 +182,13 @@
                         <summary class="cursor-pointer text-blue font-semibold">Tutor de Empresa - {{ $tutor->nombre }} {{ $tutor->apellido }}</summary>
                         <!-- Edit Button -->
                         <div class="w-full flex justify-end gap-2">
+                            @if (Auth::user()->role == 'admin' || Auth::user()->role == 'coordinador')
                             <button type="button" onclick="confirmDeleteTutorE({{ $tutor->id }})"
                                 class="mt-[-25px] bg-red-500 text-white px-2 py-1 rounded">
                                 Eliminar
                             </button>
+                            @endif
+
                             <button 
                                 id="edit-btn-tutor-empresa-{{ $tutor->id }}"
                                 type="button" 
@@ -498,9 +504,12 @@
                 </div>
                 
                 <div class="md:col-span-3 flex justify-between gap-4 mt-4">
+                    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'coordinador')
                     <button type="button" onclick="confirmDeletePractica({{ $practica->id }})" class="bg-red-500 text-white px-4 py-2 rounded">
                         Eliminar
                     </button>
+                    @endif
+                    <div></div>
 
                     <div class="flex gap-6">
                         <button type="button" class="cancel-edit-btn" data-target="practica-{{ $index }}">

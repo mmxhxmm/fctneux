@@ -4,7 +4,7 @@
             <x-button-salir :redirect="route('empresa-index')" />
                 <div class="text-center justify-center mt-20 fade-in">
                     <p class="text-white text-three " style="text-shadow: 2px 4px 2px rgba(0,0,0,0.40)">
-                        Añadir nueva <span class="text-two font-roboto_condensed_bold text-orange">Empresa</span>
+                        Añadir nueva <span class="text-two font-roboto_condensed_bold tracking-wide text-orange">Empresa</span>
                     </p>
                 </div>
             </div>

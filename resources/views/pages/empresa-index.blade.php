@@ -275,7 +275,7 @@
 
                 <div class="text-center justify-center mt-10 fade-in">
                     <p class="text-white text-three " style="text-shadow: 2px 4px 2px rgba(0,0,0,0.40)">
-                        Plataforma de <span class="text-two font-roboto_condensed_bold text-orange">Empresas</span>
+                        Plataforma de <span class="text-two font-roboto_condensed_bold tracking-wide text-orange">Empresas</span>
                     </p>
                 </div>
             </div>

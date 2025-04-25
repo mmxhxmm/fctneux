@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckEmpresa;
+use App\Http\Middleware\CheckEmpresaID;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
@@ -70,6 +71,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/clear-drafts', [DraftController::class, 'clearDrafts'])->name('clear-drafts');
 
     // Empresa Detail
+    Route::middleware([CheckEmpresaID::class])->group(function () {
+        Route::get('/empresa-detail', [EmpresaController::class, 'index_2'])->name('empresa-detail');
+    });
+    
     Route::put('/update-empresa/{id}', [EmpresaUpdateController::class, 'update_empresa'])->name('empresa.update');
     Route::delete('/delete-empresa/{id}', [EmpresaUpdateController::class, 'delete_empresa'])->name('empresa.delete');
     Route::put('/add-rc/{id}', [EmpresaUpdateController::class, 'add_rc'])->name('responsables.add');
@@ -93,7 +98,6 @@ Route::middleware('auth')->group(function () {
 
     // Empresa Index
     Route::get('/empresa-index', [EmpresaController::class, 'index'])->name('empresa-index');
-    Route::get('/empresa-detail', [EmpresaController::class, 'index_2'])->name('empresa-detail');
     Route::get('/empresa-index-3', [EmpresaController::class, 'index_3'])->name('empresa-index-3');
     Route::get('/empresas/filtros', [EmpresaController::class, 'filtro'])->name('empresa.filtro');
 
@@ -103,13 +107,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/tareas-historial', [TareaController::class, 'historial'])->name('tareas-historial');
     Route::get('/tareas-store', [TareaController::class, 'store'])->name('tareas-store');
     // Route::put('/tareas-store/{id}', [TareaController::class, 'store'])->name('tareas-store');
-    Route::patch('/tareas/{id}/done', [TareaController::class, 'markAsDone'])->name('tarea.markAsDone');
+    Route::patch('/tareas/{id}/update-estado', [TareaController::class, 'update_estado'])->name('tarea.update_estado');
     Route::get('/tareas-form', function () {
         return view('form-datos-tareas');
     })->name('tareas-form');
     Route::get('/tareas-busqueda', [TareaController::class, 'buscar'])->name('tareas-busqueda');
     Route::get('/tareas-filtro', [TareaController::class, 'asignado_filtro'])->name('tareas.filtro');
-
 });
 
 // Pages that only the admin can access

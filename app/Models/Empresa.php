@@ -224,4 +224,9 @@ class Empresa extends Model
     {
         return $this->HasMany(Practica::class, 'empresa_id', 'id');
     }
+
+    public function tareas()
+    {
+        return $this->HasMany(Tarea::class, 'empresa_id', 'id');
+    }
 }

@@ -35,7 +35,31 @@ class TareaController extends Controller
         $empresaRaw = Tarea::select('id', 'nombre')->distinct()->get();
         $empresas = $empresaRaw->pluck('nombre', 'id'); // [id => nombre]
 
-        return view('pages/tareas-index', compact('tareas', 'asignados', 'estados', 'fechas_limite', 'empresas'));
+        return view('pages/tarea/tareas-index', compact('tareas', 'asignados', 'estados', 'fechas_limite', 'empresas'));
+    }
+
+    public function historial()
+    {
+        $tareas = Tarea::all()->reverse();
+
+        $asignadoRaw = Tarea::select('asignado')->distinct()->pluck('asignado')->filter()->toArray();
+
+        $asignados = collect($asignadoRaw)->mapWithKeys(function ($item) {
+            return [$item => $item];
+        });
+
+        $estados = Tarea::ESTADOS;
+
+        $fechasRaw = Tarea::select('fecha_limite')->distinct()->pluck('fecha_limite')->filter()->sort()->toArray();
+        $fechas_limite = collect($fechasRaw)->mapWithKeys(function ($date) {
+            $formatted = \Carbon\Carbon::parse($date)->format('Y-m-d');
+            return [$formatted => $formatted];
+        });
+
+        $empresaRaw = Tarea::select('id', 'nombre')->distinct()->get();
+        $empresas = $empresaRaw->pluck('nombre', 'id');
+
+        return view('pages/tarea/tareas-historial', compact('tareas', 'asignados', 'estados', 'fechas_limite', 'empresas'));
     }
 
     public function store(Request $request)
@@ -69,14 +93,19 @@ class TareaController extends Controller
         return redirect()->back()->with('success', 'Tarea añadida correctamente');
     }
     
-    public function markAsDone(Request $request, $id)
+    public function update_estado(Request $request, $id)
     {
         $tarea = Tarea::findOrFail($id);
-        $tarea->estado = 'done';
+        $tarea->estado = $request->estado;
         $tarea->save();
 
-        return redirect()->route('tareas-historial')->with('status', 'Tarea marcada como hecha.');
+        if ($request->estado == 'done') {
+            return redirect()->route('tareas-historial')->with('success', 'Tarea editada correctamente');
+        } else {
+            return redirect()->route('tareas-index')->with('success', 'Tarea editada correctamente');
+        }
     }
+
     public function buscar(Request $request)
     {
         $query = $request->input('search');
@@ -93,7 +122,7 @@ class TareaController extends Controller
             })
             ->get();
 
-        return view('pages/tareas-index', compact('tareas'));
+        return view('pages/tarea/tareas-index', compact('tareas'));
     }
 
     public function asignado_filtro(Request $request)
@@ -149,7 +178,6 @@ class TareaController extends Controller
         $empresas = \App\Models\Empresa::whereIn('id', $empresaRaw)->pluck('nombre', 'id');
     
 
-        return view('pages/tareas-index', compact('tareas', 'asignados', 'estados', 'fechas_limite', 'empresas'));
+        return view('pages/tarea/tareas-index', compact('tareas', 'asignados', 'estados', 'fechas_limite', 'empresas'));
     }
-    
 }

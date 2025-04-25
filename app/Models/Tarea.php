@@ -77,16 +77,6 @@ class Tarea extends Model
         'blocked' => 'Bloqueado',
         'done' => 'Completada'
     ];
-    
-    /**
-     * Get the human-readable status name.
-     *
-     * @return string
-     */
-    public function getEstadoAttribute($value)
-    {
-        return self::ESTADOS[$value] ?? $value;
-    }
 
     /**
      * Filter for tasks in a specific state.

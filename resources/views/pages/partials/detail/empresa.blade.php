@@ -1,13 +1,5 @@
 <section class="flex flex-col space-y-12">
     <div class="p-6 relative">
-        <!-- Toggleable Edit Button -->
-        <button 
-            id="edit-btn-empresa"
-            type="button" 
-            class="edit-btn absolute px-2 rounded top-6 right-6 text-blue hover:text-white border border-blue hover:bg-blue transition active:scale-95 duration-80"
-            data-target="empresa"> Editar
-        </button>
-        
         <!-- Display Mode -->
         <div id="display-empresa" class="grid md:grid-cols-2 gap-8 text-gray-800 text-[15px] leading-relaxed">
             <div class="space-y-2">

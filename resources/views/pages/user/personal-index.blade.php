@@ -76,9 +76,9 @@
                 </div>
 
                 <div class="text-center justify-center mt-14 fade-in">
-                    <p class="text-white text-three " style="text-shadow: 2px 4px 2px rgba(0,0,0,0.40)">
+                    <p class="text-white text-three" style="text-shadow: 2px 4px 2px rgba(0,0,0,0.40)">
                         Personal 
-                        <span class="text-three font-roboto_condensed_bold text-orange">
+                        <span class="text-two font-roboto_condensed_bold text-orange">
                             {{ $state == 'activo' ? 'Activo' : 'No Activo' }}
                         </span>
                     </p>
@@ -94,7 +94,7 @@
                     <x-index.personal :user="$user"></x-index-box>
                 @endforeach
             </div>
-            <!-- List -->
+            <!-- User List View -->
             <div id="userList" class="hidden w-[90%] px-5 py-6 transition-all">
                 <div class="overflow-x-auto bg-white rounded-xl shadow-md border border-gray-200">
                     <table class="min-w-full divide-y divide-gray-200 text-sm font-roboto">
