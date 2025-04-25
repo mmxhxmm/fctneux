@@ -21,6 +21,7 @@ export default {
             
             colors: {
                 blue: "#263652",
+                prim2: "#435C8A",
                 orange: "#db6c00",
                 black_transp: "rgba(0, 0, 0, 0.5)",
                 primary: "#263652", // A bit bluer than bg-gray-800

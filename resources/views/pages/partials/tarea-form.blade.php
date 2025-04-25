@@ -30,67 +30,105 @@
                     </div>
 
                     <div>
-                        <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
-                        <select name="estado" id="estado"
-                            class="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-blue focus:border-blue">
-                            <option value="to_do">Por hacer</option>
-                            <option value="in_progress">En progreso</option>
-                            <option value="revision">En revisión</option>
-                            <option value="blocked">Bloqueado</option>
-                            <option value="done">Completada</option>
-                        </select>
-                    </div>
-
-                    <div>
                         <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
                         <textarea name="descripcion" id="descripcion" rows="3"
                             class="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-blue focus:border-blue"></textarea>
                     </div>
+                    <div class="grid grid-cols-2 gap-6">
+                        <!-- Asignado a -->
+                        <div x-data="multiSelect()" class="relative">
+                            <label for="asignado" class="block text-sm font-medium text-gray-700 mb-1">Asignado a</label>
 
-                    <!-- Asignado a -->
-                    <div x-data="multiSelect()" class="relative">
-                        <label for="asignado" class="block text-sm font-medium text-gray-700 mb-1">Asignado a</label>
+                            <!-- Hidden input to store selected user IDs (comma-separated) -->
+                            <input type="hidden" name="asignado" :value="selected.join(',')" />
 
-                        <!-- Hidden input to store selected user IDs (comma-separated) -->
-                        <input type="hidden" name="asignado" :value="selected.join(',')" />
-
-                        <!-- Clickable input -->
-                        <div class="border border-gray-300 rounded-md px-3 py-2 bg-white text-black cursor-pointer shadow-sm" @click="open = !open">
-                            <template x-if="selected.length > 0">
-                                <span x-text="selectedLabels().join(', ')"></span>
-                            </template>
-                            <template x-if="selected.length === 0">
-                                <span class="text-gray-400">Selecciona usuarios...</span>
-                            </template>
-                        </div>
-
-                        <!-- Dropdown -->
-                        <div x-show="open" @click.outside="open = false"
-                            class="absolute z-50 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg h-40 overflow-y-auto">
-
-                            <!-- Search input -->
-                            <div class="px-3 py-2 border-b border-gray-200">
-                                <input type="text" x-model="search" placeholder="Buscar usuario..." class="w-full px-2 py-1 border border-gray-300 rounded text-sm">
+                            <!-- Clickable input -->
+                            <div class="border border-gray-300 rounded-md px-3 py-2 bg-white text-black cursor-pointer shadow-sm" @click="open = !open">
+                                <template x-if="selected.length > 0">
+                                    <span x-text="selectedLabels().join(', ')"></span>
+                                </template>
+                                <template x-if="selected.length === 0">
+                                    <span class="text-gray-400">Selecciona usuarios...</span>
+                                </template>
                             </div>
 
-                            <!-- Filtered results -->
-                            <template x-for="user in filteredUsers()" :key="user.id">
-                                <div class="px-4 py-2 hover:bg-gray-100 flex items-center gap-2 cursor-pointer"
-                                    @click="toggle(user)">
-                                    <input type="checkbox" :checked="selected.includes(user.id)" class="form-checkbox">
-                                    <span x-text="user.name"></span>
+                            <!-- Dropdown -->
+                            <div x-show="open" @click.outside="open = false"
+                                class="absolute z-50 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg h-40 overflow-y-auto">
+
+                                <!-- Search input -->
+                                <div class="px-3 py-2 border-b border-gray-200">
+                                    <input type="text" x-model="search" placeholder="Buscar usuario..." class="w-full px-2 py-1 border border-gray-300 rounded text-sm">
                                 </div>
-                            </template>
+
+                                <!-- Filtered results -->
+                                <template x-for="user in filteredUsers()" :key="user.id">
+                                    <div class="px-4 py-2 hover:bg-gray-100 flex items-center gap-2 cursor-pointer"
+                                        @click="toggle(user)">
+                                        <input type="checkbox" :checked="selected.includes(user.id)" class="form-checkbox">
+                                        <span x-text="user.name"></span>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                        
+
+                        <!-- Empresa -->
+                        <div x-data="multiSelectEmpresa()" class="relative">
+                            <label for="empresa_id" class="block text-sm font-medium text-gray-700 mb-1">Empresa</label>
+
+                            <!-- Hidden input to store selected empresa IDs (comma-separated) -->
+                            <input type="hidden" name="empresa_id" :value="selected.join(',')" />
+
+                            <!-- Clickable input -->
+                            <div class="border border-gray-300 rounded-md px-3 py-2 bg-white text-black cursor-pointer shadow-sm" @click="open = !open">
+                                <template x-if="selected.length > 0">
+                                    <span x-text="selectedLabels().join(', ')"></span>
+                                </template>
+                                <template x-if="selected.length === 0">
+                                    <span class="text-gray-400">Selecciona empresas...</span>
+                                </template>
+                            </div>
+
+                            <!-- Dropdown -->
+                            <div x-show="open" @click.outside="open = false"
+                                class="absolute z-50 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg h-40 overflow-y-auto">
+
+                                <!-- Search input -->
+                                <div class="px-3 py-2 border-b border-gray-200">
+                                    <input type="text" x-model="search" placeholder="Buscar empresa..." class="w-full px-2 py-1 border border-gray-300 rounded text-sm">
+                                </div>
+
+                                <!-- Filtered results -->
+                                <template x-for="empresa in filteredEmpresas()" :key="empresa.id">
+                                    <div class="px-4 py-2 hover:bg-gray-100 flex items-center gap-2 cursor-pointer"
+                                        @click="toggle(empresa)">
+                                        <input type="checkbox" :checked="selected.includes(empresa.id)" class="form-checkbox">
+                                        <span x-text="empresa.name"></span>
+                                    </div>
+                                </template>
+                            </div>
                         </div>
                     </div>
-
-                    <!-- Fecha Limite -->
-                    <div>
-                        <label for="fecha_limite" class="block text-sm font-medium text-gray-700 mb-1">Fecha límite</label>
-                        <input type="date" name="fecha_limite" id="fecha_limite"
-                            class="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-blue focus:border-blue">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+                            <select name="estado" id="estado"
+                                class="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-blue focus:border-blue">
+                                <option value="to_do">Por hacer</option>
+                                <option value="in_progress">En progreso</option>
+                                <option value="revision">En revisión</option>
+                                <option value="blocked">Bloqueado</option>
+                                <option value="done">Completada</option>
+                            </select>
+                        </div>
+                        <!-- Fecha Limite -->
+                        <div>
+                            <label for="fecha_limite" class="block text-sm font-medium text-gray-700 mb-1">Fecha límite</label>
+                            <input type="date" name="fecha_limite" id="fecha_limite"
+                                class="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-blue focus:border-blue">
+                        </div>
                     </div>
-
                     <!-- Buttons -->
                     <div class="flex justify-end gap-4 pt-4">
                         <button type="submit"

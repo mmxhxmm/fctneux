@@ -440,7 +440,9 @@
         <div  class="flex justify-center bg-white items-center">
             <div id="tareasContainer" class="flex flex-col space-y-20">
                 <div>
-                    <h2 class="font-bold px-4 py-1 rounded bg-gray-400 mb-4">POR HACER</h2>
+                    <div class="flex justify-center px-4 py-2 mb-4 rounded bg-blue">
+                        <h2 class="font-bold text-white ">POR HACER</h2>
+                    </div>
                     <div class="grid grid-cols-3 gap-6">
                         @forelse ($tareas->where('estado', 'to_do') as $tarea)
                             <x-index.tarea :tarea="$tarea"></x-index-box>
@@ -626,6 +628,31 @@
             filteredUsers() {
                 if (!this.search) return this.users;
                 return this.users.filter(u => u.name.toLowerCase().includes(this.search.toLowerCase()));
+            }
+        };
+    }
+
+    function multiSelectEmpresa() {
+        return {
+            open: false,
+            search: '',
+            selected: [],
+            empresas: @json($empresas->map(fn($name, $id) => ['id' => $id, 'name' => $name])->values()),
+            toggle(empresa) {
+                if (this.selected.includes(empresa.id)) {
+                    this.selected = this.selected.filter(id => id !== empresa.id);
+                } else {
+                    this.selected.push(empresa.id);
+                }
+            },
+            selectedLabels() {
+                return this.empresas
+                    .filter(e => this.selected.includes(e.id))
+                    .map(e => e.name);
+            },
+            filteredEmpresas() {
+                if (!this.search) return this.empresas;
+                return this.empresas.filter(e => e.name.toLowerCase().includes(this.search.toLowerCase()));
             }
         };
     }
