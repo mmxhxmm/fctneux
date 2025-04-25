@@ -3,7 +3,7 @@
     data-aos-offset="150"
     data-aos-once="true"
     {{ $attributes->merge([
-        'class' => 'user-card w-full max-w-lg rounded-2xl bg-white border m-1 border-blue  shadow-md hover:shadow-blue/30 transition-all duration-300',
+        'class' => 'user-card w-[350px] rounded-2xl bg-white border m-1 border-blue  shadow-md hover:shadow-blue/30 transition-all duration-300',
         'data-municipio' => strtolower($user->municipio),
         'tabindex' => 0
     ]) }}>
