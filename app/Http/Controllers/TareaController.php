@@ -7,70 +7,31 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Tarea;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-
 
 class TareaController extends Controller
 {
-    // public function index()
-    // {
-    //     $tareas = Tarea::all()->reverse();
-
-    //     // Get unique "asignado" values
-    //     $asignadoRaw = Tarea::select('asignado')->distinct()->pluck('asignado')->filter()->toArray();
-
-    //     $asignados = collect($asignadoRaw)->mapWithKeys(function ($item) {
-    //         return [$item => $item]; // No formatting logic, just display actual name
-    //     });
-
-    //         // Estados: desde la constante del modelo
-    //     $estados = Tarea::ESTADOS;
-
-    //     // Fechas límite únicas, formateadas
-    //     $fechasRaw = Tarea::select('fecha_limite')->distinct()->pluck('fecha_limite')->filter()->sort()->toArray();
-    //     $fechas_limite = collect($fechasRaw)->mapWithKeys(function ($date) {
-    //         $formatted = \Carbon\Carbon::parse($date)->format('Y-m-d');
-    //         return [$formatted => $formatted];
-    //     });
-
-    //     // Empresas: ID + Nombre
-    //     $empresaRaw = Tarea::select('id', 'nombre')->distinct()->get();
-    //     $empresas = $empresaRaw->pluck('nombre', 'id'); // [id => nombre]
-
-    //     return view('pages/tareas-index', compact('tareas', 'asignados', 'estados', 'fechas_limite', 'empresas'));
-    // }
-
     public function index()
     {
-        $user = Auth::user(); // Obtén al usuario autenticado
-    
-        // Obtener solo las tareas asignadas al usuario actual
-        // $tareas = Tarea::whereRaw("FIND_IN_SET(?, asignado)", [$user->name])->get();
-        $tareas = Tarea::where('asignado', $user->name)->get();
-    
-        // Asegúrate de ordenar las tareas por fecha límite o como prefieras
-        $tareas = $tareas->sortByDesc('fecha_limite'); // Ordenar por fecha límite descendente
-    
-        // Verifica si hay tareas asignadas
-        // dd($tareas->toArray()); // Convierte la colección a un array y visualiza los datos
-        // dd($user->name);  // Esto te muestra el nombre del usuario que se está utilizando para filtrar
-        // dd(get_class($tareas)); // Esto te debería devolver 'Illuminate\Database\Eloquent\Collection'
+        $tareas = Tarea::all()->reverse();
 
-        // El resto del código sigue igual...
+        // Get unique "asignado" values
         $asignadoRaw = Tarea::select('asignado')->distinct()->pluck('asignado')->filter()->toArray();
-    
+
         $asignados = collect($asignadoRaw)->mapWithKeys(function ($item) {
             return [$item => $item]; // No formatting logic, just display actual name
         });
-    
+
+            // Estados: desde la constante del modelo
         $estados = Tarea::ESTADOS;
-    
+
+        // Fechas límite únicas, formateadas
         $fechasRaw = Tarea::select('fecha_limite')->distinct()->pluck('fecha_limite')->filter()->sort()->toArray();
         $fechas_limite = collect($fechasRaw)->mapWithKeys(function ($date) {
             $formatted = \Carbon\Carbon::parse($date)->format('Y-m-d');
             return [$formatted => $formatted];
         });
-    
+
+        // Empresas: ID + Nombre
         $empresaRaw = Tarea::select('id', 'nombre')->distinct()->get();
         $empresas = $empresaRaw->pluck('nombre', 'id'); // [id => nombre]
 
@@ -100,7 +61,7 @@ class TareaController extends Controller
 
         return view('pages/tarea/tareas-historial', compact('tareas', 'asignados', 'estados', 'fechas_limite', 'empresas'));
     }
-    
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
