@@ -13,7 +13,7 @@
 
     <div class="py-12">
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 shadow sm:rounded-lg ">
+            <div class="px-8 py-12 shadow sm:rounded-lg bg-gray-100">
                 <div class="w-full flex justify-center">
                     <div class="w-[50em]">
                         @include("pages.partials.{$form}")

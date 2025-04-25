@@ -11,7 +11,7 @@
                 <div class="h-10 flex items-center space-x-4">
                     <!-- Añadir button -->
                     <div class="flex items-center justify-center space-x-4">
-                        <a href="{{ route('empresa-form-1') }}" class="px-7 bg-[#ff8300] rounded-full h-10 flex justify-center items-center text-center">
+                        <a href="{{ route('empresa-form-1') }}" class="px-7 bg-orange rounded-full h-10 flex justify-center items-center text-center">
                             <p class="text-white text-base font-bold">
                                 + Añadir
                             </p>

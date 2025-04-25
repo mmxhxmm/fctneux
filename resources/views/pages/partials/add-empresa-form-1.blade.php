@@ -1,6 +1,6 @@
 <section>
     <div class="flex justify-between items-center">
-        <header>
+        <!-- <header>
             <h2 class="text-lg font-medium text-gray-900">
                 {{ __('Añadir Nueva Empresa') }}
             </h2>
@@ -8,9 +8,7 @@
             <p class="mt-1 text-sm text-gray-600 ">
                 {{ __('Aquí se introducen los datos de la Empresa y el del Responsable Convenio.') }}
             </p>
-        </header>
-
-
+        </header> -->
     </div>
 
     <form method="POST" id="form" action="{{ route('store-empresa-1') }}" class="mt-6 space-y-6">
