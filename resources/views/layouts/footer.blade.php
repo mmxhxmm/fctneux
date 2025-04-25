@@ -1,5 +1,5 @@
-<footer class="bg-primary h-17 w-full">
-    <div class="pt-8 text-center text-white text-sm font-roboto_condensed">
+<footer class="bg-primary h-[15vh] w-full overflow-hidden">
+    <div class="pt-6 text-center text-white text-sm font-roboto_condensed">
         <div class="flex justify-center gap-x-3 mb-3">
             <a href="{{ route('empresa-index') }}" class="flex items-center justify-center gap-x-1 hover:underline focus:outline-none focus:underline" title="Ir a la página de Empresa">
                 <img src="{{ asset('images/icons/icons8-business-96.png') }}" alt="" width="20px" class="invert brightness-0">
@@ -18,7 +18,7 @@
         </div>
         <p>&copy;2025 CEAC FP. Todos los derechos reservados.<p>
     </div>
-    <div class="flex justify-end items-end mt-[-10px]">
+    <div class="flex justify-end items-end mt-[-25px]">
         <a href="{{ route('dashboard') }}" class="inline-block pb-2 px-4" title="Ir a la página de Dashboard">
             <p class="text-2xl text-white font-hammersmith">FCT<span class="text-orange">Nexus</span></p>
         </a>

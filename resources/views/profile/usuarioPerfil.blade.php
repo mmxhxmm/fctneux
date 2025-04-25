@@ -1,13 +1,13 @@
 <x-app-layout>
-    <section class="bg-white overflow-hidden">
-        <section class="relative bg-cover bg-center bg-fixed mb-16" style="background-image: url('../images/Group 58.png');">
+    <section class="h-[75vh] bg-white overflow-hidden">
+        <section class="relative bg-cover bg-center bg-fixed" style="background-image: url('../images/Group 58.png');">
         <!-- @dump($tareas) -->
             @if(is_countable($users) && count($users) > 0)
                 @foreach ($users as $key => $user)
                     @if (Auth::user()->name == $user->name) <!-- Cambio aquí -->
                         <!-- User Name Badge -->
-                        <div class="absolute left-[31%] transform -translate-x-1/2 md:top-[33%] w-fit">
-                            <div class="bg-gradient-to-r from-orange to-orange/80 shadow-lg rounded-full px-6 py-2">
+                        <div class="absolute left-[31%] transform -translate-x-1/2 md:top-[27%] w-fit">
+                            <div class="bg-orange shadow-lg rounded-full px-6 py-2">
                                 <h1 class="text-white text-center text-xl font-semibold tracking-wide uppercase">
                                     {{ $user->role }}
                                 </h1>
@@ -15,7 +15,7 @@
                         </div>
 
                         <!-- Info and Tasks -->
-                        <section class="pt-[7%]">
+                        <section class="pt-[4%]">
                             <div class="md:mx-[9%] sm:mx-[3%] p-6">
                                 <div class="flex flex-col md:flex-row md:gap-12 w-full">
 
@@ -44,14 +44,19 @@
                                                     <ul class="space-y-4">
                                                         @if ($tareas->count() > 0)
                                                             @foreach ($tareas as $tarea)
-                                                                <li class="flex flex-col sm:flex-row sm:items-start text-orange font-semibold bg-white p-4 rounded overflow-hidden pr-24">
-                                                                    <div class="w-8 h-8 flex items-center justify-center bg-orange text-white rounded-full text-lg flex-shrink-0">!</div>
-                                                                    <div class="-mt-4 sm:ml-3 flex flex-col text-sm text-black w-full">
-                                                                        <span class="font-bold">{{ \Carbon\Carbon::parse($tarea->fecha_limite)->format('Y-m-d') }}</span>
-                                                                        <span class="font-semibold">{{ $tarea->nombre }}</span>
-                                                                        <span class="text-sm text-gray-700 break-words whitespace-pre-line">{{ $tarea->descripcion }}</span>
-                                                                    </div>
-                                                                </li>
+                                                            <li class="bg-white p-4 rounded overflow-hidden pr-24 hover:bg-gray-100 transition cursor-pointer">
+                                                                @if ($tarea->empresa?->id)
+                                                                    <!-- <a href="{{ route('empresa-detail', ['id' => $tarea->empresa->id]) }}" class="flex flex-col sm:flex-row sm:items-start font-semibold w-full h-full"> -->
+                                                                    <a href="{{ route('empresa-detail') }}?id=2" class="flex flex-col sm:flex-row sm:items-start font-semibold w-full h-full">
+                                                                        <div class="w-8 h-8 flex items-center justify-center bg-orange text-white rounded-full text-lg flex-shrink-0">!</div>
+                                                                        <div class="-mt-4 sm:ml-3 flex flex-col text-sm text-black w-full">
+                                                                            <span class="font-bold">{{ \Carbon\Carbon::parse($tarea->fecha_limite)->format('Y-m-d') }}</span>
+                                                                            <span class="font-semibold">{{ $tarea->nombre }}</span>
+                                                                            <span class="text-sm text-gray-700 break-words whitespace-pre-line">{{ $tarea->descripcion }}</span>
+                                                                        </div>
+                                                                    </a>
+                                                                @endif
+                                                            </li>
                                                             @endforeach
                                                         @else
                                                             <li class="text-center text-gray-600">No hay tareas pendientes.</li>

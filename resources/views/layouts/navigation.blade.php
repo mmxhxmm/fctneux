@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-primary border-b border-gray-700">
+<nav x-data="{ open: false }" class="h-[10vh] bg-primary border-b border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -31,7 +31,7 @@
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md focus:outline-none transition ease-in-out duration-150">
                             <div class="flex flex-col justify-center items-center">
                                 <img src="{{ asset('images/icons/icons8-person-96.png') }}" alt="User Icon" width="30px" class="invert brightness-0">
-                                <div>{{ Auth::user()->name }}</div>
+                                <div class="text-[12px]">{{ Auth::user()->name }}</div>
                             </div>
 
                             <div class="ms-1">
