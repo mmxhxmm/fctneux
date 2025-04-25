@@ -8,7 +8,7 @@ git checkout dev -> Ir a dev + no olvidar Actualizarlo!
 git merge [your_branch] -> Mergear tu branch a dev y resolver conflictos
 
 [ADMIN ROLE INSIDE BLADE]
-@if (Auth::user()->role == 'Admin')
+@if (Auth::user()->role == 'admin')
 OR
 {{ __("You are a :role", ['role' => Auth::user()->role]) }}
 
@@ -55,7 +55,7 @@ foreach ($array as $p) {
 }
 
 // Add to visulaize data (to lowercase and first letter uppercase) ->
-ucwords(mb_strtolower())
+ucwords(mb_strtolower()) or ucfirst()
 
 // Parse date
 \Carbon\Carbon::parse($date)->format('d-m-Y');

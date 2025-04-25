@@ -65,7 +65,7 @@
                     <!-- Número de Plazas Asignadas -->
                     <div>
                         <x-input-label-light for="numPlazasAsignadas" :value="__('Número de Plazas Asignadas')" />
-                        <x-text-input type="number" value='0' min="0" max="100" id="numPlazasAsignadas" name="numPlazasAsignadas" class="mt-1 block w-full" />
+                        <x-text-input type="number" value='0' min="0" id="numPlazasAsignadas" name="numPlazasAsignadas" class="mt-1 block w-full" />
                         <x-input-error :messages="$errors->get('numPlazasAsignadas')" class="mt-2" />
                     </div>
                 </div>
@@ -323,47 +323,7 @@
             </a>
         </h2>
 
-        <div id="tutor_wrapper">
-            <div id="tutor">
-                <div class="grid grid-cols-3 gap-6 mb-6">
-                    <!-- DNI -->
-                    <div>
-                        <x-input-label-light for="tutor_dni" :value="__('DNI/NIE <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="tutor_dni" name="tutor_dni" type="text" class="mt-1 block w-full" autocomplete="dni" required />
-                        <x-input-error :messages="$errors->get('dni')" class="mt-2" />
-                    </div>
-
-                    <!-- Nombre -->
-                    <div>
-                        <x-input-label-light for="tutor_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="tutor_nombre" name="tutor_nombre" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
-                        <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
-                    </div>
-
-                    <!-- Apellido -->
-                    <div>
-                        <x-input-label-light for="tutor_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="tutor_apellido" name="tutor_apellido" type="text" class="mt-1 block w-full" autocomplete="apellido" required />
-                        <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-6 mb-6">
-                    <!-- Telefono -->
-                    <div>
-                        <x-input-label-light for="tutor_telefono" :value="__('Teléfono')" />
-                        <x-text-input id="tutor_telefono" name="tutor_telefono" type="text" class="mt-1 block w-full" autocomplete="telefono" />
-                        <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
-                    </div>
-
-                    <!-- Email -->
-                    <div>
-                        <x-input-label-light for="tutor_email" :value="__('Email')" />
-                        <x-text-input id="tutor_email" name="tutor_email" type="text" class="mt-1 block w-full" autocomplete="email" />
-                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div id="tutor_wrapper"></div>
         <!-- Hidden template for cloning -->
         <template id="tutor_template">
             <details class="tutor-section bg-white mt-6 border border-blue rounded-lg p-4 shadow-sm mb-6" open>
@@ -371,26 +331,28 @@
                     <span class="tutor-title-label">Tutor</span>
                     <button type="button" class="remove-tutor text-red-500 hover:text-red-700 text-sm ml-4">❌</button>
                 </summary>
+                <hr class="mt-2">
 
                 <div class="grid grid-cols-3 gap-6 my-6">
+                <input type="hidden" name="tutor_count" id="tutor_count" value="0">
                     <!-- DNI -->
                     <div>
                         <x-input-label-light for="tutor_dni" :value="__('DNI/NIE <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="tutor_dni" name="tutor_dni" type="text" class="mt-1 block w-full" autocomplete="dni" required />
+                        <x-text-input id="tutor_dni" name="tutor_dni" type="text" class="mt-1 block w-full" autocomplete="dni" />
                         <x-input-error :messages="$errors->get('dni')" class="mt-2" />
                     </div>
 
                     <!-- Nombre -->
                     <div>
                         <x-input-label-light for="tutor_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="tutor_nombre" name="tutor_nombre" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
+                        <x-text-input id="tutor_nombre" name="tutor_nombre" type="text" class="mt-1 block w-full" autocomplete="nombre"  />
                         <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
                     </div>
 
                     <!-- Apellido -->
                     <div>
                         <x-input-label-light for="tutor_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="tutor_apellido" name="tutor_apellido" type="text" class="mt-1 block w-full" autocomplete="apellido" required />
+                        <x-text-input id="tutor_apellido" name="tutor_apellido" type="text" class="mt-1 block w-full" autocomplete="apellido"  />
                         <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
                     </div>
                 </div>
@@ -421,48 +383,7 @@
                 <x-primary-nonsubmit-button type="button" id="add_section_button_3">{{ __(' + ') }}</x-primary-nonsubmit-button>
             </a>
         </h2>
-        <div id="tutorEmpresa_wrapper">
-            <div id="tutorEmpresa" >
-                <div class="grid grid-cols-3 gap-6 mb-6">
-                    <!-- DNI -->
-                    <div>
-                        <x-input-label-light for="tutorEmpresa_dni" :value="__('DNI/NIE <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="tutorEmpresa_dni" name="tutorEmpresa_dni" type="text" class="mt-1 block w-full" autocomplete="dni" required />
-                        <x-input-error :messages="$errors->get('dni')" class="mt-2" />
-                    </div>
-
-                    <!-- Nombre -->
-                    <div>
-                        <x-input-label-light for="tutorEmpresa_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="tutorEmpresa_nombre" name="tutorEmpresa_nombre" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
-                        <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
-                    </div>
-
-                    <!-- Apellido -->
-                    <div>
-                        <x-input-label-light for="tutorEmpresa_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="tutorEmpresa_apellido" name="tutorEmpresa_apellido" type="text" class="mt-1 block w-full" autocomplete="apellido" required />
-                        <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-6 mb-6">
-                    <!-- Telefono -->
-                    <div>
-                        <x-input-label-light for="tutorEmpresa_telefono" :value="__('Teléfono')" />
-                        <x-text-input id="tutorEmpresa_telefono" name="tutorEmpresa_telefono" type="text" class="mt-1 block w-full" autocomplete="telefono" />
-                        <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
-                    </div>
-
-                    <!-- Email -->
-                    <div>
-                        <x-input-label-light for="tutorEmpresa_email" :value="__('Email')" />
-                        <x-text-input id="tutorEmpresa_email" name="tutorEmpresa_email" type="text" class="mt-1 block w-full" autocomplete="email" />
-                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div id="tutorEmpresa_wrapper"></div>
         <!-- Hidden template for cloning -->
         <template id="tutorEmpresa_template">
             <details class="tutor-empresa-section bg-white mt-6 border border-blue rounded-lg p-4 shadow-sm mb-6" open>
@@ -470,26 +391,28 @@
                     <span class="tutor-empresa-title-label">Tutor Empresa</span>
                     <button type="button" class="remove-tutor-empresa text-red-500 hover:text-red-700 text-sm ml-4">❌</button>
                 </summary>
+                <hr class="mt-2">
 
                 <div class="grid grid-cols-3 gap-6 my-6">
+                <input type="hidden" name="tutorEmpresa_count" id="tutorEmpresa_count" value="0">
                     <!-- DNI -->
                     <div>
                         <x-input-label-light for="tutorEmpresa_dni" :value="__('DNI/NIE <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="tutorEmpresa_dni" name="tutorEmpresa_dni" type="text" class="mt-1 block w-full" autocomplete="dni" required />
+                        <x-text-input id="tutorEmpresa_dni" name="tutorEmpresa_dni" type="text" class="mt-1 block w-full" autocomplete="dni" />
                         <x-input-error :messages="$errors->get('dni')" class="mt-2" />
                     </div>
 
                     <!-- Nombre -->
                     <div>
                         <x-input-label-light for="tutorEmpresa_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="tutorEmpresa_nombre" name="tutorEmpresa_nombre" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
+                        <x-text-input id="tutorEmpresa_nombre" name="tutorEmpresa_nombre" type="text" class="mt-1 block w-full" autocomplete="nombre" />
                         <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
                     </div>
 
                     <!-- Apellido -->
                     <div>
                         <x-input-label-light for="tutorEmpresa_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="tutorEmpresa_apellido" name="tutorEmpresa_apellido" type="text" class="mt-1 block w-full" autocomplete="apellido" required />
+                        <x-text-input id="tutorEmpresa_apellido" name="tutorEmpresa_apellido" type="text" class="mt-1 block w-full" autocomplete="apellido"  />
                         <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
                     </div>
                 </div>
@@ -517,87 +440,174 @@
     </form>
 </section>
 <script>
-            function updatePracticaTitles() {
-                const sections = document.querySelectorAll('.practica-section .practica-title-label');
-                sections.forEach((label, index) => {
-                    label.textContent = `Práctica #${index + 2}`;
-                });
-            }
 
-            document.getElementById('add_section_button_1').addEventListener('click', function () {
-                const wrapper = document.getElementById('practica_wrapper');
-                const template = document.getElementById('practica_template');
-                const clone = template.content.cloneNode(true);
-                wrapper.appendChild(clone);
+    document.getElementById('form').addEventListener('submit', function (e) {
+    const sections = document.querySelectorAll('.tutor-section');
+
+        sections.forEach(section => {
+            const dni = section.querySelector('[name="tutor_dni"]').value.trim();
+            const nombre = section.querySelector('[name="turtor_nombre"]').value.trim();
+            const apellido = section.querySelector('[name="tutor_apellido"]').value.trim();
+
+            if (!dni && !nombre && !apellido) {
+                section.remove(); // Remove this empty responsable block
+            }
+        });
+    });
+
+    document.getElementById('form').addEventListener('submit', function (e) {
+    const sections = document.querySelectorAll('.tutor-empresa-section');
+
+        sections.forEach(section => {
+            const dni = section.querySelector('[name="tutorEmpresa_dni"]').value.trim();
+            const nombre = section.querySelector('[name="tutorEmpresa_nombre"]').value.trim();
+            const apellido = section.querySelector('[name="tutorEmpresa_apellido"]').value.trim();
+
+            if (!dni && !nombre && !apellido) {
+                section.remove(); // Remove this empty responsable block
+            }
+        });
+    });
+
+    function updatePracticaTitles() {
+        const sections = document.querySelectorAll('.practica-section .practica-title-label');
+        sections.forEach((label, index) => {
+            label.textContent = `Práctica #${index + 2}`;
+        });
+    }
+
+    document.getElementById('add_section_button_1').addEventListener('click', function () {
+        const wrapper = document.getElementById('practica_wrapper');
+        const template = document.getElementById('practica_template');
+        const clone = template.content.cloneNode(true);
+        wrapper.appendChild(clone);
+        updatePracticaTitles();
+    });
+
+    document.getElementById('practica_wrapper').addEventListener('click', function (e) {
+        if (e.target && e.target.classList.contains('remove-practica')) {
+            const section = e.target.closest('.practica-section');
+            if (section) {
+                section.remove();
                 updatePracticaTitles();
-            });
-
-            document.getElementById('practica_wrapper').addEventListener('click', function (e) {
-                if (e.target && e.target.classList.contains('remove-practica')) {
-                    const section = e.target.closest('.practica-section');
-                    if (section) {
-                        section.remove();
-                        updatePracticaTitles();
-                    }
-                }
-            });
-
-            document.addEventListener('DOMContentLoaded', updatePracticaTitles);
-
-            // Tutor
-            function updateTutorTitles() {
-                const sections = document.querySelectorAll('.tutor-section .tutor-title-label');
-                sections.forEach((label, index) => {
-                    label.textContent = `Tutor #${index + 2}`;
-                });
             }
+        }
+    });
 
-            document.getElementById('add_section_button_2').addEventListener('click', function () {
-                const wrapper = document.getElementById('tutor_wrapper');
-                const template = document.getElementById('tutor_template');
-                const clone = template.content.cloneNode(true);
-                wrapper.appendChild(clone);
+    document.addEventListener('DOMContentLoaded', updatePracticaTitles);
+
+    // Tutor
+    function updateTutorTitles() {
+        const sections = document.querySelectorAll('.tutor-section');
+        document.getElementById('tutor_count').value = sections.length;
+        sections.forEach((section, index) => {
+        const num = index + 1;
+
+        // Update title
+        section.querySelector('.tutor-title-label').textContent = `Tutor Academico #${num}`;
+
+        // Update input IDs (they start duplicated from template)
+        const dni = section.querySelector('[id^="tutor_dni"]');
+        if (dni) dni.id = `tutor_dni_${num}`;
+
+        const nombre = section.querySelector('[id^="tutor_nombre"]');
+        if (nombre) nombre.id = `tutor_nombre_${num}`;
+
+        const apellido = section.querySelector('[id^="tutor_apellido"]');
+        if (apellido) apellido.id = `tutor_apellido_${num}`;
+
+        const telefono = section.querySelector('[id^="tutor_telefono"]');
+        if (telefono) telefono.id = `tutor_telefono_${num}`;
+
+        const email = section.querySelector('[id^="tutor_email"]');
+        if (email) email.id = `tutor_email_${num}`;
+
+        // Update labels
+        const labels = section.querySelectorAll('label');
+        labels.forEach(label => {
+            const forAttr = label.getAttribute('for');
+            if (forAttr && forAttr.startsWith('tutor_')) {
+                label.setAttribute('for', `${forAttr}_${num}`);
+            }
+        });
+    });
+    }
+
+    document.getElementById('add_section_button_2').addEventListener('click', function () {
+        const wrapper = document.getElementById('tutor_wrapper');
+        const template = document.getElementById('tutor_template');
+        const clone = template.content.cloneNode(true);
+        wrapper.appendChild(clone);
+        updateTutorTitles();
+    });
+
+    document.getElementById('tutor_wrapper').addEventListener('click', function (e) {
+        if (e.target && e.target.classList.contains('remove-tutor')) {
+            const section = e.target.closest('.tutor-section');
+            if (section) {
+                section.remove();
                 updateTutorTitles();
-            });
-
-            document.getElementById('tutor_wrapper').addEventListener('click', function (e) {
-                if (e.target && e.target.classList.contains('remove-tutor')) {
-                    const section = e.target.closest('.tutor-section');
-                    if (section) {
-                        section.remove();
-                        updateTutorTitles();
-                    }
-                }
-            });
-
-            document.addEventListener('DOMContentLoaded', updateTutorTitles);
-
-            //  Tutor Empresa
-
-            function updateTutorEmpresaTitles() {
-                const sections = document.querySelectorAll('.tutor-empresa-section .tutor-empresa-title-label');
-                sections.forEach((label, index) => {
-                    label.textContent = `Tutor Empresa #${index + 2}`;
-                });
             }
+        }
+    });
 
-            document.getElementById('add_section_button_3').addEventListener('click', function () {
-                const wrapper = document.getElementById('tutorEmpresa_wrapper');
-                const template = document.getElementById('tutorEmpresa_template');
-                const clone = template.content.cloneNode(true);
-                wrapper.appendChild(clone);
+    document.addEventListener('DOMContentLoaded', updateTutorTitles);
+
+    //  Tutor Empresa
+
+    function updateTutorEmpresaTitles() {
+        const sections = document.querySelectorAll('.tutor-empresa-section');
+        document.getElementById('tutorEmpresa_count').value = sections.length;
+        sections.forEach((section, index) => {
+        const num = index + 1;
+
+        // Update title
+        section.querySelector('.tutor-empresa-title-label').textContent = `Tutor Empresa #${num}`;
+
+        // Update input IDs (they start duplicated from template)
+        const dni = section.querySelector('[id^="tutorEmpresa_dni"]');
+        if (dni) dni.id = `tutorEmpresa_dni_${num}`;
+
+        const nombre = section.querySelector('[id^="tutorEmpresa_nombre"]');
+        if (nombre) nombre.id = `tutorEmpresa_nombre_${num}`;
+
+        const apellido = section.querySelector('[id^="tutorEmpresa_apellido"]');
+        if (apellido) apellido.id = `tutorEmpresa_apellido_${num}`;
+
+        const telefono = section.querySelector('[id^="tutorEmpresa_telefono"]');
+        if (telefono) telefono.id = `tutorEmpresa_telefono_${num}`;
+
+        const email = section.querySelector('[id^="tutorEmpresa_email"]');
+        if (email) email.id = `tutorEmpresa_email_${num}`;
+
+        // Update labels
+        const labels = section.querySelectorAll('label');
+        labels.forEach(label => {
+            const forAttr = label.getAttribute('for');
+            if (forAttr && forAttr.startsWith('tutorEmpresa_')) {
+                label.setAttribute('for', `${forAttr}_${num}`);
+            }
+        });
+    });
+    }
+
+    document.getElementById('add_section_button_3').addEventListener('click', function () {
+        const wrapper = document.getElementById('tutorEmpresa_wrapper');
+        const template = document.getElementById('tutorEmpresa_template');
+        const clone = template.content.cloneNode(true);
+        wrapper.appendChild(clone);
+        updateTutorEmpresaTitles();
+    });
+
+    document.getElementById('tutorEmpresa_wrapper').addEventListener('click', function (e) {
+        if (e.target && e.target.classList.contains('remove-tutor-empresa')) {
+            const section = e.target.closest('.tutor-empresa-section');
+            if (section) {
+                section.remove();
                 updateTutorEmpresaTitles();
-            });
+            }
+        }
+    });
 
-            document.getElementById('tutorEmpresa_wrapper').addEventListener('click', function (e) {
-                if (e.target && e.target.classList.contains('remove-tutor-empresa')) {
-                    const section = e.target.closest('.tutor-empresa-section');
-                    if (section) {
-                        section.remove();
-                        updateTutorEmpresaTitles();
-                    }
-                }
-            });
-
-            document.addEventListener('DOMContentLoaded', updateTutorEmpresaTitles);
+    document.addEventListener('DOMContentLoaded', updateTutorEmpresaTitles);
 </script>

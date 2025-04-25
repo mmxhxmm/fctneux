@@ -1,6 +1,6 @@
 <section>
     <div class="flex justify-between items-center">
-        <header>
+        <!-- <header>
             <h2 class="text-lg font-medium text-gray-900">
                 {{ __('Añadir Nueva Empresa') }}
             </h2>
@@ -8,9 +8,7 @@
             <p class="mt-1 text-sm text-gray-600 ">
                 {{ __('Aquí se introducen los datos de la Empresa y el del Responsable Convenio.') }}
             </p>
-        </header>
-
-
+        </header> -->
     </div>
 
     <form method="POST" id="form" action="{{ route('store-empresa-1') }}" class="mt-6 space-y-6">
@@ -247,47 +245,15 @@
 
         <!-- Responsable -->
         <h2 class="text-lg font-medium text-gray-900  flex justify-between">
-            {{ __('Añadir Responsable Convenio #1') }}
+            {{ __('Añadir Responsable Convenio') }}
             <x-primary-nonsubmit-button type="button" id="add_section_button_1">
                 {{ __(' + ') }}
             </x-primary-nonsubmit-button>
         </h2>
 
         <!-- Wrapper where all Responsable Convenio forms will go -->
-        <div id="responsables_wrapper">
-            <div class="grid grid-cols-3 gap-6 mb-6"> 
-                <div>
-                    <x-input-label-light for="rc_dni" :value="__('DNI <span class=\'text-red-500\'>*</span>')" />
-                    <x-text-input id="rc_dni" name="rc_dni" value="{{ old('rc_dni', session('responsableConvenio_draft')?->dni) }}" type="text" class="mt-1 block w-full" autocomplete="dni" required />
-                    <x-input-error :messages="$errors->get('rc_dni')" class="mt-2" />
-                </div>
+        <div id="responsables_wrapper"></div>
 
-                <div>
-                    <x-input-label-light for="rc_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
-                    <x-text-input id="rc_nombre" name="rc_nombre" value="{{ old('rc_nombre', session('responsableConvenio_draft')?->nombre) }}" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
-                    <x-input-error :messages="$errors->get('rc_nombre')" class="mt-2" />
-                </div>
-
-                <div>
-                    <x-input-label-light for="rc_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
-                    <x-text-input id="rc_apellido" name="rc_apellido" value="{{ old('rc_apellido', session('responsableConvenio_draft')?->apellido) }}" type="text" class="mt-1 block w-full" autocomplete="apellido" required />
-                    <x-input-error :messages="$errors->get('rc_apellido')" class="mt-2" />
-                </div>
-            </div>
-            <div class="grid grid-cols-2 gap-6 mb-6"> 
-                <div>
-                    <x-input-label-light for="rc_telefono" :value="__('Teléfono')" />
-                    <x-text-input id="rc_telefono" name="rc_telefono" value="{{ old('rc_telefono', session('responsableConvenio_draft')?->telefono) }}" type="text" class="mt-1 block w-full" autocomplete="telefono" />
-                    <x-input-error :messages="$errors->get('rc_telefono')" class="mt-2" />
-                </div>
-
-                <div>
-                    <x-input-label-light for="rc_email" :value="__('Email')" />
-                    <x-text-input id="rc_email" name="rc_email" value="{{ old('rc_email', session('responsableConvenio_draft')?->email) }}" type="text" class="mt-1 block w-full" autocomplete="email" />
-                    <x-input-error :messages="$errors->get('rc_email')" class="mt-2" />
-                </div>
-            </div>
-        </div> 
         
         <template id="responsable_template">
             <details class="responsable-section bg-white border rounded-lg p-4 shadow-sm mb-6" open>
@@ -295,23 +261,26 @@
                     <span class="title-label">Responsable Convenio</span>
                     <button type="button" class="remove-section text-red-500 hover:text-red-700 text-sm ml-4">❌</button>
                 </summary>
+                <hr class="mt-2">
 
-                <div class="grid grid-cols-3 gap-6 mb-6"> 
+                <div class="grid grid-cols-3 gap-6 my-6"> 
+                    <input type="hidden" name="responsable_count" id="responsable_count" value="0">
+
                     <div>
                         <x-input-label-light for="rc_dni" :value="__('DNI <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="rc_dni" name="rc_dni" value="{{ old('rc_dni', session('responsableConvenio_draft')?->dni) }}" type="text" class="mt-1 block w-full" autocomplete="dni" required />
+                        <x-text-input id="rc_dni" name="rc_dni" value="{{ old('rc_dni', session('responsableConvenio_draft')?->dni) }}" type="text" class="mt-1 block w-full" autocomplete="dni"  />
                         <x-input-error :messages="$errors->get('rc_dni')" class="mt-2" />
                     </div>
 
                     <div>
                         <x-input-label-light for="rc_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="rc_nombre" name="rc_nombre" value="{{ old('rc_nombre', session('responsableConvenio_draft')?->nombre) }}" type="text" class="mt-1 block w-full" autocomplete="nombre" required />
+                        <x-text-input id="rc_nombre" name="rc_nombre" value="{{ old('rc_nombre', session('responsableConvenio_draft')?->nombre) }}" type="text" class="mt-1 block w-full" autocomplete="nombre"  />
                         <x-input-error :messages="$errors->get('rc_nombre')" class="mt-2" />
                     </div>
 
                     <div>
                         <x-input-label-light for="rc_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="rc_apellido" name="rc_apellido" value="{{ old('rc_apellido', session('responsableConvenio_draft')?->apellido) }}" type="text" class="mt-1 block w-full" autocomplete="apellido" required />
+                        <x-text-input id="rc_apellido" name="rc_apellido" value="{{ old('rc_apellido', session('responsableConvenio_draft')?->apellido) }}" type="text" class="mt-1 block w-full" autocomplete="apellido"  />
                         <x-input-error :messages="$errors->get('rc_apellido')" class="mt-2" />
                     </div>
                 </div>
@@ -338,14 +307,57 @@
 
 <script>
 
-    let responsableCount = 2;
+    document.getElementById('form').addEventListener('submit', function (e) {
+        const sections = document.querySelectorAll('.responsable-section');
+
+        sections.forEach(section => {
+            const dni = section.querySelector('[name="rc_dni"]').value.trim();
+            const nombre = section.querySelector('[name="rc_nombre"]').value.trim();
+            const apellido = section.querySelector('[name="rc_apellido"]').value.trim();
+
+            if (!dni && !nombre && !apellido) {
+                section.remove(); // Remove this empty responsable block
+            }
+        });
+    });
 
     function updateTitles() {
-        const sections = document.querySelectorAll('.responsable-section .title-label');
-        sections.forEach((label, index) => {
-            label.textContent = `Responsable Convenio #${index + 2}`;
+    const sections = document.querySelectorAll('.responsable-section');
+    document.getElementById('responsable_count').value = sections.length;
+
+    sections.forEach((section, index) => {
+        const num = index + 1;
+
+        // Update title
+        section.querySelector('.title-label').textContent = `Responsable Convenio #${num}`;
+
+        // Update input IDs (they start duplicated from template)
+        const dni = section.querySelector('[id^="rc_dni"]');
+        if (dni) dni.id = `rc_dni_${num}`;
+
+        const nombre = section.querySelector('[id^="rc_nombre"]');
+        if (nombre) nombre.id = `rc_nombre_${num}`;
+
+        const apellido = section.querySelector('[id^="rc_apellido"]');
+        if (apellido) apellido.id = `rc_apellido_${num}`;
+
+        const telefono = section.querySelector('[id^="rc_telefono"]');
+        if (telefono) telefono.id = `rc_telefono_${num}`;
+
+        const email = section.querySelector('[id^="rc_email"]');
+        if (email) email.id = `rc_email_${num}`;
+
+        // Update labels
+        const labels = section.querySelectorAll('label');
+        labels.forEach(label => {
+            const forAttr = label.getAttribute('for');
+            if (forAttr && forAttr.startsWith('rc_')) {
+                label.setAttribute('for', `${forAttr}_${num}`);
+            }
         });
-    }
+    });
+}
+
 
     document.getElementById('add_section_button_1').addEventListener('click', function () {
         const template = document.getElementById('responsable_template');

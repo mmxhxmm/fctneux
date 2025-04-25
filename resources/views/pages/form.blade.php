@@ -4,7 +4,7 @@
             <x-button-salir :redirect="route('empresa-index')" />
                 <div class="text-center justify-center mt-20 fade-in">
                     <p class="text-white text-three " style="text-shadow: 2px 4px 2px rgba(0,0,0,0.40)">
-                        Añadir nueva <span class="text-two font-roboto_condensed_bold text-orange">Empresa</span>
+                        Añadir nueva <span class="text-two font-roboto_condensed_bold tracking-wide text-orange">Empresa</span>
                     </p>
                 </div>
             </div>
@@ -13,7 +13,7 @@
 
     <div class="py-12">
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 shadow sm:rounded-lg ">
+            <div class="px-8 py-12 shadow sm:rounded-lg bg-gray-100">
                 <div class="w-full flex justify-center">
                     <div class="w-[50em]">
                         @include("pages.partials.{$form}")

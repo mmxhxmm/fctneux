@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Empresa;
 use App\Models\ResponsableConvenio;
 use App\Models\CentroTrabajo;
@@ -53,10 +54,45 @@ class EmpresaUpdateController extends Controller
 
     public function delete_empresa(Request $request, $id)
     {
-        $empresa = Empresa::findOrFail($id);
-        $empresa->delete();
+        DB::transaction(function () use ($id) {
+            $empresa = Empresa::with([
+                'centrosTrabajo.personaContacto',
+                'practica.tutores',
+                'practica.tutoresEmpresa',
+                'responsablesConvenio',
+                'practica',
+                'tareas'
+            ])->findOrFail($id);
+    
+            foreach ($empresa->centrosTrabajo as $centro) {
+                foreach ($centro->personaContacto as $contacto) {
+                    $contacto->delete();
+                }
+                $centro->delete();
+            }
+    
+            foreach ($empresa->practica as $practica) {
+                foreach ($practica->tutores as $tutor) {
+                    $tutor->delete();
+                }
+                foreach ($practica->tutoresEmpresa as $tutorEmpresa) {
+                    $tutorEmpresa->delete();
+                }
+                $practica->delete();
+            }
+    
+            foreach ($empresa->responsablesConvenio as $responsable) {
+                $responsable->delete();
+            }
+
+            foreach ($empresa->tareas as $tarea) {
+                $tarea->delete();
+            }
+
+            $empresa->delete();
+        });
         
-        return response()->back()->with('success', 'Empresa eliminado correctamente');
+        return redirect(route('empresa-index'))->with('success', 'Empresa eliminado correctamente');
     }
 
 
@@ -160,8 +196,15 @@ class EmpresaUpdateController extends Controller
 
     public function delete_ct(Request $request, $id)
     {
-        $centroTrabajo = CentroTrabajo::findOrFail($id);
-        $centroTrabajo->delete();
+        DB::transaction(function () use ($id) {
+            $ct = CentroTrabajo::with(['personaContacto'])->findOrFail($id);
+    
+            foreach ($ct->personaContacto as $personaContacto) {
+                $personaContacto->delete();
+            }
+
+            $ct->delete();
+        });
         
         return back()->with('success', 'Centro Trabajo eliminado correctamente');
     }
@@ -262,6 +305,7 @@ class EmpresaUpdateController extends Controller
         $practica = Practica::findOrFail($id);
 
         $validated = $request->validate([
+            'numPlazasAsignadas' => 'nullable|integer',
             'cicloFormativo' => 'nullable|string|max:255',
             'cursoAcademico' => 'nullable|string|max:255',
             'periodoFrom' => 'nullable|date',
@@ -280,8 +324,19 @@ class EmpresaUpdateController extends Controller
 
     public function delete_practica(Request $request, $id)
     {
-        $practica = Practica::findOrFail($id);
-        $practica->delete();
+        DB::transaction(function () use ($id) {
+            $practica = Practica::with(['tutores', 'tutoresEmpresa'])->findOrFail($id);
+    
+            foreach ($practica->tutores as $tutor) {
+                $tutor->delete();
+            }
+
+            foreach ($practica->tutoresEmpresa as $tutorEmpresa) {
+                $tutorEmpresa->delete();
+            }
+
+            $practica->delete();
+        });
         
         return back()->with('success', 'Practica eliminado correctamente');
     }

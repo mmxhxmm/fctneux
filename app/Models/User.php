@@ -50,16 +50,4 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    public function getSituacionAttribute($value) {
-        return strtoupper(substr($value, 0, 1)) . substr($value, 1);
-    }
-
-    public function getMunicipioAttribute($value) {
-        return strtoupper(substr($value, 0, 1)) . substr($value, 1);
-    }
-
-    public function getRoleAttribute($value) {
-        return strtoupper(substr($value, 0, 1)) . substr($value, 1);
-    }
 }

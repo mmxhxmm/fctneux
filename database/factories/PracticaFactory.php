@@ -21,22 +21,21 @@ class PracticaFactory extends Factory
         
         return [
             'cicloFormativo' => $this->faker->randomElement([
-                'Desarrollo de Aplicaciones Web',
-                'Administración de Sistemas Informáticos',
-                'Desarrollo de Aplicaciones Multiplataforma',
-                'Marketing Digital',
-                'Diseño Gráfico'
+                'daw',
+                'asix',
+                'dam',
+                'marketing'
             ]),
             'cursoAcademico' => $this->faker->randomElement(['2022/2023', '2023/2024', '2024/2025']),
             'numPlazasAsignadas' => $this->faker->numberBetween(0, 10),
             'periodoFrom' => $startDate,
             'periodoTo' => $endDate,
-            'horarioFrom' => $this->faker->date('d-m-Y'),
-            'horarioTo' => $this->faker->date('d-m-Y', '+6 months'),
+            'horarioFrom' => $this->faker->randomElement(['9:00', '9:30', '10:00', '10:30']),
+            'horarioTo' => $this->faker->randomElement(['14:00', '14:30', '15:00', '15:30']),
             'convenioMarco' => $this->faker->randomElement(['ceac', 'qbid']),
             'usoLogos' => $this->faker->randomElement(['si', 'no', 'autorizacion']),
             'observaciones' => $this->faker->optional(0.7)->text(200),
-            'tecnicoGestion' => null,
+            'tecnicoGestion' => 1,
             'empresa_id' => null,
             'created_at' => now(),
             'updated_at' => now(),

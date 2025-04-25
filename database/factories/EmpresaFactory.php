@@ -19,20 +19,20 @@ class EmpresaFactory extends Factory
         return [
             'cif' => $this->faker->unique()->regexify('[A-Z]{1}[0-9]{8}'),
             'nombre' => $this->faker->company,
-            'colaboracion' => $this->faker->randomElement(['Prospección', 'Colaboración', 'Inactiva']),
+            'colaboracion' => $this->faker->randomElement(['prospeccion', 'colaboracion', 'inactiva']),
             'gestiones' => $this->faker->randomElement([
-                'P - Primer contacto', 'P - Pendente respuesta', 'P - Volver a contactar', 'P - No acogen alumnado', 
-                'C - Pendiente firma Convenio', 'C - Plazas conseguidas', 'C - Solicitud plazas'
+                'primer_contacto', 'pendente_respuesta', 'volver_contactar', 'no_acogen_alumnado', 
+                'pendiente_firma_convenio', 'plazas_conseguidas', 'solicitud_plazas'
             ]),
-            'modalidad' => $this->faker->randomElement(['Presencial', 'Remoto', 'Semipresencial']),
-            'ofertaLaboral' => $this->faker->randomElement(['Si', 'No']),
+            'modalidad' => $this->faker->randomElement(['presencial', 'remoto', 'semipresencial']),
+            'ofertaLaboral' => $this->faker->randomElement(['si', 'no']),
             'entidad' => $this->faker->company,
             'comunidad' => $this->faker->randomElement(['Catalunya', 'Aragon', 'Canarias']),
             'provincia' => $this->faker->randomElement(['Barcelona', 'Zaragoza', 'Sevilla']),
             'municipio' => $this->faker->city,
             'direccion' => $this->faker->address,
             'codigoPostal' => $this->faker->randomNumber(5, true),
-            'familiaPersonal' => $this->faker->randomElement(['Sanidad', 'Informática', 'Hostelería', 'Marketing']),
+            'familiaPersonal' => $this->faker->randomElement(['sanidad', 'informatica', 'hosteleria', 'marketing']),
             'observaciones' => $this->faker->paragraph,
             'created_at' => now(),
             'updated_at' => now(),

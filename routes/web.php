@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckEmpresa;
+use App\Http\Middleware\CheckEmpresaID;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
@@ -11,11 +12,24 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\TareaController;
 use App\Http\Controllers\DraftController;
 use App\Http\Controllers\EmpresaUpdateController;
+use App\Mail\UserResetEmail;
+use App\Models\User;
 
 // User Authorization
 Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+// Email Test
+Route::get('email', function () {
+    $user = User::find(1);
+
+    // Mail::to('Wd4lE@example.com')->send(new RegistrationSecond($registration));
+
+    $mail = new UserResetEmail($user);
+    return $mail;
+});
 
 // Pages that will run only after logging in
 Route::middleware('auth')->group(function () {
@@ -23,17 +37,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/usuarios-buscar', [UserController::class, 'search'])->name('usuarios-buscar');
+    Route::get('/usuarioPerfil', [ProfileController::class, 'mostrarTareas'])->name('usuarioPerfil');
 
-    // Usuario perfil
+    // Usuario Index
+    Route::get('/usuarios-active-index', [UserController::class, 'active'])->name('user.active');
+    Route::get('/usuarios-no_active-index', [UserController::class, 'no_active'])->name('user.no_active');
+    Route::get('/usuarios-search', [UserController::class, 'search'])->name('user.search');
+    Route::put('/usuarios-store', [UserController::class, 'store'])->name('user.add');
+
+    // Usuario Perfil
     Route::get('/perfil', function () {
         return view('profile/perfil');
     })->name('perfil');
     Route::get('/perfil', [UserController::class, 'all'])->name('perfil');
-
-    Route::get('/usuarioPerfil', [ProfileController::class, 'mostrarTareas'])->name('usuarioPerfil');
-    // Route::get('/usuarioPerfil', [TareaController::class, 'index'])->name('usuarioPerfil');
-
 
     // Empresa Forms
     // Checks if empresa_draft exists, redirects to empresa-form-1 if not
@@ -55,6 +71,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/clear-drafts', [DraftController::class, 'clearDrafts'])->name('clear-drafts');
 
     // Empresa Detail
+    Route::middleware([CheckEmpresaID::class])->group(function () {
+        Route::get('/empresa-detail', [EmpresaController::class, 'index_2'])->name('empresa-detail');
+    });
+    
     Route::put('/update-empresa/{id}', [EmpresaUpdateController::class, 'update_empresa'])->name('empresa.update');
     Route::delete('/delete-empresa/{id}', [EmpresaUpdateController::class, 'delete_empresa'])->name('empresa.delete');
     Route::put('/add-rc/{id}', [EmpresaUpdateController::class, 'add_rc'])->name('responsables.add');
@@ -78,36 +98,31 @@ Route::middleware('auth')->group(function () {
 
     // Empresa Index
     Route::get('/empresa-index', [EmpresaController::class, 'index'])->name('empresa-index');
-    Route::get('/empresa-detail', [EmpresaController::class, 'index_2'])->name('empresa-detail');
     Route::get('/empresa-index-3', [EmpresaController::class, 'index_3'])->name('empresa-index-3');
     Route::get('/empresas/filtros', [EmpresaController::class, 'filtro'])->name('empresa.filtro');
 
 
-
     // Tareas
     Route::get('/tareas-index', [TareaController::class, 'index'])->name('tareas-index');
-    Route::get('/tareas-historial', function () {
-        return view('pages/tareas-historial');
-    })->name('tareas-historial');
+    Route::get('/tareas-historial', [TareaController::class, 'historial'])->name('tareas-historial');
     Route::get('/tareas-store', [TareaController::class, 'store'])->name('tareas-store');
     // Route::put('/tareas-store/{id}', [TareaController::class, 'store'])->name('tareas-store');
-    Route::patch('/tareas/{id}/done', [TareaController::class, 'markAsDone'])->name('tarea.markAsDone');
+    Route::patch('/tareas/{id}/update-estado', [TareaController::class, 'update_estado'])->name('tarea.update_estado');
     Route::get('/tareas-form', function () {
         return view('form-datos-tareas');
     })->name('tareas-form');
     Route::get('/tareas-busqueda', [TareaController::class, 'buscar'])->name('tareas-busqueda');
     Route::get('/tareas-filtro', [TareaController::class, 'asignado_filtro'])->name('tareas.filtro');
-
 });
 
 // Pages that only the admin can access
-Route::middleware(['auth', 'role:Admin'])->group(function(){ 
-    // Personal
-    Route::get('/admin/personal-activo', [UserController::class, 'active'])->name('personal-activo');
-    Route::get('/admin/personal-no-activo', [UserController::class, 'no_active'])->name('personal-no-activo');
-    Route::get('/admin/personal-form', function () {
-        return view('/admin/form-datos-personal');
-    })->name('personal-form');
+Route::middleware(['auth', 'role:admin'])->group(function(){ 
+
+});
+
+// Error route
+Route::fallback(function () {
+    return view('pages/errors/404');
 });
 
 require __DIR__.'/auth.php';
