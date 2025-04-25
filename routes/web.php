@@ -32,6 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/perfil', [UserController::class, 'all'])->name('perfil');
 
     Route::get('/usuarioPerfil', [ProfileController::class, 'mostrarTareas'])->name('usuarioPerfil');
+    // Route::get('/usuarioPerfil', [TareaController::class, 'index'])->name('usuarioPerfil');
+
 
     // Empresa Forms
     // Checks if empresa_draft exists, redirects to empresa-form-1 if not
