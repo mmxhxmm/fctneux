@@ -453,7 +453,9 @@
                 </div>
 
                 <div>
-                    <h2 class="font-bold px-4 py-1 rounded bg-gray-400 mb-4">EN PROGRESO</h2>
+                    <div class="flex justify-center px-4 py-2 mb-4 rounded bg-blue">
+                        <h2 class="font-bold text-white ">EN PROGRESO</h2>
+                    </div>
                     <div class="grid grid-cols-3 gap-6">
                         @forelse ($tareas->where('estado', 'in_progress') as $tarea)
                             <x-index.tarea :tarea="$tarea"></x-index-box>
@@ -464,7 +466,9 @@
                 </div>
 
                 <div>
-                    <h2 class="font-bold px-4 py-1 rounded bg-gray-400 mb-4">EN REVISIÓN</h2>
+                    <div class="flex justify-center px-4 py-2 mb-4 rounded bg-blue">
+                        <h2 class="font-bold text-white ">EN REVISIÓN</h2>
+                    </div>
                     <div class="grid grid-cols-3 gap-6">
                         @forelse ($tareas->where('estado', 'revision') as $tarea)
                             <x-index.tarea :tarea="$tarea"></x-index-box>
@@ -475,7 +479,9 @@
                 </div>
 
                 <div>
-                    <h2 class="font-bold px-4 py-1 rounded bg-gray-400 mb-4">BLOQUEADO</h2>
+                    <div class="flex justify-center px-4 py-2 mb-4 rounded bg-blue">
+                        <h2 class="font-bold text-white ">BLOQUEADO</h2>
+                    </div>
                     <div class="grid grid-cols-3 gap-6">
                         @forelse ($tareas->where('estado', 'blocked') as $tarea)
                             <x-index.tarea :tarea="$tarea"></x-index-box>
