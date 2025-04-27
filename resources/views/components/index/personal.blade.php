@@ -12,13 +12,14 @@
     <div class="bg-white_dull px-4 py-4 mb-1 flex items-center justify-between"
      style="border-top-left-radius: 1.05rem; border-top-right-radius: 1.05rem;">
         <h2 class="text-xl font-semibold text-blue">{{ $user->name }}</h2>
-        <span class="px-3 py-1 text-sm rounded-full font-medium bg-orange text-white">
+        <span class="user-role px-3 py-1 text-sm rounded-full font-medium text-white
+        {{ $user->role == 'admin' ? 'bg-orange' : ($user->role == 'coordinador' ? 'bg-blue' : 'bg-gray-400') }}">
             {{ ucfirst($user->role) }}
         </span>
     </div>
 
     <!-- Details -->
-    <div class="space-y-4 text-[16px] p-6  text-gray-800 font-roboto leading-relaxed">
+    <div class="space-y-4 text-[16px] p-6 text-gray-800 font-roboto leading-relaxed">
         <div class="space-y-2">
             <div class="flex justify-between items-center pb-2">
                 <span class="text-sm text-gray-500 font-medium">Email</span>
@@ -34,4 +35,15 @@
             </div>
         </div>
     </div>
+
+    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'coordinador')
+    <div class="pb-3 px-5 flex justify-end">
+        <button 
+            id="edit-btn-{{ $user->id }}"
+            type="button"
+            class="edit-btn px-2 rounded text-blue hover:text-white border border-blue hover:bg-blue transition active:scale-95 duration-80"
+            > Editar
+        </button>
+    </div>
+    @endif
 </div>

@@ -9,7 +9,6 @@
         <div class="px-10 py-8">
             <form method="POST" action="{{ route('user.add') }}" class="space-y-6 font-roboto text-gray-800" autocomplete="off">
                 @csrf
-                @method('PUT')
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>

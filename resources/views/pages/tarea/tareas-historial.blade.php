@@ -14,12 +14,12 @@
                 <div class="flex items-center">
                     <!-- Añadir button -->
                     <div class="w-[110px] h-10">
-                        <div class="bg-orange rounded-[100px] w-[110px] h-10 flex justify-center items-center">
-                            <button id="openModal" class="text-white font-roboto text-base font-bold">+ Añadir</button>
-                        </div>
+                        <button id="openModal" class="bg-orange rounded-[100px] w-[110px] h-10 flex justify-center items-center">
+                            <p class="text-white text-base font-bold">+ Añadir</p>
+</button>
                     </div>
 
-                    @include("pages.partials.tarea-form")
+                    @include("pages.tarea.partials.tarea-form")
 
                 </div>
 
@@ -489,43 +489,101 @@
 
     <!-- JavaScript (for Search functionality) -->
     <script>
-        
-
         // Get the modal, open button, and close button
         const modal = document.getElementById("myModal");
         const openModalBtn = document.getElementById("openModal");
         const closeModalBtn = document.getElementById("closeModal");
 
-        // Open the modal
+        const editModal = document.getElementById("EditModal");
+        const openEditModalBtn = document.getElementById("openEditModal");
+        const closeEditModalBtn = document.getElementById("closeEditModal");
+
+        // Add
         openModalBtn.onclick = function() {
-            modal.classList.remove("hidden"); // Show the modal
+            modal.classList.remove("hidden");
         };
-
-        // Close the modal
         closeModalBtn.onclick = function() {
-            modal.classList.add("hidden"); // Hide the modal
+            modal.classList.add("hidden");
         };
 
-        // Close the modal if clicked outside the modal content
+        // TODO: Simplify it
+        // Edit 
+        document.addEventListener('DOMContentLoaded', function() {
+            // Use event delegation for all edit buttons
+            document.addEventListener('click', function(e) {
+                // Handle edit button clicks
+                if (e.target.closest('#openEditModal')) {
+                    const button = e.target.closest('#openEditModal');
+                    const editModal = document.getElementById("EditModal");
+                    
+                    if (!editModal) {
+                        console.error('Edit modal not found');
+                        return;
+                    }
+                    
+                    // Get task data from data attributes
+                    const tareaData = {
+                        id: button.dataset.tareaId,
+                        nombre: button.dataset.tareaNombre,
+                        descripcion: button.dataset.tareaDescripcion,
+                        estado: button.dataset.tareaEstado,
+                        fecha_limite: button.dataset.tareaFechaLimite,
+                        asignado: button.dataset.tareaAsignado,
+                        empresa_id: button.dataset.tareaEmpresa
+                    };
+                    
+                    // Set form action
+                    const form = document.getElementById('tareaEditForm');
+                    const tareaId = openEditModalBtn.dataset.tareaId;
+                    form.action = `{{ route('tarea.update', '') }}/${tareaId}`;
+                    
+                    // Populate form fields
+                    const nombreField = editModal.querySelector('#nombre');
+                    const descripcionField = editModal.querySelector('#descripcion');
+                    const estadoField = editModal.querySelector('#estado');
+                    const fechaLimiteField = editModal.querySelector('#fecha_limite');
+                    
+                    if (nombreField) nombreField.value = tareaData.nombre || '';
+                    if (descripcionField) descripcionField.value = tareaData.descripcion || '';
+                    if (estadoField) estadoField.value = tareaData.estado || 'to_do';
+                    if (fechaLimiteField) fechaLimiteField.value = tareaData.fecha_limite || '';
+                    
+                    // Show modal
+                    editModal.classList.remove("hidden");
+                }
+                
+                // Close modal handlers
+                if (e.target.closest('.closeEditModal')) {
+                    document.getElementById("EditModal").classList.add("hidden");
+                }
+            });
+        });
+        
+        closeEditModalBtn.onclick = function() {
+            editModal.classList.add("hidden");
+        };
+
+        // Doesnt work
         window.onclick = function(event) {
             if (event.target === modal) {
                 modal.classList.add("hidden"); // Hide the modal if clicked outside
             }
         };
-        document.getElementById('searchForm').addEventListener('submit', function (e) {
-            e.preventDefault(); // Prevent default form behavior
-            const query = document.getElementById('searchInput').value.trim();
+        
+        // document.getElementById('searchForm').addEventListener('submit', function (e) {
+        //     e.preventDefault(); // Prevent default form behavior
+        //     const query = document.getElementById('searchInput').value.trim();
 
-            if (query) {
-                console.log('Searching for:', query);
+        //     if (query) {
+        //         console.log('Searching for:', query);
 
-                // Example of filtering logic (adapt to your needs)
-                // You can also make an AJAX request here if needed
+        //         // Example of filtering logic (adapt to your needs)
+        //         // You can also make an AJAX request here if needed
 
-                // Or redirect:
-                // window.location.href = `?search=${encodeURIComponent(query)}`;
-            }
-        });
+        //         // Or redirect:
+        //         // window.location.href = `?search=${encodeURIComponent(query)}`;
+        //     }
+        // });
 
         function toggleLayout() {
             const grid = document.getElementById('tareasContainer');
@@ -547,29 +605,55 @@
                 iconList.classList.add('hidden');
             }
         }
+
         function multiSelect() {
-        return {
-            open: false,
-            search: '',
-            selected: [],
-            users: @json($usuarios->map(fn($u) => ['id' => $u->id, 'name' => $u->name])),
-            toggle(user) {
-                if (this.selected.includes(user.id)) {
-                    this.selected = this.selected.filter(id => id !== user.id);
-                } else {
-                    this.selected.push(user.id);
+            return {
+                open: false,
+                search: '',
+                selected: [],
+                users: @json($usuarios->map(fn($u) => ['id' => $u->id, 'name' => $u->name])),
+                toggle(user) {
+                    if (this.selected.includes(user.id)) {
+                        this.selected = this.selected.filter(id => id !== user.id);
+                    } else {
+                        this.selected.push(user.id);
+                    }
+                },
+                selectedLabels() {
+                    return this.users
+                        .filter(u => this.selected.includes(u.id))
+                        .map(u => u.name);
+                },
+                filteredUsers() {
+                    if (!this.search) return this.users;
+                    return this.users.filter(u => u.name.toLowerCase().includes(this.search.toLowerCase()));
                 }
-            },
-            selectedLabels() {
-                return this.users
-                    .filter(u => this.selected.includes(u.id))
-                    .map(u => u.name);
-            },
-            filteredUsers() {
-                if (!this.search) return this.users;
-                return this.users.filter(u => u.name.toLowerCase().includes(this.search.toLowerCase()));
-            }
-        };
-    }
+            };
+        }
+
+        function multiSelectEmpresa() {
+            return {
+                open: false,
+                search: '',
+                selected: [],
+                empresas: @json($empresas->map(fn($name, $id) => ['id' => $id, 'name' => $name])->values()),
+                toggle(empresa) {
+                    if (this.selected.includes(empresa.id)) {
+                        this.selected = this.selected.filter(id => id !== empresa.id);
+                    } else {
+                        this.selected.push(empresa.id);
+                    }
+                },
+                selectedLabels() {
+                    return this.empresas
+                        .filter(e => this.selected.includes(e.id))
+                        .map(e => e.name);
+                },
+                filteredEmpresas() {
+                    if (!this.search) return this.empresas;
+                    return this.empresas.filter(e => e.name.toLowerCase().includes(this.search.toLowerCase()));
+                }
+            };
+        }
     </script>
 </x-app-layout>

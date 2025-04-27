@@ -10,7 +10,6 @@ use App\Models\PersonaContacto;
 use App\Models\Practica;
 use App\Models\Tutor;
 use App\Models\TutorEmpresa;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -250,8 +249,10 @@ class EmpresaController extends Controller
             }
 
             if (session()->has('responsableConvenio_draft')) {
-                session('responsableConvenio_draft')->empresa_id = session('empresa_draft')->id; // Set FK
-                session('responsableConvenio_draft')->save();
+                foreach(session('responsableConvenio_draft') as $rc) {
+                    $rc->empresa_id = session('empresa_draft')->id; // Set FK
+                    $rc->save();
+                }
             }
 
             if (session()->has('centroTrabajo_draft')) {
@@ -260,8 +261,10 @@ class EmpresaController extends Controller
             }
 
             if (session()->has('personaContacto_draft')) {
-                session('personaContacto_draft')->id_centrosTrabajo = session('centroTrabajo_draft')->id; // Set FK
-                session('personaContacto_draft')->save();
+                foreach(session('personaContacto_draft') as $pc) {
+                    $pc->id_centrosTrabajo = session('centroTrabajo_draft')->id; // Set FK
+                    $pc->save();
+                }
             }
 
             if (session()->has('practica_draft')) {
@@ -270,13 +273,17 @@ class EmpresaController extends Controller
             }
 
             if (session()->has('tutor_draft')) {
-                session('tutor_draft')->id_practica = session('practica_draft')->id; // Set FK
-                session('tutor_draft')->save();
+                foreach(session('tutor_draft') as $tutor) {
+                    $tutor->id_practica = session('practica_draft')->id; // Set FK
+                    $tutor->save();
+                }
             }
 
             if (session()->has('tutorEmpresa_draft')) {
-                session('tutorEmpresa_draft')->id_practica = session('practica_draft')->id; // Set FK
-                session('tutorEmpresa_draft')->save();
+                foreach(session('tutorEmpresa_draft') as $tutorEmpresa) {
+                    $tutorEmpresa->id_practica = session('practica_draft')->id; // Set FK
+                    $tutorEmpresa->save();
+                }
             }
         } catch (\Exception $e) {
             \Log::error('Save failed: '.$e->getMessage());
@@ -406,14 +413,24 @@ class EmpresaController extends Controller
         }
 
         // ResponsableConvenio
-        if ($request->rc_dni && $request->rc_nombre && $request->rc_apellido) {
-            $rc = new ResponsableConvenio;
-            $rc->dni = $request->rc_dni;
-            $rc->nombre = $request->rc_nombre;
-            $rc->apellido = $request->rc_apellido;
-            $rc->telefono = $request->rc_telefono;
-            $rc->email = $request->rc_email;
-            session(['responsableConvenio_draft' => $rc]);
+        for ($i = 1; $i <= $request->responsable_count; $i++)  {
+            $dni = $request->input("rc_dni_$i");
+            $nombre = $request->input("rc_nombre_$i");
+            $apellido = $request->input("rc_apellido_$i");
+            
+            // Only create if required fields are present
+            if ($dni && $nombre && $apellido) {
+                $rc = new ResponsableConvenio;
+                $rc->dni = $dni;
+                $rc->nombre = $nombre;
+                $rc->apellido = $apellido;
+                $rc->telefono = $request->input("rc_telefono_$i");
+                $rc->email = $request->input("rc_email_$i");
+
+                $responsables[] = $rc;
+
+                session(['responsableConvenio_draft' => $responsables]);
+            }
         }
 
         \Log::debug('Artisan Session Check:', session()->all());
@@ -469,17 +486,6 @@ class EmpresaController extends Controller
         $centroTrabajo->municipio = $request->municipio;
         $centroTrabajo->direccion = $request->direccion;
         session(['centroTrabajo_draft' => $centroTrabajo]);
-
-        // PersonaContacto
-        if ($request->pc_dni && $request->pc_nombre && $request->pc_apellido) {
-            $pc = new PersonaContacto;
-            $pc->dni = $request->pc_dni;
-            $pc->nombre = $request->pc_nombre;
-            $pc->apellido = $request->pc_apellido;
-            $pc->telefono = $request->pc_telefono;
-            $pc->email = $request->pc_email;
-            session(['personaContacto_draft' => $pc]);
-        }
 
         // Submit
         \Log::debug('Artisan Session Check:', session()->all());
@@ -558,25 +564,36 @@ class EmpresaController extends Controller
         session(['practica_draft' => $practica]);
 
         // Tutor
-        if ($request->tutor_dni && $request->tutor_nombre && $request->tutor_apellido) {
-            $tutor = new Tutor;
-            $tutor->dni = $request->tutor_dni;
-            $tutor->nombre = $request->tutor_nombre;
-            $tutor->apellido = $request->tutor_apellido;
-            $tutor->telefono = $request->tutor_telefono;
-            $tutor->email = $request->tutor_email;
-            session(['tutor_draft' => $tutor]);
+        for ($i = 1; $i <= $request->tutor_count; $i++)  {
+            // Only create if required fields are present
+            if ($request->input("tutor_dni_$i") && $request->input("tutor_nombre_$i") && $request->input("tutor_apellido_$i")) {
+                $tutor = new Tutor;
+                $tutor->dni = $request->input("tutor_dni_$i");
+                $tutor->nombre = $request->input("tutor_nombre_$i");
+                $tutor->apellido = $request->input("tutor_apellido_$i");
+                $tutor->telefono = $request->input("tutor_telefono_$i");
+                $tutor->email = $request->input("tutor_email_$i");
+
+                $tutoresA[] = $tutor;
+
+                session(['tutor_draft' => $tutoresA]);
+            }
         }
 
-        // TutorEmpresa
-        if ($request->tutorEmpresa_dni && $request->tutorEmpresa_nombre && $request->tutorEmpresa_apellido) {
-            $tutorEmpresa = new TutorEmpresa;
-            $tutorEmpresa->dni = $request->tutorEmpresa_dni;
-            $tutorEmpresa->nombre = $request->tutorEmpresa_nombre;
-            $tutorEmpresa->apellido = $request->tutorEmpresa_apellido;
-            $tutorEmpresa->telefono = $request->tutorEmpresa_telefono;
-            $tutorEmpresa->email = $request->tutorEmpresa_email;
-            session(['tutorEmpresa_draft' => $tutorEmpresa]);
+        for ($i = 1; $i <= $request->tutorEmpresa_count; $i++)  {
+            // Only create if required fields are present
+            if ($request->input("tutorEmpresa_dni_$i") && $request->input("tutorEmpresa_nombre_$i") && $request->input("tutorEmpresa_apellido_$i")) {
+                $tutorEmpresa = new TutorEmpresa;
+                $tutorEmpresa->dni = $request->input("tutorEmpresa_dni_$i");
+                $tutorEmpresa->nombre = $request->input("tutorEmpresa_nombre_$i");
+                $tutorEmpresa->apellido = $request->input("tutorEmpresa_apellido_$i");
+                $tutorEmpresa->telefono = $request->input("tutorEmpresa_telefono_$i");
+                $tutorEmpresa->email = $request->input("tutorEmpresa_email_$i");
+
+                $tutoresE[] = $tutorEmpresa;
+
+                session(['tutorEmpresa_draft' => $tutoresE]);
+            }
         }
 
         // Submit

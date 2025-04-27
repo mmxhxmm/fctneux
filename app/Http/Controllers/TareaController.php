@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Tarea;
 use App\Models\User;
 
@@ -86,11 +87,29 @@ class TareaController extends Controller
         $tarea->asignado = $asignadosSelected; 
         $tarea->estado = $request->estado;
         $tarea->descripcion = $request->descripcion;
-        $tarea->fecha_limite = $request->fecha_limite;
-        $tarea->empresa_id = 1; 
+        $tarea->fecha_limite = $request->fecha_limite ?: null;
+        $tarea->empresa_id = 1;
         $tarea->save();
     
         return redirect()->back()->with('success', 'Tarea añadida correctamente');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $tarea = Tarea::findOrFail($id);
+
+        $validator = $request->validate([
+            'nombre' => 'nullable|string|max:255',
+            'descripcion' => 'nullable|string',
+            'estado' => 'nullable|string|max:255',
+            'fecha_limite' => 'nullable|date',
+        ]);
+
+        $tarea->asignado = Auth::user()->name; 
+        $tarea->empresa_id = 1;
+        $tarea->update($validator);
+
+        return redirect()->back()->with('success', 'Tarea actualizado correctamente');
     }
     
     public function update_estado(Request $request, $id)

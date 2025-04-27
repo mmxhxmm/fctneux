@@ -226,7 +226,7 @@
 
                     <div>
                         <x-input-label for="codigoPostal" value="Código Postal" />
-                        <x-text-input-light id="codigoPostal" name="codigoPostal" value="{{ $empresa->codigoPostal }}" />
+                        <x-text-input-light id="codigoPostal" name="codigoPostal" maxlength="5" value="{{ $empresa->codigoPostal }}" />
                     </div>
 
                     <div>

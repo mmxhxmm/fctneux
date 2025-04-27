@@ -43,7 +43,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/usuarios-active-index', [UserController::class, 'active'])->name('user.active');
     Route::get('/usuarios-no_active-index', [UserController::class, 'no_active'])->name('user.no_active');
     Route::get('/usuarios-search', [UserController::class, 'search'])->name('user.search');
-    Route::put('/usuarios-store', [UserController::class, 'store'])->name('user.add');
+    Route::post('/usuario-store', [UserController::class, 'store'])->name('user.add');
+    Route::put('/usuario-update/{user}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/usuario-delete/{id}', [UserController::class, 'delete'])->name('user.delete');
 
     // Usuario Perfil
     Route::get('/perfil', function () {
@@ -106,7 +108,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/tareas-index', [TareaController::class, 'index'])->name('tareas-index');
     Route::get('/tareas-historial', [TareaController::class, 'historial'])->name('tareas-historial');
     Route::get('/tareas-store', [TareaController::class, 'store'])->name('tareas-store');
-    // Route::put('/tareas-store/{id}', [TareaController::class, 'store'])->name('tareas-store');
+    Route::put('/tareas-update/{id}', [TareaController::class, 'update'])->name('tarea.update');
     Route::patch('/tareas/{id}/update-estado', [TareaController::class, 'update_estado'])->name('tarea.update_estado');
     Route::get('/tareas-form', function () {
         return view('form-datos-tareas');

@@ -49,6 +49,7 @@ class PersonaContacto extends Model
         'apellido',
         'telefono',
         'email',
+        'id_centrosTrabajo'
     ];
 
     /**
@@ -82,6 +83,7 @@ class PersonaContacto extends Model
         'apellido' => null,
         'telefono' => null,
         'email' => null,
+        'id_centrosTrabajo' => null,
     ];
 
     // Define Relationships

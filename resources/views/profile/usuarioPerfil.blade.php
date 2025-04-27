@@ -25,10 +25,10 @@
 
                                         <div class="space-y-4 text-base">
                                             <p><strong>Nombre:</strong> <span class="float-right">{{ $user->name }}</span></p>
-                                            <p><strong>Provincia:</strong> <span class="float-right">{{ $user->municipio }}</span></p>
+                                            <p><strong>Provincia:</strong> <span class="float-right">{{ ucfirst($user->municipio) }}</span></p>
                                             <p><strong>Teléfono:</strong> <span class="float-right">{{ $user->telefono }}</span></p>
                                             <p><strong>Correo:</strong> <span class="float-right">{{ $user->email }}</span></p>
-                                            <p><strong>Situación:</strong> <span class="float-right">{{ $user->situacion }}</span></p>
+                                            <p><strong>Situación:</strong> <span class="float-right">{{ ucfirst($user->situacion) }}</span></p>
                                         </div>
                                     </div>
 

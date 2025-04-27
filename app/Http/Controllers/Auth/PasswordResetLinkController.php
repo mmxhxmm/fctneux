@@ -46,8 +46,11 @@ class PasswordResetLinkController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        Mail::to('alex.vadmik@gmail.com')->send(new UserResetEmail($user));
-
-        return redirect(route('dashboard'));
+        if ($user) {
+            Mail::to('admin@gmail.com')->send(new UserResetEmail($user));
+            return redirect(route('dashboard'))->with('status', 'El email se ha enviado!');
+        } else {
+            return redirect(route('dashboard'))->with('status', 'No existe este email');
+        }
     }
 }

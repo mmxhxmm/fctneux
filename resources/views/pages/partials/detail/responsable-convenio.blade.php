@@ -44,7 +44,7 @@
                 
                 <div>
                     <x-input-label for="telefono-{{ $index }}" value="Teléfono" />
-                    <x-text-input-light id="telefono-{{ $index }}" name="telefono" value="{{ $resConv->telefono }}" />
+                    <x-text-input-light id="telefono-{{ $index }}" name="telefono" maxlength="9" value="{{ $resConv->telefono }}" />
                     <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                 </div>
                 
@@ -125,7 +125,7 @@
                 
                 <div>
                     <x-input-label for="telefono" value="Teléfono" />
-                    <x-text-input-light id="telefono" name="telefono" />
+                    <x-text-input-light id="telefono" name="telefono" maxlength="9" />
                     <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                 </div>
                 

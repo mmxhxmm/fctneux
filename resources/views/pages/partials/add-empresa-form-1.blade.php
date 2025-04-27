@@ -13,8 +13,8 @@
 
     <form method="POST" id="form" action="{{ route('store-empresa-1') }}" class="mt-6 space-y-6">
         @csrf <!-- CSRF token for security -->
-        <div class="grid grid-cols-2 gap-6">
 
+        <div class="grid grid-cols-2 gap-6">
             <!-- CIF -->
             <div>
                 <x-input-label-light for="cif" :value="__('CIF <span class=\'text-red-500\'>*</span>')" />
@@ -229,7 +229,7 @@
             <!-- Código Postal -->
             <div>
                 <x-input-label-light for="codigoPostal" :value="__('Código Postal')" />
-                <x-text-input id="codigoPostal" name="codigoPostal" type="text" value="{{ old('codigoPostal', session('empresa_draft')?->codigoPostal) }}" class="mt-1 block w-full" autocomplete="codigoPostal" />
+                <x-text-input id="codigoPostal" name="codigoPostal" type="text" maxlength="5" value="{{ old('codigoPostal', session('empresa_draft')?->codigoPostal) }}" class="mt-1 block w-full" autocomplete="codigoPostal" />
                 <x-input-error :messages="$errors->get('codigoPostal')" class="mt-2" />
             </div>
 
@@ -251,10 +251,12 @@
             </x-primary-nonsubmit-button>
         </h2>
 
+        <!-- Hidden input field to count the rc -->
+        <input type="hidden" name="responsable_count" id="responsable_count" value="0">
+    
         <!-- Wrapper where all Responsable Convenio forms will go -->
         <div id="responsables_wrapper"></div>
 
-        
         <template id="responsable_template">
             <details class="responsable-section bg-white border rounded-lg p-4 shadow-sm mb-6" open>
                 <summary class="text-lg font-medium text-gray-900 cursor-pointer flex justify-between items-center">
@@ -264,8 +266,6 @@
                 <hr class="mt-2">
 
                 <div class="grid grid-cols-3 gap-6 my-6"> 
-                    <input type="hidden" name="responsable_count" id="responsable_count" value="0">
-
                     <div>
                         <x-input-label-light for="rc_dni" :value="__('DNI <span class=\'text-red-500\'>*</span>')" />
                         <x-text-input id="rc_dni" name="rc_dni" value="{{ old('rc_dni', session('responsableConvenio_draft')?->dni) }}" type="text" class="mt-1 block w-full" autocomplete="dni"  />
@@ -287,7 +287,7 @@
                 <div class="grid grid-cols-2 gap-6 mb-6"> 
                     <div>
                         <x-input-label-light for="rc_telefono" :value="__('Teléfono')" />
-                        <x-text-input id="rc_telefono" name="rc_telefono" value="{{ old('rc_telefono', session('responsableConvenio_draft')?->telefono) }}" type="text" class="mt-1 block w-full" autocomplete="telefono" />
+                        <x-text-input id="rc_telefono" name="rc_telefono" maxlength="9" value="{{ old('rc_telefono', session('responsableConvenio_draft')?->telefono) }}" type="text" class="mt-1 block w-full" autocomplete="telefono" />
                         <x-input-error :messages="$errors->get('rc_telefono')" class="mt-2" />
                     </div>
 
@@ -308,6 +308,8 @@
 <script>
 
     document.getElementById('form').addEventListener('submit', function (e) {
+        updateTitles();
+
         const sections = document.querySelectorAll('.responsable-section');
 
         sections.forEach(section => {
@@ -322,42 +324,38 @@
     });
 
     function updateTitles() {
-    const sections = document.querySelectorAll('.responsable-section');
-    document.getElementById('responsable_count').value = sections.length;
+        const sections = document.querySelectorAll('.responsable-section');
+        document.getElementById('responsable_count').value = sections.length;
 
-    sections.forEach((section, index) => {
-        const num = index + 1;
+        sections.forEach((section, index) => {
+            const num = index + 1;
 
-        // Update title
-        section.querySelector('.title-label').textContent = `Responsable Convenio #${num}`;
+            // Update title
+            section.querySelector('.title-label').textContent = `Responsable Convenio #${num}`;
 
-        // Update input IDs (they start duplicated from template)
-        const dni = section.querySelector('[id^="rc_dni"]');
-        if (dni) dni.id = `rc_dni_${num}`;
+            // Update input IDs and names (they start duplicated from template)
+            const inputs = [
+                'rc_dni', 'rc_nombre', 'rc_apellido', 'rc_telefono', 'rc_email'
+            ];
 
-        const nombre = section.querySelector('[id^="rc_nombre"]');
-        if (nombre) nombre.id = `rc_nombre_${num}`;
+            inputs.forEach(field => {
+                const input = section.querySelector(`[id^="${field}"]`);
+                if (input) {
+                    input.id = `${field}_${num}`;
+                    input.name = `${field}_${num}`;  // This is the critical line you're missing
+                }
+            });
 
-        const apellido = section.querySelector('[id^="rc_apellido"]');
-        if (apellido) apellido.id = `rc_apellido_${num}`;
-
-        const telefono = section.querySelector('[id^="rc_telefono"]');
-        if (telefono) telefono.id = `rc_telefono_${num}`;
-
-        const email = section.querySelector('[id^="rc_email"]');
-        if (email) email.id = `rc_email_${num}`;
-
-        // Update labels
-        const labels = section.querySelectorAll('label');
-        labels.forEach(label => {
-            const forAttr = label.getAttribute('for');
-            if (forAttr && forAttr.startsWith('rc_')) {
-                label.setAttribute('for', `${forAttr}_${num}`);
-            }
+            // Update labels
+            const labels = section.querySelectorAll('label');
+            labels.forEach(label => {
+                const forAttr = label.getAttribute('for');
+                if (forAttr && forAttr.startsWith('rc_')) {
+                    label.setAttribute('for', `${forAttr}_${num}`);
+                }
+            });
         });
-    });
-}
-
+    }
 
     document.getElementById('add_section_button_1').addEventListener('click', function () {
         const template = document.getElementById('responsable_template');
@@ -422,6 +420,5 @@
         if (colaboracionSelect.value) {
             handleColaboracionChange({ target: colaboracionSelect });
         }
-
     });
 </script>

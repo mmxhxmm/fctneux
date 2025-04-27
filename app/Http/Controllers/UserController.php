@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class UserController extends Controller
@@ -83,5 +84,50 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->back()->with('success', 'Usuario añadido correctamente');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+            'role' => 'required|string|max:255',
+            'telefono' => 'nullable|string|digits:9',
+            'situacion' => 'required|string|max:255',
+            'municipio' => 'nullable|string|max:255',
+            'password' => 'nullable|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'telefono' => $request->telefono,
+            'situacion' => $request->situacion,
+            'municipio' => $request->municipio,
+        ];
+    
+        // Only update password if provided
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+    
+        $user->update($data);
+
+        return redirect()->back()->with('success', 'Usuario actualizado correctamente');
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        
+        return back()->with('success', 'Usuario eliminado correctamente');
     }
 }

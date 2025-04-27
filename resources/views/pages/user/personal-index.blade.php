@@ -8,7 +8,7 @@
             <!-- Main Heading and Buttons -->
             <div class="bg-black_transp h-16 relative flex justify-between items-center px-10 w-full">
                 <!-- Left buttons (Añadir and Eliminar) -->
-            <div class="flex items-center">
+                <div class="flex items-center">
                     <!-- Añadir button -->
                     @if (Auth::user()->role == 'registrador')
                     <div></div>
@@ -18,11 +18,7 @@
                             <p class="text-white text-base font-bold">+ Añadir</p>
                         </button>
                     </div>
-                    
                     @endif
-
-
-                    @include("pages.user.partials.user-form")
                 </div>
 
                 <!-- Right Section (Filter, Barcelona / BCN, Situación, and Search) -->
@@ -92,6 +88,8 @@
                 <!-- Display first 9 users by default -->
                 @foreach ($users as $key => $user)
                     <x-index.personal :user="$user"></x-index-box>
+                    @include("pages.user.partials.user-form", ['user' => $user])
+                    @include("pages.user.partials.user-edit", ['user' => $user])
                 @endforeach
             </div>
             <!-- User List View -->
@@ -123,7 +121,12 @@
                                     @endphp
                                     <td class="p-4 text-gray-800 {{ $statusClass }}">{{ ucfirst($user->situacion) }}</td>
                                     <td class="p-4 text-gray-800">{{ ucfirst($user->municipio) }}</td>
-                                    <td class="p-4 text-gray-800">{{ ucfirst($user->role) }}</td>
+                                    <td class="p-4 text-gray-800">
+                                        <span class="px-3 py-1 text-sm rounded-full font-medium text-white
+                                        {{ $user->role == 'admin' ? 'bg-orange' : ($user->role == 'coordinador' ? 'bg-blue' : 'bg-gray-400') }}">
+                                            {{ ucfirst($user->role) }}
+                                        </span>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -208,20 +211,21 @@
                 modal.classList.add("hidden");
             }
         };
-        document.getElementById('searchForm').addEventListener('submit', function (e) {
-            e.preventDefault(); // Prevent default form behavior
-            const query = document.getElementById('searchInput').value.trim();
 
-            if (query) {
-                console.log('Searching for:', query);
+        // document.getElementById('searchForm').addEventListener('submit', function (e) {
+        //     e.preventDefault(); // Prevent default form behavior
+        //     const query = document.getElementById('searchInput').value.trim();
 
-                // Example of filtering logic (adapt to your needs)
-                // You can also make an AJAX request here if needed
+        //     if (query) {
+        //         console.log('Searching for:', query);
 
-                // Or redirect:
-                // window.location.href = `?search=${encodeURIComponent(query)}`;
-            }
-        });
+        //         // Example of filtering logic (adapt to your needs)
+        //         // You can also make an AJAX request here if needed
+
+        //         // Or redirect:
+        //         // window.location.href = `?search=${encodeURIComponent(query)}`;
+        //     }
+        // });
 
         function toggleLayout() {
             const grid = document.getElementById('userContainer');
@@ -243,5 +247,59 @@
                 iconList.classList.add('hidden');
             }
         }
+
+        // EDIT
+        // Edit User Modal Logic
+        const editModal = document.getElementById("editUserModal");
+
+        // Close modal handlers
+        document.querySelectorAll('.closeEditModal').forEach(button => {
+            button.addEventListener('click', function() {
+                editModal.classList.add("hidden");
+            });
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === editModal) {
+                editModal.classList.add("hidden");
+            }
+        });
+
+        // Handle edit button clicks using event delegation
+        document.addEventListener('DOMContentLoaded', function() {
+            const editModal = document.getElementById("editUserModal");
+            const form = document.getElementById('userEditForm');
+            
+            // Close modal handlers (keep existing)
+            
+            // Edit button handler
+            document.body.addEventListener('click', function(event) {
+                const editBtn = event.target.closest('[id^="edit-btn-"]');
+                if (!editBtn) return;
+                
+                const userId = editBtn.id.replace('edit-btn-', '');
+                const userCard = editBtn.closest('.user-card');
+                
+                // Update form action with dynamic user ID
+                form.action = `{{ route('user.update', '') }}/${userId}`;
+                
+                // Fill form data
+                document.getElementById('edit_user_id').value = userId;
+                document.getElementById('edit_name').value = userCard.querySelector('h2').textContent.trim();
+                
+                // Get other fields as before
+                const detailsSection = userCard.querySelector('.text-gray-800');
+                const grayTexts = detailsSection.querySelectorAll('.text-gray-900');
+                document.getElementById('edit_email').value = grayTexts[0].textContent.trim();
+                document.getElementById('edit_telefono').value = grayTexts[1].textContent.trim();
+                document.getElementById('edit_municipio').value = grayTexts[2].textContent.trim().toLowerCase();
+                document.getElementById('edit_role').value = userCard.querySelector('.user-role').textContent.trim().toLowerCase();
+                // Needs edit_situacion
+
+                // Show modal
+                editModal.classList.remove("hidden");
+            });
+        });
     </script>
 </x-app-layout>

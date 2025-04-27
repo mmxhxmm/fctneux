@@ -93,7 +93,7 @@
                         
                         <div>
                             <x-input-label for="telefono-{{ $tutor->id }}" value="Teléfono" />
-                            <x-text-input-light id="telefono-{{ $tutor->id }}" name="telefono" value="{{ $tutor->telefono }}" />
+                            <x-text-input-light id="telefono-{{ $tutor->id }}" name="telefono" maxlength="9" value="{{ $tutor->telefono }}" />
                             <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                         </div>
                         
@@ -152,7 +152,7 @@
                     
                     <div>
                         <x-input-label for="telefono" value="Teléfono" />
-                        <x-text-input-light id="telefono" name="telefono" />
+                        <x-text-input-light id="telefono" name="telefono" maxlength="9" />
                         <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                     </div>
                     
@@ -242,7 +242,7 @@
                         
                         <div>
                             <x-input-label for="telefono-{{ $tutor->id }}" value="Teléfono" />
-                            <x-text-input-light id="telefono-{{ $tutor->id }}" name="telefono" value="{{ $tutor->telefono }}" />
+                            <x-text-input-light id="telefono-{{ $tutor->id }}" name="telefono" maxlength="9" value="{{ $tutor->telefono }}" />
                             <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                         </div>
                         
@@ -689,7 +689,7 @@
                 
                 <div>
                     <x-input-label for="telefono" value="Teléfono" />
-                    <x-text-input-light id="telefono" name="telefono" />
+                    <x-text-input-light id="telefono" name="telefono" maxlength="9" />
                     <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                 </div>
                 

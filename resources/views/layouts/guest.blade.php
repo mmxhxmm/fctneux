@@ -20,18 +20,18 @@
             <div class="flex items-center justify-center">
                 <p class="font-roboto text-[30px] text-white text-bold mr-4 font-extrabold">¡Bienvenido a </p>
                     <img src="{{ asset('images/CEACFP_Logo.png') }}" class="w-[150px] flex items-center justify-center">
-                <p class="font-roboto text-white text-bold text-xl text-[45px] font-extrabold">!</p>                
-            </div> 
-            <div class="flex items-center justify-center mt-[-30px]">
-
-                <p class="text-[100px] text-white font-hammersmith">FCT</p>
-                <p class="text-[100px] text-orange font-hammersmith">Nexus</p>
-
+                <p class="font-roboto text-white text-bold text-xl text-[45px] font-extrabold">&nbsp !</p>                
             </div>
 
-            <div class="w-[400px] h-[275px] sm:max-w-md mt-6 px-6 py-4 bg-black bg-opacity-60 
-            shadow-md overflow-hidden"> <!--clip-path-[polygon(0%_0%,100%_0%,100%_80%,0%_100%)] -->
-                {{ $slot }}
+            <div class="flex items-center justify-center mt-[-30px]">
+                <p class="text-[100px] text-white font-hammersmith">FCT</p>
+                <p class="text-[100px] text-orange font-hammersmith">Nexus</p>
+            </div>
+
+            <div class="w-[500px] min-h-[500px]">
+                <div class="mt-6 px-6 py-5 bg-black bg-primary shadow-md"> <!--clip-path-[polygon(0%_0%,100%_0%,100%_80%,0%_100%)] -->
+                    {{ $slot }}
+                </div>
             </div>
         </div>
     </body>

@@ -100,7 +100,7 @@
                         
                         <div>
                             <x-input-label for="telefono-{{ $index2Sum }}" value="Teléfono" />
-                            <x-text-input-light id="telefono-{{ $index2Sum }}" name="telefono" value="{{ $persContacto->telefono }}" />
+                            <x-text-input-light id="telefono-{{ $index2Sum }}" name="telefono" maxlength="9" value="{{ $persContacto->telefono }}" />
                             <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                         </div>
                         
@@ -159,7 +159,7 @@
                     
                     <div>
                         <x-input-label for="telefono" value="Teléfono" />
-                        <x-text-input-light id="telefono" name="telefono" />
+                        <x-text-input-light id="telefono" name="telefono" maxlength="9" />
                         <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                     </div>
                     
@@ -190,7 +190,7 @@
 
                 <div>
                     <x-input-label for="codigoPostal-{{ $index }}" value="Código Postal" />
-                    <x-text-input-light id="codigoPostal-{{ $index }}" name="codigoPostal" value="{{ $centro->codigoPostal }}" />
+                    <x-text-input-light id="codigoPostal-{{ $index }}" name="codigoPostal" maxlength="5" value="{{ $centro->codigoPostal }}" />
                 </div>
 
                 <!-- Comunidad Autónoma -->
@@ -284,7 +284,7 @@
 
                 <div>
                     <x-input-label for="codigoPostal" value="Código Postal" />
-                    <x-text-input-light id="codigoPostal" name="codigoPostal" />
+                    <x-text-input-light id="codigoPostal" name="codigoPostal" maxlength="5" />
                     <x-input-error :messages="$errors->get('codigoPostal')" class="mt-2" />
                 </div>
 

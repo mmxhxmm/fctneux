@@ -28,12 +28,12 @@ class ProfileController extends Controller
      */
     public function mostrarTareas()
     {
-    $user = Auth::user();  // Obtiene al usuario autenticado
-    $tareas = Tarea::where('asignado', $user->name)->get(); // Filtra tareas por nombre
+        $user = Auth::user();  // Obtiene al usuario autenticado
+        $tareas = Tarea::where('asignado', $user->name)->get(); // Filtra tareas por nombre
 
-    $users = User::all();
+        $users = User::all();
 
-    return view('profile.usuarioPerfil', compact('tareas', 'users'));
+        return view('profile.usuarioPerfil', compact('tareas', 'users'));
     }
 
     /**

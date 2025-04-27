@@ -13,9 +13,10 @@
 
         <h2 class="text-lg font-medium text-gray-900 flex justify-between">
             {{ __('Añadir Práctica') }}
-            <a>
+            <!-- TODO: Doesn't work, same as page 2 ct -->
+            <!-- <a>
                 <x-primary-nonsubmit-button type="button" id="add_section_button_1">{{ __(' + ') }}</x-primary-nonsubmit-button>
-            </a>
+            </a> -->
         </h2>
         <div id="practica_wrapper">
             <div id="practica" >
@@ -312,63 +313,65 @@
             </details>
         </template>
 
-
         <hr>
 
         <div id="header_tutor"></div>
         <h2 class="text-lg font-medium text-gray-900 flex justify-between">
-            {{ __('Añadir Tutor') }}
+            {{ __('Añadir Tutor Académico') }}
             <a href="#header_tutor">
-                <x-primary-nonsubmit-button type="button" id="add_section_button_2">{{ __(' + ') }}</x-primary-nonsubmit-button>
+                <x-primary-nonsubmit-button type="button" id="add_tutor_button">{{ __(' + ') }}</x-primary-nonsubmit-button>
             </a>
         </h2>
 
+        <!-- Hidden input field to count tutor sections -->
+        <input type="hidden" name="tutor_count" id="tutor_count" value="0">
+
         <div id="tutor_wrapper"></div>
-        <!-- Hidden template for cloning -->
+
         <template id="tutor_template">
-            <details class="tutor-section bg-white mt-6 border border-blue rounded-lg p-4 shadow-sm mb-6" open>
+            <details class="tutor-section bg-white mt-6 border border-blue-500 rounded-lg p-4 shadow-sm mb-6" open>
                 <summary class="text-lg font-medium text-gray-900 cursor-pointer flex justify-between items-center">
-                    <span class="tutor-title-label">Tutor</span>
+                    <span class="tutor-title-label">Tutor Académico</span>
                     <button type="button" class="remove-tutor text-red-500 hover:text-red-700 text-sm ml-4">❌</button>
                 </summary>
                 <hr class="mt-2">
 
-                <div class="grid grid-cols-3 gap-6 my-6">
-                <input type="hidden" name="tutor_count" id="tutor_count" value="0">
-                    <!-- DNI -->
+                <div class="grid grid-cols-3 gap-6 mb-6">
+                    <!-- DNI/NIE -->
                     <div>
                         <x-input-label-light for="tutor_dni" :value="__('DNI/NIE <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="tutor_dni" name="tutor_dni" type="text" class="mt-1 block w-full" autocomplete="dni" />
-                        <x-input-error :messages="$errors->get('dni')" class="mt-2" />
+                        <x-text-input id="tutor_dni" name="tutor_dni" value="{{ old('tutor_dni') }}" type="text" class="mt-1 block w-full" autocomplete="dni" />
+                        <x-input-error :messages="$errors->get('tutor_dni')" class="mt-2" />
                     </div>
 
                     <!-- Nombre -->
                     <div>
                         <x-input-label-light for="tutor_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="tutor_nombre" name="tutor_nombre" type="text" class="mt-1 block w-full" autocomplete="nombre"  />
-                        <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
+                        <x-text-input id="tutor_nombre" name="tutor_nombre" value="{{ old('tutor_nombre') }}" type="text" class="mt-1 block w-full" autocomplete="nombre" />
+                        <x-input-error :messages="$errors->get('tutor_nombre')" class="mt-2" />
                     </div>
 
                     <!-- Apellido -->
                     <div>
                         <x-input-label-light for="tutor_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="tutor_apellido" name="tutor_apellido" type="text" class="mt-1 block w-full" autocomplete="apellido"  />
-                        <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
+                        <x-text-input id="tutor_apellido" name="tutor_apellido" value="{{ old('tutor_apellido') }}" type="text" class="mt-1 block w-full" autocomplete="apellido" />
+                        <x-input-error :messages="$errors->get('tutor_apellido')" class="mt-2" />
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-6 mb-6">
-                    <!-- Telefono -->
+
+                <div class="grid grid-cols-2 gap-6 mb-4">
+                    <!-- Teléfono -->
                     <div>
                         <x-input-label-light for="tutor_telefono" :value="__('Teléfono')" />
-                        <x-text-input id="tutor_telefono" name="tutor_telefono" type="text" class="mt-1 block w-full" autocomplete="telefono" />
-                        <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
+                        <x-text-input id="tutor_telefono" name="tutor_telefono" value="{{ old('tutor_telefono') }}" maxlength="9" type="text" class="mt-1 block w-full" autocomplete="telefono" />
+                        <x-input-error :messages="$errors->get('tutor_telefono')" class="mt-2" />
                     </div>
 
                     <!-- Email -->
                     <div>
                         <x-input-label-light for="tutor_email" :value="__('Email')" />
-                        <x-text-input id="tutor_email" name="tutor_email" type="text" class="mt-1 block w-full" autocomplete="email" />
-                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        <x-text-input id="tutor_email" name="tutor_email" value="{{ old('tutor_email') }}" type="email" class="mt-1 block w-full" autocomplete="email" />
+                        <x-input-error :messages="$errors->get('tutor_email')" class="mt-2" />
                     </div>
                 </div>
             </details>
@@ -380,10 +383,15 @@
         <h2 class="text-lg font-medium text-gray-900 flex justify-between">
             {{ __('Añadir Tutor Empresa') }}
             <a href="#header_tutorEmpresa">
-                <x-primary-nonsubmit-button type="button" id="add_section_button_3">{{ __(' + ') }}</x-primary-nonsubmit-button>
+                <x-primary-nonsubmit-button type="button" id="add_tutorEmpresa_button">{{ __(' + ') }}</x-primary-nonsubmit-button>
             </a>
         </h2>
+
+        <!-- Hidden input field to count tutorEmpresa -->
+        <input type="hidden" name="tutorEmpresa_count" id="tutorEmpresa_count" value="0">
+
         <div id="tutorEmpresa_wrapper"></div>
+
         <!-- Hidden template for cloning -->
         <template id="tutorEmpresa_template">
             <details class="tutor-empresa-section bg-white mt-6 border border-blue rounded-lg p-4 shadow-sm mb-6" open>
@@ -394,7 +402,6 @@
                 <hr class="mt-2">
 
                 <div class="grid grid-cols-3 gap-6 my-6">
-                <input type="hidden" name="tutorEmpresa_count" id="tutorEmpresa_count" value="0">
                     <!-- DNI -->
                     <div>
                         <x-input-label-light for="tutorEmpresa_dni" :value="__('DNI/NIE <span class=\'text-red-500\'>*</span>')" />
@@ -420,7 +427,7 @@
                     <!-- Telefono -->
                     <div>
                         <x-input-label-light for="tutorEmpresa_telefono" :value="__('Teléfono')" />
-                        <x-text-input id="tutorEmpresa_telefono" name="tutorEmpresa_telefono" type="text" class="mt-1 block w-full" autocomplete="telefono" />
+                        <x-text-input id="tutorEmpresa_telefono" name="tutorEmpresa_telefono" maxlength="9" type="text" class="mt-1 block w-full" autocomplete="telefono" />
                         <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                     </div>
 
@@ -469,133 +476,151 @@
         });
     });
 
-    function updatePracticaTitles() {
-        const sections = document.querySelectorAll('.practica-section .practica-title-label');
-        sections.forEach((label, index) => {
-            label.textContent = `Práctica #${index + 2}`;
-        });
-    }
+    // function updatePracticaTitles() {
+    //     const sections = document.querySelectorAll('.practica-section .practica-title-label');
+    //     sections.forEach((label, index) => {
+    //         label.textContent = `Práctica #${index + 2}`;
+    //     });
+    // }
 
-    document.getElementById('add_section_button_1').addEventListener('click', function () {
-        const wrapper = document.getElementById('practica_wrapper');
-        const template = document.getElementById('practica_template');
-        const clone = template.content.cloneNode(true);
-        wrapper.appendChild(clone);
-        updatePracticaTitles();
-    });
+    // document.getElementById('add_section_button_1').addEventListener('click', function () {
+    //     const wrapper = document.getElementById('practica_wrapper');
+    //     const template = document.getElementById('practica_template');
+    //     const clone = template.content.cloneNode(true);
+    //     wrapper.appendChild(clone);
+    //     updatePracticaTitles();
+    // });
 
-    document.getElementById('practica_wrapper').addEventListener('click', function (e) {
-        if (e.target && e.target.classList.contains('remove-practica')) {
-            const section = e.target.closest('.practica-section');
-            if (section) {
-                section.remove();
-                updatePracticaTitles();
-            }
-        }
-    });
+    // document.getElementById('practica_wrapper').addEventListener('click', function (e) {
+    //     if (e.target && e.target.classList.contains('remove-practica')) {
+    //         const section = e.target.closest('.practica-section');
+    //         if (section) {
+    //             section.remove();
+    //             updatePracticaTitles();
+    //         }
+    //     }
+    // });
 
-    document.addEventListener('DOMContentLoaded', updatePracticaTitles);
+    // document.addEventListener('DOMContentLoaded', updatePracticaTitles);
 
     // Tutor
     function updateTutorTitles() {
         const sections = document.querySelectorAll('.tutor-section');
         document.getElementById('tutor_count').value = sections.length;
+
         sections.forEach((section, index) => {
-        const num = index + 1;
+            const num = index + 1;
 
-        // Update title
-        section.querySelector('.tutor-title-label').textContent = `Tutor Academico #${num}`;
+            // Update title
+            const titleLabel = section.querySelector('.tutor-title-label');
+            if (titleLabel) {
+                titleLabel.textContent = `Tutor Académico #${num}`;
+            }
 
-        // Update input IDs (they start duplicated from template)
-        const dni = section.querySelector('[id^="tutor_dni"]');
-        if (dni) dni.id = `tutor_dni_${num}`;
+            // Update input IDs and names
+            const tutorFields = [
+                'tutor_dni', 'tutor_nombre', 'tutor_apellido',
+                'tutor_telefono', 'tutor_email'
+            ];
 
-        const nombre = section.querySelector('[id^="tutor_nombre"]');
-        if (nombre) nombre.id = `tutor_nombre_${num}`;
+            tutorFields.forEach(field => {
+                const input = section.querySelector(`[name="${field}"]`);
+                if (input) {
+                    input.id = `${field}_${num}`;
+                    input.name = `${field}_${num}`;
+                }
+            });
 
-        const apellido = section.querySelector('[id^="tutor_apellido"]');
-        if (apellido) apellido.id = `tutor_apellido_${num}`;
+            // Update labels
+            const labels = section.querySelectorAll('label');
+            labels.forEach(label => {
+                const forAttr = label.getAttribute('for');
+                if (forAttr && forAttr.startsWith('tutor_')) {
+                    const baseName = forAttr.replace('tutor_', '');
+                    label.setAttribute('for', `tutor_${baseName}_${num}`);
+                }
+            });
+        });
+    }
 
-        const telefono = section.querySelector('[id^="tutor_telefono"]');
-        if (telefono) telefono.id = `tutor_telefono_${num}`;
-
-        const email = section.querySelector('[id^="tutor_email"]');
-        if (email) email.id = `tutor_email_${num}`;
-
-        // Update labels
-        const labels = section.querySelectorAll('label');
-        labels.forEach(label => {
-            const forAttr = label.getAttribute('for');
-            if (forAttr && forAttr.startsWith('tutor_')) {
-                label.setAttribute('for', `${forAttr}_${num}`);
+    // Tutor Section Management
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize numbering
+        updateTutorTitles();
+        
+        // Add new tutor section
+        document.getElementById('add_tutor_button').addEventListener('click', function(e) {
+            e.preventDefault();
+            const template = document.getElementById('tutor_template');
+            const clone = template.content.cloneNode(true);
+            document.getElementById('tutor_wrapper').appendChild(clone);
+            updateTutorTitles();
+        });
+        
+        // Remove tutor section (using event delegation)
+        document.getElementById('tutor_wrapper').addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('remove-tutor')) {
+                e.preventDefault();
+                const section = e.target.closest('.tutor-section');
+                if (section) {
+                    section.remove();
+                    updateTutorTitles();
+                }
             }
         });
     });
-    }
-
-    document.getElementById('add_section_button_2').addEventListener('click', function () {
-        const wrapper = document.getElementById('tutor_wrapper');
-        const template = document.getElementById('tutor_template');
-        const clone = template.content.cloneNode(true);
-        wrapper.appendChild(clone);
-        updateTutorTitles();
-    });
-
-    document.getElementById('tutor_wrapper').addEventListener('click', function (e) {
-        if (e.target && e.target.classList.contains('remove-tutor')) {
-            const section = e.target.closest('.tutor-section');
-            if (section) {
-                section.remove();
-                updateTutorTitles();
-            }
-        }
-    });
-
-    document.addEventListener('DOMContentLoaded', updateTutorTitles);
 
     //  Tutor Empresa
-
     function updateTutorEmpresaTitles() {
         const sections = document.querySelectorAll('.tutor-empresa-section');
         document.getElementById('tutorEmpresa_count').value = sections.length;
+
         sections.forEach((section, index) => {
-        const num = index + 1;
+            const num = index + 1;
 
-        // Update title
-        section.querySelector('.tutor-empresa-title-label').textContent = `Tutor Empresa #${num}`;
-
-        // Update input IDs (they start duplicated from template)
-        const dni = section.querySelector('[id^="tutorEmpresa_dni"]');
-        if (dni) dni.id = `tutorEmpresa_dni_${num}`;
-
-        const nombre = section.querySelector('[id^="tutorEmpresa_nombre"]');
-        if (nombre) nombre.id = `tutorEmpresa_nombre_${num}`;
-
-        const apellido = section.querySelector('[id^="tutorEmpresa_apellido"]');
-        if (apellido) apellido.id = `tutorEmpresa_apellido_${num}`;
-
-        const telefono = section.querySelector('[id^="tutorEmpresa_telefono"]');
-        if (telefono) telefono.id = `tutorEmpresa_telefono_${num}`;
-
-        const email = section.querySelector('[id^="tutorEmpresa_email"]');
-        if (email) email.id = `tutorEmpresa_email_${num}`;
-
-        // Update labels
-        const labels = section.querySelectorAll('label');
-        labels.forEach(label => {
-            const forAttr = label.getAttribute('for');
-            if (forAttr && forAttr.startsWith('tutorEmpresa_')) {
-                label.setAttribute('for', `${forAttr}_${num}`);
+            // Update title with null check
+            const titleLabel = section.querySelector('.tutor-empresa-title-label');
+            if (titleLabel) {
+                titleLabel.textContent = `Tutor Empresa #${num}`;
             }
+
+            // Define all tutor empresa fields
+            const tutorEmpresaFields = [
+                'tutorEmpresa_dni', 
+                'tutorEmpresa_nombre',
+                'tutorEmpresa_apellido',
+                'tutorEmpresa_telefono',
+                'tutorEmpresa_email'
+            ];
+
+            // Update inputs (both ID and name attributes)
+            tutorEmpresaFields.forEach(field => {
+                const input = section.querySelector(`[name^="${field}"]`);
+                if (input) {
+                    input.id = `${field}_${num}`;
+                    input.name = `${field}_${num}`;
+                }
+            });
+
+            // Update labels more precisely
+            const labels = section.querySelectorAll('label');
+            labels.forEach(label => {
+                const forAttr = label.getAttribute('for');
+                if (forAttr && forAttr.startsWith('tutorEmpresa_')) {
+                    // Handles both simple and numbered cases
+                    const baseField = forAttr.replace('tutorEmpresa_', '').split('_')[0];
+                    label.setAttribute('for', `tutorEmpresa_${baseField}_${num}`);
+                }
+            });
         });
-    });
     }
 
-    document.getElementById('add_section_button_3').addEventListener('click', function () {
+    document.getElementById('add_tutorEmpresa_button').addEventListener('click', function () {
         const wrapper = document.getElementById('tutorEmpresa_wrapper');
         const template = document.getElementById('tutorEmpresa_template');
         const clone = template.content.cloneNode(true);
         wrapper.appendChild(clone);
+        
         updateTutorEmpresaTitles();
     });
 

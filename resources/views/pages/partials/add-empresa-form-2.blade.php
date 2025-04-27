@@ -13,10 +13,14 @@
 
         <h2 class="text-lg font-medium text-gray-900 flex justify-between">
             {{ __('Añadir Centro Trabajo') }}
-            <a>
+            <!-- TODO: CHANGE THIS TO INCLUDE PC and it doesnt work either -->
+            <!-- <a>
                 <x-primary-nonsubmit-button type="button" id="add_section_button_1">{{ __(' + ') }}</x-primary-nonsubmit-button>
-            </a>
+            </a> -->
         </h2>
+
+        <input type="hidden" name="centro_count" id="centro_count" value="0">
+
         <div id="centro_trabajo_wrapper">
             <div id="centro_trabajo" class="grid grid-cols-2 gap-6 mb-6">
 
@@ -30,7 +34,7 @@
                 <!-- Código Postal -->
                 <div>
                     <x-input-label-light for="codigoPostal" :value="__('Código Postal')" />
-                    <x-text-input id="codigoPostal" name="codigoPostal" value="{{ old('codigoPostal', session('centroTrabajo_draft')?->codigoPostal) }}" type="text" class="mt-1 block w-full" />
+                    <x-text-input id="codigoPostal" name="codigoPostal" maxlength="5" value="{{ old('codigoPostal', session('centroTrabajo_draft')?->codigoPostal) }}" type="text" class="mt-1 block w-full" />
                     <x-input-error :messages="$errors->get('codigoPostal')" class="mt-2" />
                 </div>
             </div>
@@ -132,6 +136,10 @@
                 <x-primary-nonsubmit-button type="button" id="add_section_button_2">{{ __(' + ') }}</x-primary-nonsubmit-button>
             </a>
         </h2>
+
+        <!-- Hidden input field to count pc -->
+        <input type="hidden" name="persona_count" id="persona_count" value="0">
+
         <div id="persona_contacto_wrapper"></div>
 
         <template id="persona_contacto_template">
@@ -143,25 +151,24 @@
                 <hr class="mt-2">
 
                 <div class="grid grid-cols-3 gap-6 mb-6" >
-                <input type="hidden" name="persona_count" id="persona_count" value="0">
                     <!-- DNI -->
                     <div>
                         <x-input-label-light for="pc_dni" :value="__('DNI/NIE <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="pc_dni" name="pc_dni" value="{{ old('pc_dni', session('personaContacto_draft')?->dni) }}" type="text" class="mt-1 block w-full" autocomplete="dni" />
+                        <x-text-input id="pc_dni" name="pc_dni" value="" type="text" class="mt-1 block w-full" autocomplete="dni" />
                         <x-input-error :messages="$errors->get('dni')" class="mt-2" />
                     </div>
 
                     <!-- Nombre -->
                     <div>
                         <x-input-label-light for="pc_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="pc_nombre" name="pc_nombre" value="{{ old('pc_nombre', session('personaContacto_draft')?->nombre) }}" type="text" class="mt-1 block w-full" autocomplete="nombre"  />
+                        <x-text-input id="pc_nombre" name="pc_nombre" value="" type="text" class="mt-1 block w-full" autocomplete="nombre"  />
                         <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
                     </div>
 
                     <!-- Apellido -->
                     <div>
                         <x-input-label-light for="pc_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="pc_apellido" name="pc_apellido" value="{{ old('pc_apellido', session('personaContacto_draft')?->apellido) }}"  type="text" class="mt-1 block w-full" autocomplete="apellido"  />
+                        <x-text-input id="pc_apellido" name="pc_apellido" value=""  type="text" class="mt-1 block w-full" autocomplete="apellido"  />
                         <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
                     </div>
                 </div>
@@ -169,14 +176,14 @@
                     <!-- Telefono -->
                     <div>
                         <x-input-label-light for="pc_telefono" :value="__('Teléfono')" />
-                        <x-text-input id="pc_telefono" name="pc_telefono" value="{{ old('pc_telefono', session('personaContacto_draft')?->telefono) }}" type="text" class="mt-1 block w-full" autocomplete="telefono" />
+                        <x-text-input id="pc_telefono" name="pc_telefono" value="" maxlength="9" type="text" class="mt-1 block w-full" autocomplete="telefono" />
                         <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                     </div>
 
                     <!-- Email -->
                     <div>
                         <x-input-label-light for="pc_email" :value="__('Email')" />
-                        <x-text-input id="pc_email" name="pc_email" value="{{ old('pc_email', session('personaContacto_draft')?->email) }}" type="text" class="mt-1 block w-full" autocomplete="email" />
+                        <x-text-input id="pc_email" name="pc_email" value="" type="text" class="mt-1 block w-full" autocomplete="email" />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
                 </div>
@@ -203,9 +210,40 @@
     });
 
     function updateCentroTitles() {
-        const sections = document.querySelectorAll('.centro-trabajo-section .centro-title-label');
-        sections.forEach((label, index) => {
-            label.textContent = `Centro de Trabajo #${index + 2}`;
+        const sections = document.querySelectorAll('.centro-trabajo-section');
+        document.getElementById('centro_count').value = sections.length;
+
+        sections.forEach((section, index) => {
+            const num = index + 1;
+
+            // Update title
+            const titleLabel = section.querySelector('.centro-title-label');
+            if (titleLabel) {
+                titleLabel.textContent = `Centro de Trabajo #${num}`;
+            }
+
+            // Update input IDs and names for centro fields
+            const centroFields = [
+                'direccion', 'codigoPostal', 'comunidad', 
+                'provincia', 'municipio'
+            ];
+
+            centroFields.forEach(field => {
+                const input = section.querySelector(`[name="${field}"]`);
+                if (input) {
+                    input.id = `${field}_${num}`;
+                    input.name = `${field}_${num}`;
+                }
+            });
+
+            // Update labels
+            const labels = section.querySelectorAll('label');
+            labels.forEach(label => {
+                const forAttr = label.getAttribute('for');
+                if (forAttr && centroFields.some(field => forAttr.startsWith(field))) {
+                    label.setAttribute('for', `${forAttr}_${num}`);
+                }
+            });
         });
     }
 
@@ -231,30 +269,32 @@
     // Initial call
     document.addEventListener('DOMContentLoaded', updateCentroTitles);
 
-
     // Persona Contacto 
     function updatePersonaTitles() {
-        const sections = document.querySelectorAll('.persona-contacto-section .persona-title-label');
+        const sections = document.querySelectorAll('.persona-contacto-section');
         document.getElementById('persona_count').value = sections.length;
-        sections.forEach((label, index) => {
+
+        sections.forEach((section, index) => {
             const num = index + 1;
-            
-            section.querySelector('.persona-title-label').textContent = `Persona Contacto #${num}`;
 
-            const dni = section.querySelector('[id^=pc_dni"]');
-            if (dni) dni.id = `pc_dni_${num}`;
+            // Update title
+            const titleLabel = section.querySelector('.persona-title-label');
+            if (titleLabel) {
+                titleLabel.textContent = `Persona Contacto #${num}`;
+            }
 
-            const nombre = section.querySelector('[id^="pc_nombre"]');
-            if (nombre) nombre.id = `pc_nombre_${num}`;
+            // Update input IDs and names
+            const inputs = [
+                'pc_dni', 'pc_nombre', 'pc_apellido', 'pc_telefono', 'pc_email'
+            ];
 
-            const apellido = section.querySelector('[id^="pc_apellido"]');
-            if (apellido) apellido.id = `pc_apellido_${num}`;
-
-            const telefono = section.querySelector('[id^="pc_telefono"]');
-            if (telefono) telefono.id = `pc_telefono_${num}`;
-
-            const email = section.querySelector('[id^="pc_email"]');
-            if (email) email.id = `pc_email_${num}`;
+            inputs.forEach(field => {
+                const input = section.querySelector(`[name^="${field}"]`);
+                if (input) {
+                    input.id = `${field}_${num}`;
+                    input.name = `${field}_${num}`;
+                }
+            });
 
             // Update labels
             const labels = section.querySelectorAll('label');

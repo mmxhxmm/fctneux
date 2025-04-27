@@ -26,6 +26,18 @@
             </div>
         </form>
 
+        <button 
+            id="openEditModal"
+            type="button" 
+            class="edit-btn absolute px-2 rounded top-4 right-6 text-blue hover:text-white border border-blue hover:bg-blue transition active:scale-95 duration-80"
+            data-tarea-id="{{ $tarea->id }}"
+            data-tarea-nombre="{{ $tarea->nombre }}"
+            data-tarea-descripcion="{{ $tarea->descripcion }}"
+            data-tarea-estado="{{ $tarea->estado }}"
+            data-tarea-fecha-limite="{{ \Carbon\Carbon::parse($tarea->fecha_limite)->format('Y-m-d') }}"
+            data-tarea-asignado="{{ $tarea->asignado }}"
+            data-tarea-empresa="{{ $tarea->empresa }}"> Editar
+        </button>
 
         <!-- Tarea Content -->
         <div class="pt-10 pb-5 px-6 space-y-4 text-[17px] text-gray-800 font-roboto mt-8">
