@@ -34,7 +34,7 @@
 
                                     <!-- Tareas Pendientes -->
                                     <input type="checkbox" id="toggle" class="hidden peer" />
-                                    <div class="w-full -mt-16 bg-white border-[6px] border-primary p-6 rounded-2xl shadow-lg mt-8 peer-checked:h-auto transition-all duration-500">
+                                    <div class="w-full -mt-16 bg-white h-96 border-[6px] border-primary p-6 rounded-2xl shadow-lg mt-8 peer-checked:h-auto transition-all duration-500">
                                         <h3 class="text-2xl text-primary font-bold text-center mb-6">Tareas Pendientes</h3>
                                         
                                             <!-- Contenedor padre con altura fija -->

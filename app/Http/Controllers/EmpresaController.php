@@ -258,13 +258,20 @@ class EmpresaController extends Controller
                 // Obtener valores únicos de plazas
                 $plazasRaw = Practica::select('numPlazasAsignadas')->distinct()->pluck('numPlazasAsignadas')->sort()->toArray();
                 $plazas = collect($plazasRaw)->mapWithKeys(fn($item) => [$item => $item]);
+                $provincias_raw = Empresa::select('provincia')->distinct()->pluck('provincia')->filter();
+                $provincia = $provincias_raw->mapWithKeys(function ($id) {
+                    return [$id => $this->provinciaToString($id)];
+                });
+        
 
         return view('pages.empresa-index', compact('empresas',            
         'familias',
         'colaboraciones',
         'modalidades',
         'ciclos',
-        'plazas'));
+        'plazas',
+        'provincia'
+    ));
     }
         
 

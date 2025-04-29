@@ -140,8 +140,31 @@ class TareaController extends Controller
                 });
             })
             ->get();
+    
+            $asignadoRaw = Tarea::select('asignado')->distinct()->pluck('asignado')->filter()->toArray();
+        
+            $asignadoFlat = [];
+            foreach ($asignadoRaw as $entry) {
+                $names = explode(',', $entry);
+                foreach ($names as $name) {
+                    $asignadoFlat[] = trim($name);
+                }
+            }
+        
+            $asignados = collect($asignadoFlat)->unique()->sort()->values();
+        
+    
+            $estados = Tarea::ESTADOS;
+        
+            $fechasRaw = Tarea::select('fecha_limite')->distinct()->pluck('fecha_limite')->filter()->sort()->toArray();
+            $fechas_limite = collect($fechasRaw)->mapWithKeys(fn($date) => [
+                \Carbon\Carbon::parse($date)->format('Y-m-d') => \Carbon\Carbon::parse($date)->format('Y-m-d')
+            ]);
+    
+            $empresaRaw = Tarea::select('empresa_id')->distinct()->pluck('empresa_id')->filter()->toArray();
+            $empresas = \App\Models\Empresa::whereIn('id', $empresaRaw)->pluck('nombre', 'id');
 
-        return view('pages/tarea/tareas-index', compact('tareas'));
+        return view('pages/tarea/tareas-index', compact('tareas', 'asignados', 'estados', 'fechas_limite', 'empresas'));
     }
 
     public function asignado_filtro(Request $request)
