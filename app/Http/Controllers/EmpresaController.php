@@ -137,7 +137,7 @@ class EmpresaController extends Controller
             return [$id => $this->provinciaToString($id)];
         });
 
-        $ciclos = Practica::select('cicloFormativo')->distinct()->pluck('cicloFormativo')->filter()->mapWithKeys(fn($i) =>  $this->cicloFormativoToString($i));
+        $ciclos = Practica::select('cicloFormativo')->distinct()->pluck('cicloFormativo')->filter()->mapWithKeys(fn($i) => [$i => $i]);
         $plazas = Practica::select('numPlazasAsignadas')->distinct()->pluck('numPlazasAsignadas')->sort()->mapWithKeys(fn($i) => [$i => $i]);
 
         return view('pages/empresa/empresa-index', compact(
@@ -149,20 +149,6 @@ class EmpresaController extends Controller
             'ciclos',
             'plazas'
         ));
-    }
-    public function cicloFormativoToString($value) {
-        switch ($value) {
-            case 'daw':
-                return 'Desarrollo de Aplicaciones Web';
-            case 'asix':
-                return 'Administración de Sistemas Informáticos';
-            case 'dam':
-                return 'Desarrollo de Aplicaciones Multiplataforma';
-            case 'marketing':
-                return 'Marketing Digital';
-            default:
-                return $value;
-        }
     }
 
     public function provinciaToString($value) {
@@ -192,24 +178,13 @@ class EmpresaController extends Controller
         // Get the 'id' from the query parameter
         $id = $request->query('id');
 
-        // Filters estados descending
-        $empresas = Empresa::with(['tareas' => function($query) {
-            $query->orderByRaw("
-                CASE 
-                    WHEN estado = 'to_do' THEN 1
-                    WHEN estado = 'in_progress' THEN 2
-                    WHEN estado = 'revision' THEN 3
-                    WHEN estado = 'blocked' THEN 4
-                    WHEN estado = 'done' THEN 5
-                    ELSE 6
-                END
-            ");
-        }])->get();
-
-        $usuarios = \App\Models\User::all();
+        // Fetch all empresas
+        $empresas = Empresa::all();
 
         // Pass the empresas and the id to the view
-        return view('pages/empresa/empresa-detail-view', ['page' => 'detail/detail-main',],  compact('empresas' , 'id', 'usuarios') );
+        return view('pages/empresa-detail-view', [
+            'page' => 'detail/detail-main',
+        ],  compact('empresas' , 'id') );
     }
 
     // search purpose 
@@ -290,13 +265,13 @@ class EmpresaController extends Controller
         
 
         return view('pages/empresa/empresa-index', compact('empresas',            
-            'familias',
-            'colaboraciones',
-            'modalidades',
-            'ciclos',
-            'plazas',
-            'provincia'
-        ));
+        'familias',
+        'colaboraciones',
+        'modalidades',
+        'ciclos',
+        'plazas',
+        'provincia'
+    ));
     }
         
 
