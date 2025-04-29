@@ -19,7 +19,7 @@
                 <!-- Sticky Button -->
                 <button 
                     id="toggleTareasBtn"
-                    class="z-[20] fixed right-2 px-4 py-3 rounded-full text-white hover:text-blue border border-blue bg-blue hover:bg-white transition active:scale-95 duration-80"
+                    class="z-[20] fixed top-28 right-2 px-4 py-3 rounded-full text-white hover:text-blue border border-blue bg-blue hover:bg-white transition active:scale-95 duration-80"
                 >
                     Tareas >
                 </button>

@@ -113,6 +113,22 @@
                                     </div>
                                 </template>
 
+                                @php
+                                function cicloFormativoToString($value) {
+                                    switch ($value) {
+                                        case 'daw':
+                                            return 'Desarrollo de Aplicaciones Web';
+                                        case 'asix':
+                                            return 'Administración de Sistemas Informáticos';
+                                        case 'dam':
+                                            return 'Desarrollo de Aplicaciones Multiplataforma';
+                                        case 'marketing':
+                                            return 'Marketing Digital';
+                                        default:
+                                            return $value;
+                                    }
+                                }
+                                @endphp
 
                                 <!-- Ciclo -->
                                 <template x-if="selectedFilters.includes('ciclo') || '{{ request('ciclo') }}' !== ''">
@@ -120,7 +136,9 @@
                                         <select name="ciclo" onchange="this.form.submit()" class="w-[100px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
                                             <option value="" class="bg-stone-700 text-white">Ciclo</option>
                                             @foreach ($ciclos as $value => $label)
-                                                <option value="{{ $value }}" {{ request('ciclo') == $value ? 'selected' : '' }}>{{ $label }}</option>
+                                                <option value="{{ $value }}" {{ request('ciclo') == $value ? 'selected' : '' }}>
+                                                    {{ cicloFormativoToString($value) }}
+                                                </option>
                                             @endforeach
                                         </select>
                                         <button type="button" @click="toggleFilter('ciclo')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-lg hover:bg-red-700 transition">&times;</button>
