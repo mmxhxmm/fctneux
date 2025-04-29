@@ -267,14 +267,16 @@ class EmpresaController extends Controller
                 });
         
 
-        return view('pages/empresa/empresa-index', compact('empresas',            
-        'familias',
-        'colaboraciones',
-        'modalidades',
-        'ciclos',
-        'plazas',
-        'provincia'
-    ));
+        return view('pages/empresa/empresa-index', 
+        compact(
+            'empresas',
+            'familias',
+            'colaboraciones',
+            'modalidades',
+            'ciclos',
+            'plazas',
+            'provincia'
+        ));
     }
         
 
@@ -500,9 +502,8 @@ class EmpresaController extends Controller
 
         // PersonaContacto Validator
         // TODO: true to condition if 1 rc exists, change to condition like foreach inside to  
-        if (
-            $request->filled('pc_dni') || $request->filled('pc_nombre') || $request->filled('pc_apellido') || $request->filled('pc_telefono') || $request->filled('pc_email')
-        ) {
+        if ($request->filled('pc_dni') || $request->filled('pc_nombre') || $request->filled('pc_apellido') || $request->filled('pc_telefono') || $request->filled('pc_email'))
+        {
             $validator->sometimes('pc_dni', 'required|string|max:255', function () {return true;});
             $validator->sometimes('pc_nombre', 'required|string|max:255', function () {return true;});
             $validator->sometimes('pc_apellido', 'required|string|max:255', function () {return true;});
@@ -526,6 +527,23 @@ class EmpresaController extends Controller
         $centroTrabajo->direccion = $request->direccion;
         session(['centroTrabajo_draft' => $centroTrabajo]);
 
+        // PersonaContacto
+        for ($i = 1; $i <= $request->persona_count; $i++)  {
+            // Only create if required fields are present
+            if ($request->input("pc_dni_$i") && $request->input("pc_nombre_$i") && $request->input("pc_apellido_$i")) {
+                $pc = new PersonaContacto;
+                $pc->dni = $request->input("pc_dni_$i");
+                $pc->nombre = $request->input("pc_nombre_$i");
+                $pc->apellido = $request->input("pc_apellido_$i");
+                $pc->telefono = $request->input("pc_telefono_$i");
+                $pc->email = $request->input("pc_email_$i");
+
+                $personas[] = $pc;
+
+                session(['personaContacto_draft' => $personas]);
+            }
+        }
+
         // Submit
         \Log::debug('Artisan Session Check:', session()->all());
         return $this->submit('empresa-form-2', ($request->has('action') ? $request->input('action') : 'null'), true);
@@ -533,16 +551,16 @@ class EmpresaController extends Controller
 
     public function store_3(Request $request)
     {
-        // if ($request->input('action') === 'prev_page') {
-        //     $previousForm = intval(explode('-', 'empresa-form-3')[2]) - 1;
-            
-        //     \Log::info('Going to: empresa-form-' . $previousForm);
-        //     return redirect(route('empresa-form-' . $previousForm));
-        // }
-
         // Exit does not save 
         if ($request->input('action') === 'exit') {
             return $this->submit('empresa-form-1', 'exit', false);
+        }
+
+        if ($request->input('action') === 'prev_page') {
+            $previousForm = intval(explode('-', 'empresa-form-3')[2]) - 1;
+            
+            \Log::info('Going to: empresa-form-' . $previousForm);
+            return redirect(route('empresa-form-' . $previousForm));
         }
 
         // Practica

@@ -48,7 +48,7 @@
     </table>
     @else
         <div>
-            <p class="text-center">No existen Tareas</p>
+            <p class="text-center mt-10">No existen Tareas</p>
         </div>
     @endif
 

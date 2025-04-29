@@ -9,7 +9,7 @@
                 <img src="{{ asset('images/icons/icons8-address-book-96.png') }}" alt="" width="20px" class="invert brightness-0">
                 <p>Editar Datos de la Tarea</p>
             </h2>
-            <button data-modal-id="EditModal-{{ $tarea->id }}" class="closeEditModal text-white text-xl hover:text-orange transition-all">✕</button>
+            <button data-modal-id="EditModal-{{ $tarea->id }}" class="closeEditModal text-white text-xl hover:text-gray-400 transition-all">✕</button>
         </div>
 
         <!-- Content -->

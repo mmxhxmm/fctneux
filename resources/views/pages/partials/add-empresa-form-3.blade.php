@@ -332,11 +332,10 @@
             <details class="tutor-section bg-white mt-6 border border-blue-500 rounded-lg p-4 shadow-sm mb-6" open>
                 <summary class="text-lg font-medium text-gray-900 cursor-pointer flex justify-between items-center">
                     <span class="tutor-title-label">Tutor Académico</span>
-                    <button type="button" class="remove-tutor text-red-500 hover:text-red-700 text-sm ml-4">❌</button>
+                    <button type="button" class="remove-tutor text-xl hover:text-gray-400 transition-all ml-4">✕</button>
                 </summary>
-                <hr class="mt-2">
 
-                <div class="grid grid-cols-3 gap-6 mb-6">
+                <div class="grid grid-cols-3 gap-6 mb-6 mt-6">
                     <!-- DNI/NIE -->
                     <div>
                         <x-input-label-light for="tutor_dni" :value="__('DNI/NIE <span class=\'text-red-500\'>*</span>')" />
@@ -397,11 +396,10 @@
             <details class="tutor-empresa-section bg-white mt-6 border border-blue rounded-lg p-4 shadow-sm mb-6" open>
                 <summary class="text-lg font-medium text-gray-900 cursor-pointer flex justify-between items-center">
                     <span class="tutor-empresa-title-label">Tutor Empresa</span>
-                    <button type="button" class="remove-tutor-empresa text-red-500 hover:text-red-700 text-sm ml-4">❌</button>
+                    <button type="button" class="remove-tutor-empresa text-xl hover:text-gray-400 transition-all ml-4">✕</button>
                 </summary>
-                <hr class="mt-2">
 
-                <div class="grid grid-cols-3 gap-6 my-6">
+                <div class="grid grid-cols-3 gap-6 my-6 mt-6">
                     <!-- DNI -->
                     <div>
                         <x-input-label-light for="tutorEmpresa_dni" :value="__('DNI/NIE <span class=\'text-red-500\'>*</span>')" />
@@ -447,7 +445,6 @@
     </form>
 </section>
 <script>
-
     document.getElementById('form').addEventListener('submit', function (e) {
     const sections = document.querySelectorAll('.tutor-section');
 

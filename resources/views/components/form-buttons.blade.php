@@ -72,7 +72,7 @@
     </div>
 
     <!-- Bottom Row: Arrows (unchanged) -->
-    <div class="flex justify-center gap-6">
+    <div class="mt-10 flex justify-center gap-6">
         @if((intval(explode('-', $currentRoute)[2]) - 1) >= 1)
             <x-primary-button 
                 name="action" 

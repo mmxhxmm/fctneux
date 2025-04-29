@@ -16,10 +16,9 @@
             </div>
 
             <div class="relative">
-                <!-- Sticky Button -->
                 <button 
                     id="toggleTareasBtn"
-                    class="z-[20] fixed top-28 right-2 px-4 py-3 rounded-full text-white hover:text-blue border border-blue bg-blue hover:bg-white transition active:scale-95 duration-80"
+                    class="z-[20] fixed top-[12vh] right-2 px-4 py-3 rounded-full text-white hover:text-blue border border-blue bg-blue hover:bg-white transition active:scale-95 duration-80"
                 >
                     Tareas >
                 </button>
@@ -31,11 +30,9 @@
                 <div id="tareaDetailPanel" class="fixed inset-y-0 right-0 w-2/3 bg-white shadow-xl transform translate-x-full transition-transform duration-300 z-40">
                     <div class="h-full flex flex-col">
                         <!-- Panel Header -->
-                        <div class="p-4 h-[10vh] bg-blue text-white border-b flex justify-between items-center">
+                        <div class="p-6 h-[10vh] bg-blue text-white border-b flex justify-between items-center">
                             <h2 class="text-xl font-bold">Datos de Tareas</h2>
-                            <button id="closePanelBtn" class="text-gray-500 hover:text-gray-700 text-2xl">
-                            &times;
-                            </button>
+                            <button id="closePanelBtn" class="text-white text-xl hover:text-gray-400 transition-all">✕</button>
                         </div>
                         
                         <!-- Panel Content -->

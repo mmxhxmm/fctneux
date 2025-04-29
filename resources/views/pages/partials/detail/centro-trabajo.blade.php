@@ -81,31 +81,31 @@
                         @method('PUT')
                         
                         <div>
-                            <x-input-label for="dni-{{ $index2Sum }}" value="DNI <span class='text-red-500'>*</span>" />
+                            <x-input-label-light for="dni-{{ $index2Sum }}" value="DNI <span class='text-red-500'>*</span>" />
                             <x-text-input-light id="dni-{{ $index2Sum }}" name="dni" value="{{ $persContacto->dni }}" />
                             <x-input-error :messages="$errors->get('dni')" class="mt-2" />
                         </div>
                         
                         <div>
-                            <x-input-label for="nombre-{{ $index2Sum }}" value="Nombre <span class='text-red-500'>*</span>" />
+                            <x-input-label-light for="nombre-{{ $index2Sum }}" value="Nombre <span class='text-red-500'>*</span>" />
                             <x-text-input-light id="nombre-{{ $index2Sum }}" name="nombre" value="{{ $persContacto->nombre }}" />
                             <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
                         </div>
                         
                         <div>
-                            <x-input-label for="apellido-{{ $index2Sum }}" value="Apellido <span class='text-red-500'>*</span>" />
+                            <x-input-label-light for="apellido-{{ $index2Sum }}" value="Apellido <span class='text-red-500'>*</span>" />
                             <x-text-input-light id="apellido-{{ $index2Sum }}" name="apellido" value="{{ $persContacto->apellido }}" />
                             <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
                         </div>
                         
                         <div>
-                            <x-input-label for="telefono-{{ $index2Sum }}" value="Teléfono" />
+                            <x-input-label-light for="telefono-{{ $index2Sum }}" value="Teléfono" />
                             <x-text-input-light id="telefono-{{ $index2Sum }}" name="telefono" maxlength="9" value="{{ $persContacto->telefono }}" />
                             <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                         </div>
                         
                         <div>
-                            <x-input-label for="email-{{ $index2Sum }}" value="Email" />
+                            <x-input-label-light for="email-{{ $index2Sum }}" value="Email" />
                             <x-text-input-light id="email-{{ $index2Sum }}" name="email" value="{{ $persContacto->email }}" />
                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
                         </div>
@@ -143,28 +143,28 @@
                     @method('PUT')
                     
                     <div>
-                        <x-input-label for="dni" value="DNI <span class='text-red-500'>*</span>" />
+                        <x-input-label-light for="dni" value="DNI <span class='text-red-500'>*</span>" />
                         <x-text-input-light id="dni" name="dni" required />
                     </div>
                     
                     <div>
-                        <x-input-label for="nombre" value="Nombre <span class='text-red-500'>*</span>" />
+                        <x-input-label-light for="nombre" value="Nombre <span class='text-red-500'>*</span>" />
                         <x-text-input-light id="nombre" name="nombre" required />
                     </div>
                     
                     <div>
-                        <x-input-label for="apellido" value="Apellido <span class='text-red-500'>*</span>" />
+                        <x-input-label-light for="apellido" value="Apellido <span class='text-red-500'>*</span>" />
                         <x-text-input-light id="apellido" name="apellido" required />
                     </div>
                     
                     <div>
-                        <x-input-label for="telefono" value="Teléfono" />
+                        <x-input-label-light for="telefono" value="Teléfono" />
                         <x-text-input-light id="telefono" name="telefono" maxlength="9" />
                         <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                     </div>
                     
                     <div>
-                        <x-input-label for="email" value="Email" />
+                        <x-input-label-light for="email" value="Email" />
                         <x-text-input-light id="email" name="email" />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
@@ -189,13 +189,13 @@
                 @method('PUT')
 
                 <div>
-                    <x-input-label for="codigoPostal-{{ $index }}" value="Código Postal" />
+                    <x-input-label-light for="codigoPostal-{{ $index }}" value="Código Postal" />
                     <x-text-input-light id="codigoPostal-{{ $index }}" name="codigoPostal" maxlength="5" value="{{ $centro->codigoPostal }}" />
                 </div>
 
                 <!-- Comunidad Autónoma -->
                 <div>
-                    <x-input-label for="comunidad-{{ $index }}" value="Comunidad" />
+                    <x-input-label-light for="comunidad-{{ $index }}" value="Comunidad" />
                     <x-select-input-light name="comunidad" id="comunidad-{{ $index }}"
                         class="comunidad-ct block border border-gray-300 w-full mt-1 rounded text-gray-900"
                         data-initial-value="{{ $centro->comunidad }}">
@@ -224,7 +224,7 @@
                 </div>
                 
                 <div class="md:col-span-2">
-                    <x-input-label for="direccion-{{ $index }}" value="Dirección" />
+                    <x-input-label-light for="direccion-{{ $index }}" value="Dirección" />
                     <x-text-input-light id="direccion-{{ $index }}" name="direccion" value="{{ $centro->direccion }}" />
                 </div>
                 
@@ -283,14 +283,14 @@
                 @method('PUT')
 
                 <div>
-                    <x-input-label for="codigoPostal" value="Código Postal" />
+                    <x-input-label-light for="codigoPostal" value="Código Postal" />
                     <x-text-input-light id="codigoPostal" name="codigoPostal" maxlength="5" />
                     <x-input-error :messages="$errors->get('codigoPostal')" class="mt-2" />
                 </div>
 
                 <!-- Comunidad Autónoma -->
                 <div>
-                    <x-input-label for="comunidad" value="Comunidad" />
+                    <x-input-label-light for="comunidad" value="Comunidad" />
                     <x-select-input-light name="comunidad" id="comunidad"
                         class="comunidad-ct-add block border border-gray-300 w-full mt-1 rounded text-gray-900">
                         <option value="">Selecciona una comunidad</option>
@@ -316,7 +316,7 @@
                 </div>
 
                 <div class="md:col-span-2">
-                    <x-input-label for="direccion" value="Dirección" />
+                    <x-input-label-light for="direccion" value="Dirección" />
                     <x-text-input-light id="direccion" name="direccion" />
                 </div>
                 

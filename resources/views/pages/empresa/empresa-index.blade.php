@@ -340,7 +340,6 @@
 
     <!-- JavaScript (for Search functionality) -->
     <script>
-
         document.getElementById('searchForm').addEventListener('submit', function (e) {
             e.preventDefault(); // Prevent default form behavior
             const query = document.getElementById('searchInput').value.trim();

@@ -31,18 +31,18 @@
                 
                 <div class="md:col-span-1 space-y-4">
                     <div>
-                        <x-input-label for="nombre" value="Nombre" />
+                        <x-input-label-light for="nombre" value="Nombre" />
                         <x-text-input-light id="nombre" name="nombre" value="{{ $empresa->nombre }}" />
                     </div>
                 
                     <div>
-                        <x-input-label for="cif" value="CIF" />
+                        <x-input-label-light for="cif" value="CIF" />
                         <x-text-input-light id="cif" name="cif" value="{{ $empresa->cif }}" />
                     </div>
 
                     <!-- Colaboración -->
                     <div>
-                        <x-input-label for="colaboracion" :value="__('Colaboración')" />
+                        <x-input-label-light for="colaboracion" :value="__('Colaboración')" />
                         <x-select-input-light name="colaboracion" id="colaboracion" class="block w-full">
                             <option value="prospeccion"
                             {{ $empresa->colaboracion == 'prospeccion' ? 'selected' : '' }}>
@@ -56,7 +56,7 @@
 
                     <!-- Gestiones -->
                     <div>
-                        <x-input-label for="gestiones" :value="__('Gestiones')" />
+                        <x-input-label-light for="gestiones" :value="__('Gestiones')" />
 
                         <div id="prospeccion-options" style="display: none;">
                             <x-select-input-light name="gestiones_prospeccion" id="gestiones">
@@ -136,7 +136,7 @@
                     </div>
 
                     <div>
-                        <x-input-label for="familiaPersonal" value="Familia Personal" />
+                        <x-input-label-light for="familiaPersonal" value="Familia Personal" />
                         <x-select-input-light name="familiaPersonal" id="familiaPersonal" class="mt-1 block w-full">
                             <x-session-option 
                                 value="sanidad" 
@@ -185,13 +185,13 @@
 
                 <div class="md:col-span-1 space-y-4">
                     <div>
-                        <x-input-label for="entidad" value="Entidad" />
+                        <x-input-label-light for="entidad" value="Entidad" />
                         <x-text-input-light id="entidad" name="entidad" value="{{ $empresa->entidad }}" />
                     </div>
 
                     <!-- Comunidad Autónoma -->
                     <div>
-                        <x-input-label for="comunidad" value="Comunidad" />
+                        <x-input-label-light for="comunidad" value="Comunidad" />
                         <x-select-input-light name="comunidad" id="comunidad"
                             class="comunidad block border border-gray-300 w-full mt-1 rounded text-gray-900"
                             data-initial-value="{{ $empresa->comunidad }}">
@@ -220,17 +220,17 @@
                     </div>
 
                     <div>
-                        <x-input-label for="direccion" value="Dirección" />
+                        <x-input-label-light for="direccion" value="Dirección" />
                         <x-text-input-light id="direccion" name="direccion" value="{{ $empresa->direccion }}" />
                     </div>
 
                     <div>
-                        <x-input-label for="codigoPostal" value="Código Postal" />
+                        <x-input-label-light for="codigoPostal" value="Código Postal" />
                         <x-text-input-light id="codigoPostal" name="codigoPostal" maxlength="5" value="{{ $empresa->codigoPostal }}" />
                     </div>
 
                     <div>
-                        <x-input-label for="observaciones" value="Observaciones" />
+                        <x-input-label-light for="observaciones" value="Observaciones" />
                         <textarea id="observaciones" name="observaciones" rows="3" class="block w-full border-gray-700 bg-white focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">{{ $empresa->observaciones }}</textarea>
                     </div>
                 </div>

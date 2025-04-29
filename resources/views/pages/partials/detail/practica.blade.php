@@ -77,28 +77,28 @@
                         @method('PUT')
                         
                         <div>
-                            <x-input-label for="dni-{{ $tutor->id }}" value="DNI <span class='text-red-500'>*</span>" />
+                            <x-input-label-light for="dni-{{ $tutor->id }}" value="DNI <span class='text-red-500'>*</span>" />
                             <x-text-input-light id="dni-{{ $tutor->id }}" name="dni" value="{{ $tutor->dni }}" />
                         </div>
                         
                         <div>
-                            <x-input-label for="nombre-{{ $tutor->id }}" value="Nombre <span class='text-red-500'>*</span>" />
+                            <x-input-label-light for="nombre-{{ $tutor->id }}" value="Nombre <span class='text-red-500'>*</span>" />
                             <x-text-input-light id="nombre-{{ $tutor->id }}" name="nombre" value="{{ $tutor->nombre }}" />
                         </div>
                         
                         <div>
-                            <x-input-label for="apellido-{{ $tutor->id }}" value="Apellido <span class='text-red-500'>*</span>" />
+                            <x-input-label-light for="apellido-{{ $tutor->id }}" value="Apellido <span class='text-red-500'>*</span>" />
                             <x-text-input-light id="apellido-{{ $tutor->id }}" name="apellido" value="{{ $tutor->apellido }}" />
                         </div>
                         
                         <div>
-                            <x-input-label for="telefono-{{ $tutor->id }}" value="Teléfono" />
+                            <x-input-label-light for="telefono-{{ $tutor->id }}" value="Teléfono" />
                             <x-text-input-light id="telefono-{{ $tutor->id }}" name="telefono" maxlength="9" value="{{ $tutor->telefono }}" />
                             <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                         </div>
                         
                         <div>
-                            <x-input-label for="email-{{ $tutor->id }}" value="Email" />
+                            <x-input-label-light for="email-{{ $tutor->id }}" value="Email" />
                             <x-text-input-light id="email-{{ $tutor->id }}" name="email" value="{{ $tutor->email }}" />
                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
                         </div>
@@ -136,28 +136,28 @@
                     @method('PUT')
                     
                     <div>
-                        <x-input-label for="dni" value="DNI <span class='text-red-500'>*</span>" />
+                        <x-input-label-light for="dni" value="DNI <span class='text-red-500'>*</span>" />
                         <x-text-input-light id="dni" name="dni" required />
                     </div>
                     
                     <div>
-                        <x-input-label for="nombre" value="Nombre <span class='text-red-500'>*</span>" />
+                        <x-input-label-light for="nombre" value="Nombre <span class='text-red-500'>*</span>" />
                         <x-text-input-light id="nombre" name="nombre" required />
                     </div>
                     
                     <div>
-                        <x-input-label for="apellido" value="Apellido <span class='text-red-500'>*</span>" />
+                        <x-input-label-light for="apellido" value="Apellido <span class='text-red-500'>*</span>" />
                         <x-text-input-light id="apellido" name="apellido" required />
                     </div>
                     
                     <div>
-                        <x-input-label for="telefono" value="Teléfono" />
+                        <x-input-label-light for="telefono" value="Teléfono" />
                         <x-text-input-light id="telefono" name="telefono" maxlength="9" />
                         <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                     </div>
                     
                     <div>
-                        <x-input-label for="email" value="Email" />
+                        <x-input-label-light for="email" value="Email" />
                         <x-text-input-light id="email" name="email" />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
@@ -226,28 +226,28 @@
                         @method('PUT')
                         
                         <div>
-                            <x-input-label for="dni-{{ $tutor->id }}" value="DNI <span class='text-red-500'>*</span>" />
+                            <x-input-label-light for="dni-{{ $tutor->id }}" value="DNI <span class='text-red-500'>*</span>" />
                             <x-text-input-light id="dni-{{ $tutor->id }}" name="dni" value="{{ $tutor->dni }}" />
                         </div>
                         
                         <div>
-                            <x-input-label for="nombre-{{ $tutor->id }}" value="Nombre <span class='text-red-500'>*</span>" />
+                            <x-input-label-light for="nombre-{{ $tutor->id }}" value="Nombre <span class='text-red-500'>*</span>" />
                             <x-text-input-light id="nombre-{{ $tutor->id }}" name="nombre" value="{{ $tutor->nombre }}" />
                         </div>
                         
                         <div>
-                            <x-input-label for="apellido-{{ $tutor->id }}" value="Apellido <span class='text-red-500'>*</span>" />
+                            <x-input-label-light for="apellido-{{ $tutor->id }}" value="Apellido <span class='text-red-500'>*</span>" />
                             <x-text-input-light id="apellido-{{ $tutor->id }}" name="apellido" value="{{ $tutor->apellido }}" />
                         </div>
                         
                         <div>
-                            <x-input-label for="telefono-{{ $tutor->id }}" value="Teléfono" />
+                            <x-input-label-light for="telefono-{{ $tutor->id }}" value="Teléfono" />
                             <x-text-input-light id="telefono-{{ $tutor->id }}" name="telefono" maxlength="9" value="{{ $tutor->telefono }}" />
                             <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                         </div>
                         
                         <div>
-                            <x-input-label for="email-{{ $tutor->id }}" value="Email" />
+                            <x-input-label-light for="email-{{ $tutor->id }}" value="Email" />
                             <x-text-input-light id="email-{{ $tutor->id }}" name="email" value="{{ $tutor->email }}" />
                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
                         </div>
@@ -285,28 +285,28 @@
                     @method('PUT')
                     
                     <div>
-                        <x-input-label for="dni" value="DNI <span class='text-red-500'>*</span>" />
+                        <x-input-label-light for="dni" value="DNI <span class='text-red-500'>*</span>" />
                         <x-text-input-light id="dni" name="dni" required />
                     </div>
                     
                     <div>
-                        <x-input-label for="nombre" value="Nombre <span class='text-red-500'>*</span>" />
+                        <x-input-label-light for="nombre" value="Nombre <span class='text-red-500'>*</span>" />
                         <x-text-input-light id="nombre" name="nombre" required />
                     </div>
                     
                     <div>
-                        <x-input-label for="apellido" value="Apellido <span class='text-red-500'>*</span>" />
+                        <x-input-label-light for="apellido" value="Apellido <span class='text-red-500'>*</span>" />
                         <x-text-input-light id="apellido" name="apellido" required />
                     </div>
                     
                     <div>
-                        <x-input-label for="telefono" value="Teléfono" />
+                        <x-input-label-light for="telefono" value="Teléfono" />
                         <x-text-input-light id="telefono" name="telefono" />
                         <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                     </div>
                     
                     <div>
-                        <x-input-label for="email" value="Email" />
+                        <x-input-label-light for="email" value="Email" />
                         <x-text-input-light id="email" name="email" />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
@@ -343,7 +343,7 @@
                     </div>
 
                     <div>
-                        <x-input-label for="periodoFrom-{{ $index }}" value="Periodo From" />
+                        <x-input-label-light for="periodoFrom-{{ $index }}" value="Periodo From" />
                         <x-text-input-light type="date" id="periodoFrom-{{ $index }}" name="periodoFrom" value="{{ \Carbon\Carbon::parse($practica->periodoFrom)->format('Y-m-d') }}" />
                     </div>
 
@@ -392,13 +392,13 @@
                 
                 <div class="md:col-span-1 space-y-4">
                     <div>
-                        <x-input-label for="numPlazasAsignadas-{{ $index }}" value="Numero de Plazas Asignadas" />
+                        <x-input-label-light for="numPlazasAsignadas-{{ $index }}" value="Numero de Plazas Asignadas" />
                         <x-text-input-light type="number" value='0' min="0" id="numPlazasAsignadas-{{ $index }}" name="numPlazasAsignadas" value="{{ $practica->numPlazasAsignadas }}" />
                         <x-input-error :messages="$errors->get('numPlazasAsignadas')" class="mt-2" />
                     </div>
 
                     <div>
-                        <x-input-label for="periodoTo-{{ $index }}" value="Periodo To" />
+                        <x-input-label-light for="periodoTo-{{ $index }}" value="Periodo To" />
                         <x-text-input-light type="date" id="periodoTo-{{ $index }}" name="periodoTo" value="{{ \Carbon\Carbon::parse($practica->periodoTo)->format('Y-m-d') }}"  />
                     </div>
 
@@ -467,7 +467,7 @@
 
                 <div class="md:col-span-2 space-y-4">
                     <!-- <div>
-                        <x-input-label for="convenioMarco-{{ $index }}" value="Convenio Marco" />
+                        <x-input-label-light for="convenioMarco-{{ $index }}" value="Convenio Marco" />
                         <x-text-input-light id="convenioMarco-{{ $index }}" name="convenioMarco" value="{{ $practica->convenioMarco }}" />
                     </div> -->
 
@@ -483,7 +483,7 @@
 
                 <div class="md:col-span-1 space-y-4">
                     <!-- <div>
-                        <x-input-label for="usoLogos-{{ $index }}" value="Uso Logos" />
+                        <x-input-label-light for="usoLogos-{{ $index }}" value="Uso Logos" />
                         <x-text-input-light id="usoLogos-{{ $index }}" name="usoLogos" value="{{ $practica->usoLogos }}" />
                     </div> -->
 
@@ -499,7 +499,7 @@
                 </div>
 
                 <div class="md:col-span-3">
-                    <x-input-label for="observaciones-{{ $index }}" value="Observaciones" />
+                    <x-input-label-light for="observaciones-{{ $index }}" value="Observaciones" />
                     <textarea id="observaciones" name="observaciones" rows="3" class="block w-full border-gray-700 bg-white focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">{{ $practica->observaciones }}</textarea>
                 </div>
                 
@@ -688,7 +688,7 @@
                 </div>
                 
                 <div>
-                    <x-input-label for="telefono" value="Teléfono" />
+                    <x-input-label-light for="telefono" value="Teléfono" />
                     <x-text-input-light id="telefono" name="telefono" maxlength="9" />
                     <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                 </div>

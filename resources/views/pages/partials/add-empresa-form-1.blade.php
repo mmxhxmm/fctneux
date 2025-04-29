@@ -261,11 +261,10 @@
             <details class="responsable-section bg-white border rounded-lg p-4 shadow-sm mb-6" open>
                 <summary class="text-lg font-medium text-gray-900 cursor-pointer flex justify-between items-center">
                     <span class="title-label">Responsable Convenio</span>
-                    <button type="button" class="remove-section text-red-500 hover:text-red-700 text-sm ml-4">❌</button>
+                    <button type="button" class="remove-section text-xl hover:text-gray-400 transition-all ml-4">✕</button>
                 </summary>
-                <hr class="mt-2">
 
-                <div class="grid grid-cols-3 gap-6 my-6"> 
+                <div class="grid grid-cols-3 gap-6 my-6 mt-6">
                     <div>
                         <x-input-label-light for="rc_dni" :value="__('DNI <span class=\'text-red-500\'>*</span>')" />
                         <x-text-input id="rc_dni" name="rc_dni" value="{{ old('rc_dni') }}" type="text" class="mt-1 block w-full" autocomplete="dni"  />

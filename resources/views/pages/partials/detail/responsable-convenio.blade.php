@@ -28,28 +28,28 @@
                 @method('PUT')
                 
                 <div>
-                    <x-input-label for="dni-{{ $index }}" value="DNI <span class='text-red-500'>*</span>" />
+                    <x-input-label-light for="dni-{{ $index }}" value="DNI <span class='text-red-500'>*</span>" />
                     <x-text-input-light id="dni-{{ $index }}" name="dni" value="{{ $resConv->dni }}" />
                 </div>
                 
                 <div>
-                    <x-input-label for="nombre-{{ $index }}" value="Nombre <span class='text-red-500'>*</span>" />
+                    <x-input-label-light for="nombre-{{ $index }}" value="Nombre <span class='text-red-500'>*</span>" />
                     <x-text-input-light id="nombre-{{ $index }}" name="nombre" value="{{ $resConv->nombre }}" />
                 </div>
                 
                 <div>
-                    <x-input-label for="apellido-{{ $index }}" value="Apellido <span class='text-red-500'>*</span>" />
+                    <x-input-label-light for="apellido-{{ $index }}" value="Apellido <span class='text-red-500'>*</span>" />
                     <x-text-input-light id="apellido-{{ $index }}" name="apellido" value="{{ $resConv->apellido }}" />
                 </div>
                 
                 <div>
-                    <x-input-label for="telefono-{{ $index }}" value="Teléfono" />
+                    <x-input-label-light for="telefono-{{ $index }}" value="Teléfono" />
                     <x-text-input-light id="telefono-{{ $index }}" name="telefono" maxlength="9" value="{{ $resConv->telefono }}" />
                     <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                 </div>
                 
                 <div>
-                    <x-input-label for="email-{{ $index }}" value="Email" />
+                    <x-input-label-light for="email-{{ $index }}" value="Email" />
                     <x-text-input-light id="email-{{ $index }}" name="email" value="{{ $resConv->email }}" />
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
@@ -109,28 +109,28 @@
                 @method('PUT')
                 
                 <div>
-                    <x-input-label for="dni" value="DNI <span class='text-red-500'>*</span>" />
+                    <x-input-label-light for="dni" value="DNI <span class='text-red-500'>*</span>" />
                     <x-text-input-light id="dni" name="dni" />
                 </div>
                 
                 <div>
-                    <x-input-label for="nombre" value="Nombre <span class='text-red-500'>*</span>" />
+                    <x-input-label-light for="nombre" value="Nombre <span class='text-red-500'>*</span>" />
                     <x-text-input-light id="nombre" name="nombre" />
                 </div>
                 
                 <div>
-                    <x-input-label for="apellido" value="Apellido <span class='text-red-500'>*</span>" />
+                    <x-input-label-light for="apellido" value="Apellido <span class='text-red-500'>*</span>" />
                     <x-text-input-light id="apellido" name="apellido" />
                 </div>
                 
                 <div>
-                    <x-input-label for="telefono" value="Teléfono" />
+                    <x-input-label-light for="telefono" value="Teléfono" />
                     <x-text-input-light id="telefono" name="telefono" maxlength="9" />
                     <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
                 </div>
                 
                 <div>
-                    <x-input-label for="email" value="Email" />
+                    <x-input-label-light for="email" value="Email" />
                     <x-text-input-light id="email" name="email" />
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>

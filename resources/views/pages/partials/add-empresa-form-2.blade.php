@@ -146,29 +146,28 @@
             <details class="persona-contacto-section bg-white mt-6 border border-blue rounded-lg p-4 shadow-sm mb-6" open>
                 <summary class="text-lg font-medium text-gray-900 cursor-pointer flex justify-between items-center">
                     <span class="persona-title-label">Persona de Contacto</span>
-                    <button type="button" class="remove-persona text-red-500 hover:text-red-700 text-sm ml-4">❌</button>
+                    <button type="button" class="remove-persona text-black text-xl hover:text-gray-400 transition-all ml-4">✕</button>
                 </summary>
-                <hr class="mt-2">
 
-                <div class="grid grid-cols-3 gap-6 mb-6" >
+                <div class="grid grid-cols-3 gap-6 mb-6 mt-6">
                     <!-- DNI -->
                     <div>
                         <x-input-label-light for="pc_dni" :value="__('DNI/NIE <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="pc_dni" name="pc_dni" value="" type="text" class="mt-1 block w-full" autocomplete="dni" />
-                        <x-input-error :messages="$errors->get('dni')" class="mt-2" />
+                        <x-text-input id="pc_dni" name="pc_dni" value="{{ old('pc_dni') }}" type="text" class="pc_dni mt-1 block w-full" autocomplete="dni" />
+                        <x-input-error :messages="$errors->get('pc_dni')" class="mt-2" />
                     </div>
 
                     <!-- Nombre -->
                     <div>
                         <x-input-label-light for="pc_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="pc_nombre" name="pc_nombre" value="" type="text" class="mt-1 block w-full" autocomplete="nombre"  />
-                        <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
+                        <x-text-input id="pc_nombre" name="pc_nombre" value="{{ old('pc_nombre') }}" type="text" class="pc_nombre mt-1 block w-full" autocomplete="nombre"  />
+                        <x-input-error :messages="$errors->get('pc_nombre')" class="mt-2" />
                     </div>
 
                     <!-- Apellido -->
                     <div>
                         <x-input-label-light for="pc_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="pc_apellido" name="pc_apellido" value=""  type="text" class="mt-1 block w-full" autocomplete="apellido"  />
+                        <x-text-input id="pc_apellido" name="pc_apellido" value="{{ old('pc_apellido') }}"  type="text" class="pc_apellido mt-1 block w-full" autocomplete="apellido"  />
                         <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
                     </div>
                 </div>
@@ -176,15 +175,15 @@
                     <!-- Telefono -->
                     <div>
                         <x-input-label-light for="pc_telefono" :value="__('Teléfono')" />
-                        <x-text-input id="pc_telefono" name="pc_telefono" value="" maxlength="9" type="text" class="mt-1 block w-full" autocomplete="telefono" />
-                        <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
+                        <x-text-input id="pc_telefono" name="pc_telefono" value="{{ old('pc_telefono') }}" maxlength="9" type="text" class="mt-1 block w-full" autocomplete="telefono" />
+                        <x-input-error :messages="$errors->get('pc_telefono')" class="mt-2" />
                     </div>
 
                     <!-- Email -->
                     <div>
                         <x-input-label-light for="pc_email" :value="__('Email')" />
-                        <x-text-input id="pc_email" name="pc_email" value="" type="text" class="mt-1 block w-full" autocomplete="email" />
-                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        <x-text-input id="pc_email" name="pc_email" value="{{ old('pc_email') }}" type="text" class="mt-1 block w-full" autocomplete="email" />
+                        <x-input-error :messages="$errors->get('pc_email')" class="mt-2" />
                     </div>
                 </div>
             </details>
@@ -199,53 +198,53 @@
     const sections = document.querySelectorAll('.persona-contacto-section');
 
         sections.forEach(section => {
-            const dni = section.querySelector('[name="pc_dni"]').value.trim();
-            const nombre = section.querySelector('[name="pc_nombre"]').value.trim();
-            const apellido = section.querySelector('[name="pc_apellido"]').value.trim();
-
+            const dni = section.querySelector('.pc_dni').value.trim();
+            const nombre = section.querySelector('.pc_nombre').value.trim();
+            const apellido = section.querySelector('.pc_apellido').value.trim();
+            
             if (!dni && !nombre && !apellido) {
-                section.remove(); // Remove this empty responsable block
+                section.remove();
             }
         });
     });
 
-    function updateCentroTitles() {
-        const sections = document.querySelectorAll('.centro-trabajo-section');
-        document.getElementById('centro_count').value = sections.length;
+    // function updateCentroTitles() {
+    //     const sections = document.querySelectorAll('.centro-trabajo-section');
+    //     document.getElementById('centro_count').value = sections.length;
 
-        sections.forEach((section, index) => {
-            const num = index + 1;
+    //     sections.forEach((section, index) => {
+    //         const num = index + 1;
 
-            // Update title
-            const titleLabel = section.querySelector('.centro-title-label');
-            if (titleLabel) {
-                titleLabel.textContent = `Centro de Trabajo #${num}`;
-            }
+    //         // Update title
+    //         const titleLabel = section.querySelector('.centro-title-label');
+    //         if (titleLabel) {
+    //             titleLabel.textContent = `Centro de Trabajo #${num}`;
+    //         }
 
-            // Update input IDs and names for centro fields
-            const centroFields = [
-                'direccion', 'codigoPostal', 'comunidad', 
-                'provincia', 'municipio'
-            ];
+    //         // Update input IDs and names for centro fields
+    //         const centroFields = [
+    //             'direccion', 'codigoPostal', 'comunidad', 
+    //             'provincia', 'municipio'
+    //         ];
 
-            centroFields.forEach(field => {
-                const input = section.querySelector(`[name="${field}"]`);
-                if (input) {
-                    input.id = `${field}_${num}`;
-                    input.name = `${field}_${num}`;
-                }
-            });
+    //         centroFields.forEach(field => {
+    //             const input = section.querySelector(`[name="${field}"]`);
+    //             if (input) {
+    //                 input.id = `${field}_${num}`;
+    //                 input.name = `${field}_${num}`;
+    //             }
+    //         });
 
-            // Update labels
-            const labels = section.querySelectorAll('label');
-            labels.forEach(label => {
-                const forAttr = label.getAttribute('for');
-                if (forAttr && centroFields.some(field => forAttr.startsWith(field))) {
-                    label.setAttribute('for', `${forAttr}_${num}`);
-                }
-            });
-        });
-    }
+    //         // Update labels
+    //         const labels = section.querySelectorAll('label');
+    //         labels.forEach(label => {
+    //             const forAttr = label.getAttribute('for');
+    //             if (forAttr && centroFields.some(field => forAttr.startsWith(field))) {
+    //                 label.setAttribute('for', `${forAttr}_${num}`);
+    //             }
+    //         });
+    //     });
+    // }
 
     // document.getElementById('add_section_button_1').addEventListener('click', function () {
     //     const wrapper = document.getElementById('centro_trabajo_wrapper');
@@ -267,7 +266,7 @@
     // });
 
     // Initial call
-    document.addEventListener('DOMContentLoaded', updateCentroTitles);
+    // document.addEventListener('DOMContentLoaded', updateCentroTitles);
 
     // Persona Contacto 
     function updatePersonaTitles() {
