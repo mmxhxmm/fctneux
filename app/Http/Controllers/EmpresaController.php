@@ -275,14 +275,14 @@ class EmpresaController extends Controller
                 });
         
 
-        return view('pages.empresa-index', compact('empresas',            
-        'familias',
-        'colaboraciones',
-        'modalidades',
-        'ciclos',
-        'plazas',
-        'provincia'
-    ));
+        return view('pages/empresa/empresa-index', compact('empresas',            
+            'familias',
+            'colaboraciones',
+            'modalidades',
+            'ciclos',
+            'plazas',
+            'provincia'
+        ));
     }
         
 

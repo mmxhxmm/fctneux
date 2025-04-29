@@ -53,17 +53,6 @@
                             {{ __('Perfil') }}
                         </x-dropdown-link>
 
-                        @if (Auth::user()->role == 'admin')
-                        <x-dropdown-link :href="route('user.active')" class="group">
-                            <div class="flex items-center">
-                                <img src="{{ asset('images/icons/icons8-people-96.png') }}" alt="User Group Icon" width="20px"
-                                    class="mr-2 invert brightness-0 transition duration-200 group-hover:invert-[20%] group-hover:sepia-[5%] group-hover:saturate-[800%] group-hover:hue-rotate-[200deg] group-hover:brightness-[80%] group-hover:contrast-[100%]"
-                                >
-                                {{ __('Ver todos Perfiles') }}
-                            </div>
-                        </x-dropdown-link>
-                        @endif
-
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
