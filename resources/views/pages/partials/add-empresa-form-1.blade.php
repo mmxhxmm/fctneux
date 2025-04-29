@@ -268,32 +268,32 @@
                 <div class="grid grid-cols-3 gap-6 my-6"> 
                     <div>
                         <x-input-label-light for="rc_dni" :value="__('DNI <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="rc_dni" name="rc_dni" value="{{ old('rc_dni', session('responsableConvenio_draft')?->dni) }}" type="text" class="mt-1 block w-full" autocomplete="dni"  />
+                        <x-text-input id="rc_dni" name="rc_dni" value="{{ old('rc_dni') }}" type="text" class="mt-1 block w-full" autocomplete="dni"  />
                         <x-input-error :messages="$errors->get('rc_dni')" class="mt-2" />
                     </div>
 
                     <div>
                         <x-input-label-light for="rc_nombre" :value="__('Nombre <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="rc_nombre" name="rc_nombre" value="{{ old('rc_nombre', session('responsableConvenio_draft')?->nombre) }}" type="text" class="mt-1 block w-full" autocomplete="nombre"  />
+                        <x-text-input id="rc_nombre" name="rc_nombre" value="{{ old('rc_nombre') }}" type="text" class="mt-1 block w-full" autocomplete="nombre"  />
                         <x-input-error :messages="$errors->get('rc_nombre')" class="mt-2" />
                     </div>
 
                     <div>
                         <x-input-label-light for="rc_apellido" :value="__('Apellido <span class=\'text-red-500\'>*</span>')" />
-                        <x-text-input id="rc_apellido" name="rc_apellido" value="{{ old('rc_apellido', session('responsableConvenio_draft')?->apellido) }}" type="text" class="mt-1 block w-full" autocomplete="apellido"  />
+                        <x-text-input id="rc_apellido" name="rc_apellido" value="{{ old('rc_apellido') }}" type="text" class="mt-1 block w-full" autocomplete="apellido"  />
                         <x-input-error :messages="$errors->get('rc_apellido')" class="mt-2" />
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-6 mb-6"> 
                     <div>
                         <x-input-label-light for="rc_telefono" :value="__('Teléfono')" />
-                        <x-text-input id="rc_telefono" name="rc_telefono" maxlength="9" value="{{ old('rc_telefono', session('responsableConvenio_draft')?->telefono) }}" type="text" class="mt-1 block w-full" autocomplete="telefono" />
+                        <x-text-input id="rc_telefono" name="rc_telefono" maxlength="9" value="" type="text" class="mt-1 block w-full" autocomplete="telefono" />
                         <x-input-error :messages="$errors->get('rc_telefono')" class="mt-2" />
                     </div>
 
                     <div>
                         <x-input-label-light for="rc_email" :value="__('Email')" />
-                        <x-text-input id="rc_email" name="rc_email" value="{{ old('rc_email', session('responsableConvenio_draft')?->email) }}" type="text" class="mt-1 block w-full" autocomplete="email" />
+                        <x-text-input id="rc_email" name="rc_email" value="{{ old('rc_email') }}" type="text" class="mt-1 block w-full" autocomplete="email" />
                         <x-input-error :messages="$errors->get('rc_email')" class="mt-2" />
                     </div>
                 </div>

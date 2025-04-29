@@ -247,24 +247,24 @@
         });
     }
 
-    document.getElementById('add_section_button_1').addEventListener('click', function () {
-        const wrapper = document.getElementById('centro_trabajo_wrapper');
-        const template = document.getElementById('centro_trabajo_template');
-        const clone = template.content.cloneNode(true);
-        wrapper.appendChild(clone);
+    // document.getElementById('add_section_button_1').addEventListener('click', function () {
+    //     const wrapper = document.getElementById('centro_trabajo_wrapper');
+    //     const template = document.getElementById('centro_trabajo_template');
+    //     const clone = template.content.cloneNode(true);
+    //     wrapper.appendChild(clone);
 
-        updateCentroTitles();
-    });
+    //     updateCentroTitles();
+    // });
 
-    document.getElementById('centro_trabajo_wrapper').addEventListener('click', function (e) {
-        if (e.target && e.target.classList.contains('remove-centro')) {
-            const section = e.target.closest('.centro-trabajo-section');
-            if (section) {
-                section.remove();
-                updateCentroTitles();
-            }
-        }
-    });
+    // document.getElementById('centro_trabajo_wrapper').addEventListener('click', function (e) {
+    //     if (e.target && e.target.classList.contains('remove-centro')) {
+    //         const section = e.target.closest('.centro-trabajo-section');
+    //         if (section) {
+    //             section.remove();
+    //             updateCentroTitles();
+    //         }
+    //     }
+    // });
 
     // Initial call
     document.addEventListener('DOMContentLoaded', updateCentroTitles);
