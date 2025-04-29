@@ -71,7 +71,7 @@ class EmpresaController extends Controller
         });
 
 
-        return view('pages.empresa-index', compact('empresas', 'modalidades', 'colaboraciones', 'ciclos', 'plazas','familias','provincia'));
+        return view('pages/empresa/empresa-index', compact('empresas', 'modalidades', 'colaboraciones', 'ciclos', 'plazas','familias','provincia'));
     }
 
     public function filtro(Request $request)
@@ -140,7 +140,7 @@ class EmpresaController extends Controller
         $ciclos = Practica::select('cicloFormativo')->distinct()->pluck('cicloFormativo')->filter()->mapWithKeys(fn($i) => [$i => $i]);
         $plazas = Practica::select('numPlazasAsignadas')->distinct()->pluck('numPlazasAsignadas')->sort()->mapWithKeys(fn($i) => [$i => $i]);
 
-        return view('pages.empresa-index', compact(
+        return view('pages/empresa/empresa-index', compact(
             'empresas',
             'modalidades',
             'colaboraciones',
@@ -178,13 +178,24 @@ class EmpresaController extends Controller
         // Get the 'id' from the query parameter
         $id = $request->query('id');
 
-        // Fetch all empresas
-        $empresas = Empresa::all();
+        // Filters estados descending
+        $empresas = Empresa::with(['tareas' => function($query) {
+            $query->orderByRaw("
+                CASE 
+                    WHEN estado = 'to_do' THEN 1
+                    WHEN estado = 'in_progress' THEN 2
+                    WHEN estado = 'revision' THEN 3
+                    WHEN estado = 'blocked' THEN 4
+                    WHEN estado = 'done' THEN 5
+                    ELSE 6
+                END
+            ");
+        }])->get();
+
+        $usuarios = \App\Models\User::all();
 
         // Pass the empresas and the id to the view
-        return view('pages/empresa-detail-view', [
-            'page' => 'detail/detail-main',
-        ],  compact('empresas' , 'id') );
+        return view('pages/empresa/empresa-detail-view', ['page' => 'detail/detail-main',],  compact('empresas' , 'id', 'usuarios') );
     }
 
     // search purpose 

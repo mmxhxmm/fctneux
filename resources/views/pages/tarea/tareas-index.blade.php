@@ -4,7 +4,7 @@
 @endphp
     <div class="w-full flex flex-col grid-rows-3 bg-white">
         <!-- First Container with Background Image -->
-        <div class="relative h-[350px] mb-10 flex-grow-0 flex-shrink-0" style="background-image: url('../images/tareasheader.png'); background-size: cover; background-position: center;">
+        <div class="relative h-[350px] flex-grow-0 flex-shrink-0" style="background-image: url('../images/tareasheader.png'); background-size: cover; background-position: center;">
             <!-- Opacity overlay -->
             <!-- <div class="absolute inset-0 bg-primary opacity-40"></div> -->
             
@@ -20,7 +20,6 @@
                     </div>
 
                     @include("pages.tarea.partials.tarea-form")
-                    @include("pages.tarea.partials.tarea-edit")
                 </div>
 
                 <!-- Right Section (Filter, Barcelona / BCN, and Search) -->
@@ -418,13 +417,13 @@
 
             <div class="w-full h-full flex flex-col  absolute px-4">
                 <div class="absolute left-0 top-[4em] animate-left">
-                    <a href="/"  class="hover:text-white hover:border-none justify-start p-2 px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6"><<< Volver al inicio</a>
+                    <a href="/"  class="hover:text-white hover:border-none justify-start p-2 px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] text-[16px] text-white text-left font-roboto flex-grow-0 mb-6"><<< Volver al inicio</a>
                     <!-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6">
                         {{ __('<<< Volver al inicio') }}
                     </x-nav-link> -->
                 </div>
                 <div class="absolute right-0 top-[8em] animate-right">
-                    <a href="{{ route('tareas-historial') }}" class="hover:text-white hover:border-none justify-end px-4 rounded-tl-[0px] rounded-tl-[50px] rounded-bl-[50px] rounded-bl-[0px] px-4 bg-blue w-[200px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 flex justify-end items-center"> Historial de tareas >>></a>
+                    <a href="{{ route('tareas-historial') }}" class="hover:text-white hover:border-none justify-end px-4 rounded-tl-[0px] rounded-tl-[50px] rounded-bl-[50px] rounded-bl-[0px] px-4 bg-blue w-[200px] h-[40px] text-[16px] text-white text-left font-roboto flex-grow-0 flex justify-end items-center"> Historial de tareas >>></a>
                     <!-- <x-nav-link :href="route('tareas-historial')" :active="request()->routeIs('tareas-historial')" class="hover:text-white hover:border-none justify-end px-4 rounded-tl-[0px] rounded-tl-[50px] rounded-bl-[50px] rounded-bl-[0px] px-4 bg-blue w-[200px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 flex justify-end items-center">
                     {{__('Historial de tareas >>>') }} </a> 
                     </x-nav-link> -->
@@ -446,6 +445,7 @@
                     <div class="grid grid-cols-3 gap-6">
                         @forelse ($tareas->where('estado', 'to_do') as $tarea)
                             <x-index.tarea :tarea="$tarea"></x-index-box>
+                            @include("pages.tarea.partials.tarea-edit", ['tarea' => $tarea])
                         @empty
                             <p class="col-span-3 text-center text-gray-500">No hay tareas</p>
                         @endforelse
@@ -459,6 +459,7 @@
                     <div class="grid grid-cols-3 gap-6">
                         @forelse ($tareas->where('estado', 'in_progress') as $tarea)
                             <x-index.tarea :tarea="$tarea"></x-index-box>
+                            @include("pages.tarea.partials.tarea-edit", ['tarea' => $tarea])
                         @empty
                             <p class="col-span-3 text-center text-gray-500">No hay tareas</p>
                         @endforelse
@@ -466,12 +467,13 @@
                 </div>
 
                 <div>
-                    <div class="flex justify-center px-4 py-2 mb-6 rounded-[100px] bg-blue">
+                    <div class="flex justify-center px-4 py-2 mb-4 rounded bg-blue">
                         <h2 class="font-bold text-white ">EN REVISIÓN</h2>
                     </div>
                     <div class="grid grid-cols-3 gap-6">
                         @forelse ($tareas->where('estado', 'revision') as $tarea)
                             <x-index.tarea :tarea="$tarea"></x-index-box>
+                            @include("pages.tarea.partials.tarea-edit", ['tarea' => $tarea])
                         @empty
                             <p class="col-span-3 text-center text-gray-500">No hay tareas</p>
                         @endforelse
@@ -485,6 +487,7 @@
                     <div class="grid grid-cols-3 gap-6">
                         @forelse ($tareas->where('estado', 'blocked') as $tarea)
                             <x-index.tarea :tarea="$tarea"></x-index-box>
+                            @include("pages.tarea.partials.tarea-edit", ['tarea' => $tarea])
                         @empty
                             <p class="col-span-3 text-center text-gray-500">No hay tareas</p>
                         @endforelse
@@ -559,10 +562,6 @@
         const openModalBtn = document.getElementById("openModal");
         const closeModalBtn = document.getElementById("closeModal");
 
-        const editModal = document.getElementById("EditModal");
-        const openEditModalBtn = document.getElementById("openEditModal");
-        const closeEditModalBtn = document.getElementById("closeEditModal");
-
         // Add
         openModalBtn.onclick = function() {
             modal.classList.remove("hidden");
@@ -571,64 +570,30 @@
             modal.classList.add("hidden");
         };
 
-        // TODO: Simplify it
-        // Edit 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Use event delegation for all edit buttons
-            document.addEventListener('click', function(e) {
-                // Handle edit button clicks
-                if (e.target.closest('#openEditModal')) {
-                    const button = e.target.closest('#openEditModal');
-                    const editModal = document.getElementById("EditModal");
-                    
-                    if (!editModal) {
-                        console.error('Edit modal not found');
-                        return;
-                    }
-                    
-                    // Get task data from data attributes
-                    const tareaData = {
-                        id: button.dataset.tareaId,
-                        nombre: button.dataset.tareaNombre,
-                        descripcion: button.dataset.tareaDescripcion,
-                        estado: button.dataset.tareaEstado,
-                        fecha_limite: button.dataset.tareaFechaLimite,
-                        asignado: button.dataset.tareaAsignado,
-                        empresa_id: button.dataset.tareaEmpresa
-                    };
-                    
-                    // Set form action
-                    const form = document.getElementById('tareaEditForm');
-                    const tareaId = openEditModalBtn.dataset.tareaId;
-                    form.action = `{{ route('tarea.update', '') }}/${tareaId}`;
-                    
-                    // Populate form fields
-                    const nombreField = editModal.querySelector('#nombre');
-                    const descripcionField = editModal.querySelector('#descripcion');
-                    const estadoField = editModal.querySelector('#estado');
-                    const fechaLimiteField = editModal.querySelector('#fecha_limite');
-                    
-                    if (nombreField) nombreField.value = tareaData.nombre || '';
-                    if (descripcionField) descripcionField.value = tareaData.descripcion || '';
-                    if (estadoField) estadoField.value = tareaData.estado || 'to_do';
-                    if (fechaLimiteField) fechaLimiteField.value = tareaData.fecha_limite || '';
-                    
-                    // Show modal
-                    editModal.classList.remove("hidden");
-                }
-                
-                // Close modal handlers
-                if (e.target.closest('.closeEditModal')) {
-                    document.getElementById("EditModal").classList.add("hidden");
-                }
+        // Edit Modal
+        document.querySelectorAll(".openEditModal").forEach(button => {
+            button.addEventListener('click', function() {
+                const tareaId = this.getAttribute('data-tarea-id');
+                const modal = document.getElementById(`EditModal-${tareaId}`);
+                modal.classList.remove("hidden");
             });
         });
-        
-        closeEditModalBtn.onclick = function() {
-            editModal.classList.add("hidden");
-        };
+
+        document.querySelectorAll(".closeEditModal").forEach(button => {
+            button.addEventListener('click', function() {
+                const modalId = this.getAttribute('data-modal-id');
+                const modal = document.getElementById(modalId);
+                modal.classList.add("hidden");
+            });
+        });
 
         // Doesnt work
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.add('hidden');
+            }
+        });
+
         window.onclick = function(event) {
             if (event.target === modal) {
                 modal.classList.add("hidden"); // Hide the modal if clicked outside
@@ -692,31 +657,6 @@
                 filteredUsers() {
                     if (!this.search) return this.users;
                     return this.users.filter(u => u.name.toLowerCase().includes(this.search.toLowerCase()));
-                }
-            };
-        }
-
-        function multiSelectEmpresa() {
-            return {
-                open: false,
-                search: '',
-                selected: [],
-                empresas: @json($empresas->map(fn($name, $id) => ['id' => $id, 'name' => $name])->values()),
-                toggle(empresa) {
-                    if (this.selected.includes(empresa.id)) {
-                        this.selected = this.selected.filter(id => id !== empresa.id);
-                    } else {
-                        this.selected.push(empresa.id);
-                    }
-                },
-                selectedLabels() {
-                    return this.empresas
-                        .filter(e => this.selected.includes(e.id))
-                        .map(e => e.name);
-                },
-                filteredEmpresas() {
-                    if (!this.search) return this.empresas;
-                    return this.empresas.filter(e => e.name.toLowerCase().includes(this.search.toLowerCase()));
                 }
             };
         }

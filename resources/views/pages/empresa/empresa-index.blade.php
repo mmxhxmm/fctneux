@@ -86,92 +86,90 @@
                             <!-- Selected Filters Form -->
                             <form method="GET" action="{{ route('empresa.filtro') }}" class="flex flex-wrap ml-4 items-center gap-3">
 
-                            <!-- Modalidad -->
-                            <template x-if="selectedFilters.includes('modalidad') || '{{ request('modalidad') }}' !== ''">
-                                <div class="relative inline-block">
-                                    <select name="modalidad" onchange="this.form.submit()" class="w-[140px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
-                                        <option value="" class="bg-stone-700 text-white">Modalidad</option>
-                                        @foreach ($modalidades as $value => $label)
-                                            <option value="{{ $value }}" {{ request('modalidad') == $value ? 'selected' : '' }}>{{ $label }}</option>
-                                        @endforeach
-                                    </select>
-                                    <button type="button" @click="toggleFilter('modalidad')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-lg hover:bg-red-700 transition">&times;</button>
-                                </div>
-                            </template>
+                                <!-- Modalidad -->
+                                <template x-if="selectedFilters.includes('modalidad') || '{{ request('modalidad') }}' !== ''">
+                                    <div class="relative inline-block">
+                                        <select name="modalidad" onchange="this.form.submit()" class="w-[140px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
+                                            <option value="" class="bg-stone-700 text-white">Modalidad</option>
+                                            @foreach ($modalidades as $value => $label)
+                                                <option value="{{ $value }}" {{ request('modalidad') == $value ? 'selected' : '' }}>{{ $label }}</option>
+                                            @endforeach
+                                        </select>
+                                        <button type="button" @click="toggleFilter('modalidad')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-lg hover:bg-red-700 transition">&times;</button>
+                                    </div>
+                                </template>
 
 
-                            <!-- Colaboración -->
-                            <template x-if="selectedFilters.includes('colaboracion') || '{{ request('colaboracion') }}' !== ''">
-                                <div class="relative inline-block">
-                                    <select name="colaboracion" onchange="this.form.submit()" class="w-[150px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
-                                        <option value="" class="bg-stone-700 text-white">Selecciona</option>
-                                        @foreach ($colaboraciones as $value => $label)
-                                            <option value="{{ $value }}" {{ request('colaboracion') == $value ? 'selected' : '' }}>{{ $label }}</option>
-                                        @endforeach
-                                    </select>
-                                    <button type="button" @click="toggleFilter('colaboracion')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-lg hover:bg-red-700 transition">&times;</button>
-                                </div>
-                            </template>
+                                <!-- Colaboración -->
+                                <template x-if="selectedFilters.includes('colaboracion') || '{{ request('colaboracion') }}' !== ''">
+                                    <div class="relative inline-block">
+                                        <select name="colaboracion" onchange="this.form.submit()" class="w-[150px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
+                                            <option value="" class="bg-stone-700 text-white">Selecciona</option>
+                                            @foreach ($colaboraciones as $value => $label)
+                                                <option value="{{ $value }}" {{ request('colaboracion') == $value ? 'selected' : '' }}>{{ $label }}</option>
+                                            @endforeach
+                                        </select>
+                                        <button type="button" @click="toggleFilter('colaboracion')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-lg hover:bg-red-700 transition">&times;</button>
+                                    </div>
+                                </template>
 
 
-                            <!-- Ciclo -->
-                            <template x-if="selectedFilters.includes('ciclo') || '{{ request('ciclo') }}' !== ''">
-                                <div class="relative inline-block">
-                                    <select name="ciclo" onchange="this.form.submit()" class="w-[100px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
-                                        <option value="" class="bg-stone-700 text-white">Ciclo</option>
-                                        @foreach ($ciclos as $value => $label)
-                                            <option value="{{ $value }}" {{ request('ciclo') == $value ? 'selected' : '' }}>{{ $label }}</option>
-                                        @endforeach
-                                    </select>
-                                    <button type="button" @click="toggleFilter('ciclo')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-lg hover:bg-red-700 transition">&times;</button>
-                                </div>
-                            </template>
+                                <!-- Ciclo -->
+                                <template x-if="selectedFilters.includes('ciclo') || '{{ request('ciclo') }}' !== ''">
+                                    <div class="relative inline-block">
+                                        <select name="ciclo" onchange="this.form.submit()" class="w-[100px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
+                                            <option value="" class="bg-stone-700 text-white">Ciclo</option>
+                                            @foreach ($ciclos as $value => $label)
+                                                <option value="{{ $value }}" {{ request('ciclo') == $value ? 'selected' : '' }}>{{ $label }}</option>
+                                            @endforeach
+                                        </select>
+                                        <button type="button" @click="toggleFilter('ciclo')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-lg hover:bg-red-700 transition">&times;</button>
+                                    </div>
+                                </template>
 
-                            <!-- Plazas -->
-                            <template x-if="selectedFilters.includes('plazas') || '{{ request('plazas') }}' !== ''">
-                                <div class="relative inline-block">
-                                    <select name="plazas" onchange="this.form.submit()" class="w-[160px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
-                                        <option value="" class="bg-stone-700 text-white">Plazas</option>
-                                        <option value="0" {{ request('plazas') == '0' ? 'selected' : '' }}>0</option>
-                                        <option value="lt5" {{ request('plazas') == 'lt5' ? 'selected' : '' }}>Menor de 5</option>
-                                        <option value="gt5" {{ request('plazas') == 'gt5' ? 'selected' : '' }}>Más de 5</option>
-                                        <option value="gt10" {{ request('plazas') == 'gt10' ? 'selected' : '' }}>Más de 10</option>
-                                    </select>
-                                    <button type="button" @click="toggleFilter('plazas')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-lg hover:bg-red-700 transition">&times;</button>
-                                </div>
-                            </template>
+                                <!-- Plazas -->
+                                <template x-if="selectedFilters.includes('plazas') || '{{ request('plazas') }}' !== ''">
+                                    <div class="relative inline-block">
+                                        <select name="plazas" onchange="this.form.submit()" class="w-[160px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
+                                            <option value="" class="bg-stone-700 text-white">Plazas</option>
+                                            <option value="0" {{ request('plazas') == '0' ? 'selected' : '' }}>0</option>
+                                            <option value="lt5" {{ request('plazas') == 'lt5' ? 'selected' : '' }}>Menor de 5</option>
+                                            <option value="gt5" {{ request('plazas') == 'gt5' ? 'selected' : '' }}>Más de 5</option>
+                                            <option value="gt10" {{ request('plazas') == 'gt10' ? 'selected' : '' }}>Más de 10</option>
+                                        </select>
+                                        <button type="button" @click="toggleFilter('plazas')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-lg hover:bg-red-700 transition">&times;</button>
+                                    </div>
+                                </template>
 
-                            <!-- Familia -->
-                            <template x-if="selectedFilters.includes('familia') || '{{ request('familia') }}' !== ''">
-                                <div class="relative inline-block">
-                                    <select name="familia" onchange="this.form.submit()" class="w-[111px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
-                                        <option value="" class="bg-stone-700 text-white">Familia</option>
-                                        @foreach ($familias as $value => $label)
-                                            <option value="{{ $value }}" {{ request('familia') == $value ? 'selected' : '' }}>{{ $label }}</option>
-                                        @endforeach
-                                    </select>
-                                    <button type="button" @click="toggleFilter('familia')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-lg hover:bg-red-700 transition">&times;</button>
-                                </div>
-                            </template>
+                                <!-- Familia -->
+                                <template x-if="selectedFilters.includes('familia') || '{{ request('familia') }}' !== ''">
+                                    <div class="relative inline-block">
+                                        <select name="familia" onchange="this.form.submit()" class="w-[111px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
+                                            <option value="" class="bg-stone-700 text-white">Familia</option>
+                                            @foreach ($familias as $value => $label)
+                                                <option value="{{ $value }}" {{ request('familia') == $value ? 'selected' : '' }}>{{ $label }}</option>
+                                            @endforeach
+                                        </select>
+                                        <button type="button" @click="toggleFilter('familia')" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-lg hover:bg-red-700 transition">&times;</button>
+                                    </div>
+                                </template>
 
-                            <!-- Provincia -->
-                            <template x-if="selectedFilters.includes('provincia') || '{{ request('provincia') }}' !== ''">
-                                <div class="relative inline-block">
-                                    <select name="provincia" onchange="this.form.submit()" class="w-[160px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
-                                        <option value="" class="bg-stone-700 text-white">Provincia</option>
-                                        @foreach ($provincia as $value => $label)
-                                            <option value="{{ $value }}" {{ request('provincia') == $value ? 'selected' : '' }}>
-                                                {{ $label }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </template>
-
+                                <!-- Provincia -->
+                                <template x-if="selectedFilters.includes('provincia') || '{{ request('provincia') }}' !== ''">
+                                    <div class="relative inline-block">
+                                        <select name="provincia" onchange="this.form.submit()" class="w-[160px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
+                                            <option value="" class="bg-stone-700 text-white">Provincia</option>
+                                            @foreach ($provincia as $value => $label)
+                                                <option value="{{ $value }}" {{ request('provincia') == $value ? 'selected' : '' }}>
+                                                    {{ $label }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </template>
                             </form>
                         </div>
                     </div>
-
 
                     <form action="{{ route('empresa-index-3') }}" method="GET" class="relative">
                         <div class="bg-black_transp w-[200px] h-[40px] rounded-[100px] border-2 border-white flex items-center pl-4 pr-2">
@@ -187,7 +185,6 @@
                             </button>
                         </div>
                     </form>
-
 
                     <button id="toggleView" onclick="toggleLayout()" class="w-10 h-10 px-2 rounded-full bg-white text-blue border border-blue flex items-center justify-center hover:bg-blue hover:text-white transition">
                         <!-- Grid Icon -->
@@ -214,7 +211,7 @@
                 </div>
 
                 <div class="absolute left-0 top-[7em] animate-left2">
-                    <button class="justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-blue w-[210px] h-[40px] opacity-90 text-[15px] text-white text-left flex-grow-0">
+                    <button class="justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-blue w-[210px] h-[40px] text-[15px] text-white text-left flex-grow-0">
                         <a href="https://www.empresaiformacio.org/sBid" ><<< Plataforma de qBid</a> 
                     </button>
                 </div>
@@ -225,6 +222,7 @@
                     </p>
                 </div>
             </div>
+
             <!-- Status Banner (appears under header) -->
             @if (session('status'))
             <div 
@@ -253,68 +251,67 @@
 
         <div class="flex px-6 justify-center bg-white items-center">
             <!-- Empresa Grid (default view) -->
-        <div id="empresaContainer" class="grid grid-cols-3 gap-6 transition-all">
-            @foreach ($empresas as $empresa)
-                <x-index.empresa :empresa="$empresa" />
-            @endforeach
-        </div>
-        <!-- Empresa List View -->
-        <div id="empresaList" class="hidden w-[80%] px-5 py-6 transition-all">
-            <div class="overflow-x-auto bg-white rounded-xl shadow-md border border-gray-200">
-                <table class="min-w-full divide-y divide-gray-200 text-sm font-roboto">
-                    <thead class="bg-blue text-white rounded-t-xl">
-                        <tr>
-                            <th class="p-4 text-left font-semibold">Nombre</th>
-                            <th class="p-4 text-left font-semibold">CIF</th>
-                            <th class="p-4 text-left font-semibold">Gestiones</th>
-                            <th class="p-4 text-left font-semibold">Modalidad</th>
-                            <th class="p-4 text-left font-semibold">Colaboración</th>
-                            <th class="p-4 text-left font-semibold">Familia</th>
-                            <th class="p-4 text-left font-semibold">Provincía</th>
-                            <th class="p-4 text-left font-semibold">Ciclo Formativo</th>
-                            <th class="p-4 text-left font-semibold text-center">Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100">
-                        @foreach ($empresas as $empresa)
-                            @if (!request('provincia') || strtolower($empresa->provincia) == strtolower(request('provincia')))
-                            <tr class="hover:bg-blue/5 transition-all">
-                                <td class="p-4 text-gray-800">{{ $empresa->nombre }}</td>
-                                <td class="p-4 text-gray-800">{{ $empresa->cif }}</td>
-                                <td class="p-4 text-gray-800">{{ $empresa->gestiones }}</td>
-                                <td class="p-4 text-gray-800">{{ $empresa->modalidad }}</td>
-                                <td class="p-4">
-                                    <span class="text-xs font-medium px-3 py-1 rounded-full 
-                                        {{ 
-                                            $empresa->colaboracion === 'Prospección' ? 'bg-blue/10 text-blue' :
-                                            ($empresa->colaboracion === 'Inactiva' ? 'bg-red-100 text-red-600' :
-                                            'bg-green-100 text-green-600') 
-                                        }}">
-                                        {{ $empresa->colaboracion }}
-                                    </span>
-                                </td>
-                                <td class="p-4 text-gray-800">{{ $empresa->familiaPersonal }}</td>
-                                <td class="p-4 text-gray-800">{{ $empresa->provincia }}</td>
-                                <td class="p-4 text-gray-800 whitespace-pre-wrap">
-                                    @foreach ($empresa->practica as $practica)
-                                        • {{ $practica->cicloFormativo }} ({{ $practica->numPlazasAsignadas }} plazas)<br>
-                                    @endforeach
-                                </td>
-                                <td class="p-4 text-center">
-                                    <a href="{{ route('empresa-detail', ['id' => $empresa->id]) }}" class="inline-block bg-blue text-white px-4 py-2 rounded-full text-xs font-medium hover:bg-blue/90 transition">
-                                        Ver más
-                                    </a>
-                                </td>
+            <div id="empresaContainer" class="grid grid-cols-3 gap-6 transition-all">
+                @foreach ($empresas as $empresa)
+                    <x-index.empresa :empresa="$empresa" />
+                @endforeach
+            </div>
+            <!-- Empresa List View -->
+            <div id="empresaList" class="hidden w-[80%] px-5 py-6 transition-all">
+                <div class="overflow-x-auto bg-white rounded-xl shadow-md border border-gray-200">
+                    <table class="min-w-full divide-y divide-gray-200 text-sm font-roboto">
+                        <thead class="bg-blue text-white rounded-t-xl">
+                            <tr>
+                                <th class="p-4 text-left font-semibold">Nombre</th>
+                                <th class="p-4 text-left font-semibold">CIF</th>
+                                <th class="p-4 text-left font-semibold">Gestiones</th>
+                                <th class="p-4 text-left font-semibold">Modalidad</th>
+                                <th class="p-4 text-left font-semibold">Colaboración</th>
+                                <th class="p-4 text-left font-semibold">Familia</th>
+                                <th class="p-4 text-left font-semibold">Provincía</th>
+                                <th class="p-4 text-left font-semibold">Ciclo Formativo</th>
+                                <th class="p-4 text-left font-semibold text-center">Acción</th>
                             </tr>
-                            @endif
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            @foreach ($empresas as $empresa)
+                                @if (!request('provincia') || strtolower($empresa->provincia) == strtolower(request('provincia')))
+                                <tr class="hover:bg-blue/5 transition-all">
+                                    <td class="p-4 text-gray-800">{{ $empresa->nombre }}</td>
+                                    <td class="p-4 text-gray-800">{{ $empresa->cif }}</td>
+                                    <td class="p-4 text-gray-800">{{ $empresa->gestiones }}</td>
+                                    <td class="p-4 text-gray-800">{{ $empresa->modalidad }}</td>
+                                    <td class="p-4">
+                                        <span class="text-xs font-medium px-3 py-1 rounded-full 
+                                            {{ 
+                                                $empresa->colaboracion === 'Prospección' ? 'bg-blue/10 text-blue' :
+                                                ($empresa->colaboracion === 'Inactiva' ? 'bg-red-100 text-red-600' :
+                                                'bg-green-100 text-green-600') 
+                                            }}">
+                                            {{ $empresa->colaboracion }}
+                                        </span>
+                                    </td>
+                                    <td class="p-4 text-gray-800">{{ $empresa->familiaPersonal }}</td>
+                                    <td class="p-4 text-gray-800">{{ $empresa->provincia }}</td>
+                                    <td class="p-4 text-gray-800 whitespace-pre-wrap">
+                                        @foreach ($empresa->practica as $practica)
+                                            • {{ $practica->cicloFormativo }} ({{ $practica->numPlazasAsignadas }} plazas)<br>
+                                        @endforeach
+                                    </td>
+                                    <td class="p-4 text-center">
+                                        <a href="{{ route('empresa-detail', ['id' => $empresa->id]) }}" class="inline-block bg-blue text-white px-4 py-2 rounded-full text-xs font-medium hover:bg-blue/90 transition">
+                                            Ver más
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-
-
-        </div>
+        
         <div class="relative h-[420px] flex-grow-0 flex-shrink-0" style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 15), rgba(255, 255, 255, 0) ), url('../images/bottom.png'); background-size: cover; background-position: center;">
             <!-- Button is absolutely positioned in the center of the image -->
             <!-- <div class="absolute inset-0 flex justify-center items-center">

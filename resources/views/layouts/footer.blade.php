@@ -1,4 +1,4 @@
-<footer class="bg-primary h-[15vh] w-full overflow-hidden">
+<footer class="bg-primary flex flex-col justify-center h-[15vh] w-full overflow-hidden">
     <div class="pt-6 text-center text-white text-sm font-roboto_condensed">
         <div class="flex justify-center gap-x-3 mb-3">
             <a href="{{ route('empresa-index') }}" class="flex items-center justify-center gap-x-1 hover:underline focus:outline-none focus:underline" title="Ir a la página de Empresa">

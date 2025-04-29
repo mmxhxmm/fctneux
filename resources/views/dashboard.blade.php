@@ -20,7 +20,7 @@
             <!-- First Button (Acceso a Plataforma) -->
             <div class="relative w-full h-[5em] sm:h-full animate-left">
                 <a href="{{ route('empresa-index') }}">
-                    <button class="w-full h-full shadow-lg clip-diagonal hover:opacity-90 " style="background-image: url('../images/empresa-bg.png'); background-size: cover; background-position: center;">
+                    <button class="w-full h-full shadow-lg clip-diagonal hover:opacity-90" style="background-image: url('../images/empresa-bg.png'); background-size: cover; background-position: center;">
                         <div class="text-white -mt-12 mr-6 text-bold h-[8em]">    
                             <div class="absolute inset-0 bg-primary opacity-70"></div>
                             <p class="text-base relative text-center">Acceso a Plataforma<br>de</p>

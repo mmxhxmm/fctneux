@@ -1,6 +1,6 @@
-<nav x-data="{ open: false }" class="h-[10vh] bg-primary border-b border-gray-700">
+<nav x-data="{ open: false }" class="h-[10vh] flex items-center justify-between bg-blue border-b border-gray-700">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-blue max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
@@ -43,15 +43,22 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('usuarioPerfil')">
-                            <img src="{{ asset('images/icons/icons8-person-96.png') }}" alt="User Icon" width="20px" class="mr-2 invert brightness-0">
+                        <x-dropdown-link :href="route('usuarioPerfil')" class="group">
+                            <img 
+                                src="{{ asset('images/icons/icons8-person-96.png') }}" 
+                                alt="User Icon" 
+                                width="20px" 
+                                class="mr-2 invert brightness-0 transition duration-200 group-hover:invert-[20%] group-hover:sepia-[5%] group-hover:saturate-[800%] group-hover:hue-rotate-[200deg] group-hover:brightness-[80%] group-hover:contrast-[100%]"
+                            >
                             {{ __('Perfil') }}
                         </x-dropdown-link>
 
                         @if (Auth::user()->role == 'admin')
-                        <x-dropdown-link :href="route('user.active')">
+                        <x-dropdown-link :href="route('user.active')" class="group">
                             <div class="flex items-center">
-                                <img src="{{ asset('images/icons/icons8-people-96.png') }}" alt="User Group Icon" width="20px" class="mr-2 invert brightness-0">
+                                <img src="{{ asset('images/icons/icons8-people-96.png') }}" alt="User Group Icon" width="20px"
+                                    class="mr-2 invert brightness-0 transition duration-200 group-hover:invert-[20%] group-hover:sepia-[5%] group-hover:saturate-[800%] group-hover:hue-rotate-[200deg] group-hover:brightness-[80%] group-hover:contrast-[100%]"
+                                >
                                 {{ __('Ver todos Perfiles') }}
                             </div>
                         </x-dropdown-link>
@@ -63,8 +70,11 @@
 
                             <x-dropdown-link :href="route('logout')"
                             onclick="event.preventDefault();
-                            this.closest('form').submit();">
-                                <img src="{{ asset('images/icons/icons8-exit-96.png') }}" alt="EXit Icon" width="20px" class="mr-2 invert brightness-0">
+                            this.closest('form').submit();"
+                            class="group">
+                                <img src="{{ asset('images/icons/icons8-exit-96.png') }}" alt="EXit Icon" width="20px"
+                                    class="mr-2 invert brightness-0 transition duration-200 group-hover:invert-[20%] group-hover:sepia-[5%] group-hover:saturate-[800%] group-hover:hue-rotate-[200deg] group-hover:brightness-[80%] group-hover:contrast-[100%]"
+                                >
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>

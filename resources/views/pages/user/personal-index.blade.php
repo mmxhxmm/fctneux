@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="w-full flex flex-col bg-white">
         <!-- First Container with Background Image -->
-        <div class="relative h-[350px] mb-10 flex-grow-0 flex-shrink-0" style="background-image: url('../images/personalactivo.png'); background-size: cover; background-position: center;">
+        <div class="relative h-[350px] mb-2 flex-grow-0 flex-shrink-0" style="background-image: url('../images/personalactivo.png'); background-size: cover; background-position: center;">
             <!-- Opacity overlay -->
             <!-- <div class="absolute inset-0 bg-primary opacity-40"></div> -->
 
@@ -63,10 +63,10 @@
 
             <div class="w-full h-full flex flex-col absolute px-4">
                 <div class="absolute left-0 top-[4em] animate-left">
-                    <a href="/" class="p-2 hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 mb-6"><<< Volver al inicio</a>
+                    <a href="/" class="p-2 hover:text-white hover:border-none justify-start px-4 rounded-tl-[0px] rounded-tr-[50px] rounded-br-[50px] rounded-bl-[0px] bg-orange w-[170px] h-[40px] text-[16px] text-white text-left font-roboto flex-grow-0 mb-6"><<< Volver al inicio</a>
                 </div>
                 <div class="absolute right-0 top-[7em] animate-right">
-                    <a href="{{ $state == 'activo' ? route('user.no_active') : route('user.active') }}" class="hover:text-white hover:border-none justify-end px-4 rounded-tl-[0px] rounded-tl-[50px] rounded-bl-[50px] rounded-bl-[0px] px-4 bg-blue w-[220px] h-[40px] opacity-90 text-[16px] text-white text-left font-roboto flex-grow-0 flex justify-end items-center">
+                    <a href="{{ $state == 'activo' ? route('user.no_active') : route('user.active') }}" class="hover:text-white hover:border-none justify-end px-4 rounded-tl-[0px] rounded-tl-[50px] rounded-bl-[50px] rounded-bl-[0px] px-4 bg-blue w-[220px] h-[40px] text-[16px] text-white text-left font-roboto flex-grow-0 flex justify-end items-center">
                         Usuarios {{ $state == 'activo' ? 'No Activos' : 'activos'}} >>>
                     </a>
                 </div>

@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use URL;
 use App\Models\Tarea;
 use App\Models\User;
+use App\Models\Empresa;
 
 class TareaController extends Controller
 {
@@ -22,7 +24,7 @@ class TareaController extends Controller
             return [$item => $item]; // No formatting logic, just display actual name
         });
 
-            // Estados: desde la constante del modelo
+        // Estados: desde la constante del modelo
         $estados = Tarea::ESTADOS;
 
         // Fechas límite únicas, formateadas
@@ -32,9 +34,7 @@ class TareaController extends Controller
             return [$formatted => $formatted];
         });
 
-        // Empresas: ID + Nombre
-        $empresaRaw = Tarea::select('id', 'nombre')->distinct()->get();
-        $empresas = $empresaRaw->pluck('nombre', 'id'); // [id => nombre]
+        $empresas = Empresa::all();
 
         return view('pages/tarea/tareas-index', compact('tareas', 'asignados', 'estados', 'fechas_limite', 'empresas'));
     }
@@ -57,8 +57,7 @@ class TareaController extends Controller
             return [$formatted => $formatted];
         });
 
-        $empresaRaw = Tarea::select('id', 'nombre')->distinct()->get();
-        $empresas = $empresaRaw->pluck('nombre', 'id');
+        $empresas = Empresa::all();
 
         return view('pages/tarea/tareas-historial', compact('tareas', 'asignados', 'estados', 'fechas_limite', 'empresas'));
     }
@@ -88,7 +87,7 @@ class TareaController extends Controller
         $tarea->estado = $request->estado;
         $tarea->descripcion = $request->descripcion;
         $tarea->fecha_limite = $request->fecha_limite ?: null;
-        $tarea->empresa_id = 1;
+        $tarea->empresa_id = $request->empresa;
         $tarea->save();
     
         return redirect()->back()->with('success', 'Tarea añadida correctamente');
@@ -97,19 +96,40 @@ class TareaController extends Controller
     public function update(Request $request, $id)
     {
         $tarea = Tarea::findOrFail($id);
-
-        $validator = $request->validate([
+    
+        $validated = $request->validate([
             'nombre' => 'nullable|string|max:255',
             'descripcion' => 'nullable|string',
             'estado' => 'nullable|string|max:255',
             'fecha_limite' => 'nullable|date',
+            'empresa' => 'nullable|exists:empresas,id' // Add validation
         ]);
+    
+        // Process asignados
+        $asignadoArray = $request->asignado ? explode(',', $request->asignado) : [];
+        $asignadosSelected = $asignadoArray ? User::whereIn('id', $asignadoArray)->pluck('name')->implode(', ') : '';
+    
+        // Update all fields at once
+        $tarea->update([
+            'nombre' => $validated['nombre'] ?? $tarea->nombre,
+            'descripcion' => $validated['descripcion'] ?? $tarea->descripcion,
+            'estado' => $validated['estado'] ?? $tarea->estado,
+            'fecha_limite' => $validated['fecha_limite'] ?? $tarea->fecha_limite,
+            'asignado' => $asignadosSelected,
+            'empresa_id' => $validated['empresa'] ?? $tarea->empresa_id
+        ]);
+    
+        $previousUrl = URL::previous();
+        $fromHistorial = str_contains($previousUrl, route('tareas-historial'));
+        $fromIndex = str_contains($previousUrl, route('tareas-index'));
 
-        $tarea->asignado = Auth::user()->name; 
-        $tarea->empresa_id = 1;
-        $tarea->update($validator);
-
-        return redirect()->back()->with('success', 'Tarea actualizado correctamente');
+        if ($request->estado == 'done' && ($fromHistorial || $fromIndex)) {
+            return to_route('tareas-historial')->with('success', 'Tarea editada correctamente');
+        } elseif ($fromHistorial || $fromIndex) {
+            return to_route('tareas-index')->with('success', 'Tarea editada correctamente');
+        } else {
+            return back()->with('success', 'Tarea editada correctamente');
+        }
     }
     
     public function update_estado(Request $request, $id)
@@ -118,10 +138,16 @@ class TareaController extends Controller
         $tarea->estado = $request->estado;
         $tarea->save();
 
-        if ($request->estado == 'done') {
-            return redirect()->route('tareas-historial')->with('success', 'Tarea editada correctamente');
+        $previousUrl = URL::previous();
+        $fromHistorial = str_contains($previousUrl, route('tareas-historial'));
+        $fromIndex = str_contains($previousUrl, route('tareas-index'));
+
+        if ($request->estado == 'done' && ($fromHistorial || $fromIndex)) {
+            return to_route('tareas-historial')->with('success', 'Tarea editada correctamente');
+        } elseif ($fromHistorial || $fromIndex) {
+            return to_route('tareas-index')->with('success', 'Tarea editada correctamente');
         } else {
-            return redirect()->route('tareas-index')->with('success', 'Tarea editada correctamente');
+            return back()->with('success', 'Tarea editada correctamente');
         }
     }
 
@@ -216,9 +242,7 @@ class TareaController extends Controller
             \Carbon\Carbon::parse($date)->format('Y-m-d') => \Carbon\Carbon::parse($date)->format('Y-m-d')
         ]);
 
-        $empresaRaw = Tarea::select('empresa_id')->distinct()->pluck('empresa_id')->filter()->toArray();
-        $empresas = \App\Models\Empresa::whereIn('id', $empresaRaw)->pluck('nombre', 'id');
-    
+        $empresas = Empresa::all();
 
         return view('pages/tarea/tareas-index', compact('tareas', 'asignados', 'estados', 'fechas_limite', 'empresas'));
     }

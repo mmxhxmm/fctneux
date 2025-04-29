@@ -4,8 +4,9 @@
     </a>
 
     <div class="my-4 text-white">
-        <h2 class="text-center">¿Olvidaste tu contraseña?</h2>
-        <p class="flex items-center text-[12px] mt-2 justify-center">No hay problema. Solo indícanos tu dirección de correo electrónico y te enviaremos un enlace para restablecer tu contraseña que te permitirá elegir una nueva.</p>
+        <h2 class="text-center text-2xl mb-2">¿Olvidaste tu contraseña?</h2>
+        <p class="text-center text-[12px] mb-2">No hay problema.</p>
+        <p class="flex items-center text-[12px] justify-center">Indica tu dirección de correo electrónico y un administrador te va a contactar para resetearla.</p>
     </div>
 
     <!-- Session Status -->
@@ -15,7 +16,7 @@
         @csrf
 
         <!-- Email Address -->
-        <div class="mt-10">
+        <div class="mt-8">
             <label for="email" :value="__('Email')" >
             <x-text-input id="email" class="block text-[12px] text-white border-white rounded-full bg-transparent w-full h-1/2 placeholder-white"
                 placeholder="Email..." 

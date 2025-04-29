@@ -27,23 +27,20 @@
         </form>
 
         <button 
-            id="openEditModal"
             type="button" 
-            class="edit-btn absolute px-2 rounded top-4 right-6 text-blue hover:text-white border border-blue hover:bg-blue transition active:scale-95 duration-80"
-            data-tarea-id="{{ $tarea->id }}"
-            data-tarea-nombre="{{ $tarea->nombre }}"
-            data-tarea-descripcion="{{ $tarea->descripcion }}"
-            data-tarea-estado="{{ $tarea->estado }}"
-            data-tarea-fecha-limite="{{ \Carbon\Carbon::parse($tarea->fecha_limite)->format('Y-m-d') }}"
-            data-tarea-asignado="{{ $tarea->asignado }}"
-            data-tarea-empresa="{{ $tarea->empresa }}"> Editar
+            class="openEditModal absolute px-2 rounded top-4 right-6 text-blue hover:text-white border border-blue hover:bg-blue transition active:scale-95 duration-80"
+            data-tarea-id="{{ $tarea->id }}"> Editar
         </button>
 
         <!-- Tarea Content -->
         <div class="pt-10 pb-5 px-6 space-y-4 text-[17px] text-gray-800 font-roboto mt-8">
             <p><span class="font-semibold text-blue">Nombre:</span> {{ $tarea->nombre }}</p>
+            @if (isset($tarea->descripcion))
             <p><span class="font-semibold text-blue">Descripción:</span> {{ $tarea->descripcion }}</p>
+            @endif
+            @if (isset($tarea->fecha_limite))
             <p><span class="font-semibold text-blue">Fecha Límite:</span> {{ \Carbon\Carbon::parse($tarea->fecha_limite)->format('d-m-Y') }}</p>
+            @endif
         </div>
     </div>
 
@@ -57,8 +54,10 @@
                 </p>
             </a>
         </div>
-        <div class="px-6 py-4 bg-white_dull w-full rounded-b-xl">
-            <p><span class="font-semibold text-blue">Asignado a:</span> {{ $tarea->asignado }}</p> 
+        <div class="min-h-[56px] px-6 py-4 bg-white_dull w-full rounded-b-xl">
+            @if (!($tarea->asignado == ''))
+            <p><span class="font-semibold text-blue">Asignado a:</span> {{ $tarea->asignado }}</p>
+            @endif
         </div>
     </div>
 </div>
