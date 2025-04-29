@@ -467,7 +467,7 @@
                 </div>
 
                 <div>
-                    <div class="flex justify-center px-4 py-2 mb-4 rounded bg-blue">
+                    <div class="flex justify-center px-4 py-2 mb- rounded-[100px] bg-blue">
                         <h2 class="font-bold text-white ">EN REVISIÓN</h2>
                     </div>
                     <div class="grid grid-cols-3 gap-6">

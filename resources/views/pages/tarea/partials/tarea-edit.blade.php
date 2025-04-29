@@ -1,3 +1,6 @@
+@php
+    $empresas = App\Models\Empresa::all();
+@endphp
 <section id="EditModal-{{ $tarea->id }}" class="px-10 fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
     <div class="w-full max-w-6xl bg-white rounded-xl shadow-2xl overflow-hidden border-t-4 border-blue">
         <!-- Header -->

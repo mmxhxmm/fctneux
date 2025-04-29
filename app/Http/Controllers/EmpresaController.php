@@ -137,7 +137,7 @@ class EmpresaController extends Controller
             return [$id => $this->provinciaToString($id)];
         });
 
-        $ciclos = Practica::select('cicloFormativo')->distinct()->pluck('cicloFormativo')->filter()->mapWithKeys(fn($i) => [$i => $i]);
+        $ciclos = Practica::select('cicloFormativo')->distinct()->pluck('cicloFormativo')->filter()->mapWithKeys(fn($i) =>  $this->cicloFormativoToString($i));
         $plazas = Practica::select('numPlazasAsignadas')->distinct()->pluck('numPlazasAsignadas')->sort()->mapWithKeys(fn($i) => [$i => $i]);
 
         return view('pages/empresa/empresa-index', compact(
@@ -149,6 +149,20 @@ class EmpresaController extends Controller
             'ciclos',
             'plazas'
         ));
+    }
+    public function cicloFormativoToString($value) {
+        switch ($value) {
+            case 'daw':
+                return 'Desarrollo de Aplicaciones Web';
+            case 'asix':
+                return 'Administración de Sistemas Informáticos';
+            case 'dam':
+                return 'Desarrollo de Aplicaciones Multiplataforma';
+            case 'marketing':
+                return 'Marketing Digital';
+            default:
+                return $value;
+        }
     }
 
     public function provinciaToString($value) {
