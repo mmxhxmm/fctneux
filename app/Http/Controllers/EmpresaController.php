@@ -10,6 +10,7 @@ use App\Models\PersonaContacto;
 use App\Models\Practica;
 use App\Models\Tutor;
 use App\Models\TutorEmpresa;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -181,10 +182,12 @@ class EmpresaController extends Controller
         // Fetch all empresas
         $empresas = Empresa::all();
 
+        $usuarios = User::all();
+
         // Pass the empresas and the id to the view
-        return view('pages/empresa-detail-view', [
+        return view('pages/empresa/empresa-detail-view', [
             'page' => 'detail/detail-main',
-        ],  compact('empresas' , 'id') );
+        ],  compact('empresas' , 'id', 'usuarios') );
     }
 
     // search purpose 
