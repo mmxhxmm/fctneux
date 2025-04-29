@@ -159,68 +159,14 @@
                                 <div class="relative inline-block">
                                     <select name="provincia" onchange="this.form.submit()" class="w-[160px] rounded-full border-2 border-white bg-black_transp text-white px-4 py-2 pr-10">
                                         <option value="" class="bg-stone-700 text-white">Provincia</option>
-                                            @php
-                                                $provincias = [
-                                                    'alava' => 'Álava',
-                                                    'albacete' => 'Albacete',
-                                                    'alicante' => 'Alicante',
-                                                    'almeria' => 'Almería',
-                                                    'asturias' => 'Asturias',
-                                                    'avila' => 'Ávila',
-                                                    'badajoz' => 'Badajoz',
-                                                    'barcelona' => 'Barcelona',
-                                                    'burgos' => 'Burgos',
-                                                    'caceres' => 'Cáceres',
-                                                    'cadiz' => 'Cádiz',
-                                                    'cantabria' => 'Cantabria',
-                                                    'castellon' => 'Castellón',
-                                                    'ceuta' => 'Ceuta',
-                                                    'cordoba' => 'Córdoba',
-                                                    'cuenca' => 'Cuenca',
-                                                    'girona' => 'Girona',
-                                                    'granada' => 'Granada',
-                                                    'guadalajara' => 'Guadalajara',
-                                                    'huelva' => 'Huelva',
-                                                    'huesca' => 'Huesca',
-                                                    'jaen' => 'Jaén',
-                                                    'la-coruna' => 'La Coruña',
-                                                    'la-rioja' => 'La Rioja',
-                                                    'las-palmas' => 'Las Palmas',
-                                                    'leon' => 'León',
-                                                    'lleida' => 'Lleida',
-                                                    'lugo' => 'Lugo',
-                                                    'madrid' => 'Madrid',
-                                                    'malaga' => 'Málaga',
-                                                    'melilla' => 'Melilla',
-                                                    'murcia' => 'Murcia',
-                                                    'navarra' => 'Navarra',
-                                                    'orense' => 'Ourense',
-                                                    'palencia' => 'Palencia',
-                                                    'pontevedra' => 'Pontevedra',
-                                                    'salamanca' => 'Salamanca',
-                                                    'segovia' => 'Segovia',
-                                                    'sevilla' => 'Sevilla',
-                                                    'soria' => 'Soria',
-                                                    'tarragona' => 'Tarragona',
-                                                    'teruel' => 'Teruel',
-                                                    'toledo' => 'Toledo',
-                                                    'valencia' => 'Valencia',
-                                                    'valladolid' => 'Valladolid',
-                                                    'vizcaya' => 'Vizcaya',
-                                                    'zamora' => 'Zamora',
-                                                    'zaragoza' => 'Zaragoza'
-                                                ];
-                                            @endphp
-
-                                            @foreach ($provincias as $value => $label)
-                                                <option value="{{ $value }}" {{ request('provincia') == $value ? 'selected' : '' }}>
-                                                    {{ $label }}
-                                                </option>
-                                            @endforeach
+                                        @foreach ($provincia as $value => $label)
+                                            <option value="{{ $value }}" {{ request('provincia') == $value ? 'selected' : '' }}>
+                                                {{ $label }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </template>
-
 
                             </form>
                         </div>

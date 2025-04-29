@@ -49,6 +49,11 @@ class EmpresaController extends Controller
         $ciclos = collect($ciclosRaw)->mapWithKeys(function ($item) {
             return [$item => $item];
         });
+        $provincias_raw = Empresa::select('provincia')->distinct()->pluck('provincia')->filter();
+        $provincia = $provincias_raw->mapWithKeys(function ($id) {
+            return [$id => $this->provinciaToString($id)];
+        });
+
 
         $plazasRaw = Practica::select('numPlazasAsignadas')->distinct()->pluck('numPlazasAsignadas')->sort()->toArray();
         $plazas = collect($plazasRaw)->mapWithKeys(fn($item) => [$item => $item]);
@@ -66,81 +71,105 @@ class EmpresaController extends Controller
         });
 
 
-        return view('pages.empresa-index', compact('empresas', 'modalidades', 'colaboraciones', 'ciclos', 'plazas','familias'));
+        return view('pages.empresa-index', compact('empresas', 'modalidades', 'colaboraciones', 'ciclos', 'plazas','familias','provincia'));
     }
 
     public function filtro(Request $request)
-{
-    $query = Empresa::with('practica');
+    {
+        $query = Empresa::with('practica');
 
-    // 🔍 Search text
-    if ($request->filled('search')) {
-        $search = $request->search;
-        $query->where(function ($q) use ($search) {
-            $q->where('nombre', 'like', "%$search%")
-              ->orWhere('colaboracion', 'like', "%$search%")
-              ->orWhere('modalidad', 'like', "%$search%")
-              ->orWhere('ofertaLaboral', 'like', "%$search%")
-              ->orWhere('municipio', 'like', "%$search%")
-              ->orWhere('familiaPersonal', 'like', "%$search%")
-              ->orWhereHas('practica', fn($sub) => $sub->where('cicloFormativo', 'like', "%$search%"));
+        // 🔍 Search text
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('nombre', 'like', "%$search%")
+                ->orWhere('colaboracion', 'like', "%$search%")
+                ->orWhere('modalidad', 'like', "%$search%")
+                ->orWhere('ofertaLaboral', 'like', "%$search%")
+                ->orWhere('municipio', 'like', "%$search%")
+                ->orWhere('familiaPersonal', 'like', "%$search%")
+                ->orWhereHas('practica', fn($sub) => $sub->where('cicloFormativo', 'like', "%$search%"));
+            });
+        }
+
+        if ($request->filled('modalidad')) {
+            $query->where('modalidad', $request->modalidad);
+        }
+
+        if ($request->filled('colaboracion')) {
+            $query->where('colaboracion', $request->colaboracion);
+        }
+
+        if ($request->filled('familia')) {
+            $query->where('familiaPersonal', $request->familia);
+        }
+
+        if ($request->filled('provincia')) {
+            $query->where('provincia', $request->provincia);
+        }
+
+        if ($request->filled('ciclo')) {
+            $query->whereHas('practica', fn($q) => $q->where('cicloFormativo', $request->ciclo));
+        }
+
+        if ($request->filled('plazas')) {
+            $query->whereHas('practica', fn($q) => $q->where('numPlazasAsignadas', $request->plazas));
+        }
+
+        $empresas = $query->get();
+
+        $modalidades = Empresa::select('modalidad')->distinct()->pluck('modalidad')->filter()->mapWithKeys(fn($i) => [$i => ucfirst($i)]);
+        $colaboraciones = Empresa::select('colaboracion')->distinct()->pluck('colaboracion')->filter()->mapWithKeys(fn($i) => [$i => match ($i) {
+            'prospeccion' => 'Prospección',
+            'colaboracion' => 'Colaboración',
+            'inactiva' => 'Inactiva',
+            default => ucfirst($i),
+        }]);
+        $familias = Empresa::select('familiaPersonal')->distinct()->pluck('familiaPersonal')->filter()->mapWithKeys(fn($i) => [$i => match (strtolower($i)) {
+            'sanidad' => 'Sanidad',
+            'informatica' => 'Informática',
+            'hosteleria' => 'Hostelería',
+            'marketing' => 'Marketing',
+            default => ucfirst($i),
+        }]);
+        $provincias_raw = Empresa::select('provincia')->distinct()->pluck('provincia')->filter();
+        $provincia = $provincias_raw->mapWithKeys(function ($id) {
+            return [$id => $this->provinciaToString($id)];
         });
+
+        $ciclos = Practica::select('cicloFormativo')->distinct()->pluck('cicloFormativo')->filter()->mapWithKeys(fn($i) => [$i => $i]);
+        $plazas = Practica::select('numPlazasAsignadas')->distinct()->pluck('numPlazasAsignadas')->sort()->mapWithKeys(fn($i) => [$i => $i]);
+
+        return view('pages.empresa-index', compact(
+            'empresas',
+            'modalidades',
+            'colaboraciones',
+            'familias',
+            'provincia',
+            'ciclos',
+            'plazas'
+        ));
     }
 
-    if ($request->filled('modalidad')) {
-        $query->where('modalidad', $request->modalidad);
+    public function provinciaToString($value) {
+        $key = "bf9bf54cbf3e6f52ea4f61d205d533c745dc29471259d43d982c83081fc3ce06";
+        $url = "https://apiv1.geoapi.es/provincias?type=JSON&key=$key&sandbox=0";
+    
+        $response = @file_get_contents($url);
+        if ($response === false) return $value;
+    
+        $data = json_decode($response, true);
+        if (!isset($data['data'])) return $value;
+    
+        foreach ($data['data'] as $provincia) {
+            if ($provincia['CPRO'] == $value) {
+                return ucwords(mb_strtolower($provincia['PRO']));
+            }
+        }
+    
+        return $value;
     }
-
-    if ($request->filled('colaboracion')) {
-        $query->where('colaboracion', $request->colaboracion);
-    }
-
-    if ($request->filled('familia')) {
-        $query->where('familiaPersonal', $request->familia);
-    }
-
-    if ($request->filled('provincia')) {
-        $query->where('provincia', $request->provincia);
-    }
-
-    if ($request->filled('ciclo')) {
-        $query->whereHas('practica', fn($q) => $q->where('cicloFormativo', $request->ciclo));
-    }
-
-    if ($request->filled('plazas')) {
-        $query->whereHas('practica', fn($q) => $q->where('numPlazasAsignadas', $request->plazas));
-    }
-
-    $empresas = $query->get();
-
-    $modalidades = Empresa::select('modalidad')->distinct()->pluck('modalidad')->filter()->mapWithKeys(fn($i) => [$i => ucfirst($i)]);
-    $colaboraciones = Empresa::select('colaboracion')->distinct()->pluck('colaboracion')->filter()->mapWithKeys(fn($i) => [$i => match ($i) {
-        'prospeccion' => 'Prospección',
-        'colaboracion' => 'Colaboración',
-        'inactiva' => 'Inactiva',
-        default => ucfirst($i),
-    }]);
-    $familias = Empresa::select('familiaPersonal')->distinct()->pluck('familiaPersonal')->filter()->mapWithKeys(fn($i) => [$i => match (strtolower($i)) {
-        'sanidad' => 'Sanidad',
-        'informatica' => 'Informática',
-        'hosteleria' => 'Hostelería',
-        'marketing' => 'Marketing',
-        default => ucfirst($i),
-    }]);
-    $provincia = Empresa::select('provincia')->distinct()->pluck('provincia')->filter()->mapWithKeys(fn($i) => [$i => ucfirst($i)]);
-    $ciclos = Practica::select('cicloFormativo')->distinct()->pluck('cicloFormativo')->filter()->mapWithKeys(fn($i) => [$i => $i]);
-    $plazas = Practica::select('numPlazasAsignadas')->distinct()->pluck('numPlazasAsignadas')->sort()->mapWithKeys(fn($i) => [$i => $i]);
-
-    return view('pages.empresa-index', compact(
-        'empresas',
-        'modalidades',
-        'colaboraciones',
-        'familias',
-        'provincia',
-        'ciclos',
-        'plazas'
-    ));
-}
+    
 
 
     // function to connect id of empresas to show specific empresa's detail

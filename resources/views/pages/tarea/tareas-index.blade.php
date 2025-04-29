@@ -440,7 +440,7 @@
         <div  class="flex justify-center bg-white items-center">
             <div id="tareasContainer" class="flex flex-col space-y-20">
                 <div>
-                    <div class="flex justify-center px-4 py-2 mb-4 rounded bg-blue">
+                    <div class="flex justify-center px-4 py-2 mb-6 rounded-[100px] bg-blue">
                         <h2 class="font-bold text-white ">POR HACER</h2>
                     </div>
                     <div class="grid grid-cols-3 gap-6">
@@ -453,7 +453,7 @@
                 </div>
 
                 <div>
-                    <div class="flex justify-center px-4 py-2 mb-4 rounded bg-blue">
+                    <div class="flex justify-center px-4 py-2 mb-6 rounded-[100px] bg-blue">
                         <h2 class="font-bold text-white ">EN PROGRESO</h2>
                     </div>
                     <div class="grid grid-cols-3 gap-6">
@@ -466,7 +466,7 @@
                 </div>
 
                 <div>
-                    <div class="flex justify-center px-4 py-2 mb-4 rounded bg-blue">
+                    <div class="flex justify-center px-4 py-2 mb-6 rounded-[100px] bg-blue">
                         <h2 class="font-bold text-white ">EN REVISIÓN</h2>
                     </div>
                     <div class="grid grid-cols-3 gap-6">
@@ -479,7 +479,7 @@
                 </div>
 
                 <div>
-                    <div class="flex justify-center px-4 py-2 mb-4 rounded bg-blue">
+                    <div class="flex justify-center px-4 py-2 mb-6 rounded-[100px] bg-blue">
                         <h2 class="font-bold text-white ">BLOQUEADO</h2>
                     </div>
                     <div class="grid grid-cols-3 gap-6">
