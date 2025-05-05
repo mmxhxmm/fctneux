@@ -294,7 +294,7 @@
                 document.getElementById('edit_email').value = grayTexts[0].textContent.trim();
                 document.getElementById('edit_telefono').value = grayTexts[1].textContent.trim();
                 document.getElementById('edit_municipio').value = grayTexts[2].textContent.trim().toLowerCase();
-                document.getElementById('edit_role').value = userCard.querySelector('.user-role').textContent.trim().toLowerCase();
+                document.getElementById('edit_role').value = userCard.querySelector('.user_role').textContent.trim().toLowerCase();
                 // Needs edit_situacion
 
                 // Show modal

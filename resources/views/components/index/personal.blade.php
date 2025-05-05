@@ -13,7 +13,7 @@
         <div class="bg-white_dull px-4 py-4 mb-1 flex items-center justify-between"
         style="border-top-left-radius: 1.05rem; border-top-right-radius: 1.05rem;">
             <h2 class="text-xl font-semibold text-blue">{{ $user->name }}</h2>
-            <span class="user-role px-3 py-1 text-sm rounded-full font-medium text-white
+            <span class="user_role px-3 py-1 text-sm rounded-full font-medium text-white
             {{ $user->role == 'admin' ? 'bg-orange' : ($user->role == 'coordinador' ? 'bg-blue' : 'bg-gray-400') }}">
                 {{ ucfirst($user->role) }}
             </span>
@@ -24,17 +24,15 @@
             <div class="space-y-2">
                 <div class="flex justify-between items-center pb-2">
                     <span class="text-sm text-gray-500 font-medium">Email</span>
-                    <span class="text-base text-gray-900 font-medium">{{ $user->email }}</span>
+                    <span class="user_email text-base text-gray-900 font-medium">{{ $user->email }}</span>
                 </div>
-                @if (isset($user->telefono))
                 <div class="flex justify-between items-center  pb-2">
                     <span class="text-sm text-gray-500 font-medium">Teléfono</span>
-                    <span class="text-base text-gray-900 font-medium">{{ $user->telefono }}</span>
+                    <span class="user_telefono text-base text-gray-900 font-medium">{{ $user->telefono }}</span>
                 </div>
-                @endif
                 <div class="flex justify-between items-center">
                     <span class="text-sm text-gray-500 font-medium">Municipio</span>
-                    <span class="text-base text-gray-900 font-medium">{{ ucfirst($user->municipio) }}</span>
+                    <span class="user_municipio text-base text-gray-900 font-medium">{{ ucfirst($user->municipio) }}</span>
                 </div>
             </div>
         </div>
